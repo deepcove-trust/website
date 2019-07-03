@@ -1,6 +1,7 @@
 # Build
 bin/
 obj/
+node_modules/
 
 # Github
 .git/
