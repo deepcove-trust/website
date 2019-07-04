@@ -5,6 +5,10 @@
 @import './bootstrap.min.css';
 @import './footer.scss';
 
+
+/* Custom CSS */
+@import './Authentication.scss';
+
 /* Import Font Awesome 5 Pro */
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import '~@fortawesome/fontawesome-pro/scss/fontawesome';
