@@ -3,10 +3,35 @@
 
 /* Import Bootstrap Theme */
 @import './bootstrap.min.css';
+@import './footer.scss';
+
+/* Import Font Awesome 5 Pro */
+$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
+@import '~@fortawesome/fontawesome-pro/scss/fontawesome';
+@import '~@fortawesome/fontawesome-pro/scss/regular';
+@import '~@fortawesome/fontawesome-pro/scss/solid';
+@import '~@fortawesome/fontawesome-pro/scss/brands';
+
+
+body {
+    background: url(/images/background.jpg);
+    background-repeat: none;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+
+.container.content-container {
+    background-color: rgba(254, 254, 254, 0.7);
+    padding: 0px;
+}
+
+.navbar-brand > img {
+    width: 160px;
+}
 
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
-
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -47,11 +72,6 @@ button.accept-policy {
 html {
     position: relative;
     min-height: 100%;
-}
-
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
 }
 
 .footer {
