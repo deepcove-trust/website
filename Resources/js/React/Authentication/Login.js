@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Button from '../Components/Button';
+import $ from 'jquery';
 
 const baseUri = "/login";
 
@@ -16,7 +17,17 @@ export default class Login extends Component {
 
     attemptLogin(e) {
         e.preventDefault();
-        console.log("Tried to login");
+
+        this.setState({ loginPending: true });
+        $.ajax({
+            type: 'post',
+            url: `${baseUri}`,
+            data: $("form").serialize()
+        }).done(() => {
+            location.replace("/admin-portal");
+        }).fail((err) => {
+            this.setState({ loginFailed: err.responseText, loginPending: false });
+        })
     }
 
     render() {
@@ -24,7 +35,7 @@ export default class Login extends Component {
         if (this.state.loginFailed) {
             loginFailed = (
                 <div className="form-group">
-                    <p className="text-danger">Incorrect Username or Password.</p>
+                    <p className="text-danger">{this.state.loginFailed}</p>
                 </div>
             )
         }

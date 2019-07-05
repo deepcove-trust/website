@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Button from '../Components/Button';
+import $ from 'jquery';
 
 const baseUri = "/reset-password";
 
@@ -16,7 +17,17 @@ export default class ResetPassword extends Component {
 
     attemptRequest(e) {
         e.preventDefault();
-        console.log("Tried to login");
+        this.setState({ requestPending: true });
+
+        $.ajax({
+            type: 'post',
+            url: `${window.location.href}`,
+            data: $("form").serialize()
+        }).done(() => {
+            location.replace("/login");
+        }).fail((err) => {
+            this.setState({ requestPending: false, requestFailed: err.responseText });
+        })
     }
 
     render() {
@@ -29,27 +40,22 @@ export default class ResetPassword extends Component {
             )
         }
 
-        let emailSent;
-        if (this.state.emailSent) {
-            emailSent = (
-                <div className="form-group">
-                    <p className="text-success">We've sent you an email with instructions. It may take up to five minutes to appear.</p>
-                </div>
-            )
-        }
-
         return (
             <div className="login-clean text-center">
                 <form onSubmit={this.attemptRequest.bind(this)}>
                     <h1 className="sr-only">New email password form</h1>
                     <h1 className="display-4 mb-5">New Password</h1>
 
+                    <div className="form-group">
+                        <input type="email" className="form-control" name="email" placeholder="Email" autoComplete="email" required />
+                    </div>
+
                     <div class="form-group">
                         <input class="form-control" type="password" name="password" placeholder="New Password" autoComplete="new-password" minlength="6" required/>
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" type="password" name="passswordConfirm" placeholder="Retype Password" minlength="6" required/>
+                        <input class="form-control" type="password" name="passswordConfirm" placeholder="Retype Password" autoComplete="new-password" minlength="6" required/>
                     </div>
 
                     {requestFailed}

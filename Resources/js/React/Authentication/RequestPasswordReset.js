@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Button from '../Components/Button';
+import $ from 'jquery';
 
 const baseUri = "/reset-password";
 
@@ -17,7 +18,20 @@ export default class RequestPasswordReset extends Component {
 
     attemptRequest(e) {
         e.preventDefault();
-        console.log("Tried to login");
+        this.setState({ requestPending: true });
+
+        if (this.state.emailSent)
+            return;
+
+        $.ajax({
+            type: 'post',
+            url: `${baseUri}`,
+            data: $("form").serialize()
+        }).done(() => {
+            this.setState({ requestPending: false, emailSent: true, requestFailed: false });
+        }).fail((err) => {
+            this.setState({ requestPending: false, requestFailed: err.responseText });
+        });
     }
 
     render() {
@@ -39,6 +53,15 @@ export default class RequestPasswordReset extends Component {
             )
         }
 
+        let btn_submit;
+        if (!this.state.emailSent) {
+            btn_submit = (
+                <div className="form-group">
+                    <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
+                </div>
+            )
+        }
+
         return (
             <div className="login-clean text-center">
                 <form onSubmit={this.attemptRequest.bind(this)}>
@@ -51,10 +74,7 @@ export default class RequestPasswordReset extends Component {
 
                     {requestFailed}
                     {emailSent}
-
-                    <div className="form-group">
-                        <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
-                    </div>
+                    {btn_submit}
 
                     <a className="forgot" href="/login">Know your details? Login Here</a>
                 </form>

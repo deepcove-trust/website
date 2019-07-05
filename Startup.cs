@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,12 +16,12 @@ namespace Deepcove_Trust_Website
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -35,8 +36,25 @@ namespace Deepcove_Trust_Website
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<Data.WebsiteDataContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
+            string dburl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            if (!string.IsNullOrEmpty(dburl))
+            {
+                services.AddDbContext<Data.WebsiteDataContext>(options =>
+                    options.UseSqlServer(dburl), ServiceLifetime.Scoped);
+            }
+            else
+            {
+                services.AddDbContext<Data.WebsiteDataContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
+            }
+            
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => {
+                    options.LoginPath = "/login";
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.AccessDeniedPath = "/"; 
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,10 +71,9 @@ namespace Deepcove_Trust_Website
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

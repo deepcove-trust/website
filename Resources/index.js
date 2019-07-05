@@ -10,6 +10,7 @@ import './js/Libraries/bootstrap.bundle.min.js';
 import './js/React/Authentication/Login';
 import './js/React/Authentication/RequestPasswordReset';
 import './js/React/Authentication/ResetPassword';
+import './js/React/Authentication/Register';
 
 /* Theme */
 //import './js/app.min';

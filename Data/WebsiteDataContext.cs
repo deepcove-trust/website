@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Deepcove_Trust_Website.Data
 {
@@ -17,6 +18,21 @@ namespace Deepcove_Trust_Website.Data
             // Temporarily disabled as it seems to prevent database rollbacks.
             // Auto runs migrations
             //Database.Migrate();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string dburl = Environment.GetEnvironmentVariable("DATABASE_URL");
+            if (!string.IsNullOrEmpty(dburl))
+            {
+                // Use the URL from the docker file
+                optionsBuilder.UseSqlServer(dburl);
+            }
+            else
+            {
+                // appsettings.json
+                base.OnConfiguring(optionsBuilder);
+            }
         }
 
 
@@ -33,7 +49,7 @@ namespace Deepcove_Trust_Website.Data
         //    AddTimestamps();
         //    return await base.SaveChangesAsync();
         //}
-        
+
         // Adds timestamps to database record(s)
         private void AddTimestamps()
         {
