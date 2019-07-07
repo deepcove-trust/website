@@ -44,27 +44,32 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
                 if (account != null)
                 {
+                    List<PasswordReset> resetTokens = await _Db.PasswordReset.Include(i => i.Account).Where(c => c.Account.Id == account.Id).ToListAsync();
+                    if (resetTokens != null)
+                        foreach (PasswordReset resetToken in resetTokens)
+                            resetToken.ExpiresAt = DateTime.UtcNow;
+
                     PasswordReset reset = new PasswordReset
                     {
                         Account = account,
                         Token = Utils.RandomString(20),
-                        ExpiresAt = DateTime.UtcNow.AddMinutes(_Configuration.GetValue<int>("PasswordRestTokenLength"))
+                        ExpiresAt = DateTime.UtcNow.AddMinutes(_Configuration.GetSection("LoginSettings").GetValue<int>("PasswordResetTokenLength"))
                     };
 
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();
 
                     await _Smtp.SendRazorEmailAsync(null,
-                            new EmailContact { Name = account.Name, Address = account.Email },
-                            "Password Reset",
-                            "PasswordReset",
-                            new Views.Emails.Models.PasswordReset
-                            {
-                                Name = account.Name,
-                                Token = reset.Token,
-                                BaseUrl = this.Request.BaseUrl()
-                            }
-                        );
+                        new EmailContact { Name = account.Name, Address = account.Email },
+                        "Password Reset",
+                        "PasswordReset",
+                        new Views.Emails.Models.PasswordReset
+                        {
+                            Name = account.Name,
+                            Token = reset.Token,
+                            BaseUrl = this.Request.BaseUrl()
+                        }
+                    );
                 }
 
                 return Ok();

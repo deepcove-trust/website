@@ -19,20 +19,20 @@
     <div style="width: 33vw; margin: 0 auto; padding-top: 50px;">
         <!-- Logo -->
         <div style="padding: 2px 0px 30px 0px;">
-            <a href=@Model.baseUrl>
-                <img src=@($"{Model.baseUrl}/images/logo.png") alt="Logo" style="height: 130px; margin: 0 auto; display: block;" />
+            <a href=@Model.BaseUrl>
+                <img src=@($"{Model.BaseUrl}/images/logo.png") alt="Logo" style="height: 130px; margin: 0 auto; display: block;" />
             </a>
         </div><!-- End Logo -->
 
         <p style="font-size: 14px; font-weight: bold; color: #000000;">
-            Hi @Model.name,
+            Hi @Model.Name,
         </p>
 
         @RenderBody()
 
         <!-- Landscape Image -->
         <div style="padding: 20px 0px 10px 0px;">
-            <img src=@($"{Model.baseUrl}/images/email_banner.jpg") alt="Doubtful Sound" style="max-width: 100%;" />
+            <img src=@($"{Model.BaseUrl}/images/email_banner.jpg") alt="Doubtful Sound" style="max-width: 100%;" />
         </div><!-- End Landscape Image -->
         <!-- Quick Links -->
         <table align="left" style="width: 100%; text-align: center; border-top: solid 0.1rem; border-bottom: solid 0.1rem; margin-bottom: 50px; font-size: 14px;">
@@ -57,8 +57,8 @@
         <!-- Footer Copyright -->
         <footer>
             <p style="margin-bottom: 0px!important;">Copyright &copy; @DateTime.Now.Year Deep Cove Outdoor Education Trust, All rights reserved.</p>
-            <p style="margin-top: 0px!important;">You are subscribed to updates via our website <a href=@Model.baseUrl style="color: #71777D;">deepcovehostel.co.nz</a></p>
-            <a href=@($"{Model.baseUrl}account") style="color: #71777D;">Unsubscribe from this list</a>
+            <p style="margin-top: 0px!important;">You are subscribed to updates via our website <a href=@Model.BaseUrl style="color: #71777D;">deepcovehostel.co.nz</a></p>
+            <a href=@($"{Model.BaseUrl}account") style="color: #71777D;">Unsubscribe from this list</a>
         </footer><!-- End Footer Copyright -->
     </div>
 </body>
