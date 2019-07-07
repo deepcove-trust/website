@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Http;
@@ -16,11 +17,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     {
         private readonly Data.WebsiteDataContext _Db;
         private readonly IConfiguration _Configuration;
+        private readonly IEmailService _Smtp;
 
-        public RequestPasswordResetController(Data.WebsiteDataContext db, IConfiguration configuration)
+        public RequestPasswordResetController(Data.WebsiteDataContext db, IConfiguration configuration, IEmailService smtp)
         {
             _Db = db;
             _Configuration = configuration;
+            _Smtp = smtp;
         }
 
         [HttpGet]
@@ -51,8 +54,17 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();
 
-                    // Fire Email Async without await
-                    //make use of reset.Token
+                    await _Smtp.SendRazorEmailAsync(null,
+                            new EmailContact { Name = account.Name, Address = account.Email },
+                            "Password Reset",
+                            "PasswordReset",
+                            new Views.Emails.Models.PasswordReset
+                            {
+                                Name = account.Name,
+                                Token = reset.Token,
+                                BaseUrl = this.Request.BaseUrl()
+                            }
+                        );
                 }
 
                 return Ok();

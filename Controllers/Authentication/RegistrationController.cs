@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
+using Deepcove_Trust_Website.Features.Emails;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -17,21 +19,18 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     {
         private readonly Data.WebsiteDataContext _Db;
         private PasswordHasher<Account> _Hasher;
+        private IEmailService _Smtp;
 
-        public RegistrationController(Data.WebsiteDataContext db)
+        public RegistrationController(Data.WebsiteDataContext db, IEmailService smtp)
         {
             _Db = db;
             _Hasher = new PasswordHasher<Account>();
+            _Smtp = smtp;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            // Redirect authenticated users
-            // to the dashboard
-            if (User.Identity.IsAuthenticated)
-                return Redirect("/admin-portal");
-
             return View(viewName: "~/Views/Authentication/Register.cshtml");
         }
 
@@ -48,13 +47,39 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 {
                     Email = request.Str("email"),
                     Name = request.Str("name"),
-                    Active = true,
+                    Active = false,
                 };
 
                 account.Password = _Hasher.HashPassword(account, Utils.RandomString(30));
-
                 await _Db.AddAsync(account);
+
+                PasswordReset reset = new PasswordReset
+                {
+                    Account = account,
+                    Token = Utils.RandomString(42),
+                    ExpiresAt = DateTime.UtcNow.AddDays(1)
+                };
+
+                await _Db.AddAsync(reset);
                 await _Db.SaveChangesAsync();
+
+                EmailContact sendTo = new EmailContact { Name = account.Name, Address = account.Email };
+
+                await _Smtp.SendRazorEmailAsync(null,
+                    sendTo,
+                    "Account Created",
+                    "AccountCreated",
+                    new Views.Emails.Models.AccountCreated {
+                        Name = account.Name,
+                        Recipient = sendTo,
+                        CreatedBy = new EmailContact {
+                            Name = User.AccountName(),
+                            Address = User.AccountEmail()
+                        },
+                        Token = reset.Token,
+                        BaseUrl = this.Request.BaseUrl()
+                    }
+                );
 
                 return Ok();
             } 

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Deepcove_Trust_Website.Data
 {

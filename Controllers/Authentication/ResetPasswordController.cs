@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Deepcove_Trust_Website.Features.Emails;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {

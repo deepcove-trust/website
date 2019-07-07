@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml" style="line-height: inherit;">
+<head style="line-height: inherit;">
+    <!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" style="line-height: inherit;">
+    <meta content="width=device-width" name="viewport" style="line-height: inherit;">
+    <!--[if !mso]><!-->
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" style="line-height: inherit;">
+    <!--<![endif]-->
+    <title style="line-height: inherit;"></title>
+    <!--[if !mso]><!-->
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" style="line-height: inherit;">
+    <!--<![endif]-->
+</head>
+
+<body style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #FFFFFF; line-height: inherit; font-size: 12px; line-height: 18px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #71777D;">
+    <!-- Container -->
+    <div style="width: 33vw; margin: 0 auto; padding-top: 50px;">
+        <!-- Logo -->
+        <div style="padding: 2px 0px 30px 0px;">
+            <a href=@Model.baseUrl>
+                <img src=@($"{Model.baseUrl}/images/logo.png") alt="Logo" style="height: 130px; margin: 0 auto; display: block;" />
+            </a>
+        </div><!-- End Logo -->
+
+        <p style="font-size: 14px; font-weight: bold; color: #000000;">
+            Hi @Model.name,
+        </p>
+
+        @RenderBody()
+
+        <!-- Landscape Image -->
+        <div style="padding: 20px 0px 10px 0px;">
+            <img src=@($"{Model.baseUrl}/images/email_banner.jpg") alt="Doubtful Sound" style="max-width: 100%;" />
+        </div><!-- End Landscape Image -->
+        <!-- Quick Links -->
+        <table align="left" style="width: 100%; text-align: center; border-top: solid 0.1rem; border-bottom: solid 0.1rem; margin-bottom: 50px; font-size: 14px;">
+            <tr>
+                <td style="padding: 20px; width: 20%;">
+                    <a href="#" style="color: #71777D; text-decoration: none;">bookings</a>
+                </td>
+                <td style="padding: 10px; width: 20%;">
+                    <a href="#" style="color: #71777D; text-decoration: none;">contact us</a>
+                </td>
+                <td style="padding: 20px; width: 20%;">
+                    <a href="#" style="color: #71777D; text-decoration: none;">facebook</a>
+                </td>
+                <td style="padding: 20px; width: 20%;">
+                    <a href="#" style="color: #71777D; text-decoration: none;">google play</a>
+                </td>
+                <td style="padding: 20px; width: 20%;">
+                    <a href="#" style="color: #71777D; text-decoration: none;">website</a>
+                </td>
+            </tr>
+        </table><!-- End Quick Links-->
+        <!-- Footer Copyright -->
+        <footer>
+            <p style="margin-bottom: 0px!important;">Copyright &copy; @DateTime.Now.Year Deep Cove Outdoor Education Trust, All rights reserved.</p>
+            <p style="margin-top: 0px!important;">You are subscribed to updates via our website <a href=@Model.baseUrl style="color: #71777D;">deepcovehostel.co.nz</a></p>
+            <a href=@($"{Model.baseUrl}account") style="color: #71777D;">Unsubscribe from this list</a>
+        </footer><!-- End Footer Copyright -->
+    </div>
+</body>
+</html>
