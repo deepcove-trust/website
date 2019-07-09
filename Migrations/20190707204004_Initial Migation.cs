@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class InitialMigation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,6 +18,7 @@ namespace Deepcove_Trust_Website.Migrations
                     UpdatedAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: true),
                     Password = table.Column<string>(nullable: false),
                     ForcePasswordReset = table.Column<bool>(nullable: false),
                     Active = table.Column<bool>(nullable: false),

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,7 +17,11 @@ namespace Deepcove_Trust_Website.Models
         [Required]
         public string Email { get; set; }
 
+        [Phone]
+        public string PhoneNumber { get; set; }
+
         [Required]
+        [JsonIgnore]
         public string Password { get; set; }
         
         public bool ForcePasswordReset { get; set; }

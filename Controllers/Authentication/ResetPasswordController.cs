@@ -16,12 +16,12 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class ResetPasswordController : Controller
     {
         private readonly Data.WebsiteDataContext _Db;
-        private PasswordHasher<Account> _Hasher;
+        private IPasswordHasher<Account> _Hasher;
 
-        public ResetPasswordController(Data.WebsiteDataContext db)
+        public ResetPasswordController(Data.WebsiteDataContext db, IPasswordHasher<Account> hasher)
         {
             _Db = db;
-            _Hasher = new PasswordHasher<Account>();
+            _Hasher = hasher;
         }
 
         [HttpGet]

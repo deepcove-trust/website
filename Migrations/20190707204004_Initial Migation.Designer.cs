@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190704123206_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20190707204004_Initial Migation")]
+    partial class InitialMigation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired();
+
+                    b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime?>("UpdatedAt");
 

@@ -42,6 +42,8 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<string>("Password")
                         .IsRequired();
 
+                    b.Property<string>("PhoneNumber");
+
                     b.Property<DateTime?>("UpdatedAt");
 
                     b.HasKey("Id");

@@ -1,17 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Deepcove_Trust_Website.Models;
 using Deepcove_Trust_Website.Helpers;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
+
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -19,12 +20,12 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class LoginController : Controller
     {
         private readonly Data.WebsiteDataContext _Db;
-        private PasswordHasher<Account> _Hasher;
+        private IPasswordHasher<Account> _Hasher;
 
-        public LoginController(Data.WebsiteDataContext db)
+        public LoginController(Data.WebsiteDataContext db, IPasswordHasher<Account> hasher)
         {
             _Db = db;
-            _Hasher = new PasswordHasher<Account>();
+            _Hasher = hasher;
         }
 
         [HttpGet]
@@ -43,11 +44,15 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
         {
             Account account = await _Db.Accounts.Where(c => c.Email ==  request.Str("email")).FirstOrDefaultAsync();
 
-            //IF Username or password is invalid;
-            if (account == null || account.Password == _Hasher.HashPassword(account, request.Str("password")))
+            // No Account
+            if (account == null)
                 return Unauthorized("Invalid email or password");
 
-
+            // Invalid Password
+            if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("password")) != PasswordVerificationResult.Success)
+                return Unauthorized("Invalid email or password");
+            
+            // Inactive Account
             if (!account.Active)
                 return Unauthorized("Your account requires activation from an administrator before you can login");
 
@@ -70,6 +75,9 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                 new ClaimsPrincipal(claimsIdentity),
                 authProperties);
+
+            account.LastLogin = DateTime.UtcNow;
+            await _Db.SaveChangesAsync();
 
             return Ok();
         }

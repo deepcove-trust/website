@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using Deepcove_Trust_Website.Features.Emails;
+using Deepcove_Trust_Website.Features;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -18,14 +19,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class RegistrationController : Controller
     {
         private readonly Data.WebsiteDataContext _Db;
-        private PasswordHasher<Account> _Hasher;
+        private IPasswordHasher<Account> _Hasher;
         private IEmailService _Smtp;
 
-        public RegistrationController(Data.WebsiteDataContext db, IEmailService smtp)
+        public RegistrationController(Data.WebsiteDataContext db, IEmailService smtp, IPasswordHasher<Account> hasher)
         {
             _Db = db;
-            _Hasher = new PasswordHasher<Account>();
             _Smtp = smtp;
+            _Hasher = hasher;
         }
 
         [HttpGet]

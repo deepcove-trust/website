@@ -1,0 +1,21 @@
+{
+  "ConnectionStrings": {
+    "MsSqlConnection": "Server=(localdb)\\MSSQLLocalDB;Database=DeepcoveWebsite;"
+  },
+  "LoginSettings": {
+    "PasswordResetTokenLength": 30
+  },
+  "Logging": {
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "EmailConfiguration": {
+    "SmtpServer": "",
+    "SmtpPort": 465,
+    "SmtpUsername": "",
+    "SmtpPassword": "",
+    "SenderName": "",
+    "SenderEmail": ""
+  }
+}

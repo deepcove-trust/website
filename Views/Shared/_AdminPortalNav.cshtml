@@ -1,0 +1,44 @@
+﻿
+@*
+    Partial that holds the nav - custom css can be found in footer.scss
+*@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <img src="~/images/logo.png" alt="logo"/>
+                <h4 class="pl-2 d-inline">Admin Portal</h4>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Nav bar for Admins -->
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav flex-shrink-1">
+                    <!-- To left align use flex-grow-1 -->
+                    <li class="nav-item">
+                        <p class="nav-link text-dark">Manage: </p>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Accounts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Mobile Application</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Website</a>
+                    </li>
+
+                    <li class="dropdown nav-item">
+                        <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi Sam</a>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu">
+                            <a class="dropdown-item" role="presentation" href="/admin-portal/account">Account</a>
+                            <a class="dropdown-item" role="presentation" href="/logout">Log out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div><!-- End Nav bar for Admins -->
+        </div>
+    </nav>
+</header>
