@@ -2,6 +2,8 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Models;
+using System.Threading.Tasks;
+using System.Threading;
 
 namespace Deepcove_Trust_Website.Data
 {
@@ -40,12 +42,12 @@ namespace Deepcove_Trust_Website.Data
             return base.SaveChanges();
         }
 
-        // Adds timestamps to database record(s)
-        //public override async Task<int> SaveChangesAsync()
-        //{
-        //    AddTimestamps();
-        //    return await base.SaveChangesAsync();
-        //}
+        //Adds timestamps to database record(s)
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            AddTimestamps();
+            return await base.SaveChangesAsync();
+        }
 
         // Adds timestamps to database record(s)
         private void AddTimestamps()

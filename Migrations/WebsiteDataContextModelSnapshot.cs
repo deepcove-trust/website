@@ -27,7 +27,7 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<DateTime?>("CreatedAt");
+                    b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Email")
                         .IsRequired();
@@ -44,7 +44,7 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("PhoneNumber");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 

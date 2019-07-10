@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190707204004_Initial Migation")]
-    partial class InitialMigation
+    [Migration("20190709230510_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,7 +29,7 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<bool>("Active");
 
-                    b.Property<DateTime?>("CreatedAt");
+                    b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Email")
                         .IsRequired();
@@ -46,7 +46,7 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("PhoneNumber");
 
-                    b.Property<DateTime?>("UpdatedAt");
+                    b.Property<DateTime>("UpdatedAt");
 
                     b.HasKey("Id");
 
