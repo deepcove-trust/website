@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var RouteData = ViewContext.RouteData;
+    string RouteArea = RouteData.Values.ContainsKey("area") ? RouteData.Values["area"].ToString() : "";
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -13,7 +18,18 @@
 </head>
 <body>
     <div class="container content-container">
-        @{  await Html.RenderPartialAsync("_Nav.cshtml"); }
+        @if(RouteArea == "")
+        {
+            await Html.RenderPartialAsync("_Nav.cshtml");
+        }
+        else if (RouteArea == "admin-portal")
+        {
+            await Html.RenderPartialAsync("_AdminPortalNav.cshtml");
+        }
+        else if (RouteArea == "education-portal")
+        {
+
+        }
 
         <div class="container container-body">
             <partial name="_CookieConsentPartial" />
@@ -21,8 +37,8 @@
                 @RenderBody()
             </main>
         </div>
-        
-        
+
+
         @{ await Html.RenderPartialAsync("_Footer.cshtml"); }
     </div>
     

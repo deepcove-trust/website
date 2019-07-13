@@ -5,6 +5,10 @@
 @import './bootstrap.min.css';
 @import './footer.scss';
 
+
+/* Custom CSS */
+@import './Authentication.scss';
+
 /* Import Font Awesome 5 Pro */
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import '~@fortawesome/fontawesome-pro/scss/fontawesome';
@@ -34,6 +38,11 @@ body {
     height: 80px;
     outline: none;
     text-align: center;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
 }
 
 .navbar-brand > img {
@@ -46,6 +55,30 @@ a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+}
+
+.card {
+    border: none;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+}
+
+.form-group > label.required:after{
+    content: ' *';
+    color: red;
+    font-weight: bolder;
+}
+
+.btn-confirm::before {
+    content: 'Confirm';
+    -webkit-animation: fade 0.25s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 0.25s; /* Firefox < 16 */
+    -ms-animation: fadein 0.25s; /* Internet Explorer */
+    -o-animation: fadein 0.25s; /* Opera < 12.1 */
+    animation: fadein 0.25s;
+}
+
+.btn-confirm > span {
+    display: none;
 }
 
 /* Sticky footer styles
@@ -92,4 +125,58 @@ html {
     /* Set the fixed height of the footer here */
     height: 60px;
     line-height: 60px; /* Vertically center the text there */
+}
+
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Firefox < 16 */
+@-moz-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Safari, Chrome and Opera > 12.1 */
+@-webkit-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Internet Explorer */
+@-ms-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Opera < 12.1 */
+@-o-keyframes fadein {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }

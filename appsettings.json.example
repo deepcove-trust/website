@@ -3,7 +3,7 @@
     "MsSqlConnection": "Server=(localdb)\\MSSQLLocalDB;Database=DeepcoveWebsite;"
   },
   "LoginSettings": {
-    "PasswordResetTokenLength":  30
+    "PasswordResetTokenLength": 30
   },
   "Logging": {
     "LogLevel": {
