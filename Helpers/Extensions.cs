@@ -25,6 +25,18 @@ namespace Deepcove_Trust_Website.Helpers
         public static string AccountName(this ClaimsPrincipal user) => user.FindFirstValue("name");
 
         /// <summary>
+        /// Gets the user Account First Name
+        /// </summary>
+        /// <returns>Account.Name</returns>
+        /// <see cref="Models.Account"/>
+        public static string AccountNameFirst(this ClaimsPrincipal user)
+        {
+            string x = user.FindFirstValue("name").Trim();
+
+            return x.Substring(0, x.IndexOf(' '));
+        }
+
+        /// <summary>
         /// Gets the users Account Email
         /// </summary>
         /// <returns>Account.Email</returns>

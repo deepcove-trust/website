@@ -2,6 +2,8 @@
 @*
     Partial that holds the nav - custom css can be found in footer.scss
 *@
+@using Deepcove_Trust_Website.Helpers;
+
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
         <div class="container">
@@ -31,7 +33,7 @@
                     </li>
 
                     <li class="dropdown nav-item">
-                        <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi Sam</a>
+                        <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi @User.AccountNameFirst()</a>
                         <div class="dropdown-menu dropdown-menu-right" role="menu">
                             <a class="dropdown-item" role="presentation" href="/admin-portal/account">Account</a>
                             <a class="dropdown-item" role="presentation" href="/logout">Log out</a>
