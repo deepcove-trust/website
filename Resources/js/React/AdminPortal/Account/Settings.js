@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import Button from '../../Components/Button';
+import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
 
 import $ from 'jquery';

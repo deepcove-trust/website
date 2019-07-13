@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Button from '../Components/Button';
+import { Button } from '../Components/Button';
 import $ from 'jquery';
 
 const baseUri = "/register";

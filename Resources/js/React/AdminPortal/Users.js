@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Account from './Users/Account';
+import AccountCard from './Users/AccountCard';
 import $ from 'jquery';
 
 
@@ -34,8 +34,8 @@ export default class Users extends Component {
         let accounts;
         if(this.state.accounts) {
             accounts = this.state.accounts.map((account, key) => {
-                return <Account account={account}
-                    u={this.getData}
+                return <AccountCard account={account}
+                    u={this.getData.bind(this)}
                     baseUri={baseUri}
                 />
             });

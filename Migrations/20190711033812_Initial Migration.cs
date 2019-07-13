@@ -16,6 +16,7 @@ namespace Deepcove_Trust_Website.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: false),
                     PhoneNumber = table.Column<string>(nullable: true),

@@ -29,6 +29,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<DateTime?>("DeletedAt");
+
                     b.Property<string>("Email")
                         .IsRequired();
 

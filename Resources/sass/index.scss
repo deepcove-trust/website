@@ -68,6 +68,19 @@ a.navbar-brand {
     font-weight: bolder;
 }
 
+.btn-confirm::before {
+    content: 'Confirm';
+    -webkit-animation: fade 0.25s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 0.25s; /* Firefox < 16 */
+    -ms-animation: fadein 0.25s; /* Internet Explorer */
+    -o-animation: fadein 0.25s; /* Opera < 12.1 */
+    animation: fadein 0.25s;
+}
+
+.btn-confirm > span {
+    display: none;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

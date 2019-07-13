@@ -35,10 +35,7 @@ namespace Deepcove_Trust_Website.Helpers
         /// Returns the value of a post field
         /// </summary>
         /// <param name="key">POST field name</param>
-        public static string Str(this IFormCollection request, string key)
-        {
-            return request[key].ToString();
-        }
+        public static string Str(this IFormCollection request, string key) => request[key].ToString();
 
         /// <summary>
         /// Returns the value of a post field as an int
@@ -55,8 +52,6 @@ namespace Deepcove_Trust_Website.Helpers
         /// Gets the base URI for the website
         /// </summary>
         /// <returns></returns>
-        public static Uri BaseUrl(this HttpRequest request){
-            return new Uri($"{request.Scheme}://{request.Host}");
-        }
+        public static Uri BaseUrl(this HttpRequest request) => new Uri($"{request.Scheme}://{request.Host}");
     }
 }

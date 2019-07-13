@@ -1,6 +1,7 @@
 ﻿using System;
 using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Features.RazorRender;
+using Deepcove_Trust_Website.Middleware;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -83,6 +84,7 @@ namespace Deepcove_Trust_Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseActiveAccounts();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

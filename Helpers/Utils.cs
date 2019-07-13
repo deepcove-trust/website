@@ -61,16 +61,16 @@ namespace Deepcove_Trust_Website.Helpers
                 return null;
 
             if (dayDiff > 31)
-                return "more than one month ago";
+                return "over one month ago";
 
             if (secDiff < 60)
-                return "just Now";
+                return "just now";
 
             if (secDiff < 120)
                 return "1 minute ago";
 
             if (secDiff < 3600)
-                return "less than one hour ago";
+                return "in the last hour";
 
             if (secDiff < 7200)
                 return "one hour ago";

@@ -69,7 +69,7 @@ namespace Deepcove_Trust_Website.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<Account>().HasQueryFilter(f => f.DeletedAt == null);
         }
     }
 }
