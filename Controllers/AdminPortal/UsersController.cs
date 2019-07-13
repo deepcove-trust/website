@@ -109,6 +109,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             try
             {
                 Account account = await _Db.Accounts.FindAsync(id);
+                if (account.Id == User.AccountId())
+                    return Forbid("You are not allowed to delete your own account");
+
                 account.DeletedAt = DateTime.UtcNow;
                 await _Db.SaveChangesAsync();
                 return Ok();

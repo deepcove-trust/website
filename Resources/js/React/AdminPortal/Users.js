@@ -11,7 +11,7 @@ export default class Users extends Component {
         super(props);
 
         this.state = {
-            accounts: null
+            accounts: null,
         }
     }
 
@@ -24,7 +24,9 @@ export default class Users extends Component {
             type: 'get',
             url: `${baseUri}/data`
         }).done((data) => {
-            this.setState({ accounts: data });
+            this.setState({ accounts: null }, () => {
+                this.setState({ accounts: data });
+            });
         }).fail((err) => {
 
         })

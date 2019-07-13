@@ -29,12 +29,7 @@ namespace Deepcove_Trust_Website.Helpers
         /// </summary>
         /// <returns>Account.Name</returns>
         /// <see cref="Models.Account"/>
-        public static string AccountNameFirst(this ClaimsPrincipal user)
-        {
-            string x = user.FindFirstValue("name").Trim();
-
-            return x.Substring(0, x.IndexOf(' '));
-        }
+        public static string AccountNameFirst(this ClaimsPrincipal user) => user.FindFirstValue("name").Trim().Split(' ')[0];
 
         /// <summary>
         /// Gets the users Account Email
