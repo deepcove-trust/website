@@ -46,7 +46,7 @@ namespace Deepcove_Trust_Website
             else
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
+                    options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
             }
 
             // Email Config
@@ -84,7 +84,7 @@ namespace Deepcove_Trust_Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            app.UseActiveAccounts();
+            //app.UseActiveAccounts(); >> Blocking propper HTTP calls
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

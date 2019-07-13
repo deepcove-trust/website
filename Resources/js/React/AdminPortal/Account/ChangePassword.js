@@ -69,7 +69,7 @@ export default class ChangePassword extends Component {
                     <h4 className="text-center">Update Password</h4>
                     <p className="text-center">Option Password Reset</p>
                     <FormGroup>
-                        <label htmlFor="currentPassword" className="required">Confirm Password</label>
+                        <label htmlFor="currentPassword" className="required">Your Current Password</label>
                         <Input id="currentPassword"
                             type="password"
                             name="currentPassword"
