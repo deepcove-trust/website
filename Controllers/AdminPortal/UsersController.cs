@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Deepcove_Trust_Website.Data;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -17,13 +19,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
     [Route("/admin-portal/users")]
     public class UsersController : Controller
     {
-        private readonly Data.WebsiteDataContext _Db;
+        private readonly WebsiteDataContext _Db;
         private readonly IEmailService _Smtp;
+        private readonly ILogger<UsersController> _Logger;
 
-        public UsersController(Data.WebsiteDataContext db, IEmailService smtp)
+        public UsersController(WebsiteDataContext db, IEmailService smtp, ILogger<UsersController> logger)
         {
             _Db = db;
             _Smtp = smtp;
+            _Logger = logger;
         }
 
         [HttpGet]
@@ -51,6 +55,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             }
             catch (Exception ex)
             {
+                _Logger.LogError("Error retrieving account data: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
 
@@ -64,11 +70,16 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 Account account = await _Db.Accounts.FindAsync(id);
                 account.ForcePasswordReset = true;
                 await _Db.SaveChangesAsync();
+
+                _Logger.LogInformation("Account belonging to {0} will be forced to reset password on next login", account.Name);
+
                 return Ok();
             }
             catch (Exception ex)
             {
-                return BadRequest("The account could not be deleted. Please try again later.");
+                _Logger.LogError("Error forcing password reset for account belonging to {0}: {1}", User.AccountName(), ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again.");
             }
         }
 
@@ -88,18 +99,21 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 if (!string.IsNullOrEmpty(request.Str("status"))) {
                     if (account.Id == User.AccountId())
-                        return Forbid("You are not allwoed to change your own status");
+                        return Forbid("You are not allowed to change your own status");
 
                     account.Active = request.Str("status") == "Active" ? true : false;
                 }
-                
+
+                _Logger.LogInformation("Information updated for account belonging to {0}", account.Name);
 
                 await _Db.SaveChangesAsync();
                 return Ok();
             }
             catch(Exception ex)
             {
-                return BadRequest("Something went wrong please try again");
+                _Logger.LogError("Error updating account (Id: {0}): {1}", id, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again");
             }
         }
 
@@ -114,10 +128,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 account.DeletedAt = DateTime.UtcNow;
                 await _Db.SaveChangesAsync();
+
+                _Logger.LogInformation("Account belonging to {0} was deleted", account.Name);
+
                 return Ok();
             }
             catch (Exception ex)
             {
+                _Logger.LogError("Error deleting account (Id: {0}): {1}", id, ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest("The account could not be deleted. Please try again later.");
             }
         }
