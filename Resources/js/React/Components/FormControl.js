@@ -14,11 +14,16 @@ export class FormGroup extends Component {
 export class Input extends Component {
     constructor(props) {
         super(props);
-        this.state = {value: this.props.value}
+
+        this.state = {
+            value: this.props.value
+        }
     }
 
     handleChange(e) {
-        this.setState({ value: e.target.value });
+        this.setState({
+            value: e.target.value
+        });
 
         // Send the value to the (optional) callback
         if (this.props.cb)
@@ -82,7 +87,9 @@ export class Input extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.state.value != nextProps.value)
-            this.setState({ value: nextProps.value });
+            this.setState({
+                value: nextProps.value
+            });
     }
   
     
@@ -100,11 +107,15 @@ export class Input extends Component {
 export class Select extends Component {
     constructor(props) {
         super(props);
-        this.state = { value: this.props.value }
+        this.state = {
+            value: this.props.value
+        }
     }
 
     handleChange(e) {
-        this.setState({ value: e.target.value });
+        this.setState({
+            value: e.target.value
+        });
 
         // Send the value to the (optional) callback
         if (this.props.cb)
@@ -129,7 +140,9 @@ export class Select extends Component {
 
     componentWillReceiveProps(nextProps) {
         if (this.state.value != nextProps.value)
-            this.setState({ value: nextProps.value });
+            this.setState({
+                value: nextProps.value
+            });
     }
 
     render() {

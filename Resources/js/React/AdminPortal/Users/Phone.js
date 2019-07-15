@@ -14,7 +14,9 @@ export default class Phone extends Component {
     }
 
     resetValue() {
-        this.setState({ value: this.props.phone || "" });
+        this.setState({
+            value: this.props.phone || ""
+        });
     }
 
     updatePhone() {
@@ -28,15 +30,24 @@ export default class Phone extends Component {
                 data: { phone: this.state.value }
             }).done(() => {
                 this.props.u();
-                this.setState({ requestPending: false});
+
+                this.setState({
+                    requestPending: false
+                });
             }).fail((err) => {
-                this.setState({ requestPending: false });
+                console.error(`[Phone@updatePhone] Error updating phone number: `, err.responseText);
+
+                this.setState({
+                    requestPending: false
+                });
             });
         })
     }
 
     updateValue(x) {
-        this.setState({ value: x });
+        this.setState({
+            value: x
+        });
     }
 
     render() {

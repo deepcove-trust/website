@@ -28,7 +28,7 @@ export default class Users extends Component {
                 this.setState({ accounts: data });
             });
         }).fail((err) => {
-
+            console.error(`[User@getData] Error getting data: `, err.responseText);
         })
     }
 

@@ -26,6 +26,6 @@ Log Levels
 
 ### React Logging
 - Log failed responses to the console and display the err.responseText message to a popup notification. Use
-`[file name, method name, METHOD status code] error description`
+`[file name@method name] short description: response text`
 
-Example: `[Login, attemptLogin, POST 404] Email or Password is incorrect`
+Example: `[Login@attemptLogin] Error attempting login: ${err.ResponseText}`

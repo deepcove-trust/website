@@ -14,29 +14,42 @@ export default class Email extends Component {
     }
 
     resetValue() {
-        this.setState({ value: this.props.email || "" });
+        this.setState({
+            value: this.props.email || ""
+        });
     }
 
     updateEmail() {
         if (!this.state.value)
             return;
 
-        this.setState({ requestPending: true }, () => {
+        this.setState({
+            requestPending: true
+        }, () => {
             $.ajax({
                 method: 'put',
                 url: `${this.props.baseUri}/${this.props.accountId}`,
                 data: { email: this.state.value }
             }).done(() => {
                 this.props.u();
-                this.setState({ requestPending: false });
+
+                this.setState({
+                    requestPending: false
+                });
             }).fail((err) => {
-                this.setState({ requestPending: false });
+                console.error(`[Email@updateEmail] Error updating email: `, err.responseText);
+
+                this.setState({
+                    requestPending: false
+                });
             });
         })
     }
 
     updateValue(x) {
-        this.setState({ value: x });
+        this.setState({
+            value: x
+        });
     }
 
     render() {
