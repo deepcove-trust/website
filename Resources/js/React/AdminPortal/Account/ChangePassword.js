@@ -24,7 +24,9 @@ export default class ChangePassword extends Component {
             2: id == 2 ? val : passwd[2]
         };
 
-        this.setState({ passwords: passwd });
+        this.setState({
+            passwords: passwd
+        });
     }
 
     passwordConditions() {
@@ -47,7 +49,10 @@ export default class ChangePassword extends Component {
 
     updateAccountPassword(e) {
         e.preventDefault();
-        this.setState({ requestPending: true });
+
+        this.setState({
+            requestPending: true
+        });
 
         $.ajax({
             type: 'post',
@@ -55,10 +60,21 @@ export default class ChangePassword extends Component {
             data: $("#password").serialize()
         }).done(() => {
             let passwd = { 1: 0, 2: 0 };
-            this.setState({ requestPending: false, requestFailed: "", passwords: passwd});
+
+            this.setState({
+                requestPending: false,
+                requestFailed: "",
+                passwords: passwd
+            });
+
             $("#password").trigger("reset");
         }).fail((err) => {
-            this.setState({ requestPending: false, requestFailed: err.responseText });
+            this.setState({
+                requestPending: false,
+                requestFailed: err.responseText
+            });
+
+            console.error(`[ChangePassword@updateAccountPassword] Error updating password: `, err.responseText);
         });
     }
 

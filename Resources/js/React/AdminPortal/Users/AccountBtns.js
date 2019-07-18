@@ -12,16 +12,24 @@ export class DeleteUser extends Component {
     };
 
     DeleteUser() {
-        this.setState({ requestPending: true }, () => {
+        this.setState({
+            requestPending: true
+        }, () => {
             $.ajax({
                 type: 'delete',
                 url: `${this.props.baseUri}/${this.props.accountId}`
             }).done(() => {
                 this.props.u();
-                this.setState({ requestPending: false });
+
+                this.setState({
+                    requestPending: false
+                });
             }).fail((err) => {
-                console.error(err.responseText);
-                this.setState({ requestPending: false });
+                console.error(`[DeleteUser@DeleteUser] Error deleting the account: `, err.responseText);
+
+                this.setState({
+                    requestPending: false
+                });
             });
         });
     }
@@ -45,16 +53,24 @@ export class ResetPassword extends Component {
     };
 
     ResetPassword() {
-        this.setState({ "requestPending": true }, () => {
+        this.setState({
+            "requestPending": true
+        }, () => {
             $.ajax({
                 type: 'patch',
                 url: `${this.props.baseUri}/${this.props.accountId}`
             }).done(() => {
                 this.props.u();
-                this.setState({ requestPending: false });
+
+                this.setState({
+                    requestPending: false
+                });
             }).fail((err) => {
-                console.error(err.responseText);
-                this.setState({ requestPending: false });
+                console.error(`[ResetPassword@ResetPassword] Error flagging account for a password reset: `, err.responseText);
+
+                this.setState({
+                    requestPending: false
+                });
             });
         });
     }

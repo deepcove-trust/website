@@ -17,7 +17,10 @@ export default class ResetPassword extends Component {
 
     attemptRequest(e) {
         e.preventDefault();
-        this.setState({ requestPending: true });
+
+        this.setState({
+            requestPending: true
+        });
 
         $.ajax({
             type: 'post',
@@ -26,7 +29,12 @@ export default class ResetPassword extends Component {
         }).done(() => {
             location.replace("/login");
         }).fail((err) => {
-            this.setState({ requestPending: false, requestFailed: err.responseText });
+            this.setState({
+                requestPending: false,
+                requestFailed: err.responseText
+            });
+
+            console.error(`[ResetPassword@attemptRequest] Error changing password: `, err.responseText);
         })
     }
 

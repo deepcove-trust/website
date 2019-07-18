@@ -16,17 +16,27 @@ export default class Settings extends Component {
 
     updateAccount(e) {
         e.preventDefault();
-        this.setState({ requestPending: true });
+
+        this.setState({
+            requestPending: true
+        });
 
         $.ajax({
             type: 'post',
             url: `${this.props.baseUri}`,
             data: $("#settings").serialize()
         }).done(() => {
-            this.setState({ requestPending: false });
+            this.setState({
+                requestPending: false
+            });
+
             this.props.u();
         }).fail((err) => {
-            this.setState({ requestPending: false });
+            this.setState({
+                requestPending: false
+            });
+
+            console.error(`[Settings@updateAccount] Error updating account settings: `, err.responseText);
         })
     }
 

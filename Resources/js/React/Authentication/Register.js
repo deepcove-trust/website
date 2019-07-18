@@ -15,10 +15,13 @@ export default class Register extends Component {
         }
     }
 
-    attemptLogin(e) {
+    attemptRegistration(e) {
         e.preventDefault();
 
-        this.setState({ requestPending: true });
+        this.setState({
+            requestPending: true
+        });
+
         $.ajax({
             type: 'post',
             url: `${baseUri}`,
@@ -26,7 +29,12 @@ export default class Register extends Component {
         }).done(() => {
             window.location.replace("/admin-portal/users");
         }).fail((err) => {
-            this.setState({ requestFailed: err.responseText, requestPending: false });
+            this.setState({
+                requestFailed: err.responseText,
+                requestPending: false
+            });
+
+            console.error(`[Register@attemptLogin] Error registering new account: `, err.responseText);
         })
     }
 
@@ -49,7 +57,7 @@ export default class Register extends Component {
 
         return (
             <div className="login-clean text-center">
-                <form id="register" onSubmit={this.attemptLogin.bind(this)}>
+                <form id="register" onSubmit={this.attemptRegistration.bind(this)}>
                     <h1 className="sr-only">Login Form</h1>
                     <h1 className="display-4 mb-5">Create a New User</h1>
 

@@ -18,7 +18,10 @@ export default class Login extends Component {
     attemptLogin(e) {
         e.preventDefault();
 
-        this.setState({ loginPending: true });
+        this.setState({
+            loginPending: true
+        });
+
         $.ajax({
             type: 'post',
             url: `${baseUri}`,
@@ -26,7 +29,12 @@ export default class Login extends Component {
         }).done(() => {
             window.location.replace("/admin-portal");
         }).fail((err) => {
-            this.setState({ loginFailed: err.responseText, loginPending: false });
+            this.setState({
+                loginFailed: err.responseText,
+                loginPending: false
+            });
+
+            console.error(`[Login@attemptLogin] Error logging in: `, err.responseText);
         })
     }
 

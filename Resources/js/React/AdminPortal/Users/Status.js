@@ -11,7 +11,7 @@ export default class Status extends Component {
         }).done(() => {
             this.props.u();
         }).fail((err) => {
-
+            console.error(`[Status@updateEmail] Error updating account status to ${status}: `, err.responseText);
         });
     }
 
