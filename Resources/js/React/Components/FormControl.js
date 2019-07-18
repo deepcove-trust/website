@@ -83,12 +83,14 @@ export class Input extends Component {
                 type={this.getType()}
                 className={ this.props.inputClass || "form-control" }
                 name={ this.props.name || false }
-                value={this.state.value}
+                value={ this.state.value }
                 placeholder={ this.props.placeHolder || false }
-                autocomplete={this.getAutoComplete()}
+                autocomplete={ this.getAutoComplete() }
                 disabled={ this.props.disabled ? true : false }
                 readonly={ this.props.readOnly ? true : false }
                 required={ this.props.required ? true : false }
+                minLength={ this.props.minLength || false }
+                maxLength={ this.props.minLength || false }
                 onChange={this.handleChange.bind(this)}
             />
         )
