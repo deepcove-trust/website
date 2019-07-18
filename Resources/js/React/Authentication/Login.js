@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
+import { FormGroup, Input } from '../Components/FormControl';
 import $ from 'jquery';
 
 const baseUri = "/login";
@@ -42,9 +43,9 @@ export default class Login extends Component {
         let loginFailed;
         if (this.state.loginFailed) {
             loginFailed = (
-                <div className="form-group">
+                <FormGroup>
                     <p className="text-danger">{this.state.loginFailed}</p>
-                </div>
+                </FormGroup>
             )
         }
 
@@ -54,19 +55,19 @@ export default class Login extends Component {
                     <h1 className="sr-only">Login Form</h1>
                     <h1 className="display-4 mb-5">Log In</h1>
 
-                    <div className="form-group">
-                        <input type="email" className="form-control" name="email" placeholder="Email" autoComplete="email" required/>
-                    </div>
+                    <FormGroup>
+                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" required="true" autoFocus required/>
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <input type="password" className="form-control" name="password" placeholder="Password" required/>
-                    </div>
+                    <FormGroup>
+                        <Input type="password" name="password" placeHolder="Password" autoComplete="Password" required />
+                    </FormGroup>
 
                     {loginFailed}
 
-                    <div className="form-group">
+                    <FormGroup>
                         <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
-                    </div>
+                    </FormGroup>
 
                     <a className="forgot" href="/reset-password">Forgot your email or password?</a>
                 </form>

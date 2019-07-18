@@ -1,10 +1,15 @@
 ﻿import React, { Component } from 'react';
 
-
 export class FormGroup extends Component {
     render() {
+        let label;
+        if (this.props.label) {
+            label = <label htmlFor={this.props.htmlFor || null}>{this.props.label}</label>;
+        }
+
         return (
             <div className="form-group">
+                {label}
                 {this.props.children}
             </div>
         )
@@ -89,6 +94,7 @@ export class Input extends Component {
                 disabled={ this.props.disabled ? true : false }
                 readonly={ this.props.readOnly ? true : false }
                 required={ this.props.required ? true : false }
+                autoFocus={ this.props.autoFocus ? true: false }
                 minLength={ this.props.minLength || false }
                 maxLength={ this.props.minLength || false }
                 onChange={this.handleChange.bind(this)}

@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
+import { FormGroup, Input } from '../Components/FormControl';
 import $ from 'jquery';
 
 const baseUri = "/register";
@@ -39,19 +40,17 @@ export default class Register extends Component {
     }
 
     render() {
-        let requestFailed;
+        let helperLabel = (
+            <p className="text-dark">
+                The user will be emailed their login information.
+            </p>
+        );
+
         if (this.state.requestFailed) {
-            requestFailed = (
-                <div className="form-group">
+            helperLabel = (
+                <FormGroup>
                     <p className="text-danger">{this.state.requestFailed}</p>
-                </div>
-            )
-        } else {
-            requestFailed = (
-                <p className="text-dark">
-                    <i className="fas fa-info-circle"></i>
-                    The user will be emailed their login information.
-                </p>
+                </FormGroup>
             )
         }
 
@@ -61,19 +60,19 @@ export default class Register extends Component {
                     <h1 className="sr-only">Login Form</h1>
                     <h1 className="display-4 mb-5">Create a New User</h1>
 
-                    <div className="form-group">
-                        <input type="text" className="form-control" name="name" placeholder="Name" autoComplete="name" required />
-                    </div>
+                    <FormGroup>
+                        <Input type="text" name="name" placeHolder="Name" autoComplete="name" autoFocus required />
+                    </FormGroup>
 
-                    <div className="form-group">
-                        <input type="email" className="form-control" name="email" placeholder="Email" autoComplete="email" required />
-                    </div>
+                    <FormGroup>
+                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" required />
+                    </FormGroup>
 
-                    {requestFailed}
+                    {helperLabel}
 
-                    <div className="form-group">
+                    <FormGroup>
                         <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}>Create Account</Button>
-                    </div>
+                    </FormGroup>
                 </form>
             </div>
         );
