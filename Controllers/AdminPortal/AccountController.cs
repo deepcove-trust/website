@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Helpers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Logging;
+using Deepcove_Trust_Website.Data;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -17,13 +19,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
     [Route("/admin-portal/account")]
     public class AccountController : Controller
     {
-        private readonly Data.WebsiteDataContext _Db;
+        private readonly WebsiteDataContext _Db;
         private readonly IPasswordHasher<Account> _Hasher;
+        private readonly ILogger<AccountController> _Logger;
         
-        public AccountController(Data.WebsiteDataContext db, IPasswordHasher<Account> hasher)
+        public AccountController(WebsiteDataContext db, IPasswordHasher<Account> hasher, ILogger<AccountController> logger)
         {
             _Db = db;
             _Hasher = hasher;
+            _Logger = logger;
         }
 
         public IActionResult Index()
@@ -45,6 +49,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             }
             catch(Exception ex)
             {
+                _Logger.LogError("Error retrieving data for account belonging to {0}: {1}", User.AccountName(), ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest(ex.Message);
             }
         }
@@ -60,11 +66,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 account.PhoneNumber = request.Str("phone");
                 await _Db.SaveChangesAsync();
 
+                _Logger.LogInformation("Information updated for account belonging to {0}", account.Name);
                 return Ok();
             }
             catch(Exception ex)
             {
-                Console.Beep();
+                _Logger.LogError("Error updating account belonging to {0}: {1}", User.AccountName(), ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest("We could not update your account, please try again later");
             }
         }
@@ -88,10 +96,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 account.Password = _Hasher.HashPassword(account, request.Str("newPassword"));
                 await _Db.SaveChangesAsync();
 
+                _Logger.LogInformation("Password updated for account belonging to {0}", account.Name);
                 return Ok();
             } 
             catch (Exception ex)
             {
+                _Logger.LogError("Error updating password for account belonging to {0}: {1}", User.AccountName(), ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later");
             }
             

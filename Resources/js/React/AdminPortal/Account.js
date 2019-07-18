@@ -30,7 +30,7 @@ export default class Account extends Component {
         }).done((data) => {
             this.setState({ account: data });
         }).fail((err) => {
-
+            console.error(`[Account@getData] Error getting data: `, err.responseText);
         })
     }
 

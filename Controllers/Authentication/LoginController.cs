@@ -12,20 +12,23 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.Extensions.Logging;
+using Deepcove_Trust_Website.Data;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
     [Route("/login")]
     public class LoginController : Controller
     {
-        private readonly Data.WebsiteDataContext _Db;
+        private readonly WebsiteDataContext _Db;
         private IPasswordHasher<Account> _Hasher;
+        private readonly ILogger<LoginController> _Logger;
 
-        public LoginController(Data.WebsiteDataContext db, IPasswordHasher<Account> hasher)
+        public LoginController(WebsiteDataContext db, IPasswordHasher<Account> hasher, ILogger<LoginController> logger)
         {
             _Db = db;
             _Hasher = hasher;
+            _Logger = logger;
         }
 
         [HttpGet]
@@ -45,16 +48,23 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             Account account = await _Db.Accounts.Where(c => c.Email ==  request.Str("email")).FirstOrDefaultAsync();
 
             // No Account
-            if (account == null)
+            if (account == null) {
+                _Logger.LogInformation("User attempted logging in with invalid email address");
                 return Unauthorized("Invalid email or password");
+            }
 
             // Invalid Password
             if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("password")) != PasswordVerificationResult.Success)
+            {
+                _Logger.LogInformation("User attempted logging into account belonging to {0} with invalid password", account.Name);
                 return Unauthorized("Invalid email or password");
-            
+            }
+
             // Inactive Account
-            if (!account.Active)
+            if (!account.Active) {
+                _Logger.LogInformation("User attempted logging into account belonging to {0}, but the account needs to be activated", account.Name);
                 return Unauthorized("Your account requires activation from an administrator before you can login");
+            }
 
 
             var claims = new List<Claim>
@@ -79,6 +89,8 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             account.LastLogin = DateTime.UtcNow;
             await _Db.SaveChangesAsync();
 
+            _Logger.LogDebug("User has logged into account belonging to {0}", account.Name);
+
             return Ok();
         }
 
@@ -89,7 +101,9 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
         [Route("/logout")]
         public async Task<IActionResult> Logout()
         {
+            string name = User.AccountName();
             await HttpContext.SignOutAsync();
+            _Logger.LogDebug("User has logged out of account belonging to {0}", name);
             return Redirect("/");
         }
     }

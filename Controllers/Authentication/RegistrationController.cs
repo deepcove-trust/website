@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using System.Collections.Generic;
 using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Features;
+using Microsoft.Extensions.Logging;
+using Deepcove_Trust_Website.Data;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -18,15 +20,17 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     [Route("/register")]
     public class RegistrationController : Controller
     {
-        private readonly Data.WebsiteDataContext _Db;
+        private readonly WebsiteDataContext _Db;
         private IPasswordHasher<Account> _Hasher;
         private IEmailService _Smtp;
+        private readonly ILogger<RegistrationController> _Logger;
 
-        public RegistrationController(Data.WebsiteDataContext db, IEmailService smtp, IPasswordHasher<Account> hasher)
+        public RegistrationController(WebsiteDataContext db, IEmailService smtp, IPasswordHasher<Account> hasher, ILogger<RegistrationController> logger)
         {
             _Db = db;
             _Smtp = smtp;
             _Hasher = hasher;
+            _Logger = logger;
         }
 
         [HttpGet]
@@ -39,8 +43,10 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
         public async Task<IActionResult> Index(IFormCollection request)
         {
             Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
-            if(account != null)
+            if (account != null) {
+                _Logger.LogDebug("Unable to create account using {0} as an account already exists for this email address", request.Str("email"));
                 return BadRequest("An account with that email address already exists");
+            }
 
             try
             {
@@ -52,7 +58,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 };
 
                 account.Password = _Hasher.HashPassword(account, Utils.RandomString(30));
-                await _Db.AddAsync(account);
+                await _Db.AddAsync(account);                
 
                 PasswordReset reset = new PasswordReset
                 {
@@ -63,6 +69,8 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
                 await _Db.AddAsync(reset);
                 await _Db.SaveChangesAsync();
+
+                _Logger.LogInformation("New account created - Name: {0}, Email: {1}", account.Name, account.Email);
 
                 EmailContact sendTo = new EmailContact { Name = account.Name, Address = account.Email };
 
@@ -86,8 +94,8 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             } 
             catch(Exception ex)
             {
-                //Todo log ex
-                Console.WriteLine(ex.Message);
+                _Logger.LogError("Error while creating new account: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later");
             }
             

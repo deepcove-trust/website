@@ -18,7 +18,10 @@ export default class RequestPasswordReset extends Component {
 
     attemptRequest(e) {
         e.preventDefault();
-        this.setState({ requestPending: true });
+
+        this.setState({
+            requestPending: true
+        });
 
         if (this.state.emailSent)
             return;
@@ -28,9 +31,18 @@ export default class RequestPasswordReset extends Component {
             url: `${baseUri}`,
             data: $("form").serialize()
         }).done(() => {
-            this.setState({ requestPending: false, emailSent: true, requestFailed: false });
+            this.setState({
+                requestPending: false,
+                emailSent: true,
+                requestFailed: false
+            });
         }).fail((err) => {
-            this.setState({ requestPending: false, requestFailed: err.responseText });
+            this.setState({
+                requestPending: false,
+                requestFailed: err.responseText
+            });
+
+            console.error(`[RequestPasswordReset@attemptrequest] Error requesting new password: `, err.responseText);
         });
     }
 
