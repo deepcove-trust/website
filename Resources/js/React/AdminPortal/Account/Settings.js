@@ -43,30 +43,27 @@ export default class Settings extends Component {
     render() {
         return (
             <form id="settings" onSubmit={this.updateAccount.bind(this)}>
-                <FormGroup>
-                    <label htmlFor="accountName" className="required">Account Name</label>
+                <FormGroup label="Account Name" htmlFor="accountName" required>
                     <Input id="accountName"
                         type="text"
                         name="name"
                         autoComplete="name"
                         value={this.props.account ? this.props.account.name : null}
-                        required="true"
+                        required
                     />
                 </FormGroup>
 
-                <FormGroup>
-                    <label htmlFor="accountEmail" className="required">Email</label>
+                <FormGroup label="Email" htmlFor="accountEmail" required>
                     <Input id="accountEmail"
                         type="email"
                         name="email"
                         autoComplete="email"
                         value={this.props.account ? this.props.account.email : null}
-                        required="true"
+                        required
                     />
                 </FormGroup>
 
-                <FormGroup>
-                    <label htmlFor="accountPhone">Phone Number</label>
+                <FormGroup label="Phone Number" htmlFor="accountPhone">
                     <Input id="accountPhone"
                         type="text"
                         name="phone"

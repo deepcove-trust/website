@@ -84,24 +84,24 @@ export default class ChangePassword extends Component {
                 <div className="col-12">
                     <h4 className="text-center">Update Password</h4>
                     <p className="text-center">Option Password Reset</p>
-                    <FormGroup>
-                        <label htmlFor="currentPassword" className="required">Your Current Password</label>
+                    <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
                         <Input id="currentPassword"
                             type="password"
                             name="currentPassword"
                             autoComplete="password"
+                            required
                         />
                     </FormGroup>
                 </div>
 
                 <div className="col-lg-6 col-sm-12">
-                    <FormGroup>
-                        <label htmlFor="newPassword" className="required">New Password</label>
+                    <FormGroup label="New Password" htmlFor="newPassword" required>
                         <Input id="newPassword"
                             type="password"
                             name="newPassword"
                             autoComplete="newpassword"
                             cb={this.passwordComparer.bind(this, 1)}
+                            required
                         />
                         <small className="text-danger">{this.passwordConditions().label}</small>
                         <small className="text-danger d-block">{this.state.requestFailed}</small>
@@ -109,13 +109,13 @@ export default class ChangePassword extends Component {
                 </div>
 
                 <div className="col-lg-6 col-sm-12">
-                    <FormGroup>
-                        <label htmlFor="confirmPassword" className="required">Confirm New Password</label>
+                    <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
                         <Input id="confirmPassword"
                             type="password"
                             name="confirmPassword"
                             autoComplete="newpassword"
                             cb={this.passwordComparer.bind(this, 2)}
+                            required
                         />
                     </FormGroup>
                 </div>

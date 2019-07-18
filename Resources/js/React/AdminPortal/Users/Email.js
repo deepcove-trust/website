@@ -69,8 +69,7 @@ export default class Email extends Component {
         }
 
         return (
-            <FormGroup>
-                <label htmlFor={`email_user:${this.props.accountId}`}>Email</label>
+            <FormGroup label="Email" htmlFor={`email_user:${this.props.accountId}`} required>
 
                 <div className="input-group">
                     <Input id={`email_user:${this.props.accountId}`} type="email" autoComplete="email" value={this.state.value} cb={this.updateValue.bind(this)} />

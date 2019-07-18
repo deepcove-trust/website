@@ -67,9 +67,7 @@ export default class Phone extends Component {
         }
 
         return (
-            <FormGroup>
-                <label htmlFor={`phone_user:${this.props.accountId}`}>Phone</label>
-                
+            <FormGroup label="Phone" htmlFor={`phone_user:${this.props.accountId}`}>
                 <div className="input-group">
                     <Input id={`phone_user:${this.props.accountId}`} type="text" autoComplete="phone" value={this.state.value} cb={this.updateValue.bind(this)} />    
                     

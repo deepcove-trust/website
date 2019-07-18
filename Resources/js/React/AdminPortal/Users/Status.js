@@ -17,8 +17,7 @@ export default class Status extends Component {
 
     render() {
         return (
-            <FormGroup>
-                <label htmlFor={`status_user:${this.props.accountId}`}>Status</label>
+            <FormGroup label="Status" htmlFor={`status_user:${this.props.accountId}`}>
                 <Select id={`status_user:${this.props.accountId}`} options={["Active", "Inactive"]} selected={this.props.active ? "Active" : "Inactive"} cb={this.updateStatus.bind(this)}/>
             </FormGroup>
         )

@@ -4,7 +4,11 @@ export class FormGroup extends Component {
     render() {
         let label;
         if (this.props.label) {
-            label = <label htmlFor={this.props.htmlFor || null}>{this.props.label}</label>;
+            label = (
+                    <label className={this.props.required ? "required" : false} htmlFor={ this.props.htmlFor || null} >
+                        {this.props.label}
+                    </label>
+                );
         }
 
         return (
