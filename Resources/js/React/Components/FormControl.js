@@ -100,7 +100,7 @@ export class Input extends Component {
                 required={ this.props.required ? true : false }
                 autoFocus={ this.props.autoFocus ? true: false }
                 minLength={ this.props.minLength || false }
-                maxLength={ this.props.minLength || false }
+                maxLength={ this.props.maxLength || false }
                 onChange={this.handleChange.bind(this)}
             />
         )

@@ -56,7 +56,7 @@ export default class Login extends Component {
                     <h1 className="display-4 mb-5">Log In</h1>
 
                     <FormGroup>
-                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" required="true" autoFocus required/>
+                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" autoFocus required/>
                     </FormGroup>
 
                     <FormGroup>
