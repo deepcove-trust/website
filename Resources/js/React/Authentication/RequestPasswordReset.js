@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
+import { FormGroup, Input } from '../Components/FormControl';
 import $ from 'jquery';
 
 const baseUri = "/reset-password";
@@ -50,27 +51,27 @@ export default class RequestPasswordReset extends Component {
         let requestFailed;
         if (this.state.requestFailed) {
             requestFailed = (
-                <div className="form-group">
+                <FormGroup>
                     <p className="text-danger">Something went wrong. Please try again.</p>
-                </div>
+                </FormGroup>
             )
         }
 
         let emailSent;
         if (this.state.emailSent) {
             emailSent = (
-                <div className="form-group">
+                <FormGroup>
                     <p className="text-success">We've sent you an email with instructions. It may take up to five minutes to appear.</p>
-                </div>
+                </FormGroup>
             )
         }
 
         let btn_submit;
         if (!this.state.emailSent) {
             btn_submit = (
-                <div className="form-group">
+                <FormGroup>
                     <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
-                </div>
+                </FormGroup>
             )
         }
 
@@ -80,9 +81,9 @@ export default class RequestPasswordReset extends Component {
                     <h1 className="sr-only">Request password reset form</h1>
                     <h1 className="display-4 mb-5">Password Reset</h1>
 
-                    <div className="form-group">
-                        <input type="email" className="form-control" name="email" placeholder="Email" autoComplete="email" required />
-                    </div>
+                    <FormGroup>
+                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" autoFocus required />
+                    </FormGroup>
 
                     {requestFailed}
                     {emailSent}

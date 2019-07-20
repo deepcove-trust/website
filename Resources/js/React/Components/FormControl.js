@@ -1,10 +1,19 @@
 ﻿import React, { Component } from 'react';
 
-
 export class FormGroup extends Component {
     render() {
+        let label;
+        if (this.props.label) {
+            label = (
+                    <label className={this.props.required ? "required" : false} htmlFor={ this.props.htmlFor || null} >
+                        {this.props.label}
+                    </label>
+                );
+        }
+
         return (
             <div className="form-group">
+                {label}
                 {this.props.children}
             </div>
         )
@@ -49,10 +58,6 @@ export class Input extends Component {
         }
     }
 
-    getClass() {
-        return this.props.inputClass || "form-control";
-    }
-
     getType() {
         if (!this.props.type)
             throw 'You must provide a type for the input field';
@@ -73,18 +78,6 @@ export class Input extends Component {
         }
     }
 
-    isDisabled() {
-        return this.props.disabled;
-    }
-
-    isReadOnly() {
-        return this.props.readonly;
-    }
-
-    isRequired() {
-        return this.props.required;
-    }
-
     componentWillReceiveProps(nextProps) {
         if (this.state.value != nextProps.value)
             this.setState({
@@ -94,12 +87,22 @@ export class Input extends Component {
   
     
     render() {
-        let id = this.props.id || false;
-        let name = this.props.name || false;
-        let placeholder = this.props.placeholder || false;
-
         return (
-            <input id={id} type={this.getType()} className={this.getClass()} name={name} value={this.state.value} placeholder={placeholder} autocomplete={this.getAutoComplete()} disabled={this.isDisabled()} readonly={this.isReadOnly()} required={this.isRequired()} onChange={this.handleChange.bind(this)} />
+            <input id={ this.props.id || false }
+                type={this.getType()}
+                className={ this.props.inputClass || "form-control" }
+                name={ this.props.name || false }
+                value={ this.state.value }
+                placeholder={ this.props.placeHolder || false }
+                autocomplete={ this.getAutoComplete() }
+                disabled={ !!this.props.disabled }
+                readonly={ !!this.props.readOnly }
+                required={ !!this.props.required }
+                autoFocus={ !!this.props.autoFocus }
+                minLength={ this.props.minLength || false }
+                maxLength={ this.props.maxLength || false }
+                onChange={this.handleChange.bind(this)}
+            />
         )
     }
 }
@@ -122,22 +125,6 @@ export class Select extends Component {
             this.props.cb(e.target.value);
     }
 
-    getClass() {
-        return this.props.inputClass || "form-control";
-    }
-
-    isDisabled() {
-        return this.props.disabled;
-    }
-
-    isReadOnly() {
-        return this.props.readonly;
-    }
-
-    isRequired() {
-        return this.props.required;
-    }
-
     componentWillReceiveProps(nextProps) {
         if (this.state.value != nextProps.value)
             this.setState({
@@ -146,10 +133,6 @@ export class Select extends Component {
     }
 
     render() {
-        let id = this.props.id || false;
-        let name = this.props.name || false;
-        let placeholder = this.props.placeholder || false;
-
         let selectOptions;
         if (this.props.options) {
             selectOptions = this.props.options.map((option) => {
@@ -161,7 +144,16 @@ export class Select extends Component {
         }
 
         return (
-            <select id={id} className={this.getClass()} name={name} value={this.state.value} placeholder={placeholder} disabled={this.isDisabled()} readonly={this.isReadOnly()} required={this.isRequired()} onChange={this.handleChange.bind(this)} >
+            <select id={ this.props.id || false }
+                className={ this.props.inputClass || "form-control" }
+                name={ this.props.name || false }
+                value={ this.state.value }// Is this needed?? The value is actually set using a "selected" attribute in the correct option
+                placeholder={ this.props.placeHolder || false }
+                disabled={ !!this.props.disabled }
+                readonly={ !!this.props.readOnly }
+                required={ !!this.props.required }
+                onChange={ this.handleChange.bind(this) }
+            >
                 {selectOptions}
             </select>
         )

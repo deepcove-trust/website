@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
+import { FormGroup, Input } from '../Components/FormControl';
 import $ from 'jquery';
 
-const baseUri = "/reset-password";
 
 export default class ResetPassword extends Component {
     constructor(props) {
@@ -42,9 +42,9 @@ export default class ResetPassword extends Component {
         let requestFailed;
         if (this.state.requestFailed) {
             requestFailed = (
-                <div className="form-group">
+                <FormGroup>
                     <p className="text-danger">{this.state.requestFailed}</p>
-                </div>
+                </FormGroup>
             )
         }
 
@@ -54,23 +54,23 @@ export default class ResetPassword extends Component {
                     <h1 className="sr-only">New email password form</h1>
                     <h1 className="display-4 mb-5">New Password</h1>
 
-                    <div className="form-group">
-                        <input type="email" className="form-control" name="email" placeholder="Email" autoComplete="email" required />
-                    </div>
+                    <FormGroup>
+                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" autoFocus required />
+                    </FormGroup>
 
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="password" placeholder="New Password" autoComplete="new-password" minlength="6" required/>
-                    </div>
+                    <FormGroup>
+                        <Input type="password" name="password" placeHolder="New Password" autoComplete="new-password" minLength="6" required />
+                    </FormGroup>
 
-                    <div class="form-group">
-                        <input class="form-control" type="password" name="passswordConfirm" placeholder="Retype Password" autoComplete="new-password" minlength="6" required/>
-                    </div>
+                    <FormGroup>
+                        <Input type="password" name="passswordConfirm" placeHolder="Retype Password" autoComplete="new-password" minLength="6" required />
+                    </FormGroup>
 
                     {requestFailed}
 
-                    <div className="form-group">
+                    <FormGroup>
                         <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
-                    </div>
+                    </FormGroup>
                 </form>
             </div>
         );
