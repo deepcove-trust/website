@@ -95,10 +95,10 @@ export class Input extends Component {
                 value={ this.state.value }
                 placeholder={ this.props.placeHolder || false }
                 autocomplete={ this.getAutoComplete() }
-                disabled={ this.props.disabled ? true : false }
-                readonly={ this.props.readOnly ? true : false }
-                required={ this.props.required ? true : false }
-                autoFocus={ this.props.autoFocus ? true: false }
+                disabled={ !!this.props.disabled }
+                readonly={ !!this.props.readOnly }
+                required={ !!this.props.required }
+                autoFocus={ !!this.props.autoFocus }
                 minLength={ this.props.minLength || false }
                 maxLength={ this.props.maxLength || false }
                 onChange={this.handleChange.bind(this)}
@@ -144,15 +144,15 @@ export class Select extends Component {
         }
 
         return (
-            <select id={this.props.id || false}
-                className={this.props.inputClass || "form-control"}
-                name={this.props.name || false}
-                value={this.state.value}// Is this needed?? The value is actually set using a "selected" attribute in the correct option
-                placeholder={this.props.placeHolder || false}
-                disabled={this.props.disabled ? true : false}
-                readonly={this.props.readOnly ? true : false}
-                required={this.props.required ? true : false}
-                onChange={this.handleChange.bind(this)}
+            <select id={ this.props.id || false }
+                className={ this.props.inputClass || "form-control" }
+                name={ this.props.name || false }
+                value={ this.state.value }// Is this needed?? The value is actually set using a "selected" attribute in the correct option
+                placeholder={ this.props.placeHolder || false }
+                disabled={ !!this.props.disabled }
+                readonly={ !!this.props.readOnly }
+                required={ !!this.props.required }
+                onChange={ this.handleChange.bind(this) }
             >
                 {selectOptions}
             </select>
