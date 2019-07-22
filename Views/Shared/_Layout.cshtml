@@ -18,18 +18,29 @@
 </head>
 <body>
     <div class="container content-container">
-        @if(RouteArea == "")
-        {
-            await Html.RenderPartialAsync("_Nav.cshtml");
-        }
-        else if (RouteArea == "admin-portal")
-        {
-            await Html.RenderPartialAsync("_AdminPortalNav.cshtml");
-        }
-        else if (RouteArea == "education-portal")
-        {
+        <header class="mb-3">
+            @if (RouteArea == "")
+            {
+                await Html.RenderPartialAsync("_Nav.cshtml");
+            }
+            else if (RouteArea.Contains("admin-portal"))
+            {
+                await Html.RenderPartialAsync("_AdminPortalNav.cshtml");
 
-        }
+                if (RouteArea.Contains("admin-portal,web"))
+                {
+                    await Html.RenderPartialAsync("_AdminPortal_WebNav.cshtml");
+                }
+                else if(RouteArea.Contains("admin-portal,app"))
+                {
+                    await Html.RenderPartialAsync("_AdminPortal_AppNav.cshtml");
+                }
+            }
+            else if (RouteArea == "education-portal")
+            {
+
+            }
+        </header>
 
         <div class="container container-body">
             <partial name="_CookieConsentPartial" />
@@ -37,7 +48,6 @@
                 @RenderBody()
             </main>
         </div>
-
 
         @{ await Html.RenderPartialAsync("_Footer.cshtml"); }
     </div>
