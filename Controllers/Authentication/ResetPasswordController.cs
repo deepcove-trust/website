@@ -50,7 +50,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
             try
             {
-                PasswordReset reset = await _Db.PasswordReset.Include(i => i.Account)
+                PasswordReset reset = await _Db.PasswordResets.Include(i => i.Account)
                     .Where(c => c.Token == token && c.Account.Email == request.Str("email") && c.ExpiresAt > DateTime.UtcNow)
                     .FirstOrDefaultAsync();
 

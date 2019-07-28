@@ -13,6 +13,7 @@ import './js/React/Authentication/RequestPasswordReset';
 import './js/React/Authentication/ResetPassword';
 import './js/React/Authentication/Register';
 import './js/React/AdminPortal/Users';
+import './js/React/AdminPortal/Pages';
 
 /* Theme */
 //import './js/app.min';

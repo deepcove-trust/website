@@ -10,7 +10,10 @@ namespace Deepcove_Trust_Website.Data
     public class WebsiteDataContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<PasswordReset> PasswordReset { get; set; }
+        public DbSet<PasswordReset> PasswordResets { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<PageRevision> PageRevisions { get; set; }
+        public DbSet<Template> PageTemplates { get; set; }
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
         {
@@ -70,6 +73,10 @@ namespace Deepcove_Trust_Website.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>().HasQueryFilter(f => f.DeletedAt == null);
+
+            // Enum Conversions
+            modelBuilder.Entity<Page>().Property(p => p.Section).HasConversion(c => (int)c, c => (Section)c);
+            // End Enum Conversions
         }
     }
 }

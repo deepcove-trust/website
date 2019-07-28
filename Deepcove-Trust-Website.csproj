@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20190707204004_Initial Migation.Designer.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190728033958_Added Page Tables.cs" />
+    <Compile Remove="Migrations\20190728033958_Added Page Tables.Designer.cs" />
   </ItemGroup>
 
 
@@ -22,6 +24,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Resources\js\React\AdminPortal\Pages\" />
   </ItemGroup>
 
 </Project>

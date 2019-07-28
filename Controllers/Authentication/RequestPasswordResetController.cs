@@ -48,7 +48,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
                 if (account != null)
                 {
-                    List<PasswordReset> resetTokens = await _Db.PasswordReset.Include(i => i.Account).Where(c => c.Account.Id == account.Id).ToListAsync();
+                    List<PasswordReset> resetTokens = await _Db.PasswordResets.Include(i => i.Account).Where(c => c.Account.Id == account.Id).ToListAsync();
                     if (resetTokens != null)
                         foreach (PasswordReset resetToken in resetTokens)
                             resetToken.ExpiresAt = DateTime.UtcNow;
