@@ -9,7 +9,7 @@ namespace Deepcove_Trust_Website.Controllers.AppPortal
 {
     [Authorize]
     [Area("admin-portal,app")]
-    [Route("/admin-portal/app")]
+    [Route("/admin/app")]
     public class DashboardController : Controller
     {
         public IActionResult Index()

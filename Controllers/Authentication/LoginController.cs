@@ -37,7 +37,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             // Redirect authenticated users
             // to the dashboard
             if (User.Identity.IsAuthenticated)
-                return Redirect("/admin-portal");
+                return Redirect("~/admin");
 
             return View(viewName: "~/Views/Authentication/Login.cshtml");
         }

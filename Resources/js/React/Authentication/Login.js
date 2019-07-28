@@ -28,7 +28,7 @@ export default class Login extends Component {
             url: `${baseUri}`,
             data: $("form").serialize()
         }).done(() => {
-            window.location.replace("/admin-portal");
+            window.location.replace("/admin");
         }).fail((err) => {
             this.setState({
                 loginFailed: err.responseText,

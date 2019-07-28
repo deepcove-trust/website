@@ -4,7 +4,7 @@ import AccountCard from './Users/AccountCard';
 import $ from 'jquery';
 
 
-const baseUri = `/admin-portal/users`;
+const baseUri = `/admin/users`;
 
 export default class Users extends Component {
     constructor(props) {

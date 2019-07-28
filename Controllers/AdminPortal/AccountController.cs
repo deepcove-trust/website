@@ -16,7 +16,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
     [Authorize]
     [Area("admin-portal")]
-    [Route("/admin-portal/account")]
+    [Route("/admin/account")]
     public class AccountController : Controller
     {
         private readonly WebsiteDataContext _Db;

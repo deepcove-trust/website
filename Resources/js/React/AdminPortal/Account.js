@@ -8,7 +8,7 @@ import ChangePassword from './Account/ChangePassword';
 import Settings from './Account/Settings';
 
 
-const baseUri = `/admin-portal/account`;
+const baseUri = `/admin/account`;
 
 export default class Account extends Component {
     constructor(props) {

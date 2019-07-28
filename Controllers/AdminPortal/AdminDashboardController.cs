@@ -9,7 +9,7 @@ namespace Deepcove_Trust_Website.Controllers
 {
     [Authorize]
     [Area("admin-portal")]
-    [Route("/admin-portal")]
+    [Route("/admin")]
     public class AdminDashboardController : Controller
     {
         public IActionResult Index()
