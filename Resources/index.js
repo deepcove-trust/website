@@ -15,5 +15,8 @@ import './js/React/Authentication/Register';
 import './js/React/AdminPortal/Users';
 import './js/React/AdminPortal/Pages';
 
+/* React - Page Templates */
+import './js/React/PageTemplates/1'
+
 /* Theme */
 //import './js/app.min';

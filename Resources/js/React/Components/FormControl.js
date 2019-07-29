@@ -51,6 +51,8 @@ export class Input extends Component {
                 return "current-password";
             case "newpassword":
                 return "new-password";
+            case "organization":
+                return "organization";
             case "off":
                 return "off"; 
             default:
@@ -156,6 +158,83 @@ export class Select extends Component {
             >
                 {selectOptions}
             </select>
+        )
+    }
+}
+
+export class TextArea extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: this.props.value
+        }
+    }
+
+    handleChange(e) {
+        this.setState({
+            value: e.target.value
+        });
+
+        // Send the value to the (optional) callback
+        if (this.props.cb)
+            this.props.cb(e.target.value);
+    }
+
+    getAutoComplete() {
+        switch (this.props.autoComplete) {
+            case "name":
+                return "name";
+            case "email":
+                return "email";
+            case "phone":
+                return "tel";
+            case "password":
+                return "current-password";
+            case "newpassword":
+                return "new-password";
+            case "organization":
+                return "organization";
+            case "off":
+                return "off";
+            default:
+                return "on";
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value != nextProps.value)
+            this.setState({
+                value: nextProps.value
+            });
+    }
+
+    render() {
+        let charLimit;
+        if (this.props.maxLength) {
+            charLimit = (
+                <span className="d-block text-right">{(this.props.maxLength - this.state.value ? this.state.value.length : 0)} characters remaining</span>
+            )
+        }
+
+        return (
+            <React.Fragment>
+                <textarea id={this.props.id || false}
+                    className={this.props.inputClass || "form-control"}
+                    name={this.props.name || false}
+                    defaultValue={this.state.value}
+                    placeholder={this.props.placeHolder || false}
+                    autocomplete={this.getAutoComplete()}
+                    disabled={!!this.props.disabled}
+                    readonly={!!this.props.readOnly}
+                    required={!!this.props.required}
+                    autoFocus={!!this.props.autoFocus}
+                    minLength={this.props.minLength || false}
+                    maxLength={this.props.maxLength || false}
+                    onChange={this.handleChange.bind(this)}
+                />
+                {charLimit}
+            </React.Fragment>
         )
     }
 }
