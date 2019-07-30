@@ -11,6 +11,7 @@ namespace Deepcove_Trust_Website.Data
     {
         public DbSet<Account> Accounts { get; set; }
         public DbSet<PasswordReset> PasswordReset { get; set; }
+        public DbSet<WebsiteSettings> WebsiteSettings { get; set; }
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
         {
