@@ -14,6 +14,8 @@ namespace Deepcove_Trust_Website.Data
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageRevision> PageRevisions { get; set; }
         public DbSet<Template> PageTemplates { get; set; }
+        public DbSet<WebsiteSettings> WebsiteSettings { get; set; }
+
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
         {

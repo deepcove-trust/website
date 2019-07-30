@@ -14,6 +14,7 @@ import './js/React/Authentication/ResetPassword';
 import './js/React/Authentication/Register';
 import './js/React/AdminPortal/Users';
 import './js/React/AdminPortal/Pages';
+import './js/React/AdminPortal/WebSettings';
 
 /* React - Page Templates */
 import './js/React/PageTemplates/1'

@@ -75,6 +75,8 @@ export class Input extends Component {
                 return "image";
             case "password":
                 return "password";
+            case "url":
+                return "url";
             default:
                 return "text";
         }
