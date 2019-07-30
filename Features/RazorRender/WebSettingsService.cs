@@ -9,7 +9,7 @@ namespace Deepcove_Trust_Website.Features.RazorRender
     public class WebSettingsService
     {
         WebsiteDataContext _Db;
-        public Models.WebsiteSettings Settings { get; set; }
+        private Models.WebsiteSettings Settings { get; set; }
 
         public WebSettingsService(WebsiteDataContext db)
         {
