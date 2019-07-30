@@ -41,7 +41,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             catch(Exception ex)
             {
                 _Logger.LogError("Error getting website settings: {0}", ex.Message);
-                _Logger.LogError(ex.StackTrace);
+                _Logger.LogTrace(ex.StackTrace);
                 return BadRequest("Error getting website settings, please try again later");
             }
         }
@@ -65,7 +65,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             catch(Exception ex)
             {
                 _Logger.LogError("Error updating website contact information: {0}", ex.Message);
-                _Logger.LogError(ex.StackTrace);
+                _Logger.LogTrace(ex.StackTrace);
                 return BadRequest("Error updating website contact information, please try again later");
             }
             
@@ -87,7 +87,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             catch(Exception ex)
             {
                 _Logger.LogError("Error updating website mission statement: {0}", ex.Message);
-                _Logger.LogError(ex.StackTrace);
+                _Logger.LogTrace(ex.StackTrace);
                 return BadRequest("Error updating website mission statement, please try again later");
             }
         }
@@ -108,7 +108,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             catch (Exception ex)
             {
                 _Logger.LogError("Error updating website quick link titles: {0}", ex.Message);
-                _Logger.LogError(ex.StackTrace);
+                _Logger.LogTrace(ex.StackTrace);
                 return BadRequest("Error updating website quick link titles, please try again later");
             }
         }
