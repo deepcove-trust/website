@@ -1,9 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Panel from '../Components/Panel';
-import { Button } from '../Components/Button';
-import { ContactMission } from './WebSettings/FooterParts';
-import { FormGroup, Input, TextArea } from '../Components/FormControl';
+import { FooterSettings } from './WebSettings/FooterSettings';
+import { QuickLinks } from './WebSettings/QuickLinks';
 import $ from 'jquery';
 
 
@@ -39,7 +38,15 @@ export default class Settings extends Component {
                 <div className="col-12">
                     <h1 className="text-center">Website Settings</h1>
                     <Panel>
-                        <ContactMission
+                        <FooterSettings
+                            settings={this.state.settings}
+                            baseUri={baseUri}
+                            u={this.getData.bind(this)}
+                        />
+
+                        <hr />
+
+                        <QuickLinks
                             settings={this.state.settings}
                             baseUri={baseUri}
                             u={this.getData.bind(this)}

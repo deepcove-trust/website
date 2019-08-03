@@ -3,7 +3,7 @@ import { Input, FormGroup, TextArea } from '../../Components/FormControl';
 import { Button } from '../../Components/Button';
 import $ from 'jquery';
 
-export class ContactMission extends Component {
+export class FooterSettings extends Component {
     constructor(props) {
         super(props);
 
@@ -71,6 +71,7 @@ export class ContactMission extends Component {
         return (
             <form className="row" onSubmit={this.submitForm.bind(this)}>
                 <div className="col-lg-6 col-sm-12">
+                    <h4 class="pb-3">Contact Information</h4>
                     <FormGroup htmlFor="facebook" label="Facebook Url:">
                         <Input type="url"
                             id="facebook"
