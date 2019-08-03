@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace Deepcove_Trust_Website.Models
 {
     public enum Section { main, education }
+    public enum QuickLinkSection { None, A, B}
 
     public class Page : BaseEntity
     {
@@ -17,6 +18,7 @@ namespace Deepcove_Trust_Website.Models
         public bool Public { get; set; }
         [Required]
         public Section Section { get; set; }
+        public QuickLinkSection QuickLink { get; set; }
 
         // Navigation Properties
         public Template Template { get; set; }

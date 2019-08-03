@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class Addpagesmigration : Migration
+    public partial class SettingsandPages : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,6 +50,24 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WebsiteSettings",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    FacebookUrl = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    Phone = table.Column<string>(nullable: true),
+                    LinkTitleA = table.Column<string>(nullable: true),
+                    LinkTitleB = table.Column<string>(nullable: true),
+                    FooterText = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebsiteSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Pages",
                 columns: table => new
                 {
@@ -62,6 +80,7 @@ namespace Deepcove_Trust_Website.Migrations
                     Description = table.Column<string>(nullable: true),
                     Public = table.Column<bool>(nullable: false),
                     Section = table.Column<int>(nullable: false),
+                    QuickLink = table.Column<int>(nullable: false),
                     TemplateId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -104,6 +123,11 @@ namespace Deepcove_Trust_Website.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "WebsiteSettings",
+                columns: new[] { "Id", "Email", "FacebookUrl", "FooterText", "LinkTitleA", "LinkTitleB", "Phone" },
+                values: new object[] { 1, "bookings@deepcovehostel.co.nz", "https://www.facebook.com/deepcoveoutdooreducationtrust/", "", "", "", "(03) 928 5262" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_PageRevisions_CreatedById",
                 table: "PageRevisions",
@@ -136,6 +160,9 @@ namespace Deepcove_Trust_Website.Migrations
 
             migrationBuilder.DropTable(
                 name: "PageRevisions");
+
+            migrationBuilder.DropTable(
+                name: "WebsiteSettings");
 
             migrationBuilder.DropTable(
                 name: "Pages");

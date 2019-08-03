@@ -12,11 +12,11 @@ namespace Deepcove_Trust_Website.Models
         [Url]
         public string FacebookUrl { get; set; }
         [EmailAddress]
-        public string ContactEmail { get; set; }
-        public string ContactPhone { get; set; }
-        public string QLinksTitleA { get; set; }
-        public string QLinksTitleB { get; set;}
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string LinkTitleA { get; set; }
+        public string LinkTitleB { get; set;}
 
-        public string MissionStatment { get; set; }
+        public string FooterText { get; set; }
     }
 }

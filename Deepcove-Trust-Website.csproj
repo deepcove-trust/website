@@ -15,6 +15,14 @@
     <Compile Remove="Migrations\20190709230510_Initial Migration.Designer.cs" />
     <Compile Remove="Migrations\20190728033958_Added Page Tables.cs" />
     <Compile Remove="Migrations\20190728033958_Added Page Tables.Designer.cs" />
+    <Compile Remove="Migrations\20190728041803_Add pages migration.cs" />
+    <Compile Remove="Migrations\20190728041803_Add pages migration.Designer.cs" />
+    <Compile Remove="Migrations\20190729073803_Adds settings table.cs" />
+    <Compile Remove="Migrations\20190729073803_Adds settings table.Designer.cs" />
+    <Compile Remove="Migrations\20190730082003_Pages an Setings.cs" />
+    <Compile Remove="Migrations\20190730082003_Pages an Setings.Designer.cs" />
+    <Compile Remove="Migrations\20190730083459_Settings and Pages.cs" />
+    <Compile Remove="Migrations\20190730083459_Settings and Pages.Designer.cs" />
   </ItemGroup>
 
 

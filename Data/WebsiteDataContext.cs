@@ -78,7 +78,21 @@ namespace Deepcove_Trust_Website.Data
 
             // Enum Conversions
             modelBuilder.Entity<Page>().Property(p => p.Section).HasConversion(c => (int)c, c => (Section)c);
+            modelBuilder.Entity<Page>().Property(p => p.QuickLink).HasConversion(c => (int)c, c => (QuickLinkSection)c);
             // End Enum Conversions
+
+            // Seeds
+            modelBuilder.Entity<WebsiteSettings>().HasData(new WebsiteSettings
+            {
+                Id = 1,
+                FacebookUrl = "https://www.facebook.com/deepcoveoutdooreducationtrust/",
+                Email = "bookings@deepcovehostel.co.nz",
+                Phone = "(03) 928 5262",
+                LinkTitleA = "",
+                LinkTitleB = "",
+                FooterText = ""
+            });
+            // End Seeds
         }
     }
 }

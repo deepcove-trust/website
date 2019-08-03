@@ -1,38 +1,37 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Panel from '../Components/Panel';
-import QuickLinks from './WebSettings/QuickLinks';
+import { Button } from '../Components/Button';
+import { ContactMission } from './WebSettings/FooterParts';
+import { FormGroup, Input, TextArea } from '../Components/FormControl';
 import $ from 'jquery';
-import MissionStatement from './WebSettings/MissionStatement';
 
 
-const baseUri = `/admin-portal/users`;
+const baseUri = `/admin/web/settings`;
 
 export default class Settings extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            
+            settings: null
         }
     }
 
     componentDidMount() {
-        //this.getData();
+        this.getData();
     }
 
-    //getData() {
-    //    $.ajax({
-    //        type: 'get',
-    //        url: `${baseUri}/data`
-    //    }).done((data) => {
-    //        this.setState({ accounts: null }, () => {
-    //            this.setState({ accounts: data });
-    //        });
-    //    }).fail((err) => {
-    //        console.error(`[User@getData] Error getting data: `, err.responseText);
-    //    })
-    //}
+    getData() {
+        $.ajax({
+            type: 'get',
+            url: `${baseUri}/data`
+        }).done((data) => {
+            this.setState({ settings: data });
+        }).fail((err) => {
+            console.error(`[User@getData] Error getting data: `, err.responseText);
+        })
+    }
 
     render() {
         return (
@@ -40,15 +39,11 @@ export default class Settings extends Component {
                 <div className="col-12">
                     <h1 className="text-center">Website Settings</h1>
                     <Panel>
-                        <div className="row">
-                            <div className="col-lg-6 col-sm-12">
-                                <QuickLinks />
-                            </div>
-
-                            <div className="col-lg-6 col-sm-12">
-                                <MissionStatement />
-                            </div>
-                        </div>
+                        <ContactMission
+                            settings={this.state.settings}
+                            baseUri={baseUri}
+                            u={this.getData.bind(this)}
+                        />
                     </Panel>
                 </div>
             </div>

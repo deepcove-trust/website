@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190728041803_Add pages migration")]
-    partial class Addpagesmigration
+    [Migration("20190730220255_Settings and Pages")]
+    partial class SettingsandPages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,8 @@ namespace Deepcove_Trust_Website.Migrations
                         .IsRequired();
 
                     b.Property<bool>("Public");
+
+                    b.Property<int>("QuickLink");
 
                     b.Property<int>("Section");
 
@@ -154,6 +156,41 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PageTemplates");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.WebsiteSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FacebookUrl");
+
+                    b.Property<string>("FooterText");
+
+                    b.Property<string>("LinkTitleA");
+
+                    b.Property<string>("LinkTitleB");
+
+                    b.Property<string>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WebsiteSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "bookings@deepcovehostel.co.nz",
+                            FacebookUrl = "https://www.facebook.com/deepcoveoutdooreducationtrust/",
+                            FooterText = "",
+                            LinkTitleA = "",
+                            LinkTitleB = "",
+                            Phone = "(03) 928 5262"
+                        });
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Page", b =>

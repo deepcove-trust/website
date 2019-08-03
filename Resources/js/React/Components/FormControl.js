@@ -224,7 +224,7 @@ export class TextArea extends Component {
                 <textarea id={this.props.id || false}
                     className={this.props.inputClass || "form-control"}
                     name={this.props.name || false}
-                    defaultValue={this.state.value}
+                    value={this.state.value}
                     placeholder={this.props.placeHolder || false}
                     autocomplete={this.getAutoComplete()}
                     disabled={!!this.props.disabled}

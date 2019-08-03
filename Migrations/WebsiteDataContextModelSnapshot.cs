@@ -70,6 +70,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<bool>("Public");
 
+                    b.Property<int>("QuickLink");
+
                     b.Property<int>("Section");
 
                     b.Property<int?>("TemplateId");
@@ -154,6 +156,41 @@ namespace Deepcove_Trust_Website.Migrations
                     b.ToTable("PageTemplates");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.WebsiteSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email");
+
+                    b.Property<string>("FacebookUrl");
+
+                    b.Property<string>("FooterText");
+
+                    b.Property<string>("LinkTitleA");
+
+                    b.Property<string>("LinkTitleB");
+
+                    b.Property<string>("Phone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("WebsiteSettings");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "bookings@deepcovehostel.co.nz",
+                            FacebookUrl = "https://www.facebook.com/deepcoveoutdooreducationtrust/",
+                            FooterText = "",
+                            LinkTitleA = "",
+                            LinkTitleB = "",
+                            Phone = "(03) 928 5262"
+                        });
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Page", b =>
                 {
                     b.HasOne("Deepcove_Trust_Website.Models.Template", "Template")
@@ -170,29 +207,6 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasOne("Deepcove_Trust_Website.Models.Page", "Page")
                         .WithMany("PageRevisions")
                         .HasForeignKey("PageId");
-                });
-
-            modelBuilder.Entity("Deepcove_Trust_Website.Models.WebsiteSettings", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ContactEmail");
-
-                    b.Property<string>("ContactPhone");
-
-                    b.Property<string>("FacebookUrl");
-
-                    b.Property<string>("MissionStatment");
-
-                    b.Property<string>("QLinksTitleA");
-
-                    b.Property<string>("QLinksTitleB");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("WebsiteSettings");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PasswordReset", b =>
