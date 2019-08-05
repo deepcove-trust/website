@@ -211,11 +211,15 @@ export class TextArea extends Component {
             });
     }
 
+    getCharCount() {
+        return this.state.value && this.state.value.length ? this.state.value.length : 0
+    }
+
     render() {
         let charLimit;
         if (this.props.maxLength) {
             charLimit = (
-                <span className="d-block text-right">{(this.props.maxLength - this.state.value ? this.state.value.length : 0)} characters remaining</span>
+                <span className="d-block text-right">{this.props.maxLength - this.getCharCount()} characters remaining</span>
             )
         }
 
