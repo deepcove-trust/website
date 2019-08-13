@@ -15,5 +15,11 @@ namespace Deepcove_Trust_Website.Controllers
         {
             return View(viewName: "~/Views/Errors/Inactive.cshtml");
         }
+
+        [HttpGet("password-reset")]
+        public IActionResult PasswordExpired()
+        {
+            return View(viewName: "~/Views/Errors/PasswordExpired.cshtml");
+        }
     }
 }

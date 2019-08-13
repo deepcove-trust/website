@@ -75,7 +75,9 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
                 Account account = await _Db.Accounts.FindAsync(reset.Account.Id);
                 account.Password = _Hasher.HashPassword(account, request.Str("password"));
+                account.ForcePasswordReset = false;
                 reset.ExpiresAt = DateTime.UtcNow;
+                
 
                 await _Db.SaveChangesAsync();
 
