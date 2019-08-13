@@ -3,6 +3,26 @@ import ReactDOM from 'react-dom';
 import { setTimeout } from 'timers';
 
 export class Button extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            width: 0
+        };
+
+        this.contentRef = React.createRef();
+    }
+
+    componentDidMount() {
+        let width = ReactDOM.findDOMNode(this.contentRef.current).getBoundingClientRect().width;
+
+        if (width > this.state.width) {
+            let x = Math.round(width);
+            x = Math.trunc(x);
+            this.setState({ width: x });
+        }
+    }
+
     handleClick() {
         if (this.props.cb)
             this.props.cb();
@@ -25,7 +45,13 @@ export class Button extends Component {
         }
 
         return (
-            <button className={this.getClass()} type={this.getType()} disabled={this.props.disabled || this.props.pending} onClick={this.handleClick.bind(this)}>
+            <button className={this.getClass()}
+                type={this.getType()}
+                disabled={this.props.disabled || this.props.pending}
+                style={{ minWidth: `${this.state.width}px` }}
+                ref={this.contentRef}
+                onClick={this.handleClick.bind(this)}
+            >
                 {content}
             </button>
         );
@@ -98,7 +124,13 @@ export class ConfirmButton extends Component {
         }
 
         return (
-            <button className={this.getClass()} type="button" disabled={this.props.disabled || this.props.pending} style={{ minWidth: `${this.state.width}px` }} ref={this.contentRef} onClick={this.handleClick.bind(this)}>
+            <button className={this.getClass()}
+                type="button"
+                disabled={this.props.disabled || this.props.pending}
+                style={{ minWidth: `${this.state.width}px` }}
+                ref={this.contentRef}
+                onClick={this.handleClick.bind(this)}
+            >
                 <span>{content}</span>
             </button>
         );

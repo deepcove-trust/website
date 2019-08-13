@@ -25,7 +25,7 @@ export default class Pages extends Component {
         }, () => {
             $.ajax({
                 type: 'get',
-                url: `${baseUri}/${this.state.filter}/data`
+                url: `${baseUri}/data?filter=${this.state.filter}`
             }).done((data) => {
                 this.setState({ pages: data });
             }).fail((err) => {

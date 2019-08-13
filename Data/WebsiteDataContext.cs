@@ -10,6 +10,7 @@ namespace Deepcove_Trust_Website.Data
     public class WebsiteDataContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Link> CmsLink { get; set; }
         public DbSet<PasswordReset> PasswordResets { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageRevision> PageRevisions { get; set; }
@@ -79,6 +80,8 @@ namespace Deepcove_Trust_Website.Data
             // Enum Conversions
             modelBuilder.Entity<Page>().Property(p => p.Section).HasConversion(c => (int)c, c => (Section)c);
             modelBuilder.Entity<Page>().Property(p => p.QuickLink).HasConversion(c => (int)c, c => (QuickLinkSection)c);
+            modelBuilder.Entity<Link>().Property(p => p.Align).HasConversion(c => (int)c, c => (Align)c);
+            modelBuilder.Entity<Link>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
             // End Enum Conversions
 
             // Seeds

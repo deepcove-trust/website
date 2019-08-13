@@ -25,14 +25,14 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             _Logger = logger;
         }
 
-        [HttpGet("{filter}")]
+        [HttpGet]
         public IActionResult Index(string filter)
         {
             ViewData["PageName"] = filter;
             return View(viewName: "~/Views/AdminPortal/Web/Pages.cshtml");
         }
 
-        [HttpGet("{filter}/data")]
+        [HttpGet("data")]
         public async Task<IActionResult> PageList(string filter)
         {
             if (!Enum.IsDefined(typeof(Section), filter))           

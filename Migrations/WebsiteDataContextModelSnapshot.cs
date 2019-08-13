@@ -53,6 +53,29 @@ namespace Deepcove_Trust_Website.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.Link", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Align");
+
+                    b.Property<int>("Color");
+
+                    b.Property<string>("Href")
+                        .IsRequired();
+
+                    b.Property<bool>("IsButton");
+
+                    b.Property<string>("Text")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CmsLink");
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Page", b =>
                 {
                     b.Property<int>("Id")
@@ -156,6 +179,31 @@ namespace Deepcove_Trust_Website.Migrations
                     b.ToTable("PageTemplates");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.TextField", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Heading");
+
+                    b.Property<int?>("PageRevisionId");
+
+                    b.Property<int>("SlotNo");
+
+                    b.Property<string>("Text");
+
+                    b.Property<int?>("linkId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PageRevisionId");
+
+                    b.HasIndex("linkId");
+
+                    b.ToTable("TextField");
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.WebsiteSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -214,6 +262,17 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasOne("Deepcove_Trust_Website.Models.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.TextField", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.PageRevision")
+                        .WithMany("TextFields")
+                        .HasForeignKey("PageRevisionId");
+
+                    b.HasOne("Deepcove_Trust_Website.Models.Link", "link")
+                        .WithMany("TextFields")
+                        .HasForeignKey("linkId");
                 });
 #pragma warning restore 612, 618
         }

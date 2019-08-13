@@ -4,31 +4,48 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class SettingsandPages : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_PasswordReset_Accounts_AccountId",
-                table: "PasswordReset");
+            migrationBuilder.CreateTable(
+                name: "Accounts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: false),
+                    ForcePasswordReset = table.Column<bool>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    LastLogin = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accounts", x => x.Id);
+                });
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_PasswordReset",
-                table: "PasswordReset");
-
-            migrationBuilder.RenameTable(
-                name: "PasswordReset",
-                newName: "PasswordResets");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_PasswordReset_AccountId",
-                table: "PasswordResets",
-                newName: "IX_PasswordResets_AccountId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_PasswordResets",
-                table: "PasswordResets",
-                column: "Id");
+            migrationBuilder.CreateTable(
+                name: "CmsLink",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Text = table.Column<string>(nullable: false),
+                    Href = table.Column<string>(nullable: false),
+                    IsButton = table.Column<bool>(nullable: false),
+                    Color = table.Column<int>(nullable: false),
+                    Align = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CmsLink", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "PageTemplates",
@@ -65,6 +82,27 @@ namespace Deepcove_Trust_Website.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WebsiteSettings", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PasswordResets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Token = table.Column<string>(nullable: false),
+                    ExpiresAt = table.Column<DateTime>(nullable: false),
+                    AccountId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PasswordResets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PasswordResets_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -123,6 +161,35 @@ namespace Deepcove_Trust_Website.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TextField",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SlotNo = table.Column<int>(nullable: false),
+                    Heading = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    linkId = table.Column<int>(nullable: true),
+                    PageRevisionId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TextField", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TextField_PageRevisions_PageRevisionId",
+                        column: x => x.PageRevisionId,
+                        principalTable: "PageRevisions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TextField_CmsLink_linkId",
+                        column: x => x.linkId,
+                        principalTable: "CmsLink",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "WebsiteSettings",
                 columns: new[] { "Id", "Email", "FacebookUrl", "FooterText", "LinkTitleA", "LinkTitleB", "Phone" },
@@ -143,58 +210,47 @@ namespace Deepcove_Trust_Website.Migrations
                 table: "Pages",
                 column: "TemplateId");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_PasswordResets_Accounts_AccountId",
+            migrationBuilder.CreateIndex(
+                name: "IX_PasswordResets_AccountId",
                 table: "PasswordResets",
-                column: "AccountId",
-                principalTable: "Accounts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                column: "AccountId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TextField_PageRevisionId",
+                table: "TextField",
+                column: "PageRevisionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TextField_linkId",
+                table: "TextField",
+                column: "linkId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_PasswordResets_Accounts_AccountId",
-                table: "PasswordResets");
+            migrationBuilder.DropTable(
+                name: "PasswordResets");
+
+            migrationBuilder.DropTable(
+                name: "TextField");
+
+            migrationBuilder.DropTable(
+                name: "WebsiteSettings");
 
             migrationBuilder.DropTable(
                 name: "PageRevisions");
 
             migrationBuilder.DropTable(
-                name: "WebsiteSettings");
+                name: "CmsLink");
+
+            migrationBuilder.DropTable(
+                name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Pages");
 
             migrationBuilder.DropTable(
                 name: "PageTemplates");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_PasswordResets",
-                table: "PasswordResets");
-
-            migrationBuilder.RenameTable(
-                name: "PasswordResets",
-                newName: "PasswordReset");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_PasswordResets_AccountId",
-                table: "PasswordReset",
-                newName: "IX_PasswordReset_AccountId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_PasswordReset",
-                table: "PasswordReset",
-                column: "Id");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_PasswordReset_Accounts_AccountId",
-                table: "PasswordReset",
-                column: "AccountId",
-                principalTable: "Accounts",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
         }
     }
 }

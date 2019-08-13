@@ -61,5 +61,56 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["pageId"] = page.Id;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
+
+        [AllowAnonymous]
+        [Route("/api/page/{pageId:int}/{revisionId:int?}")]
+        public IActionResult PageContent(int pageId, int? revisionId)
+        {
+            var data = _Db.Pages.Include(i => i.PageRevisions)
+                .Select(s => new {
+                s.Id,
+                s.Name,
+                s.Public,
+                updated = new {
+                    at = "{dd} {MONTH}, {YYYY}",
+                    by = "{last author}"
+                },
+                text = s.Latest,
+                media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
+                User.Identity.IsAuthenticated
+            }).FirstOrDefault();
+
+            /**
+             * .Select(s1 => new {
+                    s1.Id,
+                    slot = s1.SlotNo,
+                    s1.Heading,
+                    s1.Text,
+                    link = new { }
+                })
+            */
+            
+
+            if (data == null || !data.Public && !User.Identity.IsAuthenticated)
+                return NotFound();
+
+            return Ok(data);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("/api/page/{pageId:int}/visibility")]
+        public async Task<IActionResult> ToggleVisbility(int pageId)
+        {
+            var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+            if (page == null)
+                return BadRequest("Page does not exist");
+
+            page.Public = !page.Public;
+
+            await _Db.SaveChangesAsync();
+            return Ok();
+        }
     }
 }
+ 

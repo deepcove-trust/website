@@ -14,7 +14,7 @@ export default class ResetPassword extends Component {
             requestPending: false,
         }
     }
-
+    
     attemptRequest(e) {
         e.preventDefault();
 
@@ -33,7 +33,6 @@ export default class ResetPassword extends Component {
                 requestPending: false,
                 requestFailed: err.responseText
             });
-
             console.error(`[ResetPassword@attemptRequest] Error changing password: `, err.responseText);
         })
     }

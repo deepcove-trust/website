@@ -13,6 +13,7 @@ namespace Deepcove_Trust_Website.Models
         // Navigation Properties
         public Account CreatedBy { get; set; }
         public Page Page { get; set; }
+        public List<TextField> TextFields { get; set; }
         // End Navigation Properties
     }
 }

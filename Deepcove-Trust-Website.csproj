@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20190707204004_Initial Migation.Designer.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190711033812_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190711033812_Initial Migration.Designer.cs" />
     <Compile Remove="Migrations\20190728033958_Added Page Tables.cs" />
     <Compile Remove="Migrations\20190728033958_Added Page Tables.Designer.cs" />
     <Compile Remove="Migrations\20190728041803_Add pages migration.cs" />
@@ -23,6 +25,10 @@
     <Compile Remove="Migrations\20190730082003_Pages an Setings.Designer.cs" />
     <Compile Remove="Migrations\20190730083459_Settings and Pages.cs" />
     <Compile Remove="Migrations\20190730083459_Settings and Pages.Designer.cs" />
+    <Compile Remove="Migrations\20190730220255_Settings and Pages.cs" />
+    <Compile Remove="Migrations\20190730220255_Settings and Pages.Designer.cs" />
+    <Compile Remove="Migrations\20190806074728_TextFields and Links.cs" />
+    <Compile Remove="Migrations\20190806074728_TextFields and Links.Designer.cs" />
   </ItemGroup>
 
 

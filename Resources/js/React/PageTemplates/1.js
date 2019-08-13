@@ -2,8 +2,11 @@
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
 import { FormGroup, Input, TextArea } from '../Components/FormControl';
+import TextBlock from '../CMS-Blocks/Text';
+import PageMast from '../CMS-Blocks/PageMast';
 import $ from 'jquery';
 
+const baseUri = "/api/page"
 
 export default class ReactTemplate extends Component {
     constructor(props) {
@@ -11,39 +14,57 @@ export default class ReactTemplate extends Component {
 
         this.state = {
             data: null,
-            settings: null
+            pageId: null,
+            mode: "view"
         }
     }
 
     componentDidMount() {
-        this.getData();
+        if (!document.getElementById('react_template_1')) {
+            throw `Failed to attach component. Attribute 'data-pageid' was not found`;
+        }
+
+        this.setState({
+            pageId: document.getElementById('react_template_1').getAttribute("data-pageid")
+        }, () => {
+            this.getData();
+        });
     }
 
-    getData() {
-
+    getData() {           
+        $.ajax({
+            type: 'get',
+            url: `${baseUri}/${this.state.pageId}`
+        }).done((data) => {
+            this.setState({
+                data: data
+            });
+        }).fail((err) => {
+            console.error(err);
+        });
     }
 
     render() {
-        
         return (
             <React.Fragment>
                 <div className="row">
-                    <div className="col-12">
-                        <h1>**Page Name**</h1>
+                    <PageMast page={this.state.data}
+                        baseUri={baseUri}
+                        u={this.getData.bind(this)}
+                    />
+
+                    <div className="col-12  pb-4">
                         <div className="row">
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <h6>Text Region Heading</h6>
-                                <p>This is a text region with no content.</p>
+                                <TextBlock />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <h6>Text Region Heading</h6>
-                                <p>This is a text region with no content.</p>
+                                <TextBlock />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <h6>Text Region Heading</h6>
-                                <p>This is a text region with no content.</p>
+                                <TextBlock />
                             </div>
                         </div>
                     </div>
@@ -72,7 +93,7 @@ export default class ReactTemplate extends Component {
                             </FormGroup>
 
                             <FormGroup htmlFor="message" label="Message:" required>
-                                <TextArea id="message" maxLength="100" required/>
+                                <TextArea id="message" maxLength="500" required/>
                             </FormGroup>
 
                             <Button type="submit" pending={false}>

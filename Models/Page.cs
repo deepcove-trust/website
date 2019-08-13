@@ -24,5 +24,38 @@ namespace Deepcove_Trust_Website.Models
         public Template Template { get; set; }
         public List<PageRevision> PageRevisions { get; set; }
         // End Navigation Properties
+
+        /// <summary>
+        /// Returns the latest page revision.
+        /// </summary>
+        /// <see cref="PageRevision"/>
+        public PageRevision Latest
+        {
+            get
+            {
+                if (PageRevisions == null)
+                    return null;
+
+                return PageRevisions.FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Returns the revision that has the ID provided. If no ID is provided the most recent revision is provided.
+        /// </summary>
+        /// <param name="id">Revision ID</param>
+        /// <returns>Page revision or null</returns>
+        /// <see cref="PageRevision"/>
+        public PageRevision GetRevision(int? id = null)
+        {
+            if (id == null)
+            {
+                return Latest;
+            }
+            else
+            {
+                return PageRevisions.Where(c => c.Id == (int)id).FirstOrDefault();
+            }
+        }
     }
 }
