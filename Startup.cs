@@ -86,7 +86,7 @@ namespace Deepcove_Trust_Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            //app.UseActiveAccounts(); >> Blocking propper HTTP calls
+            app.UseActiveAccounts();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
