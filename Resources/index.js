@@ -17,6 +17,10 @@ import './js/React/AdminPortal/Pages';
 import './js/React/AdminPortal/WebSettings';
 import './js/React/CMS-Blocks/Text';
 
+/* React Error Pages */
+import './js/React/Errors/Inactive';
+import './js/React/Errors/PasswordExpired';
+
 /* React - Page Templates */
 import './js/React/PageTemplates/1'
 

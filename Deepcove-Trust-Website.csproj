@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\js\React\AdminPortal\Pages\**" />
+    <Content Remove="Resources\js\React\AdminPortal\Pages\**" />
+    <EmbeddedResource Remove="Resources\js\React\AdminPortal\Pages\**" />
+    <None Remove="Resources\js\React\AdminPortal\Pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20190707204004_Initial Migation.cs" />
     <Compile Remove="Migrations\20190707204004_Initial Migation.Designer.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.cs" />
@@ -38,11 +45,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Resources\js\React\AdminPortal\Pages\" />
   </ItemGroup>
 
 </Project>

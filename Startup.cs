@@ -56,7 +56,6 @@ namespace Deepcove_Trust_Website
             // Razor Render Config
             services.Configure<RazorViewEngineOptions>(x => x.ViewLocationExpanders.Add(new ViewLocationExpander()));
             services.AddTransient<IViewRenderer, ViewRenderer>();
-            //services.AddTransient<IWebsiteSettings, WebsiteSettings>();
             services.AddTransient<WebSettingsService>();
 
             // Login services
@@ -86,7 +85,8 @@ namespace Deepcove_Trust_Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            //app.UseActiveAccounts(); >> Blocking propper HTTP calls
+            app.UseActiveAccounts();
+            app.UseForcePasswordReset();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

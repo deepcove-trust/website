@@ -23,7 +23,7 @@ namespace Deepcove_Trust_Website.Middleware
             _next = next;
         }
 
-        public async Task<Task> InvokeAsync(HttpContext httpContext, WebsiteDataContext db)
+        public async Task InvokeAsync(HttpContext httpContext, WebsiteDataContext db)
         {
             _Db = db;
             _Http = httpContext;
@@ -31,14 +31,14 @@ namespace Deepcove_Trust_Website.Middleware
             if (_Http.User.Identity.IsAuthenticated)
             {
                 Account account = await _Db.Accounts.FindAsync(_Http.User.AccountId());
-                if(account != null && !account.Active)
+                if (account != null && !account.Active)
                 {
                     await _Http.SignOutAsync();
                     _Http.Response.Redirect("/error/inactive");
                 }
             }
-            
-            return _next(_Http);
+
+            await _next.Invoke(_Http);
         }
     }
 
