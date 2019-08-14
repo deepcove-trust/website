@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190811014333_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20190814085912_Initial_Migration")]
+    partial class Initial_Migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -55,6 +55,19 @@ namespace Deepcove_Trust_Website.Migrations
                     b.ToTable("Accounts");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.ChannelMembership", b =>
+                {
+                    b.Property<int>("AccountId");
+
+                    b.Property<int>("NotificationChannelId");
+
+                    b.HasKey("AccountId", "NotificationChannelId");
+
+                    b.HasIndex("NotificationChannelId");
+
+                    b.ToTable("ChannelMembership");
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Link", b =>
                 {
                     b.Property<int>("Id")
@@ -76,6 +89,21 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CmsLink");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.NotificationChannel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("NotificationChannels");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Page", b =>
@@ -239,6 +267,19 @@ namespace Deepcove_Trust_Website.Migrations
                             LinkTitleB = "",
                             Phone = "(03) 928 5262"
                         });
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.ChannelMembership", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.Account", "Account")
+                        .WithMany("ChannelMemberships")
+                        .HasForeignKey("AccountId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.NotificationChannel", "NotificationChannel")
+                        .WithMany("ChannelMemberships")
+                        .HasForeignKey("NotificationChannelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Page", b =>

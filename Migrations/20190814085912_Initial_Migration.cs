@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial_Migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -45,6 +45,20 @@ namespace Deepcove_Trust_Website.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CmsLink", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NotificationChannels",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NotificationChannels", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,6 +117,30 @@ namespace Deepcove_Trust_Website.Migrations
                         principalTable: "Accounts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChannelMembership",
+                columns: table => new
+                {
+                    AccountId = table.Column<int>(nullable: false),
+                    NotificationChannelId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChannelMembership", x => new { x.AccountId, x.NotificationChannelId });
+                    table.ForeignKey(
+                        name: "FK_ChannelMembership_Accounts_AccountId",
+                        column: x => x.AccountId,
+                        principalTable: "Accounts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChannelMembership_NotificationChannels_NotificationChannelId",
+                        column: x => x.NotificationChannelId,
+                        principalTable: "NotificationChannels",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -196,6 +234,11 @@ namespace Deepcove_Trust_Website.Migrations
                 values: new object[] { 1, "bookings@deepcovehostel.co.nz", "https://www.facebook.com/deepcoveoutdooreducationtrust/", "", "", "", "(03) 928 5262" });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ChannelMembership_NotificationChannelId",
+                table: "ChannelMembership",
+                column: "NotificationChannelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PageRevisions_CreatedById",
                 table: "PageRevisions",
                 column: "CreatedById");
@@ -229,6 +272,9 @@ namespace Deepcove_Trust_Website.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ChannelMembership");
+
+            migrationBuilder.DropTable(
                 name: "PasswordResets");
 
             migrationBuilder.DropTable(
@@ -236,6 +282,9 @@ namespace Deepcove_Trust_Website.Migrations
 
             migrationBuilder.DropTable(
                 name: "WebsiteSettings");
+
+            migrationBuilder.DropTable(
+                name: "NotificationChannels");
 
             migrationBuilder.DropTable(
                 name: "PageRevisions");
