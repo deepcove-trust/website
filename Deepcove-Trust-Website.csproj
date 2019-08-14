@@ -36,6 +36,10 @@
     <Compile Remove="Migrations\20190730220255_Settings and Pages.Designer.cs" />
     <Compile Remove="Migrations\20190806074728_TextFields and Links.cs" />
     <Compile Remove="Migrations\20190806074728_TextFields and Links.Designer.cs" />
+    <Compile Remove="Migrations\20190811014333_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190811014333_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190814085831_Initial.cs" />
+    <Compile Remove="Migrations\20190814085831_Initial.Designer.cs" />
   </ItemGroup>
 
 

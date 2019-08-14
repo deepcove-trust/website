@@ -16,6 +16,7 @@ namespace Deepcove_Trust_Website.Data
         public DbSet<PageRevision> PageRevisions { get; set; }
         public DbSet<Template> PageTemplates { get; set; }
         public DbSet<WebsiteSettings> WebsiteSettings { get; set; }
+        public DbSet<NotificationChannel> NotificationChannels { get; set; }
 
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
@@ -84,6 +85,10 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<Link>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
             // End Enum Conversions
 
+            // Define key for junction table linking notification channels to accounts
+            modelBuilder.Entity<ChannelMembership>()
+                .HasKey(e => new { e.AccountId, e.NotificationChannelId });
+                
             // Seeds
             modelBuilder.Entity<WebsiteSettings>().HasData(new WebsiteSettings
             {
