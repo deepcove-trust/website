@@ -66,16 +66,33 @@ namespace Deepcove_Trust_Website.Controllers
         [Route("/api/page/{pageId:int}/{revisionId:int?}")]
         public IActionResult PageContent(int pageId, int? revisionId)
         {
-            var data = _Db.Pages.Include(i => i.PageRevisions)
+            var data = _Db.Pages
+                .Include(i => i.PageRevisions)
+                    .ThenInclude(pr => pr.TextFields)
+                    .ThenInclude(tf => tf.link)
+                .ToList()
                 .Select(s => new {
                 s.Id,
                 s.Name,
                 s.Public,
                 updated = new {
-                    at = "{dd} {MONTH}, {YYYY}",
-                    by = "{last author}"
+                    at = s.Latest.CreatedAt,
+                    by = s.Latest.CreatedBy.Name
                 },
-                text = s.Latest,
+                text = s.Latest.TextFields.Select(s1 => new { 
+                        s1.Id,
+                        s1.Heading,
+                        s1.SlotNo,
+                        s1.Text,
+                        //link = new {
+                        //    s1.link.Id,
+                        //    s1.link.Text,
+                        //    s1.link.Href,
+                        //    s1.link.Color,
+                        //    s1.link.Align,
+                        //    s1.link.IsButton
+                        //}
+                }),// s.Latest.Select(pr => new { pr.SlotId, pr.Name, pr.Heading, pr.Link }),
                 media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
                 User.Identity.IsAuthenticated
             }).FirstOrDefault();

@@ -14,6 +14,9 @@ import { Button, ConfirmButton } from '../Components/Button';
 
 export default class TextBlockLink extends Component {
     isExternalUrl(href) {
+        if (!href) {
+            return;
+        }
         // Contains http OR https AND does != current site HOST
          // return > TRUE
           // else False
