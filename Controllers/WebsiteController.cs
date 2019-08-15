@@ -7,6 +7,7 @@ using Deepcove_Trust_Website.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace Deepcove_Trust_Website.Controllers
 {
@@ -25,7 +26,7 @@ namespace Deepcove_Trust_Website.Controllers
             Page page = _Db.Pages.Include(i => i.Template)
                 .Where(c => c.Name == pageName.Replace('-', ' ') && c.Section == Section.main).FirstOrDefault();
 
-            if (page == null || !page.Public && !User.Identity.IsAuthenticated)
+            if (page == null || (!page.Public && !User.Identity.IsAuthenticated))
                 return NotFound();
 
             // Todo: Mail Developers with custom exception
@@ -95,26 +96,38 @@ namespace Deepcove_Trust_Website.Controllers
                            align = s1.link?.Align,
                            isButton = s1.link?.IsButton
                         }
-                }),// s.Latest.Select(pr => new { pr.SlotId, pr.Name, pr.Heading, pr.Link }),
+                }),
                 media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
                 User.Identity.IsAuthenticated
             }).FirstOrDefault();
-
-            /**
-             * .Select(s1 => new {
-                    s1.Id,
-                    slot = s1.SlotNo,
-                    s1.Heading,
-                    s1.Text,
-                    link = new { }
-                })
-            */
-            
 
             if (data == null || !data.Public && !User.Identity.IsAuthenticated)
                 return NotFound();
 
             return Ok(data);
+        }
+
+        [Authorize]
+        [HttpPost]        
+        [Route("/api/page/{pageId:int}/text/{fieldId:int}")]
+        public async Task<IActionResult> UpdateTextField(int pageId, int fieldId, IFormCollection request)
+        {
+            // Retrieve page from database
+
+            // Deal with null returns
+
+            // Validate inputs
+
+            // Duplicate latest revision
+
+            // Associate unchanged text fields with the new revision
+
+            // Create new textField with supplied text
+
+            // Save changes
+
+
+            return Ok();
         }
 
         [Authorize]
