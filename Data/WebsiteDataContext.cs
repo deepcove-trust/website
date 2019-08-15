@@ -88,7 +88,15 @@ namespace Deepcove_Trust_Website.Data
             // Define key for junction table linking notification channels to accounts
             modelBuilder.Entity<ChannelMembership>()
                 .HasKey(e => new { e.AccountId, e.NotificationChannelId });
-                
+
+            // Place unique constraints onto appropriate properties
+
+            modelBuilder.Entity<Template>()
+                .HasIndex(e => e.Name).IsUnique();
+
+            modelBuilder.Entity<Page>()
+                .HasIndex(e => e.Name).IsUnique();
+
             // Seeds
             modelBuilder.Entity<WebsiteSettings>().HasData(new WebsiteSettings
             {
