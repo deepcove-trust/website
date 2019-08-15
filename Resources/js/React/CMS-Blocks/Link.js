@@ -1,41 +1,25 @@
 ﻿import React, { Component, Fragment } from 'react';
-import { Button, ConfirmButton } from '../Components/Button';
-
-/**
- *  link: {//Button or hyperlink
- *     id: 0,************
- *     Text: "This is a button/link example", ***************
- *     href: "/url-to-action",// Relative URL means instie, absolute means we show an external icon ***********
- *     isButton: true, // Button or link *******
- *     btnClass: null,// Btn Colours (Only used on buttons)
- *     align: null,//Left, Right, Center, Block (should be converted to classes  )
- *  }
- * */
 
 export default class TextBlockLink extends Component {
     isExternalUrl(href) {
         if (!href) {
             return;
         }
-        // Contains http OR https AND does != current site HOST
-         // return > TRUE
-          // else False
+
+        // If the hyperlink is external, add an icon to the end of the text
         return href.includes("http://") || href.includes("https://") && !href.includes(window.location.hostname);
     }
 
     alignBtn() {
         switch (this.props.link.align) {
-            case "block":
-                return "btn-block";
-
             case "center":
-                return "d-block mx-auto";
+                return "text-center";
 
             case "right":
-                return "d-block mr-0 ml-auto";
+                return "text-right";
 
             default:
-                return "";
+                return false;
         }
     }
 
@@ -62,9 +46,19 @@ export default class TextBlockLink extends Component {
         let ui;
         if (this.props.link.isButton) {
             {urlIcon}
-            ui = <Button btnClass={`btn btn-${this.props.link.color} ${this.alignBtn()}`}>{this.props.link.text} {urlIcon}</Button>
+            ui = (
+                <div className={this.alignBtn()}>
+                    <a className={`btn btn-${this.props.link.color} ${this.props.link.align == "block" ? "btn-block" : ""}`}
+                        href={this.props.link.href}>
+                        {this.props.link.text} {urlIcon}
+                    </a>
+                </div>
+            )
         } else {
-            ui = <a className={`text-${this.props.link.color} ${this.alignText()}`} href={this.props.link.href}>{this.props.link.text} {urlIcon}</a>
+            ui = <a className={`text-${this.props.link.color} ${this.alignText()}`}
+                    href={this.props.link.href}>
+                    {this.props.link.text} {urlIcon}
+                </a>
         }
 
         return (

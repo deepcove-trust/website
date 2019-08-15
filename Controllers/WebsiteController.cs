@@ -68,8 +68,10 @@ namespace Deepcove_Trust_Website.Controllers
         {
             var data = _Db.Pages
                 .Include(i => i.PageRevisions)
+                    .ThenInclude(i1 => i1.CreatedBy)
+                .Include(i => i.PageRevisions)
                     .ThenInclude(pr => pr.TextFields)
-                    .ThenInclude(tf => tf.link)
+                    .ThenInclude(tf => tf.link)                    
                 .ToList()
                 .Select(s => new {
                 s.Id,
@@ -84,14 +86,15 @@ namespace Deepcove_Trust_Website.Controllers
                         s1.Heading,
                         s1.SlotNo,
                         s1.Text,
-                        //link = new {
-                        //    s1.link.Id,
-                        //    s1.link.Text,
-                        //    s1.link.Href,
-                        //    s1.link.Color,
-                        //    s1.link.Align,
-                        //    s1.link.IsButton
-                        //}
+                        link = new
+                        {
+                           id = s1.link?.Id,
+                           text = s1.link?.Text,
+                           href = s1.link?.Href,
+                           color = s1.link?.Color,
+                           align = s1.link?.Align,
+                           isButton = s1.link?.IsButton
+                        }
                 }),// s.Latest.Select(pr => new { pr.SlotId, pr.Name, pr.Heading, pr.Link }),
                 media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
                 User.Identity.IsAuthenticated
