@@ -1,12 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import Alert from '../Components/Alert';
-import Panel from '../Components/Panel';
-import $ from 'jquery';
-
 import ChangePassword from './Account/ChangePassword';
 import Settings from './Account/Settings';
-
+import NotificationChannels from './Account/NotificationChannels';
+import $ from 'jquery';
 
 const baseUri = `/admin/account`;
 
@@ -58,13 +55,9 @@ export default class Account extends Component {
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <h4 className="text-center">Notifications</h4>
-                                <p className="text-center">Send me emails when:</p>
-                                <Alert type="primary">This feature is not yet implemented</Alert>
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" />
-                                    <label className="custom-control-label" for="customCheck">Email type name</label>
-                                </div>
+                                <NotificationChannels baseUri={baseUri}
+                                    cb={this.getData.bind(this)}
+                                />
                             </div>
                         </div>
                     </div>
