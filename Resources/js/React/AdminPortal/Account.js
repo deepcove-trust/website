@@ -43,32 +43,30 @@ export default class Account extends Component {
                     </div>
 
                     <div className="col-12">
-                        <Panel>
-                            <div className="row">
-                                <div className="col-lg-6 col-md-12">
-                                    <h4 className="text-center">Account Details</h4>
-
-                                    <Settings account={this.state.account}
-                                        u={this.getData.bind(this)}
-                                        baseUri={baseUri}
-                                    />
-                                </div>
-
-                                <div className="col-lg-6 col-md-12">
-                                    <h4 className="text-center">Notifications</h4>
-                                    <p className="text-center">Send me emails when:</p>
-                                    <Alert type="primary">This feature is not yet implemented</Alert>
-                                    <div className="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" />
-                                        <label className="custom-control-label" for="customCheck">Email type name</label>
-                                    </div>
-                                </div>
+                        <div className="row">
+                            <div className="col-lg-4 col-md-6 col-sm-12">
+                                <Settings account={this.state.account}
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                />
                             </div>
 
-                            <ChangePassword 
-                                baseUri={baseUri}
-                            />
-                        </Panel>
+                            <div className="col-lg-4 col-md-6 col-sm-12">
+                                <ChangePassword
+                                    baseUri={baseUri}
+                                />
+                            </div>
+
+                            <div className="col-lg-4 col-md-6 col-sm-12">
+                                <h4 className="text-center">Notifications</h4>
+                                <p className="text-center">Send me emails when:</p>
+                                <Alert type="primary">This feature is not yet implemented</Alert>
+                                <div className="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1" />
+                                    <label className="custom-control-label" for="customCheck">Email type name</label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

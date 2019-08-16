@@ -80,47 +80,41 @@ export default class ChangePassword extends Component {
 
     render() {
         return (
-            <form id="password" className="row pb-3" onSubmit={this.updateAccountPassword.bind(this)}>
-                <div className="col-12">
-                    <h4 className="text-center">Update Password</h4>
-                    <p className="text-center">Option Password Reset</p>
-                    <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
-                        <Input id="currentPassword"
-                            type="password"
-                            name="currentPassword"
-                            autoComplete="password"
-                            required
-                        />
-                    </FormGroup>
-                </div>
+            <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
+                
+                <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
+                    <Input id="currentPassword"
+                        type="password"
+                        name="currentPassword"
+                        autoComplete="password"
+                        required
+                    />
+                </FormGroup>
+                
+                <FormGroup label="New Password" htmlFor="newPassword" required>
+                    <Input id="newPassword"
+                        type="password"
+                        name="newPassword"
+                        autoComplete="newpassword"
+                        cb={this.passwordComparer.bind(this, 1)}
+                        required
+                    />
+                </FormGroup>
+            
+                <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
+                    <Input id="confirmPassword"
+                        type="password"
+                        name="confirmPassword"
+                        autoComplete="newpassword"
+                        cb={this.passwordComparer.bind(this, 2)}
+                        required
+                    />
 
-                <div className="col-lg-6 col-sm-12">
-                    <FormGroup label="New Password" htmlFor="newPassword" required>
-                        <Input id="newPassword"
-                            type="password"
-                            name="newPassword"
-                            autoComplete="newpassword"
-                            cb={this.passwordComparer.bind(this, 1)}
-                            required
-                        />
-                        <small className="text-danger">{this.passwordConditions().label}</small>
-                        <small className="text-danger d-block">{this.state.requestFailed}</small>
-                    </FormGroup>
-                </div>
+                    <small className="text-danger">{this.passwordConditions().label}</small>
+                    <small className="text-danger d-block">{this.state.requestFailed}</small>
+                </FormGroup>   
 
-                <div className="col-lg-6 col-sm-12">
-                    <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
-                        <Input id="confirmPassword"
-                            type="password"
-                            name="confirmPassword"
-                            autoComplete="newpassword"
-                            cb={this.passwordComparer.bind(this, 2)}
-                            required
-                        />
-                    </FormGroup>
-                </div>
-
-                <Button btnClass="btn btn-warning d-block ml-auto mr-3" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
+                <Button btnClass="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
             </form>
         )
     }

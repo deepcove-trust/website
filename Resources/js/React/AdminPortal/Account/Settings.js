@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
 
@@ -42,38 +42,40 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <form id="settings" onSubmit={this.updateAccount.bind(this)}>
-                <FormGroup label="Account Name" htmlFor="accountName" required>
-                    <Input id="accountName"
-                        type="text"
-                        name="name"
-                        autoComplete="name"
-                        value={this.props.account ? this.props.account.name : null}
-                        required
-                    />
-                </FormGroup>
+            <Fragment>
+                <form id="settings" onSubmit={this.updateAccount.bind(this)}>
+                    <FormGroup label="Account Name" htmlFor="accountName" required>
+                        <Input id="accountName"
+                            type="text"
+                            name="name"
+                            autoComplete="name"
+                            value={this.props.account ? this.props.account.name : null}
+                            required
+                        />
+                    </FormGroup>
 
-                <FormGroup label="Email" htmlFor="accountEmail" required>
-                    <Input id="accountEmail"
-                        type="email"
-                        name="email"
-                        autoComplete="email"
-                        value={this.props.account ? this.props.account.email : null}
-                        required
-                    />
-                </FormGroup>
+                    <FormGroup label="Email" htmlFor="accountEmail" required>
+                        <Input id="accountEmail"
+                            type="email"
+                            name="email"
+                            autoComplete="email"
+                            value={this.props.account ? this.props.account.email : null}
+                            required
+                        />
+                    </FormGroup>
 
-                <FormGroup label="Phone Number" htmlFor="accountPhone">
-                    <Input id="accountPhone"
-                        type="text"
-                        name="phone"
-                        value={this.props.account ? this.props.account.phoneNumber : null}
-                        autoComplete="phone"
-                    />
-                </FormGroup>
+                    <FormGroup label="Phone Number" htmlFor="accountPhone">
+                        <Input id="accountPhone"
+                            type="text"
+                            name="phone"
+                            value={this.props.account ? this.props.account.phoneNumber : null}
+                            autoComplete="phone"
+                        />
+                    </FormGroup>
 
-                <Button btnClass="btn btn-primary" pending={this.state.requestPending} type="submit">Update Settings</Button>
-            </form>
+                    <Button btnClass="btn btn-primary mt-4" pending={this.state.requestPending} type="submit">Update Settings</Button>
+                </form>
+            </Fragment>
         )
     }
 }
