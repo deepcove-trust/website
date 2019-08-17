@@ -1,7 +1,8 @@
 ﻿import React, { Component, Fragment } from 'react';
 import TextBlockLink from './Link';
-import { FormGroup, Input, TextArea } from '../Components/FormControl';
+import { Input, TextArea } from '../Components/FormControl';
 import { Button, ConfirmButton } from '../Components/Button';
+import _ from 'lodash';
 
 const Mode = {
     View: 'view',
@@ -15,7 +16,7 @@ export default class TextBlock extends Component {
 
         this.state = {
             content: {
-                title: null,
+                heading: null,
                 text: null,
                 link: {
                     align: null,
@@ -31,9 +32,36 @@ export default class TextBlock extends Component {
     componentWillReceiveProps(nextProps) {
         if (nextProps.content && nextProps.content != this.state.content) {
             this.setState({
-                content: nextProps.content
+                content: _.cloneDeep(nextProps.content)
             });
         }
+    }
+
+    editVal(field, value) {
+        let content = _.cloneDeep(this.state.content);
+        switch (field) {
+            case "heading":
+                content.heading = value;
+                break;
+
+            case "text":
+                content.text = value;
+                break
+
+            case "link":
+                content.link = value;
+        }
+
+        this.setState({
+            content: content
+        });
+    }
+
+    cancelEditMode() {
+        this.setState({
+            editMode: Mode.View,
+            content: this.props.content
+        });
     }
 
     editMode(t) {
@@ -44,7 +72,7 @@ export default class TextBlock extends Component {
 
     render() {
         let btnEditMode;
-        if (this.props.admin && !(this.state.editMode == Mode.Edit)) {
+        if (this.props.admin && this.state.editMode == Mode.View) {
             btnEditMode = (
                 <Button btnClass="btn btn-sm btn-info" cb={this.editMode.bind(this, Mode.Edit)}>
                     Edit <i className="fas fa-pencil"></i>
@@ -52,21 +80,34 @@ export default class TextBlock extends Component {
             )
         }
 
+        let btnCenter;
+        if (this.state.editMode == Mode.Preview) {
+            btnCenter = (
+                <Button btnClass="btn btn-info" type="button" cb={this.editMode.bind(this, Mode.Edit)}>
+                    Edit <i className="fa fa-pencil"></i>
+                </Button>
+                )
+        } else {
+            btnCenter = (
+                <Button btnClass="btn btn-info" type="button" cb={this.editMode.bind(this, Mode.Preview)}>
+                    Preview <i className="fa fa-binoculars"></i>
+                </Button>
+            )
+        }
+
         let btnManageChanges;
-        if (this.props.admin && this.state.editMode == Mode.Edit) {
+        if (this.props.admin && this.state.editMode != Mode.View) {
             btnManageChanges = (
                 <div role="group" className="btn-group btn-group-sm pb-2 d-block">
-                    <ConfirmButton btnClass="btn btn-danger" cb={this.editMode.bind(this, Mode.View)}>
+                    <ConfirmButton btnClass="btn btn-danger" cb={this.cancelEditMode.bind(this)}>
                         Cancel <i className="fas fa-times"></i>
                     </ConfirmButton>
 
-                    <button className="btn btn-info" type="button">
-                        Preview <i className="fa fa-binoculars"></i>
-                    </button>
+                    {btnCenter}
 
-                    <button className="btn btn-success" type="button">
+                    <ConfirmButton btnClass="btn btn-success">
                         Save <i className="fa fa-check"></i>
-                    </button>
+                    </ConfirmButton>
                 </div>
             )
         }
@@ -76,7 +117,7 @@ export default class TextBlock extends Component {
             text = (
                 <Fragment>
                     <small clasName="text-muted">Text Content (Required)</small>
-                    <TextArea inputClass="form-control cms mb-2" value={this.state.content.text} rows={6} required></TextArea>
+                    <TextArea inputClass="form-control cms mb-2" value={this.state.content.text} rows={6} cb={this.editVal.bind(this, 'text')} required></TextArea>
                 </Fragment>
             )
         }
@@ -88,7 +129,7 @@ export default class TextBlock extends Component {
             heading = (
             <Fragment>
                 <small className="text-muted">Heading (Optional)</small>
-                <Input type="text" inputClass="form-control cms" value={this.state.content.heading || null} />                
+                <Input type="text" inputClass="form-control cms" value={this.state.content.heading || null} cb={this.editVal.bind(this, 'heading')} />                
             </Fragment>
             )
         }
