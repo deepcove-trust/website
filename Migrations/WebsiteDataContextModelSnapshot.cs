@@ -131,6 +131,9 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.HasIndex("TemplateId");
 
                     b.ToTable("Pages");
@@ -181,6 +184,19 @@ namespace Deepcove_Trust_Website.Migrations
                     b.ToTable("PasswordResets");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.RevisionTextField", b =>
+                {
+                    b.Property<int>("PageRevisionId");
+
+                    b.Property<int>("TextFieldId");
+
+                    b.HasKey("PageRevisionId", "TextFieldId");
+
+                    b.HasIndex("TextFieldId");
+
+                    b.ToTable("RevisionTextField");
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Template", b =>
                 {
                     b.Property<int>("Id")
@@ -204,6 +220,9 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("PageTemplates");
                 });
 
@@ -215,19 +234,15 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Heading");
 
-                    b.Property<int?>("PageRevisionId");
+                    b.Property<int?>("LinkId");
 
                     b.Property<int>("SlotNo");
 
                     b.Property<string>("Text");
 
-                    b.Property<int?>("linkId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("PageRevisionId");
-
-                    b.HasIndex("linkId");
+                    b.HasIndex("LinkId");
 
                     b.ToTable("TextField");
                 });
@@ -305,15 +320,24 @@ namespace Deepcove_Trust_Website.Migrations
                         .HasForeignKey("AccountId");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.RevisionTextField", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.PageRevision", "PageRevision")
+                        .WithMany("RevisionTextFields")
+                        .HasForeignKey("PageRevisionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.TextField", "TextField")
+                        .WithMany()
+                        .HasForeignKey("TextFieldId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.TextField", b =>
                 {
-                    b.HasOne("Deepcove_Trust_Website.Models.PageRevision")
+                    b.HasOne("Deepcove_Trust_Website.Models.Link", "Link")
                         .WithMany("TextFields")
-                        .HasForeignKey("PageRevisionId");
-
-                    b.HasOne("Deepcove_Trust_Website.Models.Link", "link")
-                        .WithMany("TextFields")
-                        .HasForeignKey("linkId");
+                        .HasForeignKey("LinkId");
                 });
 #pragma warning restore 612, 618
         }

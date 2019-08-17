@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class Initial_Migration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -120,6 +120,28 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TextField",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SlotNo = table.Column<int>(nullable: false),
+                    Heading = table.Column<string>(nullable: true),
+                    Text = table.Column<string>(nullable: true),
+                    LinkId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TextField", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TextField_CmsLink_LinkId",
+                        column: x => x.LinkId,
+                        principalTable: "CmsLink",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ChannelMembership",
                 columns: table => new
                 {
@@ -200,32 +222,27 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TextField",
+                name: "RevisionTextField",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    SlotNo = table.Column<int>(nullable: false),
-                    Heading = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true),
-                    linkId = table.Column<int>(nullable: true),
-                    PageRevisionId = table.Column<int>(nullable: true)
+                    PageRevisionId = table.Column<int>(nullable: false),
+                    TextFieldId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TextField", x => x.Id);
+                    table.PrimaryKey("PK_RevisionTextField", x => new { x.PageRevisionId, x.TextFieldId });
                     table.ForeignKey(
-                        name: "FK_TextField_PageRevisions_PageRevisionId",
+                        name: "FK_RevisionTextField_PageRevisions_PageRevisionId",
                         column: x => x.PageRevisionId,
                         principalTable: "PageRevisions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TextField_CmsLink_linkId",
-                        column: x => x.linkId,
-                        principalTable: "CmsLink",
+                        name: "FK_RevisionTextField_TextField_TextFieldId",
+                        column: x => x.TextFieldId,
+                        principalTable: "TextField",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
@@ -249,9 +266,21 @@ namespace Deepcove_Trust_Website.Migrations
                 column: "PageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pages_Name",
+                table: "Pages",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pages_TemplateId",
                 table: "Pages",
                 column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PageTemplates_Name",
+                table: "PageTemplates",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_PasswordResets_AccountId",
@@ -259,14 +288,14 @@ namespace Deepcove_Trust_Website.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TextField_PageRevisionId",
-                table: "TextField",
-                column: "PageRevisionId");
+                name: "IX_RevisionTextField_TextFieldId",
+                table: "RevisionTextField",
+                column: "TextFieldId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TextField_linkId",
+                name: "IX_TextField_LinkId",
                 table: "TextField",
-                column: "linkId");
+                column: "LinkId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -278,7 +307,7 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "PasswordResets");
 
             migrationBuilder.DropTable(
-                name: "TextField");
+                name: "RevisionTextField");
 
             migrationBuilder.DropTable(
                 name: "WebsiteSettings");
@@ -290,13 +319,16 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "PageRevisions");
 
             migrationBuilder.DropTable(
-                name: "CmsLink");
+                name: "TextField");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
 
             migrationBuilder.DropTable(
                 name: "Pages");
+
+            migrationBuilder.DropTable(
+                name: "CmsLink");
 
             migrationBuilder.DropTable(
                 name: "PageTemplates");
