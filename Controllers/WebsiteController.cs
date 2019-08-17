@@ -9,15 +9,18 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Deepcove_Trust_Website.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.Controllers
 {
     public class WebsiteController : Controller
     {
+        private readonly ILogger<WebsiteController> _Logger;
         private readonly WebsiteDataContext _Db;
-        public WebsiteController(WebsiteDataContext db)
+        public WebsiteController(WebsiteDataContext db, ILogger<WebsiteController> logger)
         {
             _Db = db;
+            _Logger = logger;
         }
 
         [AllowAnonymous]
@@ -142,7 +145,7 @@ namespace Deepcove_Trust_Website.Controllers
                     .ThenInclude(rtf => rtf.TextField)
                 .Include(p => p.PageRevisions)
                     .ThenInclude(pr => pr.CreatedBy)
-                .FirstOrDefaultAsync(p => p.Id == pageId);           
+                .FirstOrDefaultAsync(p => p.Id == pageId);
 
             // Deal with null returns
             if (page == null)
@@ -164,7 +167,7 @@ namespace Deepcove_Trust_Website.Controllers
 
             // Generate the id field
             await _Db.PageRevisions.AddAsync(newRevision);
-            
+
             // Link the new revision to the same fields as the existing revision
             foreach (RevisionTextField field in latestRevision.RevisionTextFields)
             {
@@ -182,7 +185,7 @@ namespace Deepcove_Trust_Website.Controllers
             Link newLink = null;
 
             // Create new link object if the updated text field includes one
-            if(!string.IsNullOrWhiteSpace(request.Str("link-text")))
+            if (!string.IsNullOrWhiteSpace(request.Str("link-text")))
             {
                 newLink = new Link
                 {
@@ -194,14 +197,14 @@ namespace Deepcove_Trust_Website.Controllers
                 };
 
                 await _Db.CmsLink.AddAsync(newLink);
-            }            
+            }
 
             // Create new textField with supplied text
             TextField newField = new TextField
             {
                 SlotNo = slotNum,
                 Heading = request.Str("heading"), // get value from request                
-                Text = request.Str("text"),       
+                Text = request.Str("text"),
                 Link = newLink
             };
 
@@ -233,6 +236,40 @@ namespace Deepcove_Trust_Website.Controllers
 
             await _Db.SaveChangesAsync();
             return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("/api/page/{pageId:int}")]
+        public async Task<IActionResult> DeletePage(int pageId)
+        {
+            try
+            {
+                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+
+                if (page == null)
+                {
+                    return NotFound("Page not found.");
+                }
+
+                page.DeletedAt = DateTime.UtcNow;
+                await _Db.SaveChangesAsync();
+
+                return Ok(Url.Action(
+                    "Index",
+                    "Page", new
+                    {
+                        area = "admin-portal,web",
+                        filter = page.Section.ToString()
+                    })
+                );
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError(ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong");
+            }
         }
     }
 }
