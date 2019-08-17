@@ -108,7 +108,8 @@ export default class TextBlock extends Component {
         if (this.props.admin && this.state.editMode == Mode.View) {
             btnEditMode = (
                 <Button btnClass="btn btn-sm btn-info" cb={this.editMode.bind(this, Mode.Edit)}>
-                    Edit <i className="fas fa-pencil"></i>
+                    {!this.state.content.heading && !this.state.content.text ? 'Add Content' : 'Edit'}
+                    <i className={!this.state.content.heading && !this.state.content.text ? 'fas fa-plus' : 'fas fa-pencil'}></i>
                 </Button>
             )
         }
@@ -149,8 +150,8 @@ export default class TextBlock extends Component {
         if (this.state.editMode == Mode.Edit) {
             text = (
                 <Fragment>
-                    <small clasName="text-muted">Text Content (Required)</small>
-                    <TextArea inputClass="form-control cms mb-2" value={this.state.content.text} rows={6} cb={this.editVal.bind(this, 'text')} required></TextArea>
+                    <small clasName="text-muted">Text Content</small>
+                    <TextArea inputClass="form-control cms mb-2" value={this.state.content.text} rows={6} cb={this.editVal.bind(this, 'text')}></TextArea>
                 </Fragment>
             )
         }
