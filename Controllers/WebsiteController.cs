@@ -89,6 +89,7 @@ namespace Deepcove_Trust_Website.Controllers
                     text = s.Latest.RevisionTextFields.OrderBy(o => o.TextField.SlotNo).Select(s1 => new
                     {
                         s1.TextField.Id,
+                        pageId = s.Id,
                         s1.TextField.Heading,
                         s1.TextField.SlotNo,
                         s1.TextField.Text,

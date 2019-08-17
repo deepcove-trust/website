@@ -3,6 +3,7 @@ import TextBlockLink from './Link';
 import { Input, TextArea } from '../Components/FormControl';
 import { Button, ConfirmButton } from '../Components/Button';
 import _ from 'lodash';
+import $ from 'jQuery';
 
 const Mode = {
     View: 'view',
@@ -25,7 +26,8 @@ export default class TextBlock extends Component {
                     text: null
                 }
             },
-            editMode: Mode.View
+            editMode: Mode.View,
+            requestPending: false
         }
     }
 
@@ -66,8 +68,39 @@ export default class TextBlock extends Component {
 
     editMode(t) {
         this.setState({
-             editMode: t
-         });
+            editMode: t
+        });
+    }
+
+    saveChanges() {
+        console.log(this.state.content.heading);
+        this.setState({
+            requestPending: true,
+            editMode: Mode.Preview
+        }, () => {
+            $.ajax({
+                type: 'post',
+                url: `${this.props.baseUri}/${this.props.content.pageId}/text/${this.props.content.slotNo}`,
+                data: {
+                    heading: this.state.content.heading,
+                    text: this.state.content.text,
+                    link: this.state.content.link
+                },
+            }).done(() => {
+                this.props.u();
+
+                this.setState({
+                    editMode: Mode.View,
+                    requestPending: false
+                });                
+            }).fail((err) => {
+                console.error(err);
+                this.setState({
+                    editMode: Mode.Edit,
+                    requestPending: false
+                });
+            });
+        });
     }
 
     render() {
@@ -86,7 +119,7 @@ export default class TextBlock extends Component {
                 <Button btnClass="btn btn-info" type="button" cb={this.editMode.bind(this, Mode.Edit)}>
                     Edit <i className="fa fa-pencil"></i>
                 </Button>
-                )
+            )
         } else {
             btnCenter = (
                 <Button btnClass="btn btn-info" type="button" cb={this.editMode.bind(this, Mode.Preview)}>
@@ -105,7 +138,7 @@ export default class TextBlock extends Component {
 
                     {btnCenter}
 
-                    <ConfirmButton btnClass="btn btn-success">
+                    <ConfirmButton pending={this.state.requestPending} cb={this.saveChanges.bind(this)} btnClass="btn btn-success">
                         Save <i className="fa fa-check"></i>
                     </ConfirmButton>
                 </div>
@@ -123,27 +156,27 @@ export default class TextBlock extends Component {
         }
 
         let heading;
-        if (!(this.state.editMode == Mode.Edit )&& this.state.content.heading) {
+        if (!(this.state.editMode == Mode.Edit) && this.state.content.heading) {
             heading = <h6 className="d-inline mr-3">{this.state.content.heading}</h6>
         } else if (this.state.editMode == Mode.Edit) {
             heading = (
-            <Fragment>
-                <small className="text-muted">Heading (Optional)</small>
-                <Input type="text" inputClass="form-control cms" value={this.state.content.heading || null} cb={this.editVal.bind(this, 'heading')} />                
-            </Fragment>
+                <Fragment>
+                    <small className="text-muted">Heading (Optional)</small>
+                    <Input type="text" inputClass="form-control cms" value={this.state.content.heading || null} cb={this.editVal.bind(this, 'heading')} />
+                </Fragment>
             )
         }
 
         let link;
         if (this.state.content.link) {
             link = <TextBlockLink link={this.state.content.link} />
-        }       
+        }
 
         return (
             <Fragment>
                 {btnManageChanges}
                 {heading}
-                {btnEditMode}       
+                {btnEditMode}
                 {text}
                 {link}
             </Fragment>

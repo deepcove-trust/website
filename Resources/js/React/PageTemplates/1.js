@@ -55,19 +55,28 @@ export default class ReactTemplate extends Component {
                     <div className="col-12  pb-4">
                         <div className="row">
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <TextBlock admin={this.state.data && !!this.state.data.isAuthenticated}
+                                <TextBlock
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                    admin={this.state.data && !!this.state.data.isAuthenticated}
                                     content={this.state.data ? this.state.data.text[0] : null}
                                 />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <TextBlock admin={this.state.data && !!this.state.data.isAuthenticated}
+                                <TextBlock
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                    admin={this.state.data && !!this.state.data.isAuthenticated}                                    
                                     content={this.state.data ? this.state.data.text[1] : null}
                                 />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <TextBlock admin={this.state.data && !!this.state.data.isAuthenticated}
+                                <TextBlock
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                    admin={this.state.data && !!this.state.data.isAuthenticated}
                                     content={this.state.data ? this.state.data.text[2] : null}
                                 />
                             </div>
