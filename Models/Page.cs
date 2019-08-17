@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Models
                 if (PageRevisions == null)
                     return null;
 
-                return PageRevisions.FirstOrDefault();
+                return PageRevisions.OrderByDescending(e => e.Id).FirstOrDefault();
             }
         }
 
