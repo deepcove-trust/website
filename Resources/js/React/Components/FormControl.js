@@ -1,4 +1,57 @@
 ﻿import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip'
+
+export class Checkbox extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            checked: this.props.checked || false
+        }
+    }
+
+    toggleCheckbox() {
+        console.log(this.state.checked);
+        console.log(this.state.checked);
+        this.setState({
+            checked: !this.state.checked
+        }, () => {
+            if (this.props.cb)
+                this.props.cb(this.state.checked);
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.checked && nextProps.checked != this.state.checked) {
+            this.setState({
+                checked: nextProps.checked
+            });
+        }
+    }
+
+    render() {
+        let id = this.props.id ? `chq-${this.props.id}` : null;
+
+        return (
+            <div className="custom-control custom-checkbox">
+                <ReactTooltip />
+                <input id={id}
+                    type="checkbox"
+                    class="custom-control-input"
+                    checked={this.state.checked}
+                    onChange={this.toggleCheckbox.bind(this)}
+                />
+
+                <label className='custom-control-label noselect'
+                    for={id}
+                    data-tip={this.props.tooltip || false}
+                >
+                    {this.props.label}
+                </label>
+            </div>
+        )
+    }
+}
 
 export class FormGroup extends Component {
     render() {

@@ -32,7 +32,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
         public IActionResult Index()
         {
-            return View(viewName: "~/Views/AdminPortal/Account.cshtml");
+            return View(viewName: "~/Views/AdminPortal/AccountSettings.cshtml");
         }
 
         [HttpGet("data")]
@@ -40,12 +40,17 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         {
             try
             {
-                return Ok(await _Db.Accounts.Select(s => new {
-                    s.Id,
-                    s.Name,
-                    s.Email,
-                    s.PhoneNumber
-                }).Where(c => c.Id == User.AccountId()).FirstOrDefaultAsync());
+                return Ok(new
+                {
+                    account = await _Db.Accounts.Select(s => new {
+                        s.Id,
+                        s.Name,
+                        s.Email,
+                        s.PhoneNumber,
+                        notificationChannels = s.ChannelMemberships.Select(s1 => s1.NotificationChannel.Id)
+                    }).Where(c => c.Id == User.AccountId()).FirstOrDefaultAsync(),
+                    availableChannels = await _Db.NotificationChannels.ToListAsync(),
+                });
             }
             catch(Exception ex)
             {
@@ -106,6 +111,57 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 return BadRequest("Something went wrong, please try again later");
             }
             
+        }
+
+        [HttpPost("channel/{channelId:int}")]
+        public async Task<IActionResult> SubscribeToChannel(int channelId)
+        {
+            try
+            {
+                NotificationChannel channel = await _Db.NotificationChannels.FindAsync(channelId);
+                if(channel == null)
+                {
+                    return NotFound("Notification channel not found");
+                }
+
+                _Db.Add(new ChannelMembership
+                {
+                    AccountId = User.AccountId(),
+                    NotificationChannelId = channelId
+                });
+
+                await _Db.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error subscribing {0} to notification channel ID {1}", User.AccountName(), channelId);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later");
+            }
+        }
+
+        [HttpDelete("channel/{channelId:int}")]
+        public async Task<IActionResult> UnsubscribeFromChannel(int channelId)
+        {
+            try
+            {
+                _Db.Remove(new ChannelMembership
+                {
+                    AccountId = User.AccountId(),
+                    NotificationChannelId = channelId
+                });
+
+                return Ok(await _Db.SaveChangesAsync());
+
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error unsubscribing {0} from notification channel ID {1}", User.AccountName(), channelId);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later");
+            }
         }
     }
 }

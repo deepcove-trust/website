@@ -7,7 +7,7 @@ import './js/Libraries/bootstrap.bundle.min.js';
 //import './js/Bootstrap/index';
 
 /* React */
-import './js/React/AdminPortal/Account';
+import './js/React/AdminPortal/AccountSettings';
 import './js/React/Authentication/Login';
 import './js/React/Authentication/RequestPasswordReset';
 import './js/React/Authentication/ResetPassword';

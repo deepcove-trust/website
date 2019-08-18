@@ -5,7 +5,7 @@
         <!-- Brand Logo -->
         <a class="navbar-brand" href="/">
             <img src="~/images/logo.png" alt="logo" />
-            <h4 class="pl-2 d-inline">Admin Portal</h4>
+            @*<h4 class="pl-2 d-inline">Admin Portal</h4>*@
         </a>
         <!-- End Brand Logo -->
 
@@ -38,7 +38,7 @@
                 <li class="dropdown nav-item">
                     <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi @User.AccountNameFirst()</a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a class="dropdown-item" role="presentation" asp-controller="Account">My Account</a>
+                        <a class="dropdown-item" role="presentation" asp-controller="Account">Account Settings</a>
                         <a class="dropdown-item" role="presentation" asp-controller="Login" asp-action="Logout">Log out</a>
                     </div>
                 </li>

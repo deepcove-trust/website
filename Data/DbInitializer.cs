@@ -15,10 +15,7 @@ namespace Deepcove_Trust_Website.Data
         {
             char separator = Path.DirectorySeparatorChar;            
 
-            //Make a list of objects from the json
-            // foreach that list
-                //If object is not in database, add 
-
+            // Page Templates
             List<Template> templatesSeed = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText($"Data{separator}Seeds{separator}templates.json"));
 
             foreach(Template template in templatesSeed)
@@ -28,7 +25,20 @@ namespace Deepcove_Trust_Website.Data
                     context.PageTemplates.Add(template);
                 }
             }
+            // End Page Templates
+            context.SaveChanges();
 
+            // Notification Channels
+            List<NotificationChannel> channelsSeed = JsonConvert.DeserializeObject<List<NotificationChannel>>(File.ReadAllText($"Data{separator}Seeds{separator}notificationChannels.json"));
+            
+            foreach(NotificationChannel channel in channelsSeed)
+            {
+                if(context.NotificationChannels.Where(c => c.Name == channel.Name).FirstOrDefault() == null)
+                {
+                    context.NotificationChannels.Add(channel);
+                }
+            }
+            // End Notification Channels
             context.SaveChanges();
         }
     }

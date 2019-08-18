@@ -1,13 +1,13 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import ChangePassword from './Account/ChangePassword';
-import Settings from './Account/Settings';
-import NotificationChannels from './Account/NotificationChannels';
+import ChangePassword from './AccountSettings/ChangePassword';
+import Settings from './AccountSettings/Settings';
+import NotificationChannels from './AccountSettings/Notifications';
 import $ from 'jquery';
 
 const baseUri = `/admin/account`;
 
-export default class Account extends Component {
+export default class AccountSettings extends Component {
     constructor(props) {
         super(props);
 
@@ -25,10 +25,17 @@ export default class Account extends Component {
             type: 'get',
             url: `${baseUri}/data`
         }).done((data) => {
-            this.setState({ account: data });
+            this.setState({
+                account: data.account,
+                channels: data.availableChannels
+            });
         }).fail((err) => {
             console.error(`[Account@getData] Error getting data: `, err.responseText);
         })
+    }
+
+    getChannelMemberships() {
+        return this.state.account ? this.state.account.notificationChannels : null;
     }
 
     render() {
@@ -36,13 +43,14 @@ export default class Account extends Component {
             <div className="container">
                 <div className="row">
                     <div className="col-12 pb-3">
-                        <h1 className="text-center">My Account</h1>
+                        <h1 className="text-center">Account Settings</h1>
                     </div>
 
                     <div className="col-12">
                         <div className="row">
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <Settings account={this.state.account}
+                                <Settings
+                                    account={this.state.account}
                                     u={this.getData.bind(this)}
                                     baseUri={baseUri}
                                 />
@@ -56,7 +64,9 @@ export default class Account extends Component {
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
                                 <NotificationChannels baseUri={baseUri}
-                                    cb={this.getData.bind(this)}
+                                    channels={this.state.channels}
+                                    channelMemberships={this.getChannelMemberships()}
+                                    u={this.getData.bind(this)}
                                 />
                             </div>
                         </div>
@@ -67,5 +77,5 @@ export default class Account extends Component {
     }
 }
 
-if (document.getElementById('react_account')) 
-    render(<Account />, document.getElementById('react_account'));    
+if (document.getElementById('react_accountSettings')) 
+    render(<AccountSettings />, document.getElementById('react_accountSettings'));    
