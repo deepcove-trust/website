@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
 import ReactTooltip from 'react-tooltip'
 
+const AutoComplete = ["name", "email", "organization", "on"];
+const Type = ["email", "file", "image", "password", "url"];
+
 export class Checkbox extends Component {
     constructor(props) {
         super(props);
@@ -38,6 +41,7 @@ export class Checkbox extends Component {
                 <input id={id}
                     type="checkbox"
                     class="custom-control-input"
+                    name={this.props.name || null}
                     checked={this.state.checked}
                     onChange={this.toggleCheckbox.bind(this)}
                 />
@@ -93,23 +97,18 @@ export class Input extends Component {
     }
 
     getAutoComplete() {
+        if (AutoComplete.includes(this.props.autoComplete))
+            return this.props.autoComplete;
+        
         switch (this.props.autoComplete) {
-            case "name":
-                return "name";
-            case "email":
-                return "email";
             case "phone":
                 return "tel";
             case "password":
                 return "current-password";
             case "newpassword":
                 return "new-password";
-            case "organization":
-                return "organization";
-            case "off":
-                return "off"; 
             default:
-                return "on";
+                return "off";
         }
     }
 
@@ -117,19 +116,12 @@ export class Input extends Component {
         if (!this.props.type)
             throw 'You must provide a type for the input field';
 
+        if (Type.includes(this.props.type))
+            return this.props.type;
+
         switch (this.props.type) {
             case "date":
                 return "datetime-local";
-            case "email":
-                return "email";
-            case "file":
-                return "file";
-            case "image":
-                return "image";
-            case "password":
-                return "password";
-            case "url":
-                return "url";
             default:
                 return "text";
         }
@@ -204,8 +196,6 @@ export class Select extends Component {
             <select id={ this.props.id || false }
                 className={ this.props.inputClass || "form-control" }
                 name={ this.props.name || false }
-                value={ this.state.value }// Is this needed?? The value is actually set using a "selected" attribute in the correct option
-                placeholder={ this.props.placeHolder || false }
                 disabled={ !!this.props.disabled }
                 readonly={ !!this.props.readOnly }
                 required={ !!this.props.required }
@@ -237,23 +227,18 @@ export class TextArea extends Component {
     }
 
     getAutoComplete() {
+        if (AutoComplete.includes(this.props.autoComplete))
+            return this.props.autoComplete;
+
         switch (this.props.autoComplete) {
-            case "name":
-                return "name";
-            case "email":
-                return "email";
             case "phone":
                 return "tel";
             case "password":
                 return "current-password";
             case "newpassword":
                 return "new-password";
-            case "organization":
-                return "organization";
-            case "off":
-                return "off";
             default:
-                return "on";
+                return "off";
         }
     }
 
