@@ -14,6 +14,7 @@ namespace Deepcove_Trust_Website.Data
         public DbSet<PasswordReset> PasswordResets { get; set; }
         public DbSet<Page> Pages { get; set; }
         public DbSet<PageRevision> PageRevisions { get; set; }
+        public DbSet<TextField> TextField { get; set; }
         public DbSet<Template> PageTemplates { get; set; }
         public DbSet<WebsiteSettings> WebsiteSettings { get; set; }
         public DbSet<NotificationChannel> NotificationChannels { get; set; }
@@ -85,9 +86,12 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<Link>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
             // End Enum Conversions
 
-            // Define key for junction table linking notification channels to accounts
+            // Define keys for junction tables
             modelBuilder.Entity<ChannelMembership>()
                 .HasKey(e => new { e.AccountId, e.NotificationChannelId });
+
+            modelBuilder.Entity<RevisionTextField>()
+                .HasKey(e => new { e.PageRevisionId, e.TextFieldId });
 
             // Place unique constraints onto appropriate properties
 

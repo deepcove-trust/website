@@ -18,8 +18,8 @@ namespace Deepcove_Trust_Website.Models
 
 
         // Navigation Properties
-        PageRevision PageRevision { get; set; }
-        public Link link { get; set; }
+        List<RevisionTextField> RevisionTextFields { get; set; }
+        public Link Link { get; set; }
         // End Navigation Properties
     }
 }

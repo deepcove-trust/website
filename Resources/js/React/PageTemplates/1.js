@@ -15,7 +15,6 @@ export default class ReactTemplate extends Component {
         this.state = {
             data: null,
             pageId: null,
-            mode: "view"
         }
     }
 
@@ -57,17 +56,29 @@ export default class ReactTemplate extends Component {
                         <div className="row">
                             <div className="col-lg-4 col-md-6 col-sm-12">
                                 <TextBlock
-                                    content={this.state.data ? this.state.data.text[0] : null} />
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                    admin={this.state.data && !!this.state.data.isAuthenticated}
+                                    content={this.state.data ? this.state.data.text[0] : null}
+                                />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
                                 <TextBlock
-                                    content={this.state.data ? this.state.data.text[1] : null} />
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                    admin={this.state.data && !!this.state.data.isAuthenticated}                                    
+                                    content={this.state.data ? this.state.data.text[1] : null}
+                                />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
                                 <TextBlock
-                                    content={this.state.data ? this.state.data.text[2] : null} />
+                                    u={this.getData.bind(this)}
+                                    baseUri={baseUri}
+                                    admin={this.state.data && !!this.state.data.isAuthenticated}
+                                    content={this.state.data ? this.state.data.text[2] : null}
+                                />
                             </div>
                         </div>
                     </div>

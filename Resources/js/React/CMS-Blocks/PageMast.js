@@ -4,16 +4,19 @@ import Alert from '../Components/Alert';
 import $ from 'jquery';
 
 export default class PageMast extends Component {
+
     render() {
         if (!!!this.props.page)
             return null;
 
         return (
             <div className="col-12 pb-4">
-                <ConfirmButton btnClass="btn btn-danger float-right disabled">
-                    Delete Page &nbsp;
-                    <i className="fas fa-trash"></i>
-                </ConfirmButton>
+
+                <DeletePage admin={true}
+                    page={this.props.page}
+                    baseUri={this.props.baseUri}
+                    u={this.props.u}
+                />
 
                 <ToggleVisibility admin={true}
                     page={this.props.page}
@@ -24,8 +27,8 @@ export default class PageMast extends Component {
                 <ConfirmButton btnClass="btn btn-info float-right disabled">
                     View Page History &nbsp;
                     <i className="far fa-history"></i>
-                </ConfirmButton>      
-                
+                </ConfirmButton>
+
                 <h1 className="mb-1">{this.props.page ? this.props.page.name : ""}</h1>
                 <LastTouched page={this.props.page} />
 
@@ -47,6 +50,32 @@ export class LastTouched extends Component {
             <small>
                 Updated by: {update.by} on {update.at}
             </small>
+        )
+    }
+}
+
+export class DeletePage extends Component {
+    deletePage() {
+        $.ajax({
+            type: 'delete',
+            data: this.props.page.id,
+            url: `${this.props.baseUri}/${this.props.page.id}`
+        }).done((url) => {
+            location.replace(url);
+        }).fail((err) => {
+            console.log(err);
+        });
+    }
+
+    render() {
+        if (!this.props.page.isAuthenticated) {
+            return null;
+        }
+
+        return (
+            <ConfirmButton btnClass="btn btn-danger float-right" cb={this.deletePage.bind(this)} >
+                Delete Page <i class="fas fa-trash"></i>
+            </ConfirmButton>
         )
     }
 }

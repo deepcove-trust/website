@@ -8,15 +8,19 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Deepcove_Trust_Website.Helpers;
+using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.Controllers
 {
     public class WebsiteController : Controller
     {
+        private readonly ILogger<WebsiteController> _Logger;
         private readonly WebsiteDataContext _Db;
-        public WebsiteController(WebsiteDataContext db)
+        public WebsiteController(WebsiteDataContext db, ILogger<WebsiteController> logger)
         {
             _Db = db;
+            _Logger = logger;
         }
 
         [AllowAnonymous]
@@ -52,11 +56,11 @@ namespace Deepcove_Trust_Website.Controllers
                 return NotFound();
 
             // Todo: Mail Developers with custom exception
-            if(page.Template == null)
+            if (page.Template == null)
             {
                 return BadRequest("Fatal error - no page template found.");
             }
-                
+
             ViewData["pageName"] = page.Name;
             ViewData["templateId"] = page.Template.Id;
             ViewData["pageId"] = page.Id;
@@ -71,35 +75,40 @@ namespace Deepcove_Trust_Website.Controllers
                 .Include(i => i.PageRevisions)
                     .ThenInclude(i1 => i1.CreatedBy)
                 .Include(i => i.PageRevisions)
-                    .ThenInclude(pr => pr.TextFields)
-                    .ThenInclude(tf => tf.link)                    
+                    .ThenInclude(pr => pr.RevisionTextFields)
+                    .ThenInclude(rtf => rtf.TextField)
+                    .ThenInclude(tf => tf.Link)
                 .ToList()
-                .Select(s => new {
-                s.Id,
-                s.Name,
-                s.Public,
-                updated = new {
-                    at = s.Latest.CreatedAt,
-                    by = s.Latest.CreatedBy.Name
-                },
-                text = s.Latest.TextFields.Select(s1 => new { 
-                        s1.Id,
-                        s1.Heading,
-                        s1.SlotNo,
-                        s1.Text,
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Name,
+                    s.Public,
+                    updated = new
+                    {
+                        at = s.Latest.CreatedAt,
+                        by = s.Latest.CreatedBy?.Name
+                    },
+                    text = s.Latest.RevisionTextFields.OrderBy(o => o.TextField.SlotNo).Select(s1 => new
+                    {
+                        s1.TextField.Id,
+                        pageId = s.Id,
+                        s1.TextField.Heading,
+                        s1.TextField.SlotNo,
+                        s1.TextField.Text,
                         link = new
                         {
-                           id = s1.link?.Id,
-                           text = s1.link?.Text,
-                           href = s1.link?.Href,
-                           color = s1.link?.Color,
-                           align = s1.link?.Align,
-                           isButton = s1.link?.IsButton
+                            id = s1.TextField.Link?.Id,
+                            text = s1.TextField.Link?.Text,
+                            href = s1.TextField.Link?.Href,
+                            color = s1.TextField.Link?.Color,
+                            align = s1.TextField.Link?.Align,
+                            isButton = s1.TextField.Link?.IsButton
                         }
-                }),
-                media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
-                User.Identity.IsAuthenticated
-            }).FirstOrDefault();
+                    }),
+                    media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
+                    User.Identity.IsAuthenticated
+                }).FirstOrDefault();
 
             if (data == null || !data.Public && !User.Identity.IsAuthenticated)
                 return NotFound();
@@ -107,25 +116,109 @@ namespace Deepcove_Trust_Website.Controllers
             return Ok(data);
         }
 
-        [Authorize]
-        [HttpPost]        
-        [Route("/api/page/{pageId:int}/text/{fieldId:int}")]
-        public async Task<IActionResult> UpdateTextField(int pageId, int fieldId, IFormCollection request)
+        /// <summary>
+        /// Creates a new page revision, based off of the latest revision, with an updated text field.
+        /// </summary>
+        /// <param name="pageId">The ID of the page being revised</param>
+        /// <param name="slotNum">The slot number of the text field being updated</param>
+        /// <param name="request">
+        /// Key values:
+        /// "heading" - (optional) the text to display as the heading |
+        /// "text" - the text to display in the body of the text field |
+        /// "link-text" - (optional) the text to display in the link - this field is used to determine 
+        /// whether or the updated field contains a link |
+        /// "link-href" - (optional) the URL to which the link is linked to |
+        /// "link-isButton" = (optional) if true, link will display as bootstrap button |
+        /// "link-color" = (optional) sets the color of the link using the Color enum |
+        /// "link-align" = (optional) sets the alignment of the link using the Align enum 
+        /// </param>
+        /// <returns></returns>
+        //[Authorize] // Todo: Reinstate this
+        [HttpPost]
+        [Route("/api/page/{pageId:int}/text/{slotNum:int}")]
+        public async Task<IActionResult> UpdateTextField(int pageId, int slotNum, IFormCollection request)
         {
             // Retrieve page from database
+            Page page = await _Db.Pages
+                .Include(p => p.PageRevisions)
+                    .ThenInclude(pr => pr.RevisionTextFields)
+                    .ThenInclude(rtf => rtf.TextField)
+                .Include(p => p.PageRevisions)
+                    .ThenInclude(pr => pr.CreatedBy)
+                .FirstOrDefaultAsync(p => p.Id == pageId);
 
             // Deal with null returns
+            if (page == null)
+            {
+                return NotFound("Page not found.");
+            }
 
             // Validate inputs
 
-            // Duplicate latest revision
+            PageRevision latestRevision = page.Latest;
 
-            // Associate unchanged text fields with the new revision
+            // Duplicate latest revision
+            PageRevision newRevision = new PageRevision
+            {
+                Page = page,
+                RevisionTextFields = new List<RevisionTextField>(),
+                CreatedBy = await _Db.Accounts.FindAsync(1)   // (User.AccountId())
+            };
+
+            // Generate the id field
+            await _Db.PageRevisions.AddAsync(newRevision);
+
+            // Link the new revision to the same fields as the existing revision
+            foreach (RevisionTextField field in latestRevision.RevisionTextFields)
+            {
+                // Only copy text fields across if they are not the one being edited
+                if (field.TextField.SlotNo != slotNum)
+                {
+                    newRevision.RevisionTextFields.Add(new RevisionTextField
+                    {
+                        PageRevisionId = newRevision.Id,
+                        TextFieldId = field.TextFieldId
+                    });
+                }
+            }
+
+            Link newLink = null;
+
+            // Create new link object if the updated text field includes one
+            if (!string.IsNullOrWhiteSpace(request.Str("link-text")))
+            {
+                newLink = new Link
+                {
+                    Text = request.Str("link-text"),
+                    Href = request.Str("link-href"),
+                    IsButton = request.Int("link-isButton") == 1,
+                    Color = (Color)request.Int("link-color"),
+                    Align = (Align)request.Int("link-align")
+                };
+
+                await _Db.CmsLink.AddAsync(newLink);
+            }
 
             // Create new textField with supplied text
+            TextField newField = new TextField
+            {
+                SlotNo = slotNum,
+                Heading = request.Str("heading"), // get value from request                
+                Text = request.Str("text"),
+                Link = newLink
+            };
+
+            // Generate an Id for the new text field
+            await _Db.TextField.AddAsync(newField);
+
+            newRevision.RevisionTextFields.Add(new RevisionTextField
+            {
+                PageRevisionId = newRevision.Id,
+                TextFieldId = newField.Id
+            });
 
             // Save changes
-
+            await _Db.SaveChangesAsync();
 
             return Ok();
         }
@@ -144,6 +237,39 @@ namespace Deepcove_Trust_Website.Controllers
             await _Db.SaveChangesAsync();
             return Ok();
         }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("/api/page/{pageId:int}")]
+        public async Task<IActionResult> DeletePage(int pageId)
+        {
+            try
+            {
+                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+
+                if (page == null)
+                {
+                    return NotFound("Page not found.");
+                }
+
+                page.DeletedAt = DateTime.UtcNow;
+                await _Db.SaveChangesAsync();
+
+                return Ok(Url.Action(
+                    "Index",
+                    "Page", new
+                    {
+                        area = "admin-portal,web",
+                        filter = page.Section.ToString()
+                    })
+                );
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError(ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong");
+            }
+        }
     }
 }
- 
