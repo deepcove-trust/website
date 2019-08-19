@@ -1,5 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
-import TextBlockLink from './Link';
+import TextBlockAction from './TextBlockAction';
 import { Input, TextArea } from '../Components/FormControl';
 import { Button, ConfirmButton } from '../Components/Button';
 import _ from 'lodash';
@@ -108,7 +108,7 @@ export default class TextBlock extends Component {
         if (this.props.admin && this.state.editMode == Mode.View) {
             btnEditMode = (
                 <Button btnClass="btn btn-sm btn-info" cb={this.editMode.bind(this, Mode.Edit)}>
-                    {!this.state.content.heading && !this.state.content.text ? 'Add Content' : 'Edit'}
+                    {!this.state.content.heading && !this.state.content.text ? "Add Content" : "Edit"} &nbsp;
                     <i className={!this.state.content.heading && !this.state.content.text ? 'fas fa-plus' : 'fas fa-pencil'}></i>
                 </Button>
             )
@@ -170,7 +170,7 @@ export default class TextBlock extends Component {
 
         let link;
         if (this.state.content.link) {
-            link = <TextBlockLink link={this.state.content.link} />
+            link = <TextBlockAction link={this.state.content.link} />
         }
 
         return (
