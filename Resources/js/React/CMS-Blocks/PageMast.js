@@ -1,5 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
-import { ConfirmButton } from '../Components/Button';
+import { ConfirmButton, ConfirmModal } from '../Components/Button';
 import Alert from '../Components/Alert';
 import $ from 'jquery';
 
@@ -72,10 +72,16 @@ export class DeletePage extends Component {
             return null;
         }
 
-        return (
-            <ConfirmButton btnClass="btn btn-danger float-right" cb={this.deletePage.bind(this)} >
+        return (            
+            <ConfirmModal btnClass="btn btn-danger float-right"
+                question="delete page"
+                explanation="This action cannot be undone, all information will be lost"
+                actionText="YES Delete Page!"
+                confirmPhrase={this.props.page.name}
+                cb={this.deletePage.bind(this)}
+            >
                 Delete Page <i class="fas fa-trash"></i>
-            </ConfirmButton>
+            </ConfirmModal>
         )
     }
 }
