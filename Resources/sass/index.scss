@@ -87,6 +87,10 @@ a.navbar-brand {
     animation: fadein 0.25s;
 }
 
+button[disabled]{
+    cursor: not-allowed;
+}
+
 .btn-confirm > span {
     display: none;
 }

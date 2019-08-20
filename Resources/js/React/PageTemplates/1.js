@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Button } from '../Components/Button';
+import { Button, ConfirmModal } from '../Components/Button';
 import { FormGroup, Input, TextArea } from '../Components/FormControl';
 import TextBlock from '../CMS-Blocks/Text';
 import PageMast from '../CMS-Blocks/PageMast';
