@@ -27,8 +27,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             _Logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string tab)
         {
+            ViewData["tab"] = tab;
             return View(viewName: "~/Views/AdminPortal/Web/Settings.cshtml");
         }
 
