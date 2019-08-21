@@ -1,9 +1,11 @@
 ﻿import React, { Component, Fragment } from 'react';
 import TextBlockAction from './TextBlockAction';
+import EditButton from './Text/EditButtons'
 import { Input, TextArea } from '../Components/FormControl';
 import { Button, ConfirmButton } from '../Components/Button';
 import _ from 'lodash';
 import $ from 'jQuery';
+import EditActionModal from './TextBlockAction/EditActionModal';
 
 const Mode = {
     View: 'view',
@@ -19,12 +21,7 @@ export default class TextBlock extends Component {
             content: {
                 heading: null,
                 text: null,
-                link: {
-                    align: null,
-                    href: null,
-                    isButton: false,
-                    text: null
-                }
+                link: null
             },
             editMode: Mode.View,
             requestPending: false
@@ -73,7 +70,6 @@ export default class TextBlock extends Component {
     }
 
     saveChanges() {
-        console.log(this.state.content.heading);
         this.setState({
             requestPending: true,
             editMode: Mode.Preview
@@ -92,7 +88,7 @@ export default class TextBlock extends Component {
                 this.setState({
                     editMode: Mode.View,
                     requestPending: false
-                });                
+                });
             }).fail((err) => {
                 console.error(err);
                 this.setState({
@@ -105,7 +101,7 @@ export default class TextBlock extends Component {
 
     render() {
         let btnEditMode;
-        if (this.props.admin && this.state.editMode == Mode.View) {
+        if (this.state.editMode == Mode.View) {
             btnEditMode = (
                 <Button btnClass="btn btn-sm btn-info" cb={this.editMode.bind(this, Mode.Edit)}>
                     {!this.state.content.heading && !this.state.content.text ? "Add Content" : "Edit"} &nbsp;
@@ -114,43 +110,11 @@ export default class TextBlock extends Component {
             )
         }
 
-        let btnCenter;
-        if (this.state.editMode == Mode.Preview) {
-            btnCenter = (
-                <Button btnClass="btn btn-info" type="button" cb={this.editMode.bind(this, Mode.Edit)}>
-                    Edit <i className="fa fa-pencil"></i>
-                </Button>
-            )
-        } else {
-            btnCenter = (
-                <Button btnClass="btn btn-info" type="button" cb={this.editMode.bind(this, Mode.Preview)}>
-                    Preview <i className="fa fa-binoculars"></i>
-                </Button>
-            )
-        }
-
-        let btnManageChanges;
-        if (this.props.admin && this.state.editMode != Mode.View) {
-            btnManageChanges = (
-                <div role="group" className="btn-group btn-group-sm pb-2 d-block">
-                    <ConfirmButton btnClass="btn btn-danger" cb={this.cancelEditMode.bind(this)}>
-                        Cancel <i className="fas fa-times"></i>
-                    </ConfirmButton>
-
-                    {btnCenter}
-
-                    <ConfirmButton pending={this.state.requestPending} cb={this.saveChanges.bind(this)} btnClass="btn btn-success">
-                        Save <i className="fa fa-check"></i>
-                    </ConfirmButton>
-                </div>
-            )
-        }
-
         let text = <p>{this.state.content.text}</p>;
         if (this.state.editMode == Mode.Edit) {
             text = (
                 <Fragment>
-                    <small clasName="text-muted">Text Content</small>
+                    <small className="text-muted">Text Content</small>
                     <TextArea inputClass="form-control cms mb-2" value={this.state.content.text} rows={6} cb={this.editVal.bind(this, 'text')}></TextArea>
                 </Fragment>
             )
@@ -168,14 +132,34 @@ export default class TextBlock extends Component {
             )
         }
 
+       
+
         let link;
         if (this.state.content.link) {
-            link = <TextBlockAction link={this.state.content.link} />
+            link = (
+                <div >
+                    <TextBlockAction link={this.state.content.link} />
+                    {editLinkBtn}
+                </div>
+            )
+        }
+
+        let editButton;
+        if (this.props.admin) {
+            editButton = (
+                <EditButton mode={this.state.editMode}
+                    editMode={this.editMode.bind(this)}
+                    saveChanges={this.saveChanges.bind(this)}
+                    cancelEditMode={this.cancelEditMode.bind(this)}
+                    requestPending={this.state.requestPending}
+                />
+            )
         }
 
         return (
             <Fragment>
-                {btnManageChanges}
+                {editButton}
+
                 {heading}
                 {btnEditMode}
                 {text}
