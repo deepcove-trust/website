@@ -49,17 +49,14 @@ export default class AccountSettings extends Component {
                     <div className="col-12">
                         <div className="row">
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <Settings
-                                    account={this.state.account}
+                                <Settings account={this.state.account}
                                     u={this.getData.bind(this)}
                                     baseUri={baseUri}
                                 />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <ChangePassword
-                                    baseUri={baseUri}
-                                />
+                                <ChangePassword baseUri={baseUri} />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">

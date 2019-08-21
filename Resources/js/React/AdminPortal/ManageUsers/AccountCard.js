@@ -9,6 +9,7 @@ import Panel from '../../Components/Panel';
 
 import $ from 'jquery';
 import _ from 'lodash';
+import { validateEmail } from '../../../helpers';
 
 const Mode = {
     View: 'view',
@@ -21,7 +22,8 @@ export default class AccountCard extends Component {
 
         this.state = {
             mode: Mode.View,
-            account: _.cloneDeep(this.props.account)
+            account: _.cloneDeep(this.props.account),
+            error: null
         }
     }
 
@@ -58,23 +60,32 @@ export default class AccountCard extends Component {
     }
 
     updateAccount() {
-        console.log(this.state.account.active)
-        $.ajax({
-            type: 'put',
-            url: `${this.props.baseUri}/${this.state.account.id}`,
-            data: {
-                email: this.state.account.email,
-                phone: this.state.account.phoneNumber,
-                status: this.state.account.active
-            }
-        }).done(() => {
-            this.props.u();
+        // Validate
+        if (!validateEmail(this.state.account.email)) {
             this.setState({
-                mode: Mode.View
+                error: "Please enter a valid email address."
+            }, () => {
+                console.error(`${this.state.account.email} is not an RFC2822 compliant email address.`)
             });
-        }).fail((err) => {
-            console.error(`[AccountCard@updateAccount] Error updating account data: `, err.responseText);
-        });
+        } else {
+            $.ajax({
+                type: 'put',
+                url: `${this.props.baseUri}/${this.state.account.id}`,
+                data: {
+                    email: this.state.account.email,
+                    phone: this.state.account.phoneNumber,
+                    status: this.state.account.active
+                }
+            }).done(() => {
+                this.props.u();
+                this.setState({
+                    mode: Mode.View,
+                    error: null
+                });
+            }).fail((err) => {
+                console.error(`[AccountCard@updateAccount] Error updating account data: `, err.responseText);
+            });
+        }
     }
 
     render() {
@@ -92,6 +103,7 @@ export default class AccountCard extends Component {
                     <Email mode={this.state.mode}
                         value={this.state.account.email}
                         accountId={this.props.accountId}
+                        error={this.state.error}
                         cb={this.updateVal.bind(this, 'email')}
                     />
 

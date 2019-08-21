@@ -11,9 +11,15 @@ export default class Email extends Component {
             control = <Input id={`email_user:${this.props.accountId}`} type="email" autoComplete="email" value={this.props.value} cb={this.props.cb} />
         }
 
+        let error;
+        if (this.props.error) {
+            error = <small className="text-danger">{this.props.error}</small>
+        }
+
         return (
             <FormGroup label="Email" htmlFor={`email_user:${this.props.accountId}`} required>
                 {control}
+                {error}
             </FormGroup>
         )
     }
