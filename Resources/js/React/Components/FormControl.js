@@ -14,8 +14,6 @@ export class Checkbox extends Component {
     }
 
     toggleCheckbox() {
-        console.log(this.state.checked);
-        console.log(this.state.checked);
         this.setState({
             checked: !this.state.checked
         }, () => {

@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import AccountCard from './Users/AccountCard';
+import AccountCard from './ManageUsers/AccountCard';
 import $ from 'jquery';
 
 
@@ -46,7 +46,7 @@ export default class Users extends Component {
         return (
             <div className="row">
                 <div className="col-12">
-                    <h1 className="text-center">Users</h1>
+                    <h1 className="text-center">Manage Users</h1>
                     <p className="text-center">
                         Active accounts have access to all functions, <a href="/register">click here</a> to register a new account.
                     </p>

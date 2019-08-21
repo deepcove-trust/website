@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -90,20 +89,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             {
                 Account account = await _Db.Accounts.FindAsync(id);
 
-                if (!string.IsNullOrEmpty(request.Str("email")))
-                    account.Email = request.Str("email");
+                account.Email = request.Str("email");
+                account.PhoneNumber = request.Str("phone");
 
-                if(!string.IsNullOrEmpty(request.Str("phone")))
-                    account.PhoneNumber = request.Str("phone");
-
-
-                if (!string.IsNullOrEmpty(request.Str("status"))) {
-                    if (account.Id == User.AccountId())
-                        return Forbid("You are not allowed to change your own status");
-
-                    account.Active = request.Str("status") == "Active" ? true : false;
-                }
-
+                if (account.Id != User.AccountId())
+                    account.Active = bool.Parse(request.Str("status"));
+                
                 _Logger.LogInformation("Information updated for account belonging to {0}", account.Name);
 
                 await _Db.SaveChangesAsync();
