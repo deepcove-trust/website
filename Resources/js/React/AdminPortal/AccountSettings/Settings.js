@@ -10,9 +10,49 @@ export default class Settings extends Component {
         super(props);
 
         this.state = {
-            requestPending: false
+            requestPending: false,
+            account: {
+                id: null,
+                email: null,
+                phoneNumber: null
+            },
+            error: null
         }
     }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.account && nextProps.account != this.state.account) {
+            this.setState({
+                account: {
+                    id: nextProps.account.id,
+                    name: nextProps.account.name,
+                    email: nextProps.account.email,
+                    phoneNumber: nextProps.account.phoneNumber
+                }
+            });
+        }
+    }
+
+    updateVal(field, val) {
+        let account = this.state.account;
+        switch (field) {
+            case "name":
+                account.name = val;
+                break;
+
+            case "email":
+                account.email = val;
+                break;
+
+            case "phoneNumber":
+                account.phoneNumber = val;
+        }
+
+        this.setState({
+            account: account
+        });
+    }
+
 
     updateAccount(e) {
         e.preventDefault();
@@ -24,7 +64,12 @@ export default class Settings extends Component {
         $.ajax({
             type: 'post',
             url: `${this.props.baseUri}`,
-            data: $("#settings").serialize()
+            data: {
+                id: this.state.account.id,
+                name: this.state.account.name,
+                email: this.state.account.email,
+                phone: this.state.account.phoneNumber
+            }
         }).done(() => {
             this.setState({
                 requestPending: false
@@ -47,9 +92,9 @@ export default class Settings extends Component {
                     <FormGroup label="Account Name" htmlFor="accountName" required>
                         <Input id="accountName"
                             type="text"
-                            name="name"
                             autoComplete="name"
-                            value={this.props.account ? this.props.account.name : null}
+                            value={this.state.account.name}
+                            cb={this.updateVal.bind(this, 'name')}
                             required
                         />
                     </FormGroup>
@@ -57,9 +102,9 @@ export default class Settings extends Component {
                     <FormGroup label="Email" htmlFor="accountEmail" required>
                         <Input id="accountEmail"
                             type="email"
-                            name="email"
                             autoComplete="email"
-                            value={this.props.account ? this.props.account.email : null}
+                            value={this.state.account.email}
+                            cb={this.updateVal.bind(this, 'email')}
                             required
                         />
                     </FormGroup>
@@ -67,9 +112,9 @@ export default class Settings extends Component {
                     <FormGroup label="Phone Number" htmlFor="accountPhone">
                         <Input id="accountPhone"
                             type="text"
-                            name="phone"
-                            value={this.props.account ? this.props.account.phoneNumber : null}
+                            value={this.state.account.phoneNumber}
                             autoComplete="phone"
+                            cb={this.updateVal.bind(this, 'phoneNumber')}
                         />
                     </FormGroup>
 
