@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react'
-import { isExternalUrl } from '../../../helpers.js'
+import { isExternalUrl } from '../../../../helpers.js'
 
 export default class CMSButton extends Component {
 
