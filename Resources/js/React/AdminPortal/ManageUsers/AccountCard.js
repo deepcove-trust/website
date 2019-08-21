@@ -34,8 +34,8 @@ export default class AccountCard extends Component {
             case "phone":
                 account.phoneNumber = val;
                 break;
-            case "active":
-                account.active = val == "Active" ? true : false;
+            case "status":
+                account.active = (val == "Active") ? true : false;
                 break;
         }
         
@@ -58,6 +58,7 @@ export default class AccountCard extends Component {
     }
 
     updateAccount() {
+        console.log(this.state.account.active)
         $.ajax({
             type: 'put',
             url: `${this.props.baseUri}/${this.state.account.id}`,
@@ -79,8 +80,9 @@ export default class AccountCard extends Component {
     render() {
         return (
             <div className="col-lg-4 col-md-6 col-sm-12">
-                <Panel>
+                <Panel onSubmit={this.updateAccount.bind(this)}>
                     <h4 class="text-center">{this.state.account.name || ""}</h4>
+                    
                     <EditButtons mode={this.state.mode}
                         setModeCb={this.setMode.bind(this)}
                         cancelCb={this.cancel.bind(this)}
@@ -115,7 +117,7 @@ export default class AccountCard extends Component {
                     <DeleteUser accountId={this.props.account.id}
                         baseUri={this.props.baseUri}
                         u={this.props.u}
-                    />
+                    />    
                 </Panel>
             </div>
         );
