@@ -22,7 +22,7 @@ export default class TextBlock extends Component {
                 heading: null,
                 text: null,
                 link: null
-            },
+            },            
             editMode: Mode.View,
             requestPending: false
         }
@@ -130,8 +130,11 @@ export default class TextBlock extends Component {
                 />
 
                 <TextBlockAction mode={this.state.editMode}
+                    slotNo={this.state.content.slotNo}
                     link={this.state.content.link}
-                    admin={this.props.admin}
+                    showEditButton={this.state.editMode == Mode.Edit}
+                    settings={this.props.settings}
+                    editVal={this.editVal.bind(this)}
                 />
             </Fragment>
         )

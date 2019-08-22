@@ -58,8 +58,9 @@ export default class ReactTemplate extends Component {
                                 <TextBlock
                                     u={this.getData.bind(this)}
                                     baseUri={baseUri}
-                                    admin={this.state.data && !!this.state.data.isAuthenticated}
+                                    admin={this.state.data && !!this.state.data.settings}
                                     content={this.state.data ? this.state.data.text[0] : null}
+                                    settings={this.state.data ? this.state.data.settings : null}
                                 />
                             </div>
 
@@ -67,8 +68,9 @@ export default class ReactTemplate extends Component {
                                 <TextBlock
                                     u={this.getData.bind(this)}
                                     baseUri={baseUri}
-                                    admin={this.state.data && !!this.state.data.isAuthenticated}                                    
+                                    admin={this.state.data && !!this.state.data.settings}                                    
                                     content={this.state.data ? this.state.data.text[1] : null}
+                                    settings={this.state.data ? this.state.data.settings : null}
                                 />
                             </div>
 
@@ -76,8 +78,9 @@ export default class ReactTemplate extends Component {
                                 <TextBlock
                                     u={this.getData.bind(this)}
                                     baseUri={baseUri}
-                                    admin={this.state.data && !!this.state.data.isAuthenticated}
+                                    admin={this.state.data && !!this.state.data.settings}
                                     content={this.state.data ? this.state.data.text[2] : null}
+                                    settings={this.state.data ? this.state.data.settings : null}
                                 />
                             </div>
                         </div>

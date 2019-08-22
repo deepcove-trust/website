@@ -41,8 +41,8 @@ export class LastTouched extends Component {
     render() {
         let update = this.props.page.updated;
 
-        if (!this.props.page.isAuthenticated) {
-            // Only administrators should see this button
+        // Only administrators should see this button
+        if (this.props.page.settings == null) {            
             return null;
         }
 
@@ -68,7 +68,7 @@ export class DeletePage extends Component {
     }
 
     render() {
-        if (!this.props.page.isAuthenticated) {
+        if (this.props.page.settings == null) {
             return null;
         }
 
@@ -99,8 +99,8 @@ export class ToggleVisibility extends Component {
     }
 
     render() {
-        if (!this.props.page.isAuthenticated) {
-            // Only administrators should see this button
+        // Only administrators should see this button
+        if (this.props.page.settings == null) {            
             return null;
         }
 

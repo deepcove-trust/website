@@ -107,7 +107,12 @@ namespace Deepcove_Trust_Website.Controllers
                         }
                     }),
                     media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
-                    User.Identity.IsAuthenticated
+                    // if null, user is not authenticated
+                    settings = User.Identity.IsAuthenticated ? new
+                    {
+                        colors = Enum.GetNames(typeof(Color)),
+                        alignments = Enum.GetNames(typeof(Align))
+                    } : null
                 }).FirstOrDefault();
 
             if (data == null || !data.Public && !User.Identity.IsAuthenticated)
@@ -185,18 +190,22 @@ namespace Deepcove_Trust_Website.Controllers
             Link newLink = null;
 
             // Create new link object if the updated text field includes one
-            if (!string.IsNullOrWhiteSpace(request.Str("link-text")))
+            if (!string.IsNullOrWhiteSpace(request.Str("link[text]")))
             {
+                Enum.TryParse(request.Str("link[color]").ToLower(), out Color color);
+                Enum.TryParse(request.Str("link[align]").ToLower(), out Align align);
+
                 newLink = new Link
                 {
-                    Text = request.Str("link-text"),
-                    Href = request.Str("link-href"),
-                    IsButton = request.Int("link-isButton") == 1,
-                    Color = (Color)request.Int("link-color"),
-                    Align = (Align)request.Int("link-align")
+                    Text = request.Str("link[text]"),
+                    Href = request.Str("link[href]"),
+                    IsButton = request.Bool("link[isButton]"),
+                    Color = color,
+                    Align = align
                 };
 
                 await _Db.CmsLink.AddAsync(newLink);
+                await _Db.SaveChangesAsync();
             }
 
             // Create new textField with supplied text
