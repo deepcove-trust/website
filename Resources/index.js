@@ -12,7 +12,7 @@ import './js/React/Authentication/Login';
 import './js/React/Authentication/RequestPasswordReset';
 import './js/React/Authentication/ResetPassword';
 import './js/React/Authentication/Register';
-import './js/React/AdminPortal/Users';
+import './js/React/AdminPortal/ManageUsers';
 import './js/React/AdminPortal/Pages';
 import './js/React/AdminPortal/SystemSettings';
 import './js/React/CMS-Blocks/Text';
