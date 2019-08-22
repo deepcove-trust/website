@@ -1,10 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { FooterSettings } from './WebSettings/FooterSettings';
-import { QuickLinks } from './WebSettings/QuickLinks';
-import $ from 'jquery';
-import ContactInformation from './SystemSettings/ContactInformation';
 
+import ContactInformation from './SystemSettings/ContactInformation';
+import FooterQuickLinks from './SystemSettings/FooterQuickLinks';
+
+import $ from 'jquery';
 
 const baseUri = `/admin/web/settings`;
 
@@ -41,31 +41,25 @@ export default class Settings extends Component {
     }
 
     render() {
-        //<Panel>
-        //    <FooterSettings
-        //        settings={this.state.settings}
-        //        baseUri={baseUri}
-        //        u={this.getData.bind(this)}
-        //    />
-
-        //    <hr />
-
-        //    <QuickLinks
-        //        settings={this.state.settings}
-        //        baseUri={baseUri}
-        //        u={this.getData.bind(this)}
-        //    />
-        //</Panel>
-
         let activePage;
+        if (this.state.settings) {
+            activePage = (
+                <ContactInformation contact={this.state.settings.contact}
+                    u={this.getData.bind(this)}
+                    baseUri={baseUri}
+                />
+            )
+        } else if (this.state.activeTab == "footer") {
+            activePage = <FooterQuickLinks />;
+        }
 
         return (
             <div className="row">
                 <div className="col-12">
-                    <h1 className="text-center">Website Settings</h1>
+                    <h1 className="text-center">System Settings</h1>
                     <PageTabs activeTab={this.state.activeTab} />
 
-                    <ContactInformation />
+                    {activePage}
                 </div>
             </div>
         );
@@ -89,7 +83,7 @@ export class PageTabs extends Component {
         if (tabsArray) {
             tabs = tabsArray.map((tab) => {
                 return (
-                    <li className="nav-item pb-2">
+                    <li className="nav-item">
                         <a className={`nav-link ${tab.url == this.props.activeTab ? 'active' : ''}`} href={`?tab=${tab.url}`}>{tab.tabName}</a>
                     </li>
                 )
@@ -97,7 +91,7 @@ export class PageTabs extends Component {
         }
 
         return (
-            <ul className="nav nav-tabs">
+            <ul className="nav nav-tabs mb-3">
                 {tabs}
             </ul>
         )

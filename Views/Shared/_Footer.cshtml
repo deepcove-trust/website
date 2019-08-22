@@ -45,6 +45,13 @@
                         </a>
                     }
 
+                    @if (!string.IsNullOrEmpty(Settings.GooglePlayUrl))
+                    {
+                        <a href="@Settings.GooglePlayUrl">
+                            <i class="fab fa-google-play"></i>
+                        </a>
+                    }
+
                     @if (!string.IsNullOrEmpty(Settings.Email))
                     {
                         <!-- Email -->

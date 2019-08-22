@@ -42,6 +42,8 @@
     <Compile Remove="Migrations\20190814085831_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190814085912_Initial_Migration.cs" />
     <Compile Remove="Migrations\20190814085912_Initial_Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190821095454_update settings table.cs" />
+    <Compile Remove="Migrations\20190821095454_update settings table.Designer.cs" />
   </ItemGroup>
 
 
@@ -52,11 +54,6 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Resources\js\React\AdminPortal\SystemSettings\" />
   </ItemGroup>
 
 </Project>

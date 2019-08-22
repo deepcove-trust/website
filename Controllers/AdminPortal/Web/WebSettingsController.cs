@@ -38,7 +38,27 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         {
             try
             {
-                return Ok(await _Db.WebsiteSettings.FirstOrDefaultAsync());
+                return Ok(await _Db.SystemSettings.OrderByDescending(o => o.Id)
+                    .Select(s => new
+                {
+                    contact = new {
+                        Email = new
+                        {
+                            bookings = s.EmailBookings,
+                            general = s.EmailGeneral
+                        },
+                        Urls = new
+                        {
+                            Facebook = s.UrlFacebook,
+                            GooglePlay = s.UrlGooglePlay,
+                            GoogleMaps = s.UrlGoogleMaps
+                        },
+                        s.Phone
+                    },
+                    footer = new {
+
+                    }
+                }).FirstOrDefaultAsync());
             }
             catch(Exception ex)
             {
@@ -48,27 +68,40 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             }
         }
 
-        [HttpPost]
-        public async Task<IActionResult> UpdateSettings(IFormCollection request)
+        [HttpPost("contact")]
+        public async Task<IActionResult> UpdateContactSettings(IFormCollection request)
         {
             try
             {
-                WebsiteSettings settings = await _Db.WebsiteSettings.FirstOrDefaultAsync();
-                settings.Email = request.Str("email");
-                settings.Phone = request.Str("phone");
-                settings.FacebookUrl = request.Str("facebookUrl");
-                settings.FooterText = request.Str("footerText");
+                SystemSettings settings = await _Db.SystemSettings.FirstOrDefaultAsync();
+
+                await _Db.AddAsync(new SystemSettings
+                {
+                    // Update the new information
+                    EmailBookings = request.Str("emailBookings"),
+                    EmailGeneral = request.Str("emailGeneral"),
+                    Phone = request.Str("phone"),
+                    UrlFacebook = request.Str("urlFacebook"),
+                    UrlGooglePlay = request.Str("urlGooglePlay"),
+                    UrlGoogleMaps = request.Str("urlGoogleMaps"),
+
+                    // These fields aren't in this endpoint, bring settings from the last record
+                    FooterText = settings.FooterText,
+                    LinkTitleA = settings.LinkTitleA, 
+                    LinkTitleB = settings.LinkTitleB
+                });
 
                 await _Db.SaveChangesAsync();
+                _Logger.LogInformation($"{User.AccountName()} updated the sites contact settings");
                 return Ok();
+                
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                _Logger.LogError("Error updating website settings: {0}", ex.Message);
+                _Logger.LogError("Error updating system contact settings: {0}", ex.Message);
                 _Logger.LogTrace(ex.StackTrace);
-                return BadRequest("Error updating website settings, please try again later");
+                return BadRequest("Error updating system contact settings, please try again later");
             }
         }
-        
     }
 }
