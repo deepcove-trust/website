@@ -45,8 +45,8 @@ export class Checkbox extends Component {
                 />
 
                 <label className='custom-control-label noselect'
-                    for={id}
-                    data-tip={this.props.tooltip || false}
+                    htmlFor={id}
+                    data-tip={this.props.tooltip || null}
                 >
                     {this.props.label}
                 </label>
