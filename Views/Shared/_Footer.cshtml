@@ -11,19 +11,24 @@
                 <div class="col-sm-6 col-md-3 item">
                     <h3>@Settings.GetQuickLinks().A.Title</h3>
                     <ul>
-                        @*@foreach (var name in Settings.GetQuickLinks().A.Pages)
+                        @foreach (var page in Settings.GetQuickLinks().A.Pages)
                         {
-                            <li><a href="/launch.html">Boat Access</a></li>
-                        }*@
+
+                            <li>
+                                <a href="@string.Format("{0}", page.RelativeUrl)">@string.Format("{0}", page.Name)</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="col-sm-6 col-md-3 item">
                     <h3>@Settings.GetQuickLinks().B.Title</h3>
                     <ul>
-                        @*@foreach (var name in Settings.GetQuickLinks().B.Pages)
+                        @foreach (var page in Settings.GetQuickLinks().B.Pages)
                         {
-                            <li><a href="/launch.html">Boat Access</a></li>
-                        }*@
+                            <li>
+                                <a href="@string.Format("{0}", page.RelativeUrl)">@string.Format("{0}", page.Name)</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="col-md-6 item text">

@@ -55,8 +55,16 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         },
                         s.Phone
                     },
-                    footer = new {
-
+                    QuickLinks = new {
+                        a = new {
+                            title = s.LinkTitleA,
+                            pages = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.A).Select(s1 => new { s1.Name, s1.Section, s1.Id }).ToList(),
+                        },
+                        b = new {
+                            title = s.LinkTitleB,
+                            pages = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.B).Select(s1 => new { s1.Name, s1.Section, s1.Id }).ToList(),
+                        },
+                        avaliable = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.None).Select(s1 => new { s1.Name, s1.Section, s1.Id}).ToList()
                     }
                 }).FirstOrDefaultAsync());
             }
@@ -101,6 +109,76 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 _Logger.LogError("Error updating system contact settings: {0}", ex.Message);
                 _Logger.LogTrace(ex.StackTrace);
                 return BadRequest("Error updating system contact settings, please try again later");
+            }
+        }
+
+        [HttpDelete("quicklink/{pageId}")]
+        public async Task<IActionResult> RemoveQuickLink(int pageId)
+        {
+            try
+            {
+                Page page = await _Db.Pages.FindAsync(pageId);
+                page.QuickLink = QuickLinkSection.None;
+                await _Db.SaveChangesAsync();
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error removing quick link: {0}", ex.Message);
+                _Logger.LogTrace(ex.StackTrace);
+                return BadRequest("Error removing quick link, please try again later");
+            }
+        }
+
+        [HttpPost("quicklink/{pageId:int}/{sectionId:int}")]
+        public async Task<IActionResult> AddQuickLink(int pageId, int sectionId)
+        {
+            try
+            {
+                Page page = await _Db.Pages.FindAsync(pageId);
+                page.QuickLink = (QuickLinkSection)sectionId;
+                await _Db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error adding quick link: {0}", ex.Message);
+                _Logger.LogTrace(ex.StackTrace);
+                return BadRequest("Error adding quick link, please try again later");
+            }
+        }
+
+        [HttpPut("quicklink/{sectionId:int}")]
+        public async Task<IActionResult> UpdateQuickLinks(IFormCollection request, int sectionId)
+        {
+            try
+            {
+                SystemSettings settings = await _Db.SystemSettings.FirstOrDefaultAsync();
+
+                await _Db.AddAsync(new SystemSettings
+                {
+                    // Update the new information
+                    LinkTitleA = (sectionId == (int)QuickLinkSection.A) ? request.Str("title") : settings.LinkTitleA,
+                    LinkTitleB = (sectionId == (int)QuickLinkSection.B) ? request.Str("title") : settings.LinkTitleB,
+
+                    // These fields aren't in this endpoint, bring settings from the last record
+                    EmailBookings = settings.EmailBookings,
+                    EmailGeneral = settings.EmailGeneral,
+                    Phone = settings.Phone,
+                    UrlFacebook = settings.UrlFacebook,
+                    UrlGooglePlay = settings.UrlGooglePlay,
+                    UrlGoogleMaps = settings.UrlGoogleMaps,
+                });
+
+                await _Db.SaveChangesAsync();
+                _Logger.LogInformation($"{User.AccountName()} updated the quick link settings");
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error updating quick link title: {0}", ex.Message);
+                _Logger.LogTrace(ex.StackTrace);
+                return BadRequest("Error updating quick link title, please try again later");
             }
         }
     }

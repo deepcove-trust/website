@@ -52,12 +52,12 @@ namespace Deepcove_Trust_Website.Features.RazorRender
             {
                 A = new Section {
                     Title = Settings.LinkTitleA,
-                    Pages = new List<string>()
+                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.A).ToList()
                 },
                 B = new Section
                 {
                     Title = Settings.LinkTitleB,
-                    Pages = new List<string>()
+                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.B).ToList()
                 }
             };
         }
@@ -72,6 +72,6 @@ namespace Deepcove_Trust_Website.Features.RazorRender
     public struct Section
     {
         public string Title;
-        public List<string> Pages;
+        public List<Page> Pages;
     }
 }

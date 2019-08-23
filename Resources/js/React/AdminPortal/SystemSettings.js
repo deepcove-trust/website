@@ -41,16 +41,23 @@ export default class Settings extends Component {
     }
 
     render() {
-        let activePage;
-        if (this.state.settings) {
+        if (!this.state.settings)
+            return null;
+
+        let activePage = (
+            <ContactInformation contact={this.state.settings.contact}
+                u={this.getData.bind(this)}
+                baseUri={baseUri}
+            />
+        )
+
+        if (this.state.activeTab == "footer") {
             activePage = (
-                <ContactInformation contact={this.state.settings.contact}
+                <FooterQuickLinks sections={this.state.settings.quickLinks}
                     u={this.getData.bind(this)}
                     baseUri={baseUri}
                 />
             )
-        } else if (this.state.activeTab == "footer") {
-            activePage = <FooterQuickLinks />;
         }
 
         return (
