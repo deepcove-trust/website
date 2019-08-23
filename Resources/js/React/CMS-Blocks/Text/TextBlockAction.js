@@ -2,6 +2,7 @@
 import CMSButton from './TextBlockAction/CMSButton';
 import CMSLink from './TextBlockAction/CMSLink';
 import EditActionModal from './TextBlockAction/EditActionModal';
+import { ConfirmButton } from '../../Components/Button';
 
 export default class TextBlockAction extends Component {
 
@@ -9,7 +10,11 @@ export default class TextBlockAction extends Component {
         return this.props.link && this.props.link.text;
     }
 
-    render() {       
+    clearLink() {
+        this.props.editVal('link', null);
+    }
+
+    render() {
 
         let editButton;
         if (this.props.showEditButton) {
@@ -21,6 +26,15 @@ export default class TextBlockAction extends Component {
                     settings={this.props.settings}
                     cb={this.props.editVal.bind(this, 'link')}
                 />
+            )
+        }
+
+        let removeButton;
+        if (this.props.showEditButton && this.linkExists()) {
+            removeButton = (
+                <ConfirmButton btnClass="btn btn-info btn-sm" cb={this.clearLink.bind(this)}>
+                    Remove &nbsp; <i className="fas fa-minus" />
+                </ConfirmButton>
             )
         }
 
@@ -37,6 +51,7 @@ export default class TextBlockAction extends Component {
             <Fragment>
                 {actionElement}
                 {editButton}
+                {removeButton}
             </Fragment>
         )
     }
