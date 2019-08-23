@@ -1,0 +1,11 @@
+﻿{
+  "EmailBookings": "office@deepcovehostel.co.nz",
+  "EmailGeneral": "office@deepcovehostel.co.nz",
+  "UrlFacebook": null,
+  "UrlGooglePlay": null,
+  "UrlGoogleMaps": null,
+  "Phone": null,
+  "LinkTitleA": "Quick Link Heading",
+  "LinkTitleB": "Quick Link Heading",
+  "FooterText": "Login to the admin panel and go to the \"System Settings\" page to change this text as well as the following settings: general enquiries email, booking enquiries email, phone number, Facebook Url, Google Play URL, Google Maps URL and the site quick links. For more information please refer to your manual \"Configuring System Settings\"."
+}

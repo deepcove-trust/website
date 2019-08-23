@@ -101,19 +101,6 @@ namespace Deepcove_Trust_Website.Data
 
             modelBuilder.Entity<Page>()
                 .HasIndex(e => e.Name).IsUnique();
-
-            // Seeds
-            modelBuilder.Entity<SystemSettings>().HasData(new SystemSettings
-            {
-                Id = 1,
-                UrlFacebook = "https://www.facebook.com/deepcoveoutdooreducationtrust/",
-                EmailGeneral = "bookings@deepcovehostel.co.nz",
-                Phone = "(03) 928 5262",
-                LinkTitleA = "",
-                LinkTitleB = "",
-                FooterText = ""
-            });
-            // End Seeds
         }
     }
 }

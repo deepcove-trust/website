@@ -40,6 +40,15 @@ namespace Deepcove_Trust_Website.Data
             }
             // End Notification Channels
             context.SaveChanges();
+
+            // System Settings - Only runs once
+            if (!context.SystemSettings.Any())
+            {
+                SystemSettings settings = JsonConvert.DeserializeObject<SystemSettings>(File.ReadAllText($"Data{separator}Seeds{separator}SystemSettings.json"));
+                context.Add(settings);
+            }
+            // End System Settings
+            context.SaveChanges();
         }
     }
 }

@@ -46,6 +46,14 @@
     <Compile Remove="Migrations\20190821095454_update settings table.Designer.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="Data\Seeds\SystemSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\Seeds\SystemSettings.json" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="MailKit" Version="2.2.0" />
