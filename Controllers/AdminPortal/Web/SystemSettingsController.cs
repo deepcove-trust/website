@@ -53,7 +53,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                             GooglePlay = s.UrlGooglePlay,
                             GoogleMaps = s.UrlGoogleMaps
                         },
-                        s.Phone
+                        s.Phone,
+                        MissionStatement = s.FooterText
                     },
                     QuickLinks = new {
                         a = new {
@@ -92,9 +93,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     UrlFacebook = request.Str("urlFacebook"),
                     UrlGooglePlay = request.Str("urlGooglePlay"),
                     UrlGoogleMaps = request.Str("urlGoogleMaps"),
+                    FooterText = request.Str("missionStatement"),
 
                     // These fields aren't in this endpoint, bring settings from the last record
-                    FooterText = settings.FooterText,
                     LinkTitleA = settings.LinkTitleA, 
                     LinkTitleB = settings.LinkTitleB
                 });
@@ -168,6 +169,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     UrlFacebook = settings.UrlFacebook,
                     UrlGooglePlay = settings.UrlGooglePlay,
                     UrlGoogleMaps = settings.UrlGoogleMaps,
+                    FooterText = settings.FooterText,
                 });
 
                 await _Db.SaveChangesAsync();
