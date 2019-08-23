@@ -192,8 +192,8 @@ namespace Deepcove_Trust_Website.Controllers
             // Create new link object if the updated text field includes one
             if (!string.IsNullOrWhiteSpace(request.Str("link[text]")))
             {
-                Enum.TryParse(request.Str("link[color]").ToLower(), out Color color);
-                Enum.TryParse(request.Str("link[align]").ToLower(), out Align align);
+                Enum.TryParse(request.Str("link[color]"), true, out Color color);
+                Enum.TryParse(request.Str("link[align]"), true, out Align align);
 
                 newLink = new Link
                 {
