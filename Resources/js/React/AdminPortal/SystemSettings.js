@@ -21,7 +21,7 @@ export default class SystemSettings extends Component {
     componentDidMount() {
 
         this.setState({
-            activeTab: document.getElementById('react_websiteSettings').getAttribute("data-tab")
+            activeTab: document.getElementById('react_systemSettings').getAttribute("data-tab")
         }, () => {
             this.getData();
         })    
