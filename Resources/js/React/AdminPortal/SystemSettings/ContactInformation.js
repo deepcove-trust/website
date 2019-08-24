@@ -184,7 +184,7 @@ export class UrlFacebook extends Component {
     render() {
         return (
             <FormGroup label="Facebook Page URL:">
-                <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)}/>
+                <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
                 <small className="text-muted pl-2">
                     <i class="fab fa-facebook-square"></i> Used in the footer &amp; in emails.
                 </small>
@@ -197,7 +197,7 @@ export class UrlGooglePlay extends Component {
     render() {
         return (
             <FormGroup label="Discover Deep Cove - App URL:">
-                <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)}/>
+                <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
                 <small className="text-muted pl-2">
                     <i className="fab fa-google-play"></i> Used in the footer &amp; in emails.
                 </small>
