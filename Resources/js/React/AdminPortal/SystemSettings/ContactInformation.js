@@ -161,7 +161,7 @@ export class MissionStatment extends Component {
     render() {
         return (
             <FormGroup label="Mission Statement" required>
-                <TextArea maxLength="200" value={this.props.text} cb={this.props.cb.bind(this)} />
+                <TextArea maxLength="200" value={this.props.text} cb={this.props.cb.bind(this)} rows={3} />
             </FormGroup>
         ) 
     }
