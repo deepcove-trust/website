@@ -28,7 +28,7 @@ namespace Deepcove_Trust_Website.Controllers
         public IActionResult MainPage(string pageName)
         {
             Page page = _Db.Pages.Include(i => i.Template)
-                .Where(c => c.Name == pageName.Replace('-', ' ') && c.Section == Section.main).FirstOrDefault();
+                .Where(c => c.Name.ToLower() == pageName.Replace('-', ' ').ToLower() && c.Section == Section.main).FirstOrDefault();
 
             if (page == null || (!page.Public && !User.Identity.IsAuthenticated))
                 return NotFound();
@@ -50,7 +50,7 @@ namespace Deepcove_Trust_Website.Controllers
         public IActionResult EducationPage(string pageName)
         {
             Page page = _Db.Pages.Include(i => i.Template)
-                .Where(c => c.Name == pageName.Replace('-', ' ') && c.Section == Section.education).FirstOrDefault();
+                .Where(c => c.Name.ToLower() == pageName.Replace('-', ' ').ToLower() && c.Section == Section.education).FirstOrDefault();
 
             if (page == null || !page.Public && !User.Identity.IsAuthenticated)
                 return NotFound();
