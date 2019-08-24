@@ -18,10 +18,12 @@ namespace Deepcove_Trust_Website
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        private IHostingEnvironment Env { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IHostingEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -41,15 +43,15 @@ namespace Deepcove_Trust_Website
 
             // Database Config
             string dburl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if (!string.IsNullOrEmpty(dburl))
+            if (Configuration.GetSection("ConnectionStrings").GetValue<string>("UseDb") == "MsSqlConnection")
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(dburl), ServiceLifetime.Scoped);
-            }
+                    options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
+            } 
             else
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
+                    options.UseMySql(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MySqlConnection")), ServiceLifetime.Scoped);
             }
 
             // Email Config
