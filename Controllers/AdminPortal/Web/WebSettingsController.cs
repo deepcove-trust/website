@@ -81,7 +81,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         {
             try
             {
-                SystemSettings settings = await _Db.SystemSettings.FirstOrDefaultAsync();
+                SystemSettings settings = await _Db.SystemSettings.OrderByDescending(o => o.Id).FirstOrDefaultAsync();
 
                 await _Db.AddAsync(new SystemSettings
                 {
@@ -153,7 +153,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         {
             try
             {
-                SystemSettings settings = await _Db.SystemSettings.FirstOrDefaultAsync();
+                SystemSettings settings = await _Db.SystemSettings.OrderByDescending(o => o.Id).FirstOrDefaultAsync();
 
                 await _Db.AddAsync(new SystemSettings
                 {
