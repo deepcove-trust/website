@@ -136,7 +136,7 @@ export class GeneralEmail extends Component {
         return (
             <FormGroup label="Email: (General Enquiries)" required>
                 <Input type="email" value={this.props.email} cb={this.props.cb.bind(this)}/>
-                <small className="text-muted pl-2 float-right">
+                <small className="text-muted pl-2">
                     <i className="fas fa-envelope"></i> Used by the contact us email form, the footer &amp; in the emails.
                 </small>
             </FormGroup>
