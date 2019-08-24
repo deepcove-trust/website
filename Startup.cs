@@ -18,10 +18,12 @@ namespace Deepcove_Trust_Website
     public class Startup
     {
         public IConfiguration Configuration { get; }
+        private IHostingEnvironment Env { get; }
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration,IHostingEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -34,19 +36,22 @@ namespace Deepcove_Trust_Website
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => {
+                options.SerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+                options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
+            });
 
             // Database Config
             string dburl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if (!string.IsNullOrEmpty(dburl))
+            if (Configuration.GetSection("ConnectionStrings").GetValue<string>("UseDb") == "MsSqlConnection")
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(dburl), ServiceLifetime.Scoped);
-            }
+                    options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
+            } 
             else
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MsSqlConnection")));
+                    options.UseMySql(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MySqlConnection")), ServiceLifetime.Scoped);
             }
 
             // Email Config
@@ -56,6 +61,7 @@ namespace Deepcove_Trust_Website
             // Razor Render Config
             services.Configure<RazorViewEngineOptions>(x => x.ViewLocationExpanders.Add(new ViewLocationExpander()));
             services.AddTransient<IViewRenderer, ViewRenderer>();
+            services.AddTransient<WebSettingsService>();
 
             // Login services
             services.AddScoped<IPasswordHasher<Models.Account>, PasswordHasher<Models.Account>>();
@@ -84,7 +90,8 @@ namespace Deepcove_Trust_Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            //app.UseActiveAccounts(); >> Blocking propper HTTP calls
+            app.UseActiveAccounts();
+            app.UseForcePasswordReset();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

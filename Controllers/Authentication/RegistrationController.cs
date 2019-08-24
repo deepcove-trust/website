@@ -8,11 +8,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 using Deepcove_Trust_Website.Features.Emails;
-using Deepcove_Trust_Website.Features;
 using Microsoft.Extensions.Logging;
 using Deepcove_Trust_Website.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -21,16 +20,18 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class RegistrationController : Controller
     {
         private readonly WebsiteDataContext _Db;
+        private readonly IConfiguration _Configuration;
         private IPasswordHasher<Account> _Hasher;
         private IEmailService _Smtp;
         private readonly ILogger<RegistrationController> _Logger;
 
-        public RegistrationController(WebsiteDataContext db, IEmailService smtp, IPasswordHasher<Account> hasher, ILogger<RegistrationController> logger)
+        public RegistrationController(WebsiteDataContext db, IConfiguration configuration, IEmailService smtp, IPasswordHasher<Account> hasher, ILogger<RegistrationController> logger)
         {
             _Db = db;
             _Smtp = smtp;
             _Hasher = hasher;
             _Logger = logger;
+            _Configuration = configuration;
         }
 
         [HttpGet]
@@ -64,7 +65,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 {
                     Account = account,
                     Token = Utils.RandomString(42),
-                    ExpiresAt = DateTime.UtcNow.AddDays(1)
+                    ExpiresAt = DateTime.UtcNow.AddHours(_Configuration.GetSection("LoginSettings").GetValue<int>("NewAccountResetTokenLength"))
                 };
 
                 await _Db.AddAsync(reset);
@@ -90,7 +91,11 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     }
                 );
 
-                return Ok();
+                return Ok(Url.Action(
+                        "Index",
+                        "Users",
+                        new { area = "admin-portal" }
+                    ));
             } 
             catch(Exception ex)
             {

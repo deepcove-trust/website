@@ -10,7 +10,15 @@ namespace Deepcove_Trust_Website.Data
     public class WebsiteDataContext : DbContext
     {
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<PasswordReset> PasswordReset { get; set; }
+        public DbSet<Link> CmsLink { get; set; }
+        public DbSet<PasswordReset> PasswordResets { get; set; }
+        public DbSet<Page> Pages { get; set; }
+        public DbSet<PageRevision> PageRevisions { get; set; }
+        public DbSet<TextField> TextField { get; set; }
+        public DbSet<Template> PageTemplates { get; set; }
+        public DbSet<SystemSettings> SystemSettings { get; set; }
+        public DbSet<NotificationChannel> NotificationChannels { get; set; }
+
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
         {
@@ -70,6 +78,29 @@ namespace Deepcove_Trust_Website.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Account>().HasQueryFilter(f => f.DeletedAt == null);
+            modelBuilder.Entity<Page>().HasQueryFilter(f => f.DeletedAt == null);
+
+            // Enum Conversions
+            modelBuilder.Entity<Page>().Property(p => p.Section).HasConversion(c => (int)c, c => (Section)c);
+            modelBuilder.Entity<Page>().Property(p => p.QuickLink).HasConversion(c => (int)c, c => (QuickLinkSection)c);
+            modelBuilder.Entity<Link>().Property(p => p.Align).HasConversion(c => (int)c, c => (Align)c);
+            modelBuilder.Entity<Link>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
+            // End Enum Conversions
+
+            // Define keys for junction tables
+            modelBuilder.Entity<ChannelMembership>()
+                .HasKey(e => new { e.AccountId, e.NotificationChannelId });
+
+            modelBuilder.Entity<RevisionTextField>()
+                .HasKey(e => new { e.PageRevisionId, e.TextFieldId });
+
+            // Place unique constraints onto appropriate properties
+
+            modelBuilder.Entity<Template>()
+                .HasIndex(e => e.Name).IsUnique();
+
+            modelBuilder.Entity<Page>()
+                .HasIndex(e => e.Name).IsUnique();
         }
     }
 }

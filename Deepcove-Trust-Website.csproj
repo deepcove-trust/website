@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -9,10 +9,49 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\js\React\AdminPortal\Pages\**" />
+    <Content Remove="Resources\js\React\AdminPortal\Pages\**" />
+    <EmbeddedResource Remove="Resources\js\React\AdminPortal\Pages\**" />
+    <None Remove="Resources\js\React\AdminPortal\Pages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20190707204004_Initial Migation.cs" />
     <Compile Remove="Migrations\20190707204004_Initial Migation.Designer.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190711033812_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190711033812_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190728033958_Added Page Tables.cs" />
+    <Compile Remove="Migrations\20190728033958_Added Page Tables.Designer.cs" />
+    <Compile Remove="Migrations\20190728041803_Add pages migration.cs" />
+    <Compile Remove="Migrations\20190728041803_Add pages migration.Designer.cs" />
+    <Compile Remove="Migrations\20190729073803_Adds settings table.cs" />
+    <Compile Remove="Migrations\20190729073803_Adds settings table.Designer.cs" />
+    <Compile Remove="Migrations\20190730082003_Pages an Setings.cs" />
+    <Compile Remove="Migrations\20190730082003_Pages an Setings.Designer.cs" />
+    <Compile Remove="Migrations\20190730083459_Settings and Pages.cs" />
+    <Compile Remove="Migrations\20190730083459_Settings and Pages.Designer.cs" />
+    <Compile Remove="Migrations\20190730220255_Settings and Pages.cs" />
+    <Compile Remove="Migrations\20190730220255_Settings and Pages.Designer.cs" />
+    <Compile Remove="Migrations\20190806074728_TextFields and Links.cs" />
+    <Compile Remove="Migrations\20190806074728_TextFields and Links.Designer.cs" />
+    <Compile Remove="Migrations\20190811014333_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190811014333_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190814085831_Initial.cs" />
+    <Compile Remove="Migrations\20190814085831_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190814085912_Initial_Migration.cs" />
+    <Compile Remove="Migrations\20190814085912_Initial_Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190821095454_update settings table.cs" />
+    <Compile Remove="Migrations\20190821095454_update settings table.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Data\Seeds\SystemSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\Seeds\SystemSettings.json" />
   </ItemGroup>
 
 
@@ -22,6 +61,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
 </Project>

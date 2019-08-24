@@ -1,4 +1,59 @@
 ﻿import React, { Component } from 'react';
+import ReactTooltip from 'react-tooltip'
+
+const AutoComplete = ["name", "email", "organization", "on"];
+const Type = ["email", "file", "image", "password", "url"];
+
+export class Checkbox extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            checked: this.props.checked || false
+        }
+    }
+
+    toggleCheckbox() {
+        this.setState({
+            checked: !this.state.checked
+        }, () => {
+            if (this.props.cb)
+                this.props.cb(this.state.checked);
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.checked && nextProps.checked != this.state.checked) {
+            this.setState({
+                checked: nextProps.checked
+            });
+        }
+    }
+
+    render() {
+        let id = this.props.id ? `chq-${this.props.id}` : null;
+
+        return (
+            <div className="custom-control custom-checkbox">
+                <ReactTooltip />
+                <input id={id}
+                    type="checkbox"
+                    class="custom-control-input"
+                    name={this.props.name || null}
+                    checked={this.state.checked}
+                    onChange={this.toggleCheckbox.bind(this)}
+                />
+
+                <label className='custom-control-label noselect'
+                    htmlFor={id}
+                    data-tip={this.props.tooltip || null}
+                >
+                    {this.props.label}
+                </label>
+            </div>
+        )
+    }
+}
 
 export class FormGroup extends Component {
     render() {
@@ -40,21 +95,18 @@ export class Input extends Component {
     }
 
     getAutoComplete() {
+        if (AutoComplete.includes(this.props.autoComplete))
+            return this.props.autoComplete;
+        
         switch (this.props.autoComplete) {
-            case "name":
-                return "name";
-            case "email":
-                return "email";
             case "phone":
                 return "tel";
             case "password":
                 return "current-password";
             case "newpassword":
                 return "new-password";
-            case "off":
-                return "off"; 
             default:
-                return "on";
+                return "off";
         }
     }
 
@@ -62,17 +114,12 @@ export class Input extends Component {
         if (!this.props.type)
             throw 'You must provide a type for the input field';
 
+        if (Type.includes(this.props.type))
+            return this.props.type;
+
         switch (this.props.type) {
             case "date":
                 return "datetime-local";
-            case "email":
-                return "email";
-            case "file":
-                return "file";
-            case "image":
-                return "image";
-            case "password":
-                return "password";
             default:
                 return "text";
         }
@@ -102,6 +149,7 @@ export class Input extends Component {
                 minLength={ this.props.minLength || false }
                 maxLength={ this.props.maxLength || false }
                 onChange={this.handleChange.bind(this)}
+                onPaste={this.handleChange.bind(this)}
             />
         )
     }
@@ -147,8 +195,6 @@ export class Select extends Component {
             <select id={ this.props.id || false }
                 className={ this.props.inputClass || "form-control" }
                 name={ this.props.name || false }
-                value={ this.state.value }// Is this needed?? The value is actually set using a "selected" attribute in the correct option
-                placeholder={ this.props.placeHolder || false }
                 disabled={ !!this.props.disabled }
                 readonly={ !!this.props.readOnly }
                 required={ !!this.props.required }
@@ -156,6 +202,83 @@ export class Select extends Component {
             >
                 {selectOptions}
             </select>
+        )
+    }
+}
+
+export class TextArea extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: this.props.value
+        }
+    }
+
+    handleChange(e) {
+        this.setState({
+            value: e.target.value
+        });
+
+        // Send the value to the (optional) callback
+        if (this.props.cb)
+            this.props.cb(e.target.value);
+    }
+
+    getAutoComplete() {
+        if (AutoComplete.includes(this.props.autoComplete))
+            return this.props.autoComplete;
+
+        switch (this.props.autoComplete) {
+            case "phone":
+                return "tel";
+            case "password":
+                return "current-password";
+            case "newpassword":
+                return "new-password";
+            default:
+                return "off";
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (this.state.value != nextProps.value)
+            this.setState({
+                value: nextProps.value
+            });
+    }
+
+    getCharCount() {
+        return this.state.value && this.state.value.length ? this.state.value.length : 0
+    }
+
+    render() {
+        let charLimit;
+        if (this.props.maxLength) {
+            charLimit = (
+                <span className="d-block text-right">{this.props.maxLength - this.getCharCount()} characters remaining</span>
+            )
+        }
+
+        return (
+            <React.Fragment>
+                <textarea id={this.props.id || false}
+                    className={this.props.inputClass || "form-control"}
+                    name={this.props.name || false}
+                    value={this.state.value}
+                    placeholder={this.props.placeHolder || false}
+                    autocomplete={this.getAutoComplete()}
+                    rows={this.props.rows || false }
+                    disabled={!!this.props.disabled}
+                    readonly={!!this.props.readOnly}
+                    required={!!this.props.required}
+                    autoFocus={!!this.props.autoFocus}
+                    minLength={this.props.minLength || false}
+                    maxLength={this.props.maxLength || false}
+                    onChange={this.handleChange.bind(this)}
+                />
+                {charLimit}
+            </React.Fragment>
         )
     }
 }

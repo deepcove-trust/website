@@ -1,51 +1,77 @@
-﻿
-@*
+﻿@*
     Partial that holds the footer - custom css can be found in footer.scss
 *@
+@using Deepcove_Trust_Website.Features.RazorRender
+@inject WebSettingsService Settings
+
 <div class="footer-dark">
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-3 item">
-                    <h3>Accommodation</h3>
+                    <h3>@Settings.GetQuickLinks().A.Title</h3>
                     <ul>
-                        <li><a href="/wanganella.html">Wanganella Apartment</a></li>
-                        <li><a href="/wilmot.html">Wilmot Lodge</a></li>
-                        <li><a href="/hostel.html">School Hostel</a></li>
+                        @foreach (var page in Settings.GetQuickLinks().A.Pages)
+                        {
+
+                            <li>
+                                <a href="@string.Format("{0}", page.RelativeUrl)">@string.Format("{0}", page.Name)</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="col-sm-6 col-md-3 item">
-                    <h3>Activities</h3>
+                    <h3>@Settings.GetQuickLinks().B.Title</h3>
                     <ul>
-                        <li><a href="/launch.html">Boat Access</a></li>
-                        <li><a href="/bush-walks.html">Bush Walks</a></li>
-                        <li><a href="/fishing.html">Fishing</a></li>
-                        <li><a href="/bush-skills.html">Bush Skills</a></li>
+                        @foreach (var page in Settings.GetQuickLinks().B.Pages)
+                        {
+                            <li>
+                                <a href="@string.Format("{0}", page.RelativeUrl)">@string.Format("{0}", page.Name)</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="col-md-6 item text">
                     <h3>Deep Cove Outdoor Education Trust</h3>
-                    <p>
-                        Providing accommodation and facilities for tourists and school groups<br>
-                        since 1971, allowing people to experience one of New Zealand’s most remote treasures.
-                    </p>
+                    @if (!string.IsNullOrEmpty(Settings.MissionStatment))
+                    {
+                        <p>
+                            @Settings.MissionStatment
+                        </p>
+                    }
                 </div>
                 <!-- Social Icons -->
                 <div class="col item social">
-                    <!-- Facebook -->
-                    <a href="https://www.facebook.com/deepcoveoutdooreducationtrust/">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
+                    @if (!string.IsNullOrEmpty(Settings.FacebookUrl))
+                    {
+                        <!-- Facebook -->
+                        <a href="@Settings.FacebookUrl">
+                            <i class="fab fa-facebook-square"></i>
+                        </a>
+                    }
 
-                    <!-- Email -->
-                    <a href="mailto:bookings@deepcovehostel.co.nz">
-                        <i class="fas fa-envelope"></i>
-                    </a>
+                    @if (!string.IsNullOrEmpty(Settings.GooglePlayUrl))
+                    {
+                        <a href="@Settings.GooglePlayUrl">
+                            <i class="fab fa-google-play"></i>
+                        </a>
+                    }
 
-                    <!-- Phone -->
-                    <a href="#">
-                        <i class="fas fa-phone"></i>
-                    </a>
+                    @if (!string.IsNullOrEmpty(Settings.Email))
+                    {
+                        <!-- Email -->
+                        <a href="@string.Format("mailto:{0}", @Settings.Email)">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    }
+
+                    @if (!string.IsNullOrEmpty(Settings.PhoneNumber))
+                    {
+                        <!-- Phone -->
+                        <a href="@string.Format("tel:{0}", Settings.PhoneNumber)">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    }
                 </div><!-- End Socials -->
             </div>
             <p class="copyright">Deep Cove Outdoor Education Trust © 2019</p>
