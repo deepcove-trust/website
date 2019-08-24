@@ -34,7 +34,7 @@
                 <li class="dropdown nav-item">
                     <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi @User.AccountNameFirst()</a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a class="dropdown-item" role="presentation" asp-controller="Account">Account Settings</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin-portal" asp-controller="Account">Account Settings</a>
                         <a class="dropdown-item" role="presentation" asp-controller="Login" asp-action="Logout">Log out</a>
                     </div>
                 </li>
