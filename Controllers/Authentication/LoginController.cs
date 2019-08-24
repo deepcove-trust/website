@@ -44,7 +44,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                         new { area = "admin-portal" }
                     )
                 );
-            
+
 
             return View(viewName: "~/Views/Authentication/Login.cshtml");
         }
@@ -102,9 +102,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
                 _Logger.LogDebug("User has logged into account belonging to {0}", account.Name);
 
-                return Ok();
+                return Ok(
+                    Url.Action(
+                        "Index",
+                        "AdminDashboard",
+                        new { area = "admin-portal" }
+                    ));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _Logger.LogError("Error while logging in: {0}", ex.Message);
                 _Logger.LogError(ex.StackTrace);
