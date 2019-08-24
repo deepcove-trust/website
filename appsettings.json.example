@@ -5,7 +5,8 @@
     "Use": "MsSqlConnection"
   },
   "LoginSettings": {
-    "PasswordResetTokenLength": 30
+    "PasswordResetTokenLength": 30,
+    "NewAccountResetTokenLength": 24
   },
   "Logging": {
     "LogLevel": {
@@ -13,7 +14,7 @@
     }
   },
   "EmailConfiguration": {
-    "SmtpServer": "",
+    "SmtpServer": "smtp.mailtrap.io",
     "SmtpPort": 465,
     "SmtpUsername": "",
     "SmtpPassword": "",
