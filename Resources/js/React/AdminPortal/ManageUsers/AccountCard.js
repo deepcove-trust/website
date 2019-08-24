@@ -1,15 +1,16 @@
 ﻿import React, { Component } from 'react';
 
 import Email from './Email';
-import Status from './Status';
 import Phone from './Phone';
+import Status from './Status';
 import Timestamps from './Timestamps';
-import { DeleteUser, ResetPassword, EditButtons } from './AccountBtns';
 import Panel from '../../Components/Panel';
+import { validateEmail } from '../../../helpers';
+import { DeleteUser, ResetPassword, EditButtons } from './AccountBtns';
 
 import $ from 'jquery';
 import _ from 'lodash';
-import { validateEmail } from '../../../helpers';
+
 
 const Mode = {
     View: 'view',

@@ -42,6 +42,16 @@
     <Compile Remove="Migrations\20190814085831_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190814085912_Initial_Migration.cs" />
     <Compile Remove="Migrations\20190814085912_Initial_Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190821095454_update settings table.cs" />
+    <Compile Remove="Migrations\20190821095454_update settings table.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Data\Seeds\SystemSettings.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Data\Seeds\SystemSettings.json" />
   </ItemGroup>
 
 

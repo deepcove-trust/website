@@ -62,6 +62,30 @@ export class Button extends Component {
     }
 }
 
+export class BtnGroup extends Component {
+
+    size() {
+        switch (this.props.size) {
+            case "sm":
+                return "btn-group-sm";
+            case "lg":
+                return "btn-group-lg";
+        }
+    }
+
+    direction() {
+        return `btn-group${this.props.direction == 'vertical' ? '-vertical' : ''}`;
+    }
+
+    render() {
+        return (
+            <div role="group" class={`${this.direction()} ${this.size()} ${this.props.className || ''}`}>
+                {this.props.children}
+            </div>
+        )
+    }
+}
+
 export class ConfirmButton extends Component {
     constructor(props) {
         super(props);

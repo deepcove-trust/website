@@ -57,5 +57,14 @@ namespace Deepcove_Trust_Website.Models
                 return PageRevisions.Where(c => c.Id == (int)id).FirstOrDefault();
             }
         }
+
+        public string RelativeUrl
+        {
+            get
+            {
+                string pageNameUrl = Name.ToLower().Replace(' ', '-');
+                return Section == Section.main ? $"/education/{pageNameUrl}" : $"/{pageNameUrl}";
+            }
+        }
     }
 }

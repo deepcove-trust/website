@@ -10,20 +10,25 @@ namespace Deepcove_Trust_Website.Features.RazorRender
     public class WebSettingsService
     {
         WebsiteDataContext _Db;
-        private WebsiteSettings Settings { get; set; }
+        private SystemSettings Settings { get; set; }
         private List<Page> QuickLinkPages { get; set; }
 
 
         public WebSettingsService(WebsiteDataContext db)
         {
             _Db = db;
-            Settings = _Db.WebsiteSettings.FirstOrDefault();
+            Settings = _Db.SystemSettings.OrderByDescending(o => o.Id).FirstOrDefault();
             QuickLinkPages = _Db.Pages.Where(c => c.QuickLink != QuickLinkSection.None).ToList();
         }
 
         public string FacebookUrl
         {
-            get => Settings.FacebookUrl;
+            get => Settings.UrlFacebook;
+        }
+
+        public string GooglePlayUrl
+        {
+            get => Settings.UrlGooglePlay;
         }
 
         public string PhoneNumber
@@ -33,7 +38,7 @@ namespace Deepcove_Trust_Website.Features.RazorRender
 
         public string Email
         {
-            get => Settings.Email;
+            get => Settings.EmailGeneral;
         }
 
         public string MissionStatment
@@ -47,12 +52,12 @@ namespace Deepcove_Trust_Website.Features.RazorRender
             {
                 A = new Section {
                     Title = Settings.LinkTitleA,
-                    Pages = new List<string>()
+                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.A).ToList()
                 },
                 B = new Section
                 {
                     Title = Settings.LinkTitleB,
-                    Pages = new List<string>()
+                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.B).ToList()
                 }
             };
         }
@@ -67,6 +72,6 @@ namespace Deepcove_Trust_Website.Features.RazorRender
     public struct Section
     {
         public string Title;
-        public List<string> Pages;
+        public List<Page> Pages;
     }
 }
