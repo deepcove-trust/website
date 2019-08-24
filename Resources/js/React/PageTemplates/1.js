@@ -2,9 +2,11 @@
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
 import { FormGroup, Input, TextArea } from '../Components/FormControl';
-import TextBlock from '../CMS-Blocks/Text';
+import GoogleMap from '../CMS-Blocks/GoogleMap';
 import PageMast from '../CMS-Blocks/PageMast';
+import TextBlock from '../CMS-Blocks/Text';
 import $ from 'jquery';
+
 
 const baseUri = "/api/page"
 
@@ -121,10 +123,7 @@ export default class ReactTemplate extends Component {
                     </div>
 
                     <div className="col-lg-6 col-md-12">
-                        <h3>Where to Find Us</h3>
-                        <iframe width="100%" frameborder="0" style={{ border: 0, height: 50 + 'vh' }} src="https://www.google.com/maps/embed/v1/place?key=AIzaSyAfo1AATDgkVuNqry2jt7oYnONdyrfc2cM
-                            &amp;q=Deep+Cove+School+Hostel&amp;center=-45.322628,167.232328&amp;zoom=9&amp;maptype=satellite" allowfullscreen="">
-                        </iframe>
+                        <GoogleMap title="Where to Find Us" />
                     </div>
                 </div>
             </React.Fragment>
