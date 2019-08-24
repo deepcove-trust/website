@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190822014112_Update Site Setings")]
-    partial class UpdateSiteSetings
+    [Migration("20190824091417_Initial Migration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -226,18 +226,6 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemSettings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EmailGeneral = "bookings@deepcovehostel.co.nz",
-                            FooterText = "",
-                            LinkTitleA = "",
-                            LinkTitleB = "",
-                            Phone = "(03) 928 5262",
-                            UrlFacebook = "https://www.facebook.com/deepcoveoutdooreducationtrust/"
-                        });
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Template", b =>

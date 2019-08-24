@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class Initial : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
@@ -35,7 +36,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(nullable: false),
                     Href = table.Column<string>(nullable: false),
                     IsButton = table.Column<bool>(nullable: false),
@@ -52,7 +54,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
@@ -66,7 +69,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
@@ -81,13 +85,17 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "WebsiteSettings",
+                name: "SystemSettings",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    FacebookUrl = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    EmailBookings = table.Column<string>(nullable: true),
+                    EmailGeneral = table.Column<string>(nullable: true),
+                    UrlFacebook = table.Column<string>(nullable: true),
+                    UrlGooglePlay = table.Column<string>(nullable: true),
+                    UrlGoogleMaps = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
                     LinkTitleA = table.Column<string>(nullable: true),
                     LinkTitleB = table.Column<string>(nullable: true),
@@ -95,7 +103,7 @@ namespace Deepcove_Trust_Website.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_WebsiteSettings", x => x.Id);
+                    table.PrimaryKey("PK_SystemSettings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,7 +111,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Token = table.Column<string>(nullable: false),
                     ExpiresAt = table.Column<DateTime>(nullable: false),
                     AccountId = table.Column<int>(nullable: true)
@@ -124,7 +133,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     SlotNo = table.Column<int>(nullable: false),
                     Heading = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
@@ -170,7 +180,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
@@ -197,7 +208,8 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
@@ -244,11 +256,6 @@ namespace Deepcove_Trust_Website.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.InsertData(
-                table: "WebsiteSettings",
-                columns: new[] { "Id", "Email", "FacebookUrl", "FooterText", "LinkTitleA", "LinkTitleB", "Phone" },
-                values: new object[] { 1, "bookings@deepcovehostel.co.nz", "https://www.facebook.com/deepcoveoutdooreducationtrust/", "", "", "", "(03) 928 5262" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChannelMembership_NotificationChannelId",
@@ -310,7 +317,7 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "RevisionTextField");
 
             migrationBuilder.DropTable(
-                name: "WebsiteSettings");
+                name: "SystemSettings");
 
             migrationBuilder.DropTable(
                 name: "NotificationChannels");

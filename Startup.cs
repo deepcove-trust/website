@@ -43,7 +43,7 @@ namespace Deepcove_Trust_Website
 
             // Database Config
             string dburl = Environment.GetEnvironmentVariable("DATABASE_URL");
-            if (Configuration.GetSection("ConnectionStrings").GetValue<string>("UseDb") == "MsSqlConnection")
+            if (Configuration.GetSection("ConnectionStrings").GetValue<string>("Use") == "MsSqlConnection")
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
                     options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
