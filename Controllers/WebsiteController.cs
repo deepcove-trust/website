@@ -25,7 +25,7 @@ namespace Deepcove_Trust_Website.Controllers
 
         [AllowAnonymous]
         [Route("/{pageName}")]
-        public IActionResult mainPage(string pageName)
+        public IActionResult MainPage(string pageName)
         {
             Page page = _Db.Pages.Include(i => i.Template)
                 .Where(c => c.Name == pageName.Replace('-', ' ') && c.Section == Section.main).FirstOrDefault();
@@ -47,7 +47,7 @@ namespace Deepcove_Trust_Website.Controllers
 
         [AllowAnonymous]
         [Route("/education/{pageName}")]
-        public IActionResult educationPage(string pageName)
+        public IActionResult EducationPage(string pageName)
         {
             Page page = _Db.Pages.Include(i => i.Template)
                 .Where(c => c.Name == pageName.Replace('-', ' ') && c.Section == Section.education).FirstOrDefault();
@@ -58,7 +58,8 @@ namespace Deepcove_Trust_Website.Controllers
             // Todo: Mail Developers with custom exception
             if (page.Template == null)
             {
-                return BadRequest("Fatal error - no page template found.");
+                _Logger.LogError("Page {0} requested but page template is not specified.", pageName);
+                return BadRequest("Something went wrong, please try again later.");
             }
 
             ViewData["pageName"] = page.Name;
@@ -71,54 +72,63 @@ namespace Deepcove_Trust_Website.Controllers
         [Route("/api/page/{pageId:int}/{revisionId:int?}")]
         public IActionResult PageContent(int pageId, int? revisionId)
         {
-            var data = _Db.Pages
-                .Include(i => i.PageRevisions)
-                    .ThenInclude(i1 => i1.CreatedBy)
-                .Include(i => i.PageRevisions)
-                    .ThenInclude(pr => pr.RevisionTextFields)
-                    .ThenInclude(rtf => rtf.TextField)
-                    .ThenInclude(tf => tf.Link)
-                .ToList()
-                .Select(s => new
-                {
-                    s.Id,
-                    s.Name,
-                    s.Public,
-                    updated = new
+            try
+            {
+                var data = _Db.Pages
+                    .Include(i => i.PageRevisions)
+                        .ThenInclude(i1 => i1.CreatedBy)
+                    .Include(i => i.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionTextFields)
+                        .ThenInclude(rtf => rtf.TextField)
+                        .ThenInclude(tf => tf.Link)
+                    .ToList()
+                    .Select(s => new
                     {
-                        at = s.Latest.CreatedAt,
-                        by = s.Latest.CreatedBy?.Name
-                    },
-                    text = s.Latest.RevisionTextFields.OrderBy(o => o.TextField.SlotNo).Select(s1 => new
-                    {
-                        s1.TextField.Id,
-                        pageId = s.Id,
-                        s1.TextField.Heading,
-                        s1.TextField.SlotNo,
-                        s1.TextField.Text,
-                        link = new
+                        s.Id,
+                        s.Name,
+                        s.Public,
+                        updated = new
                         {
-                            id = s1.TextField.Link?.Id,
-                            text = s1.TextField.Link?.Text,
-                            href = s1.TextField.Link?.Href,
-                            color = s1.TextField.Link?.Color,
-                            align = s1.TextField.Link?.Align,
-                            isButton = s1.TextField.Link?.IsButton
-                        }
-                    }),
-                    media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
-                    // if null, user is not authenticated
-                    settings = User.Identity.IsAuthenticated ? new
-                    {
-                        colors = Enum.GetNames(typeof(Color)),
-                        alignments = Enum.GetNames(typeof(Align))
-                    } : null
-                }).FirstOrDefault();
+                            at = s.Latest.CreatedAt,
+                            by = s.Latest.CreatedBy?.Name
+                        },
+                        text = s.Latest.RevisionTextFields.OrderBy(o => o.TextField.SlotNo).Select(s1 => new
+                        {
+                            s1.TextField.Id,
+                            pageId = s.Id,
+                            s1.TextField.Heading,
+                            s1.TextField.SlotNo,
+                            s1.TextField.Text,
+                            link = new
+                            {
+                                id = s1.TextField.Link?.Id,
+                                text = s1.TextField.Link?.Text,
+                                href = s1.TextField.Link?.Href,
+                                color = s1.TextField.Link?.Color,
+                                align = s1.TextField.Link?.Align,
+                                isButton = s1.TextField.Link?.IsButton
+                            }
+                        }),
+                        media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
+                                         // if null, user is not authenticated
+                        settings = User.Identity.IsAuthenticated ? new
+                        {
+                            colors = Enum.GetNames(typeof(Color)),
+                            alignments = Enum.GetNames(typeof(Align))
+                        } : null
+                    }).FirstOrDefault();
 
-            if (data == null || !data.Public && !User.Identity.IsAuthenticated)
-                return NotFound();
+                if (data == null || !data.Public && !User.Identity.IsAuthenticated)
+                    return NotFound();
 
-            return Ok(data);
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error retrieving data for page {0}: {1}", pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later.");
+            }
         }
 
         /// <summary>
@@ -143,93 +153,105 @@ namespace Deepcove_Trust_Website.Controllers
         [Route("/api/page/{pageId:int}/text/{slotNum:int}")]
         public async Task<IActionResult> UpdateTextField(int pageId, int slotNum, IFormCollection request)
         {
-            // Retrieve page from database
-            Page page = await _Db.Pages
-                .Include(p => p.PageRevisions)
-                    .ThenInclude(pr => pr.RevisionTextFields)
-                    .ThenInclude(rtf => rtf.TextField)
-                .Include(p => p.PageRevisions)
-                    .ThenInclude(pr => pr.CreatedBy)
-                .FirstOrDefaultAsync(p => p.Id == pageId);
-
-            // Deal with null returns
-            if (page == null)
+            try
             {
-                return NotFound("Page not found.");
-            }
+                // Retrieve page from database
+                Page page = await _Db.Pages
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionTextFields)
+                        .ThenInclude(rtf => rtf.TextField)
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.CreatedBy)
+                    .FirstOrDefaultAsync(p => p.Id == pageId);
 
-            // Validate inputs
-
-            PageRevision latestRevision = page.Latest;
-
-            // Duplicate latest revision
-            PageRevision newRevision = new PageRevision
-            {
-                Page = page,
-                RevisionTextFields = new List<RevisionTextField>(),
-                CreatedBy = await _Db.Accounts.FindAsync(1)   // (User.AccountId())
-            };
-
-            // Generate the id field
-            await _Db.PageRevisions.AddAsync(newRevision);
-
-            // Link the new revision to the same fields as the existing revision
-            foreach (RevisionTextField field in latestRevision.RevisionTextFields)
-            {
-                // Only copy text fields across if they are not the one being edited
-                if (field.TextField.SlotNo != slotNum)
+                // Deal with null returns
+                if (page == null)
                 {
-                    newRevision.RevisionTextFields.Add(new RevisionTextField
-                    {
-                        PageRevisionId = newRevision.Id,
-                        TextFieldId = field.TextFieldId
-                    });
+                    return NotFound("Page not found.");
                 }
-            }
 
-            Link newLink = null;
+                // Validate inputs
 
-            // Create new link object if the updated text field includes one
-            if (!string.IsNullOrWhiteSpace(request.Str("link[text]")))
-            {
-                Enum.TryParse(request.Str("link[color]"), true, out Color color);
-                Enum.TryParse(request.Str("link[align]"), true, out Align align);
+                PageRevision latestRevision = page.Latest;
 
-                newLink = new Link
+                // Duplicate latest revision
+                PageRevision newRevision = new PageRevision
                 {
-                    Text = request.Str("link[text]"),
-                    Href = request.Str("link[href]"),
-                    IsButton = request.Bool("link[isButton]"),
-                    Color = color,
-                    Align = align
+                    Page = page,
+                    RevisionTextFields = new List<RevisionTextField>(),
+                    CreatedBy = await _Db.Accounts.FindAsync(1)   // (User.AccountId())
                 };
 
-                await _Db.CmsLink.AddAsync(newLink);
+                // Generate the id field
+                await _Db.PageRevisions.AddAsync(newRevision);
+
+                // Link the new revision to the same fields as the existing revision
+                foreach (RevisionTextField field in latestRevision.RevisionTextFields)
+                {
+                    // Only copy text fields across if they are not the one being edited
+                    if (field.TextField.SlotNo != slotNum)
+                    {
+                        newRevision.RevisionTextFields.Add(new RevisionTextField
+                        {
+                            PageRevisionId = newRevision.Id,
+                            TextFieldId = field.TextFieldId
+                        });
+                    }
+                }
+
+                Link newLink = null;
+
+                // Create new link object if the updated text field includes one
+                if (!string.IsNullOrWhiteSpace(request.Str("link[text]")))
+                {
+                    Enum.TryParse(request.Str("link[color]"), true, out Color color);
+                    Enum.TryParse(request.Str("link[align]"), true, out Align align);
+
+                    newLink = new Link
+                    {
+                        Text = request.Str("link[text]"),
+                        Href = request.Str("link[href]"),
+                        IsButton = request.Bool("link[isButton]"),
+                        Color = color,
+                        Align = align
+                    };
+
+                    await _Db.CmsLink.AddAsync(newLink);
+                    await _Db.SaveChangesAsync();
+                }
+
+                // Create new textField with supplied text
+                TextField newField = new TextField
+                {
+                    SlotNo = slotNum,
+                    Heading = request.Str("heading"), // get value from request                
+                    Text = request.Str("text"),
+                    Link = newLink
+                };
+
+                // Generate an Id for the new text field
+                await _Db.TextField.AddAsync(newField);
+
+                newRevision.RevisionTextFields.Add(new RevisionTextField
+                {
+                    PageRevisionId = newRevision.Id,
+                    TextFieldId = newField.Id
+                });
+
+                // Save changes
                 await _Db.SaveChangesAsync();
+
+                _Logger.LogDebug("Text field {0} on {1} has been updated", slotNum, page.Name);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error updating text field {0} on page {1}: ", slotNum, pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later");
             }
 
-            // Create new textField with supplied text
-            TextField newField = new TextField
-            {
-                SlotNo = slotNum,
-                Heading = request.Str("heading"), // get value from request                
-                Text = request.Str("text"),
-                Link = newLink
-            };
-
-            // Generate an Id for the new text field
-            await _Db.TextField.AddAsync(newField);
-
-            newRevision.RevisionTextFields.Add(new RevisionTextField
-            {
-                PageRevisionId = newRevision.Id,
-                TextFieldId = newField.Id
-            });
-
-            // Save changes
-            await _Db.SaveChangesAsync();
-
-            return Ok();
         }
 
         [Authorize]
@@ -237,14 +259,26 @@ namespace Deepcove_Trust_Website.Controllers
         [Route("/api/page/{pageId:int}/visibility")]
         public async Task<IActionResult> ToggleVisbility(int pageId)
         {
-            var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
-            if (page == null)
-                return BadRequest("Page does not exist");
+            try
+            {
+                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+                if (page == null)
+                    return BadRequest("Page does not exist");
 
-            page.Public = !page.Public;
+                page.Public = !page.Public;
 
-            await _Db.SaveChangesAsync();
-            return Ok();
+                await _Db.SaveChangesAsync();
+
+                _Logger.LogDebug("Page {0} has been toggled to {1} visible.", page.Name, page.Public ? "" : "not");
+
+                return Ok();
+
+            }catch(Exception ex)
+            {
+                _Logger.LogError("Error toggling visibility of page {0}: {1}", pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later.");
+            }
         }
 
         [Authorize]
@@ -264,6 +298,8 @@ namespace Deepcove_Trust_Website.Controllers
                 page.DeletedAt = DateTime.UtcNow;
                 await _Db.SaveChangesAsync();
 
+                _Logger.LogDebug("Page {0} has been deleted", page.Name);
+
                 return Ok(Url.Action(
                     "Index",
                     "Page", new
@@ -275,9 +311,9 @@ namespace Deepcove_Trust_Website.Controllers
             }
             catch (Exception ex)
             {
-                _Logger.LogError(ex.Message);
+                _Logger.LogError("Error deleting page {0}: {1}", pageId, ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong");
+                return BadRequest("Something went wrong, please try again later");
             }
         }
     }

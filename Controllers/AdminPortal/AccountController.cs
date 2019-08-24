@@ -132,6 +132,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 await _Db.SaveChangesAsync();
 
+                _Logger.LogDebug("User {0} subscribed to {1} notification channel", User.AccountName(), channel.Name);
+
                 return Ok();
             }
             catch (Exception ex)
@@ -153,8 +155,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     NotificationChannelId = channelId
                 });
 
-                return Ok(await _Db.SaveChangesAsync());
+                _Logger.LogDebug("User {0} unsubscribed from notification channel {1}", User.AccountName(), channelId);
 
+                return Ok(await _Db.SaveChangesAsync());
             }
             catch (Exception ex)
             {
