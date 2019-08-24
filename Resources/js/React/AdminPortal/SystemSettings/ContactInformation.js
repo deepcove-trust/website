@@ -1,9 +1,10 @@
-﻿import React, { Component, Fragment } from 'react';
-import { FormGroup, Input } from '../../Components/FormControl';
+﻿import React, { Component } from 'react';
+import { FormGroup, Input, TextArea } from '../../Components/FormControl';
 import { Button } from '../../Components/Button';
+import { PrepareGoogleMapsUrl } from '../../../helpers';
 import $ from 'jquery';
 import _ from 'lodash';
-import { PrepareGoogleMapsUrl } from '../../../helpers';
+
 
 
 export default class ContactInformation extends Component {
@@ -45,6 +46,8 @@ export default class ContactInformation extends Component {
             case "url.googleMaps":
                 contact.urls.googleMaps = val;
                 break;
+            case "missionStatement":
+                contact.missionStatement = val;
         }
 
         this.setState({
@@ -67,7 +70,8 @@ export default class ContactInformation extends Component {
                         phone: this.state.contact.phone,
                         urlFacebook: this.state.contact.urls.facebook,
                         urlGooglePlay: this.state.contact.urls.googlePlay,
-                        urlGoogleMaps: this.state.contact.urls.googleMaps
+                        urlGoogleMaps: this.state.contact.urls.googleMaps,
+                        missionStatement: this.state.contact.missionStatement
                     }
                 }).done(() => {
                     this.props.u();
@@ -96,6 +100,10 @@ export default class ContactInformation extends Component {
                     <Phone number={this.state.contact.phone}
                         cb={this.updateState.bind(this, 'phone')}
                     />
+
+                    <MissionStatment text={this.state.contact.missionStatement}
+                        cb={this.updateState.bind(this, 'missionStatement')}
+                    />
                 </div>
 
                 <div className="col-lg-6 col-md-12">
@@ -110,14 +118,13 @@ export default class ContactInformation extends Component {
                     <UrlGoogleMap url={this.state.contact.urls.googleMaps}
                         cb={this.updateState.bind(this, 'url.googleMaps')}
                     />
-                </div>
 
-                <div className="col-12">
                     <FormGroup label="&#8291;">
                         <Button btnClass="btn btn-primary d-block" type="submit" pending={this.state.requestPending}>
                             Update Settings <i className="fas fa-check-circle"></i>
                         </Button>
                     </FormGroup>
+
                 </div>
             </form>
         )
@@ -129,7 +136,7 @@ export class GeneralEmail extends Component {
         return (
             <FormGroup label="Email: (General Enquiries)" required>
                 <Input type="email" value={this.props.email} cb={this.props.cb.bind(this)}/>
-                <small className="text-muted pl-2">
+                <small className="text-muted pl-2 float-right">
                     <i className="fas fa-envelope"></i> Used by the contact us email form, the footer &amp; in the emails.
                 </small>
             </FormGroup>
@@ -147,6 +154,16 @@ export class BookingEmail extends Component {
                 </small>
             </FormGroup> 
         )
+    }
+}
+
+export class MissionStatment extends Component {
+    render() {
+        return (
+            <FormGroup label="Mission Statement" required>
+                <TextArea maxLength="200" value={this.props.text} cb={this.props.cb.bind(this)} />
+            </FormGroup>
+        ) 
     }
 }
 
