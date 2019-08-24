@@ -5,7 +5,7 @@
         <!-- Brand Logo -->
         <a class="navbar-brand" href="/">
             <img src="~/images/logo.png" alt="logo" />
-            <h4 class="pl-2 d-inline">Admin Portal</h4>
+            @*<h4 class="pl-2 d-inline">Admin Portal</h4>*@
         </a>
         <!-- End Brand Logo -->
 
@@ -20,11 +20,7 @@
             <ul class="navbar-nav flex-shrink-1">
                 <!-- To left align use flex-grow-1 -->
                 <li class="nav-item">
-                    <p class="nav-link text-dark">Manage: </p>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="admin-portal" asp-controller="users" asp-action="Index">Accounts</a>
+                    <a class="nav-link text-dark" asp-area="admin-portal" asp-controller="users" asp-action="Index">Manage Users</a>
                 </li>
 
                 <li class="nav-item">
@@ -38,8 +34,8 @@
                 <li class="dropdown nav-item">
                     <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi @User.AccountNameFirst()</a>
                     <div class="dropdown-menu dropdown-menu-right" role="menu">
-                        <a class="dropdown-item" role="presentation" href="/admin-portal/account">Account</a>
-                        <a class="dropdown-item" role="presentation" href="/logout">Log out</a>
+                        <a class="dropdown-item" role="presentation" asp-controller="Account">Account Settings</a>
+                        <a class="dropdown-item" role="presentation" asp-controller="Login" asp-action="Logout">Log out</a>
                     </div>
                 </li>
             </ul>

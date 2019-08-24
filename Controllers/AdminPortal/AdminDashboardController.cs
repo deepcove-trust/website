@@ -8,8 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Deepcove_Trust_Website.Controllers
 {
     [Authorize]
+    [Route("/admin")]
     [Area("admin-portal")]
-    [Route("/admin-portal")]
     public class AdminDashboardController : Controller
     {
         public IActionResult Index()

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Deepcove_Trust_Website.Helpers;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Data;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +32,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             // Redirect authenticated users
             // to the dashboard
             if (User.Identity.IsAuthenticated)
-                return Redirect("/admin-portal");
+                return Redirect(
+                    Url.Action(
+                        "Index",
+                        "AdminDashboard",
+                        new { area = "admin-portal" }
+                    )
+                );
 
             return View(viewName: "~/Views/Authentication/ResetPassword.cshtml");
         }
@@ -50,7 +54,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
             try
             {
-                PasswordReset reset = await _Db.PasswordReset.Include(i => i.Account)
+                PasswordReset reset = await _Db.PasswordResets.Include(i => i.Account)
                     .Where(c => c.Token == token && c.Account.Email == request.Str("email") && c.ExpiresAt > DateTime.UtcNow)
                     .FirstOrDefaultAsync();
 
@@ -69,7 +73,9 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
                 Account account = await _Db.Accounts.FindAsync(reset.Account.Id);
                 account.Password = _Hasher.HashPassword(account, request.Str("password"));
+                account.ForcePasswordReset = false;
                 reset.ExpiresAt = DateTime.UtcNow;
+                
 
                 await _Db.SaveChangesAsync();
 

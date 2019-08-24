@@ -36,7 +36,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             // Redirect authenticated users
             // to the dashboard
             if (User.Identity.IsAuthenticated)
-                return Redirect("/admin-portal");
+                return Redirect(
+                    Url.Action(
+                        "Index",
+                        "AdminDashboard",
+                        new { area = "admin-portal" }
+                    )
+                );
 
             return View(viewName: "~/Views/Authentication/RequestPasswordReset.cshtml");
         }
@@ -48,7 +54,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
                 if (account != null)
                 {
-                    List<PasswordReset> resetTokens = await _Db.PasswordReset.Include(i => i.Account).Where(c => c.Account.Id == account.Id).ToListAsync();
+                    List<PasswordReset> resetTokens = await _Db.PasswordResets.Include(i => i.Account).Where(c => c.Account.Id == account.Id).ToListAsync();
                     if (resetTokens != null)
                         foreach (PasswordReset resetToken in resetTokens)
                             resetToken.ExpiresAt = DateTime.UtcNow;

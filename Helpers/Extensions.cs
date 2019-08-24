@@ -56,6 +56,20 @@ namespace Deepcove_Trust_Website.Helpers
         }
 
         /// <summary>
+        /// Returns the value of a post field as a boolean.
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static bool Bool(this IFormCollection request, string key)
+        {
+            bool.TryParse(request[key].ToString(), out bool x);
+
+            return x;
+        }
+
+
+        /// <summary>
         /// Gets the base URI for the website
         /// </summary>
         /// <returns></returns>

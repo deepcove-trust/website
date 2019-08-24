@@ -68,6 +68,16 @@ a.navbar-brand {
     font-weight: bolder;
 }
 
+.custom-checkbox > label[title], .custom-checkbox > label[data-tip] {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+}
+
+.__react_component_tooltip.show {
+    max-width: 250px;
+    text-align: center;
+}
+
 .btn-confirm::before {
     content: 'Confirm';
     -webkit-animation: fade 0.25s; /* Safari, Chrome and Opera > 12.1 */
@@ -75,6 +85,10 @@ a.navbar-brand {
     -ms-animation: fadein 0.25s; /* Internet Explorer */
     -o-animation: fadein 0.25s; /* Opera < 12.1 */
     animation: fadein 0.25s;
+}
+
+button[disabled]{
+    cursor: not-allowed;
 }
 
 .btn-confirm > span {
@@ -179,4 +193,13 @@ html {
     to {
         opacity: 1;
     }
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }

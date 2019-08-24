@@ -1,0 +1,8 @@
+[
+  {
+    "Name": "Contact Us",
+    "Description": "A contact us layout that features three text areas, an email form and Google Maps integration.",
+    "TextAreas": 3,
+    "MediaAreas": 0
+  }
+]

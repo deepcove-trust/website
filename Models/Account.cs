@@ -29,5 +29,9 @@ namespace Deepcove_Trust_Website.Models
         public bool Active { get; set; }
 
         public DateTime? LastLogin { get; set; }
+
+        // Nav properties
+        public ICollection<ChannelMembership> ChannelMemberships { get; set; }
+        // End of nav properties
     }
 }
