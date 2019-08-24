@@ -91,7 +91,11 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     }
                 );
 
-                return Ok();
+                return Ok(Url.Action(
+                        "Index",
+                        "Users",
+                        new { area = "admin-portal" }
+                    ));
             } 
             catch(Exception ex)
             {
