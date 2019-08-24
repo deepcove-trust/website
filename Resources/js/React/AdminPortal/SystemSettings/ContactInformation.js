@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { FormGroup, Input, TextArea } from '../../Components/FormControl';
-import { Button } from '../../Components/Button';
 import { PrepareGoogleMapsUrl } from '../../../helpers';
+import { Button } from '../../Components/Button';
 import $ from 'jquery';
 import _ from 'lodash';
 
