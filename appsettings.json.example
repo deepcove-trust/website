@@ -2,6 +2,7 @@
   "ConnectionStrings": {
     "MsSqlConnection": "Server=(localdb)\\MSSQLLocalDB;Database=DeepcoveWebsite;",
     "MySqlConnection": "",
+    "Use": "MsSqlConnection"
   },
   "LoginSettings": {
     "PasswordResetTokenLength": 30,
