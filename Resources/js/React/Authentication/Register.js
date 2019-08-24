@@ -27,8 +27,8 @@ export default class Register extends Component {
             type: 'post',
             url: `${baseUri}`,
             data: $("#register").serialize()
-        }).done(() => {
-            window.location.replace("/admin-portal/users");
+        }).done((url) => {
+            window.location.replace(url);
         }).fail((err) => {
             this.setState({
                 requestFailed: err.responseText,
