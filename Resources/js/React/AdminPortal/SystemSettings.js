@@ -8,7 +8,7 @@ import $ from 'jquery';
 
 const baseUri = `/admin/web/settings`;
 
-export default class Settings extends Component {
+export default class SystemSettings extends Component {
     constructor(props) {
         super(props);
 
@@ -106,5 +106,5 @@ export class PageTabs extends Component {
 }
 
 
-if (document.getElementById('react_websiteSettings'))
-    render(<Settings />, document.getElementById('react_websiteSettings'));    
+if (document.getElementById('react_systemSettings'))
+    render(<SystemSettings />, document.getElementById('react_systemSettings'));    

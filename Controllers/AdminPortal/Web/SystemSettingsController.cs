@@ -30,7 +30,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         public IActionResult Index(string tab)
         {
             ViewData["tab"] = tab;
-            return View(viewName: "~/Views/AdminPortal/Web/Settings.cshtml");
+            return View(viewName: "~/Views/AdminPortal/Web/SystemSettings.cshtml");
         }
 
         [HttpGet("data")]
