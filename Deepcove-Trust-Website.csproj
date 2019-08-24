@@ -42,8 +42,12 @@
     <Compile Remove="Migrations\20190814085831_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190814085912_Initial_Migration.cs" />
     <Compile Remove="Migrations\20190814085912_Initial_Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190816091737_Initial.cs" />
+    <Compile Remove="Migrations\20190816091737_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190821095454_update settings table.cs" />
     <Compile Remove="Migrations\20190821095454_update settings table.Designer.cs" />
+    <Compile Remove="Migrations\20190822014112_Update Site Setings.cs" />
+    <Compile Remove="Migrations\20190822014112_Update Site Setings.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,6 +67,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

@@ -224,18 +224,6 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SystemSettings");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            EmailGeneral = "bookings@deepcovehostel.co.nz",
-                            FooterText = "",
-                            LinkTitleA = "",
-                            LinkTitleB = "",
-                            Phone = "(03) 928 5262",
-                            UrlFacebook = "https://www.facebook.com/deepcoveoutdooreducationtrust/"
-                        });
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Template", b =>
