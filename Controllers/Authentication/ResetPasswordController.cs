@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Deepcove_Trust_Website.Helpers;
@@ -8,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Data;
 using Microsoft.Extensions.Logging;
 
