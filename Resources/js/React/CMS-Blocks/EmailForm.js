@@ -66,19 +66,22 @@ class Form extends Component {
 
         $.ajax({
             type: 'post',
-            uri: '/api/sendmail',
+            url: '/api/sendmail',
             data: {
-                name: this.state.name,
-                email: this.state.email,
-                phoneNumbr: this.state.phone,
-                org: this.state.org,
-                subject: this.state.subject,
-                message: this.state.message
+                name: this.state.mail.name,
+                email: this.state.mail.email,
+                phone: this.state.mail.phone,
+                org: this.state.mail.org,
+                subject: this.state.mail.subject,
+                message: this.state.mail.message
             }
         }).done(() => {
             this.props.sent();
         }).fail((err) => {
-
+            this.setState({
+                errText: err.responseText,
+                requestPending: false
+            });
         });
     }
 
@@ -112,6 +115,10 @@ class Form extends Component {
     }
 
     render() {
+        let errorText;
+        if (!!this.state.errText)
+            errorText = <small className="text-danger pb-2">{this.state.errText}</small>
+
         return (
             <Fragment>
                 <h3>Drop us an Email</h3>
@@ -157,6 +164,8 @@ class Form extends Component {
                     </div>
 
                     <div className="col-12">
+                        {errorText}
+
                         <Button type="submit" pending={this.state.requestPending}>
                             Send Email &nbsp; <i className="fas fa-envelope"></i>
                         </Button>

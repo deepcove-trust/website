@@ -316,12 +316,5 @@ namespace Deepcove_Trust_Website.Controllers
                 return BadRequest("Something went wrong, please try again later");
             }
         }
-
-        [HttpPost]
-        [Route("/api/sendmail")]
-        public async Task<IActionResult> SendEmail(IFormCollection request)
-        {
-            return Ok();
-        }
     }
 }

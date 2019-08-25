@@ -2,5 +2,9 @@
   {
     "Name": "Developer Exceptions",
     "Description": "Receive an email when something goes wrong with the website."
+  },
+  {
+    "name": "cc: Email Enquiries",
+    "Description":  "Send me a copy of emails sent through the contact us email form."
   }
 ]
