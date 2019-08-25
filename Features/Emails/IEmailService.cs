@@ -21,5 +21,12 @@ namespace Deepcove_Trust_Website.Features.Emails
             string viewName,
             object vars
         );
+
+        Task SendContactUsEmailAsync(
+            EmailContact Sender,
+            List<EmailContact> CcRecipients,
+            string subject,
+            object vars
+        );
     }
 }

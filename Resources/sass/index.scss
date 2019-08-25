@@ -203,3 +203,17 @@ html {
     -ms-user-select: none; /* Internet Explorer/Edge */
     user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 }
+
+
+
+.fade1sec {
+    animation: fadein 1s linear;
+}
+
+.fade3sec {
+    animation: fadein 3s linear;
+}
+
+.fade5sec {
+    animation: fadein 3s linear;
+}

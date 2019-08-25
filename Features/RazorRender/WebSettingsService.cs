@@ -21,30 +21,17 @@ namespace Deepcove_Trust_Website.Features.RazorRender
             QuickLinkPages = _Db.Pages.Where(c => c.QuickLink != QuickLinkSection.None).ToList();
         }
 
-        public string FacebookUrl
-        {
-            get => Settings.UrlFacebook;
-        }
+        public string FacebookUrl => Settings.UrlFacebook;
 
-        public string GooglePlayUrl
-        {
-            get => Settings.UrlGooglePlay;
-        }
+        public string GooglePlayUrl => Settings.UrlGooglePlay;
 
-        public string PhoneNumber
-        {
-            get => Settings.Phone;
-        }
+        public string GoogleMapsUrl => Settings.UrlGoogleMaps;
 
-        public string Email
-        {
-            get => Settings.EmailGeneral;
-        }
+        public string PhoneNumber => Settings.Phone;
 
-        public string MissionStatment
-        {
-            get => Settings.FooterText;
-        }
+        public string Email => Settings.EmailGeneral;
+
+        public string MissionStatment => Settings.FooterText;
 
         public QuickLinks GetQuickLinks()
         {

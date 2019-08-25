@@ -2,6 +2,8 @@
     var RouteData = ViewContext.RouteData;
     string RouteArea = RouteData.Values.ContainsKey("area") ? RouteData.Values["area"].ToString() : "";
 }
+@using Deepcove_Trust_Website.Features.RazorRender
+@inject WebSettingsService Settings
 
 <!DOCTYPE html>
 <html>
@@ -11,8 +13,15 @@
     <meta name="keywords" content="Deep Cove, Deep Cove Outdoor Education Trust, Deep Cove Trust,Deep Cove Hostel, Deep Cove Camp, Deep Cove School Trips, Deep Cove Hostel">
     <meta name="author" content="Samuel Grant, Samuel Jackson and Mitchell Quarrie">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Deep Cove Outdoor Education Trust</title>
 
+    <!-- Special Meta Data -->
+    <meta name="theme-color" content="#67B829" />
+    @if (!String.IsNullOrEmpty(Settings.GoogleMapsUrl))
+    {
+        <meta name="googlemap" content="@Settings.GoogleMapsUrl" />
+    }
+
+    <title>@ViewData["Title"] - Deep Cove Outdoor Education Trust</title>
     <link rel="stylesheet" href="~/dist/bundle.css" />
 
 </head>
@@ -31,7 +40,7 @@
                 {
                     await Html.RenderPartialAsync("_AdminPortal_WebNav.cshtml");
                 }
-                else if(RouteArea.Contains("admin-portal,app"))
+                else if (RouteArea.Contains("admin-portal,app"))
                 {
                     await Html.RenderPartialAsync("_AdminPortal_AppNav.cshtml");
                 }
@@ -51,7 +60,7 @@
 
         @{ await Html.RenderPartialAsync("_Footer.cshtml"); }
     </div>
-    
+
     <script src="~/dist/bundle.js"></script>
 
     @RenderSection("Scripts", required: false)

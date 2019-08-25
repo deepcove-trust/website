@@ -91,7 +91,7 @@ export default class AccountCard extends Component {
 
     render() {
         return (
-            <div className="col-lg-4 col-md-6 col-sm-12">
+            <div className="col-lg-4 col-md-6 col-sm-12 mb-2">
                 <Panel onSubmit={this.updateAccount.bind(this)}>
                     <h4 class="text-center">{this.state.account.name || ""}</h4>
                     
