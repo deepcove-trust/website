@@ -4,7 +4,7 @@ import Alert from '../Components/Alert';
 
 export default class GoogleMap extends Component {
     getSrc() {
-        return $('meta[name=googlemap]').attr("content") || null
+        return this.props.config || null
     }
 
     render() {

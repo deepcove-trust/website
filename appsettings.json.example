@@ -20,5 +20,9 @@
     "SmtpPassword": "",
     "SenderName": "",
     "SenderEmail": ""
+  },
+  "reCAPTCHA": {
+    "siteKey": "",
+    "secretKey": ""
   }
 }

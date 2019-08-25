@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Deepcove_Trust_Website.Helpers;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Deepcove_Trust_Website.Controllers
 {
@@ -17,10 +18,13 @@ namespace Deepcove_Trust_Website.Controllers
     {
         private readonly ILogger<WebsiteController> _Logger;
         private readonly WebsiteDataContext _Db;
-        public WebsiteController(WebsiteDataContext db, ILogger<WebsiteController> logger)
+        private readonly IConfiguration _Configuration;
+
+        public WebsiteController(WebsiteDataContext db, ILogger<WebsiteController> logger, IConfiguration config)
         {
             _Db = db;
             _Logger = logger;
+            _Configuration = config;
         }
 
         [AllowAnonymous]
@@ -111,6 +115,11 @@ namespace Deepcove_Trust_Website.Controllers
                         }),
                         media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
                                          // if null, user is not authenticated
+
+                        other = new {
+                            googleMaps = _Db.SystemSettings.OrderByDescending(o => o.Id).Select(settings => settings.UrlGoogleMaps).FirstOrDefault(),
+                            captchaSiteKey =  _Configuration.GetSection("reCAPTCHA").GetValue<String>("siteKey")
+                        },
                         settings = User.Identity.IsAuthenticated ? new
                         {
                             colors = Enum.GetNames(typeof(Color)),
