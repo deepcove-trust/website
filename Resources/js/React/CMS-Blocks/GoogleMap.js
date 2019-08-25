@@ -17,9 +17,9 @@ export default class GoogleMap extends Component {
             <Fragment>
                 <h3>{this.props.title}</h3>
                 <iframe width="100%"
-                    frameborder="0"
+                    frameBorder="0"
                     style={{ border: 0, height: 50 + 'vh' }}
-                    allowfullscreen=""
+                    allowFullScreen=""
                     src={this.getSrc()}>
                 </iframe>
             </Fragment>

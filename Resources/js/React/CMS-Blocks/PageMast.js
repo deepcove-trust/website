@@ -80,7 +80,7 @@ export class DeletePage extends Component {
                 confirmPhrase={this.props.page.name}
                 cb={this.deletePage.bind(this)}
             >
-                Delete Page <i class="fas fa-trash"></i>
+                Delete Page <i className="fas fa-trash"></i>
             </ConfirmModal>
         )
     }

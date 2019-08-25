@@ -1,6 +1,7 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { FormGroup, Input, TextArea } from '../Components/FormControl';
 import { Button } from '../Components/Button';
+import Recaptcha from 'react-google-invisible-recaptcha';
 import $ from 'jquery';
 
 export default class EmailForm extends Component {
@@ -16,7 +17,8 @@ export default class EmailForm extends Component {
         if (this.state.mailSent) {
             return <MailSent />
         } else {
-            return <Form sent={() =>
+            return <Form config={this.props.config}
+                sent={() =>
                 {
                     this.setState({
                         mailSent: true
@@ -53,17 +55,30 @@ class Form extends Component {
                 org: null,
                 subject: null,
                 message: null
-            }
+            },
+            key: false
         }
     }
 
-    sendEmail(e) {
-        e.preventDefault();
+    componentDidUpdate() {
+        if (!!this.props.config && !this.state.key) {
+            this.setState({
+                key: true
+            });
+        }
+    }
 
+    // Run the reCAPTCHA
+    verifyHuman(e) {
+        e.preventDefault();
+        this.recaptcha.execute();
+    }
+    // reCAPTCHA passed
+    onResolved() {
         this.setState({
             requestPending: true
         });
-
+      
         $.ajax({
             type: 'post',
             url: '/api/sendmail',
@@ -115,6 +130,10 @@ class Form extends Component {
     }
 
     render() {
+        if (!this.state.key)
+            return <i className="fad fa-spinner-third"></i>
+
+
         let errorText;
         if (!!this.state.errText)
             errorText = <small className="text-danger pb-2">{this.state.errText}</small>
@@ -126,7 +145,7 @@ class Form extends Component {
                     <span className="text-danger">*</span> Denotes a required field.
                 </p>
 
-                <form className="row" onSubmit={this.sendEmail.bind(this)}>
+                <form className="row" onSubmit={this.verifyHuman.bind(this)}>
                     <div className="col-lg-6 col-md-6 col-sm-12">
                         <FormGroup htmlFor="name" label="Your Name:" required>
                             <Input id="name" type="text" value={this.state.mail.name} autoComplete="name" cb={this.updateState.bind(this, 'name')} required />
@@ -171,6 +190,11 @@ class Form extends Component {
                         </Button>
                     </div>
                 </form>
+
+                <Recaptcha
+                    ref={ref => this.recaptcha = ref}
+                    sitekey={this.props.config}
+                    onResolved={this.onResolved} />
             </Fragment>
         )
     }
