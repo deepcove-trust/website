@@ -85,6 +85,7 @@ namespace Deepcove_Trust_Website.Controllers
                         .ThenInclude(pr => pr.RevisionTextFields)
                         .ThenInclude(rtf => rtf.TextField)
                         .ThenInclude(tf => tf.Link)
+                    .Where(p => p.Id == pageId)
                     .ToList()
                     .Select(s => new
                     {
