@@ -25,8 +25,6 @@ namespace Deepcove_Trust_Website.Features.RazorRender
 
         public string GooglePlayUrl => Settings.UrlGooglePlay;
 
-        public string GoogleMapsUrl => Settings.UrlGoogleMaps;
-
         public string PhoneNumber => Settings.Phone;
 
         public string Email => Settings.EmailGeneral;

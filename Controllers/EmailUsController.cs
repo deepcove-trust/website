@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using reCAPTCHA.AspNetCore;
 
 namespace Deepcove_Trust_Website.Controllers
 {
@@ -19,12 +20,14 @@ namespace Deepcove_Trust_Website.Controllers
         private readonly ILogger<EmailUsController> _Logger;
         private readonly IEmailService _SMTP;
         private WebsiteDataContext _Db;
+        private IRecaptchaService _Recaptcha;
 
-        public EmailUsController(ILogger<EmailUsController> logger, IEmailService smtp, WebsiteDataContext db)
+        public EmailUsController(ILogger<EmailUsController> logger, IEmailService smtp, WebsiteDataContext db, IRecaptchaService reCAPTCHA)
         {
             _Logger = logger;
             _SMTP = smtp;
             _Db = db;
+            _Recaptcha = reCAPTCHA;
         }
 
         [HttpPost("sendmail")]
@@ -32,6 +35,11 @@ namespace Deepcove_Trust_Website.Controllers
         {
             try
             {
+
+                var reCAPTCHA = await _Recaptcha.Validate(request.Str("code"));
+                if (!reCAPTCHA.success)
+                    return Conflict("Please complete the reCAPTCHA");
+
                 List<EmailContact> CcedRecipients = await _Db.NotificationChannels.Where(c => c.Name == "cc: Email Enquiries")
                 .Select(s => s.ChannelMemberships
                     .Select(s1 => new EmailContact

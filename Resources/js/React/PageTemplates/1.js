@@ -88,11 +88,12 @@ export default class ReactTemplate extends Component {
                     </div>
 
                     <div className="col-lg-6 col-md-12 pb-2">
-                        <EmailForm />
+                        <EmailForm config={this.state.data ? this.state.data.other.captchaSiteKey : null }/>
                     </div>
 
                     <div className="col-lg-6 col-md-12">
-                        <GoogleMap title="Where to Find Us" />
+                        <GoogleMap title="Where to Find Us"
+                            config={this.state.data ? this.state.data.other.googleMaps : null } />
                     </div>
                 </div>
             </React.Fragment>

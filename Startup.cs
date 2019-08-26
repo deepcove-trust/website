@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using reCAPTCHA.AspNetCore;
 
 namespace Deepcove_Trust_Website
 {
@@ -71,6 +72,9 @@ namespace Deepcove_Trust_Website
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
                     options.AccessDeniedPath = "/"; 
                 });
+
+            services.Configure<RecaptchaSettings>(Configuration.GetSection("RecaptchaSettings"));
+            services.AddTransient<IRecaptchaService, RecaptchaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
