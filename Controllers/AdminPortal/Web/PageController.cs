@@ -57,5 +57,16 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 return BadRequest("We could not retrieve the pages, please try again later");
             }
         }
+
+        [HttpGet("new")]
+        public IActionResult NewPageIndex(string filter)
+        {
+            ViewData["PageName"] = filter;
+            return View(viewName: "~/Views/AdminPortal/Web/PagesNew.cshtml");
+        }
+
+        //> TODO: We need
+        //=> An API that provides info on avaliable templates:  HTTP GET - Does This Go Here?
+        //=> An API that creates a new page:  HTTP POST
     }
 }
