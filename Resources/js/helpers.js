@@ -11,9 +11,9 @@ export function isExternalUrl(href) {
 export function PageUrl(pageName, pageSection) {
     if (!pageName) return null;
 
-    let section = pageSection != "main" ? pageSection : "";
+    let section = pageSection != "main" ? `${pageSection}/` : "";
     let page = pageName.replace(/\s+/g, '-').toLowerCase()
-    return `${window.location.protocol}/${window.location.hostname}/${section}${page}`
+    return `${window.location.protocol}//${window.location.hostname}/${section}${page}`
 }
 
 // Returns a google maps API url. If the map imbeed is provided that is stripped.

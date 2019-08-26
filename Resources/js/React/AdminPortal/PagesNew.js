@@ -1,14 +1,12 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
-import { Button } from '../Components/Button';
 
 import ProgressBar from './PagesNew/ProgressBar';
 import PageDetails from './PagesNew/PageDetails';
+import SelectTemplate from './PagesNew/SelectTemplate';
 
-import $ from 'jquery';
 
 const baseUri = "/admin/web/pages/new";
-const ApiBaseUri = "/api"
 
 export default class NewPageWrapper extends Component {
     constructor(props) {
@@ -20,11 +18,28 @@ export default class NewPageWrapper extends Component {
         }
     }
 
+    createPage() {
+        $.ajax({
+            method: 'post',
+            url: `${baseUri}`,
+            data: {
+                name: this.state.page.name,
+                description: this.state.page.description,
+                section: this.state.page.section,
+                templateId: this.state.templateId
+            }
+        }).done((url) => {
+            window.location.replace(url);
+        }).fail((err) => {
+            console.error(`[PageNew@createPage] Error getting data: `, err.responseText);
+        })
+    }
+
     render() {
         let DivBlock; 
         if (this.state.stage == 1)
             DivBlock = (
-                <PageDetails
+                <PageDetails pageData={this.state.page}
                     cb={(data) => {
                         this.setState({
                             stage: 2,
@@ -34,9 +49,18 @@ export default class NewPageWrapper extends Component {
                 />
             );
         else if (this.state.stage == 2)
-            DivBlock = <PageTemplates />;
+            DivBlock = (
+                <SelectTemplate
+                    cb={(templateId, stage) => {
+                        this.setState({
+                            stage: stage,
+                            templateId: templateId
+                        });
+                    }}
+                />
+            );
         else
-            DivBlock = <PageDetails />;
+            DivBlock = <ConfimChoices cb={this.createPage.bind(this)}/>;
 
         return (
             <Fragment>
@@ -47,28 +71,10 @@ export default class NewPageWrapper extends Component {
     }
 }
 
-
-
-class PageTemplates extends Component {
+class ConfimChoices extends Component {
     render() {
         return (
-            <Fragment>
-                <div className="row">
-                    <div className="col-12">
-                        <h1 className="text-center pb-3">Select a Template</h1>
-                    </div>
-                </div>    
-
-                <div className="col-12">
-                    <Button btnClass="btn btn-info float-left">
-                        <i className="far fa-arrow-circle-left"></i> Back
-                            </Button>
-
-                    <Button btnClass="btn btn-info float-right">
-                        Next <i className="far fa-arrow-circle-right"></i>
-                    </Button>
-                </div>
-            </Fragment>
+            <button cb={this.props.cb.bind(this)}>Confirm</button>    
         )
     }
 }
