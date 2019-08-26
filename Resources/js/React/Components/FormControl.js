@@ -135,19 +135,19 @@ export class Input extends Component {
     
     render() {
         return (
-            <input id={ this.props.id || false }
+            <input id={ this.props.id || null }
                 type={this.getType()}
                 className={ this.props.inputClass || "form-control" }
-                name={ this.props.name || false }
+                name={ this.props.name || null }
                 value={ this.state.value }
-                placeholder={ this.props.placeHolder || false }
-                autocomplete={ this.getAutoComplete() }
+                placeholder={ this.props.placeHolder || null }
+                autoComplete={ this.getAutoComplete() }
                 disabled={ !!this.props.disabled }
-                readonly={ !!this.props.readOnly }
+                readOnly={ !!this.props.readOnly }
                 required={ !!this.props.required }
                 autoFocus={ !!this.props.autoFocus }
-                minLength={ this.props.minLength || false }
-                maxLength={ this.props.maxLength || false }
+                minLength={ this.props.minLength || null }
+                maxLength={this.props.maxLength || null }
                 onChange={this.handleChange.bind(this)}
                 onPaste={this.handleChange.bind(this)}
             />
@@ -192,11 +192,11 @@ export class Select extends Component {
         }
 
         return (
-            <select id={ this.props.id || false }
+            <select id={ this.props.id || null }
                 className={ this.props.inputClass || "form-control" }
-                name={ this.props.name || false }
+                name={ this.props.name || null }
                 disabled={ !!this.props.disabled }
-                readonly={ !!this.props.readOnly }
+                readOnly={ !!this.props.readOnly }
                 required={ !!this.props.required }
                 onChange={ this.handleChange.bind(this) }
             >
@@ -262,15 +262,15 @@ export class TextArea extends Component {
 
         return (
             <React.Fragment>
-                <textarea id={this.props.id || false}
+                <textarea id={this.props.id || null}
                     className={this.props.inputClass || "form-control"}
-                    name={this.props.name || false}
+                    name={this.props.name || null}
                     value={this.state.value}
-                    placeholder={this.props.placeHolder || false}
-                    autocomplete={this.getAutoComplete()}
+                    placeholder={this.props.placeHolder || null}
+                    autoComplete={this.getAutoComplete()}
                     rows={this.props.rows || false }
                     disabled={!!this.props.disabled}
-                    readonly={!!this.props.readOnly}
+                    readOnly={!!this.props.readOnly}
                     required={!!this.props.required}
                     autoFocus={!!this.props.autoFocus}
                     minLength={this.props.minLength || false}
