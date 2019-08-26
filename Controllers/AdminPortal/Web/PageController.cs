@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -35,13 +37,14 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         [HttpGet("data")]
         public async Task<IActionResult> PageList(string filter)
         {
-            if (!Enum.IsDefined(typeof(Section), filter))           
+            if (!Enum.IsDefined(typeof(Section), filter))
                 return BadRequest($"Invalid filter. Please use one of the following: {string.Join(", ", Enum.GetNames(typeof(Section)))}");
 
             try
             {
                 return Ok(await _Db.Pages.Where(w => w.Section == Enum.Parse<Section>(filter))
-                    .Select(s => new {
+                    .Select(s => new
+                    {
                         s.Id,
                         s.Name,
                         template = s.Template.Name,
@@ -67,6 +70,40 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 
         //> TODO: We need
         //=> An API that provides info on avaliable templates:  HTTP GET - Does This Go Here?
-        //=> An API that creates a new page:  HTTP POST
+        //=> An API that creates a new page:  HTTP POST        
+        [HttpPost]
+        [Route("new")]
+        public async Task<IActionResult> CreatePage(IFormCollection request, 
+            [Bind("Name", "Description", "Section")] Page page)
+        {
+            Template template = await _Db.PageTemplates.FindAsync(request.Int("templateId"));
+
+            // Validate request inputs as per model data annotations
+            if (ModelState.IsValid && template != null)
+            {
+                try
+                {
+                    page.Template = template;
+                    await _Db.AddAsync(page);
+                    await _Db.AddAsync(new PageRevision
+                    {
+                        Page = page,
+                        CreatedBy = await _Db.Accounts.FindAsync(User.AccountId())
+                    }); ;
+                    await _Db.SaveChangesAsync();
+                    return Ok(this.Request.BaseUrl() + page.RelativeUrl);
+
+                }          
+                catch (Exception ex)
+                {
+                    _Logger.LogWarning("Error creating new page: {0}", ex.Message);
+                    _Logger.LogWarning(ex.StackTrace);
+                    return BadRequest("There was an error creating the page. Please try again later.");
+                }                
+            }
+
+            // else model state isn't valid
+            return BadRequest("There was a problem"); // Todo: give better feedback...
+        }
     }
 }
