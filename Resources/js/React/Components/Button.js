@@ -79,7 +79,7 @@ export class BtnGroup extends Component {
 
     render() {
         return (
-            <div role="group" class={`${this.direction()} ${this.size()} ${this.props.className || ''}`}>
+            <div role="group" class={`${this.direction()} ${this.size()} ${this.props.btnClass || ''}`}>
                 {this.props.children}
             </div>
         )
