@@ -85,11 +85,27 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 {
                     page.Template = template;
                     await _Db.AddAsync(page);
-                    await _Db.AddAsync(new PageRevision
+
+                    // Create initial page revision
+                    PageRevision pageRevision = new PageRevision
                     {
                         Page = page,
                         CreatedBy = await _Db.Accounts.FindAsync(User.AccountId())
-                    }); ;
+                    };
+                    await _Db.AddAsync(pageRevision);
+
+                    // Create empty text fields, and associate to new page
+                    for(int i = 0; i < template.TextAreas; i++)
+                    {
+                        TextField textField = new TextField();
+                        await _Db.AddAsync(textField);
+                        await _Db.AddAsync(new RevisionTextField
+                        {
+                            TextField = textField,
+                            PageRevision = pageRevision,
+                        });
+                    }
+
                     await _Db.SaveChangesAsync();
                     return Ok(this.Request.BaseUrl() + page.RelativeUrl);
 

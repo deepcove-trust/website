@@ -158,7 +158,7 @@ namespace Deepcove_Trust_Website.Controllers
         /// "link-align" = (optional) sets the alignment of the link using the Align enum 
         /// </param>
         /// <returns></returns>
-        //[Authorize] // Todo: Reinstate this
+        [Authorize]
         [HttpPost]
         [Route("/api/page/{pageId:int}/text/{slotNum:int}")]
         public async Task<IActionResult> UpdateTextField(int pageId, int slotNum, IFormCollection request)
