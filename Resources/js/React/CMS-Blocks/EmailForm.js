@@ -1,7 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { FormGroup, Input, TextArea } from '../Components/FormControl';
 import { Button } from '../Components/Button';
-import Recaptcha from 'react-google-invisible-recaptcha';
 import $ from 'jquery';
 
 export default class EmailForm extends Component {
@@ -42,6 +41,7 @@ class MailSent extends Component {
     }
 }
 
+
 class Form extends Component {
     constructor(props) {
         super(props);
@@ -56,9 +56,11 @@ class Form extends Component {
                 subject: null,
                 message: null
             },
-            key: false
+            key: false,
         }
+        this.reCAPTCHA = null;
     }
+
 
     componentDidUpdate() {
         if (!!this.props.config && !this.state.key) {
@@ -68,13 +70,9 @@ class Form extends Component {
         }
     }
 
-    // Run the reCAPTCHA
-    verifyHuman(e) {
+    sendMail(e) {
         e.preventDefault();
-        this.recaptcha.execute();
-    }
-    // reCAPTCHA passed
-    onResolved() {
+
         this.setState({
             requestPending: true
         });
@@ -82,14 +80,7 @@ class Form extends Component {
         $.ajax({
             type: 'post',
             url: '/api/sendmail',
-            data: {
-                name: this.state.mail.name,
-                email: this.state.mail.email,
-                phone: this.state.mail.phone,
-                org: this.state.mail.org,
-                subject: this.state.mail.subject,
-                message: this.state.mail.message
-            }
+            data: this.state.mail
         }).done(() => {
             this.props.sent();
         }).fail((err) => {
@@ -128,7 +119,7 @@ class Form extends Component {
             mail: mail
         });
     }
-
+    
     render() {
         if (!this.state.key)
             return <i className="fad fa-spinner-third"></i>
@@ -142,10 +133,11 @@ class Form extends Component {
             <Fragment>
                 <h3>Drop us an Email</h3>
                 <p>
-                    <span className="text-danger">*</span> Denotes a required field.
+                    <span className="text-danger">* </span> 
+                    Denotes a required field.
                 </p>
 
-                <form className="row" onSubmit={this.verifyHuman.bind(this)}>
+                <form className="row" onSubmit={this.sendMail.bind(this)}>
                     <div className="col-lg-6 col-md-6 col-sm-12">
                         <FormGroup htmlFor="name" label="Your Name:" required>
                             <Input id="name" type="text" value={this.state.mail.name} autoComplete="name" cb={this.updateState.bind(this, 'name')} required />
@@ -190,11 +182,6 @@ class Form extends Component {
                         </Button>
                     </div>
                 </form>
-
-                <Recaptcha
-                    ref={ref => this.recaptcha = ref}
-                    sitekey={this.props.config}
-                    onResolved={this.onResolved} />
             </Fragment>
         )
     }
