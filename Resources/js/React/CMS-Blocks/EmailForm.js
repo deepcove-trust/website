@@ -75,7 +75,7 @@ class Form extends Component {
     sendMail(e) {
         e.preventDefault();
 
-        if (!!!this.state.mail.code) {
+        if (!this.state.mail.code) {
             console.log(this.state.mail.code)
             return;
         }
