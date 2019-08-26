@@ -1,7 +1,9 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { FormGroup, Input, TextArea } from '../Components/FormControl';
 import { Button } from '../Components/Button';
+import Recaptcha from 'react-recaptcha';
 import $ from 'jquery';
+
 
 export default class EmailForm extends Component {
     constructor(props) {
@@ -54,11 +56,11 @@ class Form extends Component {
                 phone: null,
                 org: null,
                 subject: null,
-                message: null
+                message: null,
+                code: null
             },
             key: false,
         }
-        this.reCAPTCHA = null;
     }
 
 
@@ -72,6 +74,11 @@ class Form extends Component {
 
     sendMail(e) {
         e.preventDefault();
+
+        if (!!!this.state.mail.code) {
+            console.log(this.state.mail.code)
+            return;
+        }
 
         this.setState({
             requestPending: true
@@ -119,7 +126,27 @@ class Form extends Component {
             mail: mail
         });
     }
-    
+
+    verify(e) {
+        if (!!e) {
+            let mail = this.state.mail;
+            mail.code = e;
+            this.setState({
+                mail: mail,
+            })
+        } else {
+            alert(`reCAPTCHA failed: ${e}`)
+        }
+    }
+
+    verifyExpired() {
+        let mail = this.state.mail;
+        mail.code = null;
+        this.setState({
+            mail: mail
+        });
+    }
+
     render() {
         if (!this.state.key)
             return <i className="fad fa-spinner-third"></i>
@@ -127,7 +154,7 @@ class Form extends Component {
 
         let errorText;
         if (!!this.state.errText)
-            errorText = <small className="text-danger pb-2">{this.state.errText}</small>
+            errorText = <small className="text-danger d-block pb-2">{this.state.errText}</small>
 
         return (
             <Fragment>
@@ -137,7 +164,7 @@ class Form extends Component {
                     Denotes a required field.
                 </p>
 
-                <form className="row" onSubmit={this.sendMail.bind(this)}>
+                <form className="row" onSubmit={this.sendMail.bind(this)}> {/* this.sendMail.bind(this) */}
                     <div className="col-lg-6 col-md-6 col-sm-12">
                         <FormGroup htmlFor="name" label="Your Name:" required>
                             <Input id="name" type="text" value={this.state.mail.name} autoComplete="name" cb={this.updateState.bind(this, 'name')} required />
@@ -171,17 +198,27 @@ class Form extends Component {
                     <div className="col-12">
                         <FormGroup htmlFor="message" label="Message:" required>
                             <TextArea id="message" maxLength="800" value={this.state.mail.message} rows={5} cb={this.updateState.bind(this, 'message')} required />
+
+                            <Recaptcha
+                                sitekey={this.props.config}
+                                render="explicit"
+                                verifyCallback={this.verify.bind(this)}
+                                onloadCallback={() => console.log('reCAPTCHA loaded')}
+                                expiredCallback={this.verifyExpired.bind(this)}
+                            />
                         </FormGroup>
                     </div>
 
                     <div className="col-12">
                         {errorText}
 
-                        <Button type="submit" pending={this.state.requestPending}>
+                        <Button type="submit" pending={this.state.requestPending} disabled={!!!this.state.mail.code}>
                             Send Email &nbsp; <i className="fas fa-envelope"></i>
                         </Button>
                     </div>
                 </form>
+
+                
             </Fragment>
         )
     }

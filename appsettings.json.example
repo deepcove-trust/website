@@ -21,8 +21,9 @@
     "SenderName": "",
     "SenderEmail": ""
   },
-  "reCAPTCHA": {
-    "siteKey": "",
-    "secretKey": ""
+  "RecaptchaSettings": {
+    "SiteKey": "",
+    "SecretKey": "",
+    "Version": "v2"
   }
 }

@@ -118,7 +118,7 @@ namespace Deepcove_Trust_Website.Controllers
 
                         other = new {
                             googleMaps = _Db.SystemSettings.OrderByDescending(o => o.Id).Select(settings => settings.UrlGoogleMaps).FirstOrDefault(),
-                            captchaSiteKey =  _Configuration.GetSection("reCAPTCHA").GetValue<String>("siteKey")
+                            captchaSiteKey =  _Configuration.GetSection("RecaptchaSettings").GetValue<String>("SiteKey")
                         },
                         settings = User.Identity.IsAuthenticated ? new
                         {
