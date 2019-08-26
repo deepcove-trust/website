@@ -212,7 +212,7 @@ class Form extends Component {
                     <div className="col-12">
                         {errorText}
 
-                        <Button type="submit" pending={this.state.requestPending} disabled={!!!this.state.mail.code}>
+                        <Button type="submit" pending={this.state.requestPending} disabled={!this.state.mail.code}>
                             Send Email &nbsp; <i className="fas fa-envelope"></i>
                         </Button>
                     </div>
