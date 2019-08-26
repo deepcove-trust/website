@@ -68,9 +68,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             return View(viewName: "~/Views/AdminPortal/Web/PagesNew.cshtml");
         }
 
-        //> TODO: We need
-        //=> An API that provides info on avaliable templates:  HTTP GET - Does This Go Here?
-        //=> An API that creates a new page:  HTTP POST        
+
         [HttpPost]
         [Route("new")]
         public async Task<IActionResult> CreatePage(IFormCollection request, 

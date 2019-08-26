@@ -28,7 +28,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         /// <summary>
         /// Returns data for each template in the application.
         /// </summary>
-        /// <returns></returns>
         [HttpGet]
         [Route("page/templates")]
         public async Task<IActionResult> GetTemplateData()
@@ -54,7 +53,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
         [HttpGet]
         [Route("sections")]
-        public async Task<IActionResult> GetSections()
+        public IActionResult GetSections()
         {
             return Ok(Enum.GetNames(typeof(Section)));
         }
