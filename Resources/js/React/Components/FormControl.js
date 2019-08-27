@@ -60,14 +60,14 @@ export class FormGroup extends Component {
         let label;
         if (this.props.label) {
             label = (
-                    <label className={this.props.required ? "required" : false} htmlFor={ this.props.htmlFor || null} >
-                        {this.props.label}
-                    </label>
-                );
+                <label className={this.props.required ? "required" : false} htmlFor={this.props.htmlFor || null} >
+                    {this.props.label}
+                </label>
+            );
         }
 
         return (
-            <div className="form-group">
+            <div className={`form-group ${this.props.className || ''}`}>
                 {label}
                 {this.props.children}
             </div>
@@ -97,7 +97,7 @@ export class Input extends Component {
     getAutoComplete() {
         if (AutoComplete.includes(this.props.autoComplete))
             return this.props.autoComplete;
-        
+
         switch (this.props.autoComplete) {
             case "phone":
                 return "tel";
@@ -131,23 +131,23 @@ export class Input extends Component {
                 value: nextProps.value
             });
     }
-  
-    
+
+
     render() {
         return (
-            <input id={ this.props.id || null }
+            <input id={this.props.id || null}
                 type={this.getType()}
-                className={ this.props.inputClass || "form-control" }
-                name={ this.props.name || null }
-                value={ this.state.value }
-                placeholder={ this.props.placeHolder || null }
-                autoComplete={ this.getAutoComplete() }
-                disabled={ !!this.props.disabled }
-                readOnly={ !!this.props.readOnly }
-                required={ !!this.props.required }
-                autoFocus={ !!this.props.autoFocus }
-                minLength={ this.props.minLength || null }
-                maxLength={this.props.maxLength || null }
+                className={this.props.inputClass || "form-control"}
+                name={this.props.name || null}
+                value={this.state.value}
+                placeholder={this.props.placeHolder || null}
+                autoComplete={this.getAutoComplete()}
+                disabled={!!this.props.disabled}
+                readOnly={!!this.props.readOnly}
+                required={!!this.props.required}
+                autoFocus={!!this.props.autoFocus}
+                minLength={this.props.minLength || null}
+                maxLength={this.props.maxLength || null}
                 onChange={this.handleChange.bind(this)}
                 onPaste={this.handleChange.bind(this)}
             />
@@ -192,13 +192,13 @@ export class Select extends Component {
         }
 
         return (
-            <select id={ this.props.id || null }
-                className={ this.props.inputClass || "form-control" }
-                name={ this.props.name || null }
-                disabled={ !!this.props.disabled }
-                readOnly={ !!this.props.readOnly }
-                required={ !!this.props.required }
-                onChange={ this.handleChange.bind(this) }
+            <select id={this.props.id || null}
+                className={this.props.inputClass || "form-control"}
+                name={this.props.name || null}
+                disabled={!!this.props.disabled}
+                readOnly={!!this.props.readOnly}
+                required={!!this.props.required}
+                onChange={this.handleChange.bind(this)}
             >
                 {selectOptions}
             </select>
@@ -268,7 +268,7 @@ export class TextArea extends Component {
                     value={this.state.value}
                     placeholder={this.props.placeHolder || null}
                     autoComplete={this.getAutoComplete()}
-                    rows={this.props.rows || false }
+                    rows={this.props.rows || false}
                     disabled={!!this.props.disabled}
                     readOnly={!!this.props.readOnly}
                     required={!!this.props.required}

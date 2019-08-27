@@ -5,6 +5,10 @@
   },
   {
     "name": "cc: Email Enquiries",
-    "Description":  "Send me a copy of emails sent through the contact us email form."
+    "Description": "Send me a copy of the non-booking related emails sent through the contact us email form."
+  },
+  {
+    "name": "cc: Booking Enquiries",
+    "Description": "Send me a copy of the booking related emails sent through the contact us email form."
   }
 ]
