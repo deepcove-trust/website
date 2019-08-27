@@ -32,13 +32,6 @@ export class Button extends Component {
             this.props.cb();
     }
 
-    getClass() {
-        return this.props.btnClass || "btn btn-primary"
-    }
-
-    getType() {
-        return this.props.type || "button";
-    }
 
     render() {
         let content;
@@ -49,8 +42,8 @@ export class Button extends Component {
         }
 
         return (
-            <button className={this.getClass()}
-                type={this.getType()}
+            <button className={this.props.btnClass || "btn btn-primary"}
+                type={this.props.type || "button"}
                 disabled={this.props.disabled || this.props.pending}
                 style={{ minWidth: `${this.state.width}px` }}
                 ref={this.contentRef}
