@@ -5,6 +5,7 @@ import ProgressBar from './PagesNew/ProgressBar';
 import PageDetails from './PagesNew/PageDetails';
 import SelectTemplate from './PagesNew/SelectTemplate';
 
+import $ from 'jquery';
 
 const baseUri = "/admin/web/pages/new";
 
@@ -18,7 +19,12 @@ export default class NewPageWrapper extends Component {
         }
     }
 
-    createPage() {
+    componentDidMount() {
+        window.onbeforeunload = () => true;
+    }
+
+    createPage(template) {
+        window.onbeforeunload = () => false;
         $.ajax({
             method: 'post',
             url: `${baseUri}`,
@@ -26,7 +32,7 @@ export default class NewPageWrapper extends Component {
                 name: this.state.page.name,
                 description: this.state.page.description,
                 section: this.state.page.section,
-                templateId: this.state.templateId
+                templateId: template.id
             }
         }).done((url) => {
             window.location.replace(url);
@@ -36,7 +42,7 @@ export default class NewPageWrapper extends Component {
     }
 
     render() {
-        let DivBlock; 
+        let DivBlock;
         if (this.state.stage == 1)
             DivBlock = (
                 <PageDetails pageData={this.state.page}
@@ -51,31 +57,21 @@ export default class NewPageWrapper extends Component {
         else if (this.state.stage == 2)
             DivBlock = (
                 <SelectTemplate
-                    cb={(templateId, stage) => {
+                    cb={this.createPage.bind(this)}
+                    goBack={(stage) => {
                         this.setState({
-                            stage: stage,
-                            templateId: templateId
+                            stage: stage
                         });
                     }}
                 />
             );
-        else
-            DivBlock = <ConfimChoices cb={this.createPage.bind(this)}/>;
 
         return (
             <Fragment>
-                <ProgressBar progress={this.state.stage} />
+                <ProgressBar progress={this.state.stage * 50} />
                 {DivBlock}
             </Fragment>
         );
-    }
-}
-
-class ConfimChoices extends Component {
-    render() {
-        return (
-            <button cb={this.props.cb.bind(this)}>Confirm</button>    
-        )
     }
 }
 

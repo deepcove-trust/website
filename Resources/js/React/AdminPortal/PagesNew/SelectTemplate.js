@@ -33,7 +33,7 @@ export default class SelectTemplate extends Component {
             templates = this.state.templates.map((template) => {
                 return (
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <Template template={template} cb={this.props.cb} />
+                        <Template template={template} showButton="true" cb={this.props.cb} />
                     </div>
                 )
             });
@@ -49,7 +49,7 @@ export default class SelectTemplate extends Component {
                     {templates}
 
                     <div className="col-12">
-                        <Button btnClass="btn btn-info float-left" cb={this.props.cb.bind(this, null, 1)}>
+                        <Button btnClass="btn btn-info float-left" cb={this.props.goBack.bind(this, 1)}>
                             <i className="far fa-arrow-circle-left"></i> Back
                         </Button>
                     </div>
@@ -59,9 +59,17 @@ export default class SelectTemplate extends Component {
     }
 }
 
-class Template extends Component {
+export class Template extends Component {
     render() {
-        console.log(this.props.template)
+        let button; 
+        if (this.props.showButton) {
+            button = (
+                <Button btnClass="btn btn-info d-block mx-auto" cb={this.props.cb.bind(this, this.props.template)}>
+                    Use This Template <i className="fas fa-check"></i>
+                </Button>
+            );
+        }
+
         return (
             <Panel>    
                 <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
@@ -85,9 +93,7 @@ class Template extends Component {
                         {this.props.template.description}
                     </div>
 
-                    <Button btnClass="btn btn-info d-block mx-auto" cb={this.props.cb.bind(this, this.props.template.id, 3)}>
-                        Use This Template <i className="fas fa-check"></i>
-                    </Button>
+                    {button}
                 </div>
             </Panel>
         )

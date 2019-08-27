@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
@@ -21,7 +22,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         private readonly WebsiteDataContext _Db;
         private readonly ILogger<ApiController> _Logger;
 
-        private readonly string[] reservedNames = { "", "login", "reset password" };
+        private readonly string[] reservedNames = { "", "login", "reset password", "logout", "register", "admin" };
 
         public ApiController(WebsiteDataContext db, ILogger<ApiController> logger)
         {
@@ -62,19 +63,34 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             return Ok(Enum.GetNames(typeof(Section)));
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("page/validate-name")]
         public async Task<IActionResult> ValidatePageName(IFormCollection request)
         {
-            string name = request.Str("name");
-            List<Page> pages = await _Db.Pages.ToListAsync();            
-
-            if (pages.Any(p => p.Name.ToLower() == name.ToLower()) || reservedNames.Contains(name.ToLower()))
+            try
             {
-                return new ConflictResult();
-            }
+                string name = request.Str("name");
+                List<Page> pages = await _Db.Pages.ToListAsync();
 
-            return Ok();
+                // Page already exists
+                if (pages.Any(p => p.Name.ToLower() == name.ToLower()))
+                    return Conflict($"A page already exists with the name: {name}");
+
+                // Reserved names
+                if (reservedNames.Contains(name.ToLower()))
+                    return Conflict($"{name} is a reserved page name");
+
+                // Illegal Characters
+                if (!new Regex("^[a-zA-Z ]*$").IsMatch(name))
+                    return Conflict($"{name} contains an invalid character. Page names can only include latters and spaces.");
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("We were unable to validate your page name, please wait 60 seconds and try again.");
+            }
+            
         }
     }
 }

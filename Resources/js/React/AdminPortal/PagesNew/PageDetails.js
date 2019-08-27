@@ -50,6 +50,22 @@ export default class PageDetails extends Component {
         this.setState({
             pageData: page
         });
+
+        if (field == 'name') {
+            $.ajax({
+                method: 'post',
+                url: `${baseUri}/page/validate-name`,
+                data: { name: val }
+            }).done(() => {
+                this.setState({
+                    errorText: null
+                });
+            }).fail((err) => {
+                this.setState({
+                    errorText: err.responseText
+                });
+            });
+        }
     }
 
     render() {
@@ -65,29 +81,34 @@ export default class PageDetails extends Component {
 
                 <form className="row" onSubmit={this.next.bind(this)}>
                     <div className="col-lg-6 col-sm-12">
-                        <FormGroup label="Page Name:" required>
-                            <Input type="text"
+                        <FormGroup htmlFor="name" label="Page Name:" required>
+                            <Input id="name"
+                                type="text"
                                 value={this.state.pageData.name}
                                 cb={this.updateState.bind(this, 'name')}
                                 required
                             />
+
+                            <small className="text-danger">{this.state.errorText}</small>
                         </FormGroup>
 
-                        <FormGroup label="Website Section:" required>
-                            <Select options={this.state.sections}
+                        <FormGroup htmlFor="section" label="Website Section:" required>
+                            <Select id="section"
+                                options={this.state.sections}
                                 selected={this.state.pageData.section}
                                 cb={this.updateState.bind(this, 'section')}
                             />
                         </FormGroup>
 
                         <FormGroup label="Page URL:">
-                            <a className="d-block" href={url}>{url}</a>
+                            <Input className="form-control-plaintext" type="text"  value={url} disabled />
                         </FormGroup>
                     </div>
 
                     <div className="col-lg-6 col-sm-12">
-                        <FormGroup label="Page Description">
-                            <TextArea rows={4}
+                        <FormGroup htmlFor="description" label="Page Description">
+                            <TextArea id="description"
+                                rows={4}
                                 maxLength={150}
                                 value={this.state.pageData.description}
                                 cb={this.updateState.bind(this, 'description')}
@@ -101,7 +122,7 @@ export default class PageDetails extends Component {
                             <i className="far fa-arrow-circle-left"></i> Back
                         </Button>
 
-                        <Button btnClass="btn btn-info float-right" type="submit">
+                        <Button btnClass="btn btn-info float-right" type="submit" disabled={this.state.errorText || null}>
                             Next <i className="far fa-arrow-circle-right"></i>
                         </Button>
                     </div>
