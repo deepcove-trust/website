@@ -62,7 +62,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         }
 
         [HttpGet("new")]
-        public IActionResult NewPageIndex(string filter)
+        public IActionResult NewPageIndex(string filter = "main")
         {
             ViewData["PageName"] = filter;
             return View(viewName: "~/Views/AdminPortal/Web/PagesNew.cshtml");
@@ -105,7 +105,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     }
 
                     await _Db.SaveChangesAsync();
-                    return Ok(this.Request.BaseUrl() + page.RelativeUrl);
+                    return Ok(this.Request.BaseUrl() + page.AbsoluteUrl);
 
                 }          
                 catch (Exception ex)

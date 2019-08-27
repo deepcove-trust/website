@@ -15,7 +15,7 @@
                         {
 
                             <li>
-                                <a href="@string.Format("{0}", page.RelativeUrl)">@string.Format("{0}", page.Name)</a>
+                                <a href="@string.Format("/{0}", page.AbsoluteUrl)">@string.Format("{0}", page.Name)</a>
                             </li>
                         }
                     </ul>
@@ -26,7 +26,7 @@
                         @foreach (var page in Settings.GetQuickLinks().B.Pages)
                         {
                             <li>
-                                <a href="@string.Format("{0}", page.RelativeUrl)">@string.Format("{0}", page.Name)</a>
+                                <a href="@string.Format("/{0}", page.AbsoluteUrl)">@string.Format("{0}", page.Name)</a>
                             </li>
                         }
                     </ul>
