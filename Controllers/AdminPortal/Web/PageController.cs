@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
-    [Authorize]
+    //[Authorize]
     [Area("admin-portal,web")]
     [Route("/admin/web/pages")]
     public class PageController : Controller
@@ -95,7 +95,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     // Create empty text fields, and associate to new page
                     for(int i = 0; i < template.TextAreas; i++)
                     {
-                        TextField textField = new TextField();
+                        TextField textField = new TextField { SlotNo = i };
                         await _Db.AddAsync(textField);
                         await _Db.AddAsync(new RevisionTextField
                         {
@@ -120,7 +120,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             return BadRequest("There was a problem"); // Todo: give better feedback...
         }
 
-        [Authorize]
         [HttpPost]
         [Route("/api/page/{pageId:int}/text/{slotNum:int}")]
         public async Task<IActionResult> UpdateTextField(int pageId, int slotNum, IFormCollection request)
@@ -226,7 +225,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 
         }
 
-        [Authorize]
         [HttpPost]
         [Route("/api/page/{pageId:int}/visibility")]
         public async Task<IActionResult> ToggleVisbility(int pageId)
@@ -254,21 +252,34 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             }
         }
 
-        [Authorize]
         [HttpDelete]
         [Route("/api/page/{pageId:int}")]
         public async Task<IActionResult> DeletePage(int pageId)
         {
             try
             {
-                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+                var page = await _Db.Pages.Where(c => c.Id == pageId)
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionTextFields)
+                            .ThenInclude(rtf => rtf.TextField)
+                    .FirstOrDefaultAsync();
 
                 if (page == null)
                 {
                     return NotFound("Page not found.");
                 }
 
-                page.DeletedAt = DateTime.UtcNow;
+                // First, mark all text fields for removal
+                foreach(PageRevision rev in page.PageRevisions)
+                {
+                    foreach(RevisionTextField rtf in rev.RevisionTextFields)
+                    {
+                        _Db.Remove(rtf.TextField);
+                    }
+                    _Db.Remove(rev);
+                }
+
+                _Db.Remove(page);
                 await _Db.SaveChangesAsync();
 
                 _Logger.LogDebug("Page {0} has been deleted", page.Name);
