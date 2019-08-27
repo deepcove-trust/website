@@ -67,7 +67,7 @@ export class FormGroup extends Component {
         }
 
         return (
-            <div className="form-group">
+            <div className={`form-group ${this.props.className || ''}`}>
                 {label}
                 {this.props.children}
             </div>

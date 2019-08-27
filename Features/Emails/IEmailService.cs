@@ -22,9 +22,14 @@ namespace Deepcove_Trust_Website.Features.Emails
             object vars
         );
 
-        Task SendContactUsEmailAsync(
+        Task SendGeneralInquiryAsync(
             EmailContact Sender,
-            List<EmailContact> CcRecipients,
+            string subject,
+            object vars
+        );
+
+        Task SendBookingInquiryAsync(
+            EmailContact Sender,
             string subject,
             object vars
         );

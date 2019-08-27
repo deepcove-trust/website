@@ -1,5 +1,4 @@
 ﻿import React, { Component, Fragment } from 'react';
-import $ from 'jquery';
 import Alert from '../Components/Alert';
 
 export default class GoogleMap extends Component {
@@ -16,6 +15,9 @@ export default class GoogleMap extends Component {
         return (
             <Fragment>
                 <h3>{this.props.title}</h3>
+                <p className="text-danger font-weight-bold pb-2">
+                    Deep Cove is not accessible by road.
+                </p>
                 <iframe width="100%"
                     frameBorder="0"
                     style={{ border: 0, height: 50 + 'vh' }}
