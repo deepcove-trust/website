@@ -17,30 +17,10 @@ export default class EditActionModal extends Component {
         }
     }
 
-    editVal(field, value) {
+    editVal(field, val) {
         let link = _.cloneDeep(this.state.link);
-        switch (field) {
-            case 'text':
-                link.text = value;
-                break;
-
-            case 'href':
-                link.href = value;
-                break
-
-            case 'align':
-                link.align = String(value).toLowerCase();
-                break;
-
-            case 'color':
-                link.color = String(value).toLowerCase();
-                break;
-
-            case 'isButton':
-                link.isButton = value;
-                break;
-        }
-
+        link[field] = val;
+        
         this.setState({
             link: link
         });

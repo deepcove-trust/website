@@ -68,7 +68,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 Account account = await _Db.Accounts.FindAsync(User.AccountId());
                 account.Name = request.Str("name");
                 account.Email = request.Str("email");
-                account.PhoneNumber = request.Str("phone");
+                account.PhoneNumber = request.Str("phoneNumber");
                 await _Db.SaveChangesAsync();
 
                 _Logger.LogInformation("Information updated for account belonging to {0}", account.Name);
