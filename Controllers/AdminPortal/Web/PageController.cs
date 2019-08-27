@@ -119,5 +119,175 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             // else model state isn't valid
             return BadRequest("There was a problem"); // Todo: give better feedback...
         }
+
+        [Authorize]
+        [HttpPost]
+        [Route("/api/page/{pageId:int}/text/{slotNum:int}")]
+        public async Task<IActionResult> UpdateTextField(int pageId, int slotNum, IFormCollection request)
+        {
+            try
+            {
+                // Retrieve page from database
+                Page page = await _Db.Pages
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionTextFields)
+                        .ThenInclude(rtf => rtf.TextField)
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.CreatedBy)
+                    .FirstOrDefaultAsync(p => p.Id == pageId);
+
+                // Deal with null returns
+                if (page == null)
+                {
+                    return NotFound("Page not found.");
+                }
+
+                // Validate inputs
+
+                PageRevision latestRevision = page.Latest;
+
+                // Duplicate latest revision
+                PageRevision newRevision = new PageRevision
+                {
+                    Page = page,
+                    RevisionTextFields = new List<RevisionTextField>(),
+                    CreatedBy = await _Db.Accounts.FindAsync(1)   // (User.AccountId())
+                };
+
+                // Generate the id field
+                await _Db.PageRevisions.AddAsync(newRevision);
+
+                // Link the new revision to the same fields as the existing revision
+                foreach (RevisionTextField field in latestRevision.RevisionTextFields)
+                {
+                    // Only copy text fields across if they are not the one being edited
+                    if (field.TextField.SlotNo != slotNum)
+                    {
+                        newRevision.RevisionTextFields.Add(new RevisionTextField
+                        {
+                            PageRevisionId = newRevision.Id,
+                            TextFieldId = field.TextFieldId
+                        });
+                    }
+                }
+
+                Link newLink = null;
+
+                // Create new link object if the updated text field includes one
+                if (!string.IsNullOrWhiteSpace(request.Str("link[text]")))
+                {
+                    Enum.TryParse(request.Str("link[color]"), true, out Color color);
+                    Enum.TryParse(request.Str("link[align]"), true, out Align align);
+
+                    newLink = new Link
+                    {
+                        Text = request.Str("link[text]"),
+                        Href = request.Str("link[href]"),
+                        IsButton = request.Bool("link[isButton]"),
+                        Color = color,
+                        Align = align
+                    };
+
+                    await _Db.CmsLink.AddAsync(newLink);
+                    await _Db.SaveChangesAsync();
+                }
+
+                // Create new textField with supplied text
+                TextField newField = new TextField
+                {
+                    SlotNo = slotNum,
+                    Heading = request.Str("heading"), // get value from request                
+                    Text = request.Str("text"),
+                    Link = newLink
+                };
+
+                // Generate an Id for the new text field
+                await _Db.TextField.AddAsync(newField);
+
+                newRevision.RevisionTextFields.Add(new RevisionTextField
+                {
+                    PageRevisionId = newRevision.Id,
+                    TextFieldId = newField.Id
+                });
+
+                // Save changes
+                await _Db.SaveChangesAsync();
+
+                _Logger.LogDebug("Text field {0} on {1} has been updated", slotNum, page.Name);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error updating text field {0} on page {1}: ", slotNum, pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later");
+            }
+
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("/api/page/{pageId:int}/visibility")]
+        public async Task<IActionResult> ToggleVisbility(int pageId)
+        {
+            try
+            {
+                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+                if (page == null)
+                    return BadRequest("Page does not exist");
+
+                page.Public = !page.Public;
+
+                await _Db.SaveChangesAsync();
+
+                _Logger.LogDebug("Page {0} has been toggled to {1} visible.", page.Name, page.Public ? "" : "not");
+
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error toggling visibility of page {0}: {1}", pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later.");
+            }
+        }
+
+        [Authorize]
+        [HttpDelete]
+        [Route("/api/page/{pageId:int}")]
+        public async Task<IActionResult> DeletePage(int pageId)
+        {
+            try
+            {
+                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
+
+                if (page == null)
+                {
+                    return NotFound("Page not found.");
+                }
+
+                page.DeletedAt = DateTime.UtcNow;
+                await _Db.SaveChangesAsync();
+
+                _Logger.LogDebug("Page {0} has been deleted", page.Name);
+
+                return Ok(Url.Action(
+                    "Index",
+                    "Page", new
+                    {
+                        area = "admin-portal,web",
+                        filter = page.Section.ToString()
+                    })
+                );
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error deleting page {0}: {1}", pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later");
+            }
+        }
     }
 }
