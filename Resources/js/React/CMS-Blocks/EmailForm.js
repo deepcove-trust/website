@@ -94,31 +94,8 @@ class Form extends Component {
 
     updateState(field, val) {
         let mail = this.state.mail;
-
-        switch (field) {
-            case "name":
-                mail.name = val;
-                break;
-            case "email":
-                mail.email = val;
-                break;
-            case "phone":
-                mail.phone = val;
-                break;
-            case "org":
-                mail.org = val;
-                break;
-            case "subject":
-                mail.subject = val;
-                break;
-            case "message":
-                mail.message = val;
-                break;
-            case "sendToBookings":
-                mail.sendToBookings = val
-                break;
-        }
-
+        mail[field] = val;
+        
         this.setState({
             mail: mail
         });
