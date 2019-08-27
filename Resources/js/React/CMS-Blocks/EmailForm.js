@@ -100,28 +100,8 @@ class Form extends Component {
 
     updateState(field, val) {
         let mail = this.state.mail;
-
-        switch (field) {
-            case "name":
-                mail.name = val;
-                break;
-            case "email":
-                mail.email = val;
-                break;
-            case "phone":
-                mail.phone = val;
-                break;
-            case "org":
-                mail.org = val;
-                break;
-            case "subject":
-                mail.subject = val;
-                break;
-            case "message":
-                mail.message = val;
-                break;
-        }
-
+        mail[field] = val;
+        
         this.setState({
             mail: mail
         });
@@ -160,7 +140,7 @@ class Form extends Component {
             <Fragment>
                 <h3>Drop us an Email</h3>
                 <p>
-                    <span className="text-danger">* </span> 
+                    <span className="text-danger font-weight-bold">* </span> 
                     Denotes a required field.
                 </p>
 
@@ -217,8 +197,6 @@ class Form extends Component {
                         </Button>
                     </div>
                 </form>
-
-                
             </Fragment>
         )
     }
