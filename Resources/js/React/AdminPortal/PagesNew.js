@@ -24,7 +24,7 @@ export default class NewPageWrapper extends Component {
     }
 
     createPage(template) {
-        window.onbeforeunload = () => false;
+        
         $.ajax({
             method: 'post',
             url: `${baseUri}`,
@@ -35,6 +35,7 @@ export default class NewPageWrapper extends Component {
                 templateId: template.id
             }
         }).done((url) => {
+            window.onbeforeunload = null;
             window.location.replace(url);
         }).fail((err) => {
             console.error(`[PageNew@createPage] Error getting data: `, err.responseText);

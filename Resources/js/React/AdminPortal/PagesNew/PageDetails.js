@@ -52,10 +52,18 @@ export default class PageDetails extends Component {
         });
 
         if (field == 'name') {
+            this.validatePageName(val);
+        }
+    }
+
+    validatePageName(string) {
+        var waitPeriod = 1.2 * 1000;
+        clearTimeout(this.inputTimer);
+        this.inputTimer = setTimeout(() => {
             $.ajax({
                 method: 'post',
                 url: `${baseUri}/page/validate-name`,
-                data: { name: val }
+                data: { name: string }
             }).done(() => {
                 this.setState({
                     errorText: null
@@ -65,7 +73,8 @@ export default class PageDetails extends Component {
                     errorText: err.responseText
                 });
             });
-        }
+        }, waitPeriod);
+
     }
 
     render() {
