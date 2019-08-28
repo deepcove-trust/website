@@ -2,7 +2,7 @@
 
 export default class ProgressBar extends Component {
 
-    getColor() { `bg-${this.props.color}`; }
+    getColor() { return `bg-${this.props.color}`; }
     
 
     render() {

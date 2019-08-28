@@ -25,7 +25,7 @@ export default class PagePreview extends Component {
                 <div className="row">
                     <div className="col-md-6 col-sm-12 pb-1">
                         <Link btnClass="btn-info btn-block" href={`/${this.props.page.absoluteUrl}`}>
-                            View Page <i className="fas fa-eye"/>
+                            View Page
                         </Link>
                     </div>
 
