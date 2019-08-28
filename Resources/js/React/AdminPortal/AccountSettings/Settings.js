@@ -35,18 +35,7 @@ export default class Settings extends Component {
 
     updateVal(field, val) {
         let account = this.state.account;
-        switch (field) {
-            case "name":
-                account.name = val;
-                break;
-
-            case "email":
-                account.email = val;
-                break;
-
-            case "phoneNumber":
-                account.phoneNumber = val;
-        }
+        account[field] = val;
 
         this.setState({
             account: account
@@ -64,18 +53,12 @@ export default class Settings extends Component {
         $.ajax({
             type: 'post',
             url: `${this.props.baseUri}`,
-            data: {
-                id: this.state.account.id,
-                name: this.state.account.name,
-                email: this.state.account.email,
-                phone: this.state.account.phoneNumber
-            }
+            data: this.state.account
         }).done(() => {
+            this.props.u();
             this.setState({
                 requestPending: false
             });
-
-            this.props.u();
         }).fail((err) => {
             this.setState({
                 requestPending: false

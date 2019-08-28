@@ -30,18 +30,8 @@ export default class AccountCard extends Component {
 
     updateVal(field, val) {
         let account = this.state.account;
-        switch (field) {
-            case "email":
-                account.email = val;
-                break;
-            case "phone":
-                account.phoneNumber = val;
-                break;
-            case "status":
-                account.active = (val == "Active") ? true : false;
-                break;
-        }
-        
+        account[field] = val;
+       
         this.setState({
             account: account
         });
@@ -72,11 +62,7 @@ export default class AccountCard extends Component {
             $.ajax({
                 type: 'put',
                 url: `${this.props.baseUri}/${this.state.account.id}`,
-                data: {
-                    email: this.state.account.email,
-                    phone: this.state.account.phoneNumber,
-                    status: this.state.account.active
-                }
+                data: this.state.account
             }).done(() => {
                 this.props.u();
                 this.setState({
@@ -111,13 +97,13 @@ export default class AccountCard extends Component {
                     <Phone mode={this.state.mode}
                         value={this.state.account.phoneNumber}
                         accountId={this.props.account.id}
-                        cb={this.updateVal.bind(this, 'phone')}
+                        cb={this.updateVal.bind(this, 'phoneNumber')}
                     />
                         
                     <Status mode={this.state.mode}
-                        value={this.state.account.active ? "Active" : "Inactive"}
+                        value={this.state.account.active}
                         accountId={this.props.account.id}
-                        cb={this.updateVal.bind(this, 'status')}
+                        cb={this.updateVal.bind(this, 'active')}
                     />
 
                     <Timestamps timestamps={this.state.account.timestamps}/>

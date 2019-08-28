@@ -36,21 +36,10 @@ export default class TextBlock extends Component {
         }
     }
 
-    editVal(field, value) {
+    editVal(field, val) {
         let content = _.cloneDeep(this.state.content);
-        switch (field) {
-            case "heading":
-                content.heading = value;
-                break;
-
-            case "text":
-                content.text = value;
-                break
-
-            case "link":
-                content.link = value;
-        }
-
+        content[field] = val;
+        
         this.setState({
             content: content
         });
