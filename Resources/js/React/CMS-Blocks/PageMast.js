@@ -1,22 +1,21 @@
 ﻿import React, { Component, Fragment } from 'react';
-import { ConfirmButton, ConfirmModal } from '../Components/Button';
+import { ConfirmButton, ConfirmModal, Link } from '../Components/Button';
 import Alert from '../Components/Alert';
 import $ from 'jquery';
+import { PageUrl } from '../../helpers';
 
 export default class PageMast extends Component {
 
     render() {
-        if (!!!this.props.page)
+        if (!this.props.page)
+            return null;
+
+        if (!this.props.page.settings)
             return null;
 
         return (
             <div className="col-12 pb-4">
-
-                <DeletePage admin={true}
-                    page={this.props.page}
-                    baseUri={this.props.baseUri}
-                    u={this.props.u}
-                />
+                <BackToDashboard/>
 
                 <ToggleVisibility admin={true}
                     page={this.props.page}
@@ -24,7 +23,7 @@ export default class PageMast extends Component {
                     u={this.props.u}
                 />
 
-                <ConfirmButton btnClass="btn btn-info float-right disabled">
+                <ConfirmButton btnClass="btn btn-info float-right mx-1 disabled">
                     View Page History &nbsp;
                     <i className="far fa-history"></i>
                 </ConfirmButton>
@@ -37,51 +36,25 @@ export default class PageMast extends Component {
         )
     }
 }
+
+class BackToDashboard extends Component {
+    render() {
+        return (
+            <Link btnClass="btn-info float-right mx-1" href={`/admin/web/pages?filter=main`}>
+                Page Dashboard <i className="far fa-columns" />
+            </Link>
+        )
+    }
+}
+
 export class LastTouched extends Component {
     render() {
         let update = this.props.page.updated;
-
-        // Only administrators should see this button
-        if (this.props.page.settings == null) {            
-            return null;
-        }
 
         return (
             <small>
                 Updated by: {update.by} on {update.at}
             </small>
-        )
-    }
-}
-
-export class DeletePage extends Component {
-    deletePage() {
-        $.ajax({
-            type: 'delete',
-            data: this.props.page.id,
-            url: `${this.props.baseUri}/${this.props.page.id}`
-        }).done((url) => {
-            location.replace(url);
-        }).fail((err) => {
-            console.log(err);
-        });
-    }
-
-    render() {
-        if (this.props.page.settings == null) {
-            return null;
-        }
-
-        return (            
-            <ConfirmModal btnClass="btn btn-danger float-right"
-                question="delete page"
-                explanation="This action cannot be undone, all information will be lost"
-                actionText="YES Delete Page!"
-                confirmPhrase={this.props.page.name}
-                cb={this.deletePage.bind(this)}
-            >
-                Delete Page <i className="fas fa-trash"></i>
-            </ConfirmModal>
         )
     }
 }
@@ -94,16 +67,11 @@ export class ToggleVisibility extends Component {
         }).done(() => {
             this.props.u();
         }).fail((err) => {
-            console.log(err);
+            console.log(`[PageMast@ToggleVisibility] Error changing the visbility of page ${this.props.page.id}: ${err.ResponseText}`);
         });
     }
 
     render() {
-        // Only administrators should see this button
-        if (this.props.page.settings == null) {            
-            return null;
-        }
-
         let text;
         if (this.props.page.public) {
             text = (
@@ -122,7 +90,7 @@ export class ToggleVisibility extends Component {
         }
 
         return (
-            <ConfirmButton btnClass="btn btn-warning float-right" cb={this.toggleVisibility.bind(this)} >
+            <ConfirmButton btnClass={`btn btn-info float-right ${this.props.block ? 'btn-block' : ''}`} cb={this.toggleVisibility.bind(this)} >
                 {text}
             </ConfirmButton>
         )

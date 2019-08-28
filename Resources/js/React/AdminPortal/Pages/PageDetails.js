@@ -17,8 +17,8 @@ export default class PageDetails extends Component {
         this.state = {
             sections: null,
             pageData: this.props.pageData || {
-                name: null,
-                description: null,
+                name: "",
+                description: "",
                 section: document.getElementById('react_PagesNew').getAttribute("data-filter")
             }
         }

@@ -1,9 +1,9 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 
-import ProgressBar from './PagesNew/ProgressBar';
-import PageDetails from './PagesNew/PageDetails';
-import SelectTemplate from './PagesNew/SelectTemplate';
+import ProgressBar from '../Components/ProgressBar';
+import PageDetails from './Pages/PageDetails';
+import SelectTemplate from './Pages/SelectTemplate';
 
 import $ from 'jquery';
 
@@ -69,7 +69,7 @@ export default class NewPageWrapper extends Component {
 
         return (
             <Fragment>
-                <ProgressBar progress={this.state.stage * 50} />
+                <ProgressBar progress={this.state.stage * 50} color="info"/>
                 {DivBlock}
             </Fragment>
         );
