@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
+import { Button } from '../Components/Button';
 import $ from 'jquery';
-
 
 const baseUri = `/admin/web/pages`;
 
@@ -39,7 +39,9 @@ export default class Pages extends Component {
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Pages</h1>
-
+                    <Button btnClass="btn btn-primary float-right" cb={() => window.location.replace(`${baseUri}/new?filter=${this.state.filter}`)}>
+                        New Page <i class="fas fa-file-plus"></i>
+                    </Button>
                 </div>
             </div>
         );

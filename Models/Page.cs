@@ -58,12 +58,12 @@ namespace Deepcove_Trust_Website.Models
             }
         }
 
-        public string RelativeUrl
+        public string AbsoluteUrl
         {
             get
             {
                 string pageNameUrl = Name.ToLower().Replace(' ', '-');
-                return Section == Section.main ? $"/education/{pageNameUrl}" : $"/{pageNameUrl}";
+                return Section == Section.main ? $"{pageNameUrl}" : $"education/{pageNameUrl}";
             }
         }
     }
