@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import { Button } from '../Components/Button';
+import { Link } from '../Components/Button';
+import PagePreview from './Pages/PagePreview';
 import $ from 'jquery';
 
 const baseUri = `/admin/web/pages`;
@@ -16,6 +17,10 @@ export default class Pages extends Component {
     }
 
     componentDidMount() {
+        this.getData();
+    }
+
+    getData() {
         if (!document.getElementById('react_PagesDirectory')) {
             throw `Failed to attach component. Attribute 'data-filter' was not found`;
         }
@@ -30,19 +35,31 @@ export default class Pages extends Component {
                 this.setState({ pages: data });
             }).fail((err) => {
                 console.log(err.responseText);
-            });    
+            });
         });
     }
 
     render() {
+        let pages;
+        if (this.state.pages) {
+            pages = this.state.pages.map((page, key) => {
+                return (
+                    <div className="col-lg-4 col-md-6 col-sm-12" key={key}>
+                        <PagePreview page={page} u={this.getData.bind(this)} />
+                    </div>
+                )
+            });
+        }
         return (
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Pages</h1>
-                    <Button btnClass="btn btn-primary float-right" cb={() => window.location.replace(`${baseUri}/new?filter=${this.state.filter}`)}>
-                        New Page <i class="fas fa-file-plus"></i>
-                    </Button>
+                    <Link btnClass="btn btn-info float-right" href={`${baseUri}/new?filter=${this.state.filter}`}>
+                        New Page <i className="fas fa-file-plus"></i>
+                    </Link>
                 </div>
+
+                {pages}    
             </div>
         );
     }

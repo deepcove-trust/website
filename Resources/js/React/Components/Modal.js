@@ -27,7 +27,7 @@ export class Modal extends Component {
         }
 
         return (
-            <div id={this.props.id || false} className="modal fade" tabindex="-1" role="dialog">                
+            <div id={this.props.id || false} className="modal fade" tabIndex="-1" role="dialog">                
                 <div className={`modal-dialog ${this.getModalSize()}`} role="document">                    
                     <div className="modal-content">
                         {modalHead}

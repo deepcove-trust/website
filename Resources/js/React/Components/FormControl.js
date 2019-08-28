@@ -38,7 +38,7 @@ export class Checkbox extends Component {
                 <ReactTooltip />
                 <input id={id}
                     type="checkbox"
-                    class="custom-control-input"
+                    className="custom-control-input"
                     name={this.props.name || null}
                     checked={this.state.checked}
                     onChange={this.toggleCheckbox.bind(this)}
@@ -60,7 +60,7 @@ export class FormGroup extends Component {
         let label;
         if (this.props.label) {
             label = (
-                <label className={this.props.required ? "required" : false} htmlFor={this.props.htmlFor || null} >
+                <label className={this.props.required ? "required" : ''} htmlFor={this.props.htmlFor || null} >
                     {this.props.label}
                 </label>
             );
@@ -80,7 +80,7 @@ export class Input extends Component {
         super(props);
 
         this.state = {
-            value: this.props.value
+            value: this.props.value || ""
         }
     }
 
@@ -183,11 +183,9 @@ export class Select extends Component {
     render() {
         let selectOptions;
         if (this.props.options) {
-            selectOptions = this.props.options.map((option) => {
-                let selected = false;
-                if (this.props.selected && this.props.selected.toLowerCase() == option.toLowerCase())
-                    selected = true;
-                return <option value={option} selected={selected}>{option}</option>
+            selectOptions = this.props.options.map((option, key) => {
+
+                return <option value={option} key={key}>{option}</option>
             });
         }
 
@@ -198,6 +196,7 @@ export class Select extends Component {
                 disabled={!!this.props.disabled}
                 readOnly={!!this.props.readOnly}
                 required={!!this.props.required}
+                value={this.props.selected}
                 onChange={this.handleChange.bind(this)}
             >
                 {selectOptions}
@@ -265,7 +264,7 @@ export class TextArea extends Component {
                 <textarea id={this.props.id || null}
                     className={this.props.inputClass || "form-control"}
                     name={this.props.name || null}
-                    value={this.state.value}
+                    value={this.state.value || ''}
                     placeholder={this.props.placeHolder || null}
                     autoComplete={this.getAutoComplete()}
                     rows={this.props.rows || false}
@@ -273,8 +272,8 @@ export class TextArea extends Component {
                     readOnly={!!this.props.readOnly}
                     required={!!this.props.required}
                     autoFocus={!!this.props.autoFocus}
-                    minLength={this.props.minLength || false}
-                    maxLength={this.props.maxLength || false}
+                    minLength={this.props.minLength || null}
+                    maxLength={this.props.maxLength || null}
                     onChange={this.handleChange.bind(this)}
                 />
                 {charLimit}

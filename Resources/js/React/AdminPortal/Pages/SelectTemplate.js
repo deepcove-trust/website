@@ -1,6 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { Button } from '../../Components/Button';
-import Panel from '../../Components/Panel';
+import PreviewCard from './PreviewCard';
 import $ from 'jquery';
 
 const baseUri = "/api/page/templates";
@@ -30,10 +30,10 @@ export default class SelectTemplate extends Component {
     render() {
         let templates;
         if (!!this.state.templates) {
-            templates = this.state.templates.map((template) => {
+            templates = this.state.templates.map((template, key) => {
                 return (
                     <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <Template template={template} showButton="true" cb={this.props.cb} />
+                        <Template template={template} showButton="true" cb={this.props.cb} key={key} />
                     </div>
                 )
             });
@@ -71,13 +71,7 @@ export class Template extends Component {
         }
 
         return (
-            <Panel>    
-                <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                    <img src="https://via.placeholder.com/150" style={{ 'width': '100%', 'max-height': '300px' }}/>
-                </div>
-
-                <h4 className="text-center pb-2">{this.props.template.name}</h4>
-
+            <PreviewCard title={this.props.template.name}>   
                 <div className="row text-center">
                     <div className="col-md-6 col-sm-12 py-3">
                         <p className="font-weight-bold">Text Fields</p>
@@ -95,7 +89,7 @@ export class Template extends Component {
 
                     {button}
                 </div>
-            </Panel>
+            </PreviewCard>
         )
     }
 }
