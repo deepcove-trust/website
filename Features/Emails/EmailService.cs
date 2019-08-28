@@ -1,13 +1,13 @@
 ﻿using System;
-using MimeKit;
-using MailKit.Net.Smtp;
-using System.Threading.Tasks;
-using Deepcove_Trust_Website.Features.RazorRender;
-using Microsoft.Extensions.Logging;
-using System.Collections.Generic;
-using Deepcove_Trust_Website.Data;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Features.RazorRender;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace Deepcove_Trust_Website.Features.Emails
 {
@@ -75,7 +75,7 @@ namespace Deepcove_Trust_Website.Features.Emails
                     // Disconnect
                     await client.DisconnectAsync(true);
 
-                    _Logger.LogDebug("Email sent - Subject: {0} | Recipient: {1}<{2}>", email.Subject, recipient.Name, recipient.Address);                    
+                    _Logger.LogDebug("Email sent - Subject: {0} | Recipient: {1}<{2}>", email.Subject, recipient.Name, recipient.Address);
                 }
             }
             catch (Exception ex)
@@ -91,7 +91,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             await SendEmailAsync(sender, recipient, subject, message);
         }
 
-        public async Task SendContactUsEmailAsync(EmailContact Sender, List<EmailContact> CcRecipients, string subject, object vars)
+        public async Task SendGeneralInquiryAsync(EmailContact Sender, string subject, object vars)
         {
             EmailContact trust = await _Db.SystemSettings.OrderByDescending(o => o.Id)
                 .Select(s => new EmailContact { Name = "Office", Address = s.EmailGeneral }).FirstOrDefaultAsync();
@@ -100,10 +100,48 @@ namespace Deepcove_Trust_Website.Features.Emails
             var message = await _ViewRender.RenderAsync("EmailRecieved", vars);
             await SendEmailAsync(Sender, trust, subject, message);
 
-            if(CcRecipients != null)
+            List<EmailContact> CcRecipients = await _Db.NotificationChannels.Where(c => c.Name == "cc: Email Enquiries")
+                .Select(s => s.ChannelMemberships
+                    .Select(s1 => new EmailContact
+                    {
+                        Name = s1.Account.Name,
+                        Address = s1.Account.Email
+                    }).ToList()
+                ).FirstOrDefaultAsync();
+
+            if (CcRecipients != null)
             {
                 foreach (EmailContact recipient in CcRecipients)
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     SendEmailAsync(Sender, recipient, $"FWD: {subject}", message);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            }
+        }
+
+        public async Task SendBookingInquiryAsync(EmailContact Sender, string subject, object vars)
+        {
+            EmailContact trust = await _Db.SystemSettings.OrderByDescending(o => o.Id)
+                .Select(s => new EmailContact { Name = "Office", Address = s.EmailBookings }).FirstOrDefaultAsync();
+
+
+            var message = await _ViewRender.RenderAsync("EmailRecieved", vars);
+            await SendEmailAsync(Sender, trust, subject, message);
+
+            List<EmailContact> CcRecipients = await _Db.NotificationChannels.Where(c => c.Name == "cc: Booking Enquiries")
+                .Select(s => s.ChannelMemberships
+                    .Select(s1 => new EmailContact
+                    {
+                        Name = s1.Account.Name,
+                        Address = s1.Account.Email
+                    }).ToList()
+                ).FirstOrDefaultAsync();
+
+            if (CcRecipients != null)
+            {
+                foreach (EmailContact recipient in CcRecipients)
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    SendEmailAsync(Sender, recipient, $"FWD: {subject}", message);
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
         }
     }

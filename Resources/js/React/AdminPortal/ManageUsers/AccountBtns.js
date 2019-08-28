@@ -101,9 +101,10 @@ export class EditButtons extends Component {
         } else {
             buttons = (
                 <div role="group" class="btn-group btn-group-sm">
-                    <ConfirmButton btnClass="btn btn-danger" cb={this.props.cancelCb.bind(this)}>
+                    <Button btnClass="btn btn-danger" cb={this.props.cancelCb.bind(this)}>
                         Cancel <i className="fas fa-times"></i>
-                    </ConfirmButton>
+                    </Button>
+
                     <Button btnClass="btn btn-success" cb={this.props.updateCb.bind(this)}>
                         Save <i className="fas fa-check"></i>
                     </Button>
