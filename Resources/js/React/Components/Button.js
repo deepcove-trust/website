@@ -5,7 +5,6 @@ import { FormGroup, Input } from './FormControl';
 import { Modal } from './Modal';
 import $ from 'jquery';
 
-
 export class Button extends Component {
     constructor(props) {
         super(props);
@@ -72,7 +71,7 @@ export class BtnGroup extends Component {
 
     render() {
         return (
-            <div role="group" class={`${this.direction()} ${this.size()} ${this.props.btnClass || ''}`}>
+            <div role="group" className={`${this.direction()} ${this.size()} ${this.props.btnClass || ''}`}>
                 {this.props.children}
             </div>
         )
@@ -163,7 +162,8 @@ export class ConfirmModal extends Component {
         super(props);
 
         this.state = {
-            disabled: (this.props.confirmPhrase) ? true : false
+            disabled: (this.props.confirmPhrase) ? true : false,
+            input: ""
         }
 
     }
@@ -185,18 +185,18 @@ export class ConfirmModal extends Component {
 
     updateConfirmPhrase(e) {
         this.setState({
-            disabled: e.toLowerCase() != this.props.confirmPhrase.toLowerCase()
+            disabled: e.toLowerCase() != this.props.confirmPhrase.toLowerCase(),
+            input: e
         });
     }
 
     render() {
-
         let confirmPhrase;
         if (this.props.confirmPhrase) {
             confirmPhrase = (
                 <FormGroup>
                     <label>Please type "{this.props.confirmPhrase}" to confirm.</label>
-                    <Input type="string" cb={this.updateConfirmPhrase.bind(this)}/>
+                    <Input type="string" cb={this.updateConfirmPhrase.bind(this)} value={this.state.input} />
                 </FormGroup>
             )
         }
@@ -233,6 +233,19 @@ export class ConfirmModal extends Component {
                     </FormGroup>
                 </Modal>
             </Fragment>
+        )
+    }
+}
+
+export class Link extends Component {
+    render() {
+        return (
+            <a className={`btn ${this.props.btnClass}`}
+                href={this.props.href}
+                target={this.props.target || null}
+            >
+                {this.props.children}
+            </a>
         )
     }
 }

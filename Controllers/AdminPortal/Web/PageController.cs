@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
-    //[Authorize]
+    [Authorize]
     [Area("admin-portal,web")]
     [Route("/admin/web/pages")]
     public class PageController : Controller
@@ -28,7 +28,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         }
 
         [HttpGet]
-        public IActionResult Index(string filter)
+        public IActionResult Index(string filter = "main")
         {
             ViewData["PageName"] = filter;
             return View(viewName: "~/Views/AdminPortal/Web/Pages.cshtml");
@@ -42,16 +42,28 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 
             try
             {
-                return Ok(await _Db.Pages.Where(w => w.Section == Enum.Parse<Section>(filter))
+                return Ok(_Db.Pages
+                    .Where(w => w.Section == Enum.Parse<Section>(filter))
+                    .Include(i => i.PageRevisions)
                     .Select(s => new
                     {
                         s.Id,
                         s.Name,
-                        template = s.Template.Name,
+                        template = new
+                        {
+                            s.Template.Id,
+                            s.Template.Name
+                        },
+                        s.Description,
                         s.Public,
-                        s.CreatedAt,
-                        s.UpdatedAt
-                    }).ToListAsync());
+                        s.AbsoluteUrl
+                        //Updated = new
+                        //{
+                        //    at = s.Latest.CreatedAt,
+                        //    by = s.Latest.CreatedBy.Name
+                        //}
+                    }).ToList()
+                );
             }
             catch (Exception ex)
             {

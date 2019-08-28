@@ -38,7 +38,7 @@ export class Checkbox extends Component {
                 <ReactTooltip />
                 <input id={id}
                     type="checkbox"
-                    class="custom-control-input"
+                    className="custom-control-input"
                     name={this.props.name || null}
                     checked={this.state.checked}
                     onChange={this.toggleCheckbox.bind(this)}
@@ -80,7 +80,7 @@ export class Input extends Component {
         super(props);
 
         this.state = {
-            value: this.props.value
+            value: this.props.value || ""
         }
     }
 
@@ -139,7 +139,7 @@ export class Input extends Component {
                 type={this.getType()}
                 className={this.props.inputClass || "form-control"}
                 name={this.props.name || null}
-                value={this.state.value || ''}
+                value={this.state.value}
                 placeholder={this.props.placeHolder || null}
                 autoComplete={this.getAutoComplete()}
                 disabled={!!this.props.disabled}
