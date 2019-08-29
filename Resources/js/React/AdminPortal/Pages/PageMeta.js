@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { PageDescription, PageName, PreviewUrl, WebsiteSection } from './PageMeta/MetaInputs';
+import { PageDescription, PageName, PreviewUrl, WebsiteSection } from './MetaInputs';
 import { Button } from '../../Components/Button';
 import $ from 'jquery';
 
@@ -7,17 +7,12 @@ export default class PageMeta extends Component {
     constructor(props) {
         super(props);
 
-        let section;
-        if (document.getElementById('react_PageNew')) {
-            section: document.getElementById('react_PageNew').getAttribute("data-filter")
-        }
-
         this.state = {
             sections: [],
             pageData: this.props.data || {
                 name: "",
                 description: "",
-                section: section || ""
+                section: ""
             },
             errorText: "" 
         }
@@ -30,9 +25,20 @@ export default class PageMeta extends Component {
         }).done((data) => {
             this.setState({
                 sections: data
-            });
+            }, () => this.getDefaultSection());
         }).fail((err) => {
             console.error(`[PageMeta@componentDidMount] Error retrieving Sections: `, err.responseText);
+        });
+    }
+
+    getDefaultSection() {
+        if (!document.getElementById('react_PageNew'))
+            return;
+        
+        let data = this.state.pageData;
+        data.section = document.getElementById('react_PageNew').getAttribute("data-filter")
+        this.setState({
+            pageData: data
         });
     }
 

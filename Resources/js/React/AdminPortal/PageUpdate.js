@@ -2,7 +2,6 @@
 import { render } from 'react-dom';
 
 import ProgressBar from '../Components/ProgressBar';
-import PageDetails from './Pages/PageDetails';// KILL IT
 import PageMeta from './Pages/PageMeta';
 import SelectTemplate from './Pages/SelectTemplate';
 

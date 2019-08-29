@@ -2,7 +2,7 @@
 import { render } from 'react-dom';
 
 import ProgressBar from '../Components/ProgressBar';
-import PageDetails from './Pages/PageDetails';
+import PageMeta from './Pages/PageMeta';
 import SelectTemplate from './Pages/SelectTemplate';
 
 import $ from 'jquery';
@@ -47,12 +47,12 @@ export default class NewPageWrapper extends Component {
         let DivBlock;
         if (this.state.stage == 1)
             DivBlock = (
-                <PageDetails pageData={this.state.page}
-                    section={this.state.dataFilter}
-                    cb={(data) => {
+                <PageMeta title="Create a new Page"
+                    data={this.state.page}
+                    cb={(pageResponse) => {
                         this.setState({
                             stage: 2,
-                            page: data
+                            page: pageResponse
                         });
                     }}
                 />

@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
-import { FormGroup, Input, Select, TextArea } from '../../../Components/FormControl';
-import { PageUrl } from '../../../../helpers';
+import { FormGroup, Input, Select, TextArea } from '../../Components/FormControl';
+import { PageUrl } from '../../../helpers';
 import $ from 'jquery';
 
 export class PageDescription extends Component {
