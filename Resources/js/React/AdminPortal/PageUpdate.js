@@ -9,37 +9,29 @@ import $ from 'jquery';
 
 const baseUri = "/admin/web/pages/new";
 
-export default class NewPageWrapper extends Component {
+export default class UpdatePageWrapper extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stage: 1,
+            stage: -1,
             page: null,
+            dataPageId: null
         }
     }
 
     componentDidMount() {
         window.onbeforeunload = () => true;
+
+        if (document.getElementById('react_PageUpdate')) {
+            this.setState({
+                dataPageId: document.getElementById('react_PageUpdate').getAttribute("data-pageid") 
+            })
+        }
     }
 
-    createPage(template) {
-        
-        $.ajax({
-            method: 'post',
-            url: `${baseUri}`,
-            data: {
-                name: this.state.page.name,
-                description: this.state.page.description,
-                section: this.state.page.section,
-                templateId: template.id
-            }
-        }).done((url) => {
-            window.onbeforeunload = null;
-            window.location.replace(url);
-        }).fail((err) => {
-            console.error(`[PageNew@createPage] Error getting data: `, err.responseText);
-        })
+    updatePage() {
+        //This method needs to update the meta
     }
 
     render() {
@@ -69,12 +61,12 @@ export default class NewPageWrapper extends Component {
 
         return (
             <Fragment>
-                <ProgressBar progress={this.state.stage * 50} color="info"/>
+                <ProgressBar progress={this.state.stage * 50} color="info" />
                 {DivBlock}
             </Fragment>
         );
     }
 }
 
-if (document.getElementById('react_PagesNew'))
-    render(<NewPageWrapper />, document.getElementById('react_PagesNew'));
+if (document.getElementById('react_PageUpdate'))
+    render(<UpdatePageWrapper />, document.getElementById('react_PageUpdate'));

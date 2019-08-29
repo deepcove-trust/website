@@ -10,7 +10,7 @@ export default class PageDetails extends Component {
     constructor(props) {
         super(props);
 
-        if (!document.getElementById('react_PagesNew')) {
+        if (!document.getElementById('react_PageNew')) {
             throw `Failed to attach component. Attribute 'data-filter' was not found`;
         }
 
@@ -19,7 +19,7 @@ export default class PageDetails extends Component {
             pageData: this.props.pageData || {
                 name: "",
                 description: "",
-                section: document.getElementById('react_PagesNew').getAttribute("data-filter")
+                section: document.getElementById('react_PageNew').getAttribute("data-filter")
             }
         }
     }

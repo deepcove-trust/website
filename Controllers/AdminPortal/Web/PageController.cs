@@ -27,6 +27,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             _Logger = logger;
         }
 
+        /// <summary>
+        /// Returns the page dashboard
+        /// </summary>
+        /// <param name="filter">Filter that only displays the main website or education website <see cref="Section"/></param>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Index(string filter = "main")
         {
@@ -34,6 +39,35 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             return View(viewName: "~/Views/AdminPortal/Web/Pages.cshtml");
         }
 
+        /// <summary>
+        /// Returns the page creation view
+        /// </summary>
+        /// <param name="filter">Filter used to set some settings <see cref="Section"/></param>
+        /// <returns></returns>
+        [HttpGet("new")]
+        public IActionResult NewPageIndex(string filter = "main")
+        {
+            ViewData["Filter"] = filter;
+            return View(viewName: "~/Views/AdminPortal/Web/PageNew.cshtml");
+        }
+
+        [HttpGet("{pageId:int}")]
+        public async Task<IActionResult> UpdatePageIndex(int pageId)
+        {
+            Page page = await _Db.Pages.FindAsync(pageId);
+
+            if (page == null)
+                return NotFound();
+
+            ViewData["PageId"] = page.Id;
+            return View(viewName: "~/Views/AdminPortal/Web/PageUpdate.cshtml");
+        }
+
+        /// <summary>
+        /// Returns a list of all pages within the website.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         [HttpGet("data")]
         public async Task<IActionResult> PageList(string filter)
         {
@@ -73,16 +107,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             }
         }
 
-        [HttpGet("new")]
-        public IActionResult NewPageIndex(string filter = "main")
-        {
-            ViewData["PageName"] = filter;
-            return View(viewName: "~/Views/AdminPortal/Web/PagesNew.cshtml");
-        }
-
-
-        [HttpPost]
-        [Route("new")]
+        /// <summary>
+        /// Creates a new web page
+        /// </summary>
+        [HttpPost("new")]
         public async Task<IActionResult> CreatePage(IFormCollection request, 
             [Bind("Name", "Description", "Section")] Page page)
         {

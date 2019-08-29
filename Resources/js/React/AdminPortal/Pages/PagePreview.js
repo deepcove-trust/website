@@ -30,9 +30,9 @@ export default class PagePreview extends Component {
                     </div>
 
                     <div className="col-md-6 col-sm-12 pb-1">
-                        <Button btnClass="btn btn-info btn-block">
+                        <Link btnClass="btn btn-info btn-block" href={`/admin/web/pages/${this.props.page.id}`}>
                             Edit Meta <i className="fas fa-pencil" />
-                        </Button>
+                        </Link>
                     </div>
 
                     <div className="col-md-6 col-sm-12 pb-1">
