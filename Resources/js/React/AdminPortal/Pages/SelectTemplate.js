@@ -32,15 +32,15 @@ export default class SelectTemplate extends Component {
         if (!!this.state.templates) {
             templates = this.state.templates.map((template, key) => {
                 return (
-                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                        <Template template={template} showButton="true" cb={this.props.cb} key={key} />
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-3" key={key}>
+                        <Template template={template} showButton="true" cb={this.props.cb} />
                     </div>
                 )
             });
         }
 
         return (
-            <Fragment>
+            <section className="fade1sec">
                 <div className="row">
                     <div className="col-12">
                         <h1 className="text-center pb-3">Select a Template</h1>
@@ -54,7 +54,7 @@ export default class SelectTemplate extends Component {
                         </Button>
                     </div>
                 </div>
-            </Fragment>
+            </section>
         )
     }
 }

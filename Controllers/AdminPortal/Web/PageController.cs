@@ -71,13 +71,29 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 {
                     s.Name,
                     s.Description,
-                    s.Section
+                    s.Section,
+                    s.Template
                 }).FirstOrDefaultAsync();
 
             if (page == null)
                 return NotFound();
 
             return Ok(page);
+        }
+
+        [HttpPut("{pageId:int}")]
+        public async Task<IActionResult> UpdatePage(int pageId, IFormCollection request,
+            [Bind("Name", "Description", "Section")] Page updatedPage)
+        {
+            Page page = await _Db.Pages.FindAsync(pageId);
+
+            // Todo: Sam Jackson. . . . 
+            // Update my page data here
+            // Name, Desc, Section, Template
+            // If they change the template front end will warn them of possible data loss
+            // Keep all fields, in the revision, we won’t show the missing fields in views
+
+            return Ok();
         }
 
         /// <summary>

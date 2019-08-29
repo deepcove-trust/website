@@ -17,6 +17,7 @@ export default class UpdatePageWrapper extends Component {
             stage: 1,
             page: null,
             dataPageId: null
+            //CurrentSelectedTemplate
         }
     }
 
@@ -45,8 +46,12 @@ export default class UpdatePageWrapper extends Component {
     }
 
     updatePage(e) {
-        console.log(`update page methid in pageupdate.js ${e}`)
-        //This method needs to update the meta
+        console.log(`update page methid in pageupdate.js`, e)
+        /**
+         * 1. Check if selected template matches current, if it doesn't we need to take them to a confirm page to explain what might go wrong
+         * 2. If all is good, disable onBeforeUnload
+         * 3. Send PUT request 
+         */
     }
 
     render() {
@@ -75,6 +80,7 @@ export default class UpdatePageWrapper extends Component {
             DivBlock = (
                 <SelectTemplate
                     cb={this.updatePage.bind(this)}
+                    activeTemplate={this.state.page.template}
                     goBack={(stage) => {
                         this.setState({
                             stage: stage
