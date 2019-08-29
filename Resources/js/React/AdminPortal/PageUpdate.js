@@ -2,19 +2,20 @@
 import { render } from 'react-dom';
 
 import ProgressBar from '../Components/ProgressBar';
-import PageDetails from './Pages/PageDetails';
+import PageDetails from './Pages/PageDetails';// KILL IT
+import PageMeta from './Pages/PageMeta';
 import SelectTemplate from './Pages/SelectTemplate';
 
 import $ from 'jquery';
 
-const baseUri = "/admin/web/pages/new";
+const baseUri = "/admin/web/pages";
 
 export default class UpdatePageWrapper extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stage: -1,
+            stage: 1,
             page: null,
             dataPageId: null
         }
@@ -23,26 +24,50 @@ export default class UpdatePageWrapper extends Component {
     componentDidMount() {
         window.onbeforeunload = () => true;
 
-        if (document.getElementById('react_PageUpdate')) {
-            this.setState({
-                dataPageId: document.getElementById('react_PageUpdate').getAttribute("data-pageid") 
-            })
+        if (!document.getElementById('react_PageUpdate')) {
+
+            throw "Error attaching to the DOM, no data attribute pageId found";
         }
+
+        this.setState({
+            dataPageId: document.getElementById('react_PageUpdate').getAttribute("data-pageid")
+        }, () => {
+            $.ajax({
+                method: 'get',
+                url: `${baseUri}/${this.state.dataPageId}/data`
+            }).done((page) => {
+                this.setState({
+                    page: page
+                });
+            }).fail((err) => {
+                console.error(`[PageUpdate@componentDidMount] Error retrieving page information: `, err.responseText);
+            })
+        })
     }
 
-    updatePage() {
+    updatePage(e) {
+        console.log(`update page methid in pageupdate.js ${e}`)
         //This method needs to update the meta
     }
 
     render() {
+        if (!this.state.page) {
+            return (
+                <div className="text-center mt-5">
+                    <i className="far fa-spinner-third fa-spin fa-5x mt-5" />
+                </div>
+            )
+        }
+
         let DivBlock;
         if (this.state.stage == 1)
             DivBlock = (
-                <PageDetails pageData={this.state.page}
-                    cb={(data) => {
+                <PageMeta title="Update Page Details"
+                    data={this.state.page}
+                    cb={(pageResponse) => {
                         this.setState({
                             stage: 2,
-                            page: data
+                            page: pageResponse
                         });
                     }}
                 />
@@ -50,7 +75,7 @@ export default class UpdatePageWrapper extends Component {
         else if (this.state.stage == 2)
             DivBlock = (
                 <SelectTemplate
-                    cb={this.createPage.bind(this)}
+                    cb={this.updatePage.bind(this)}
                     goBack={(stage) => {
                         this.setState({
                             stage: stage

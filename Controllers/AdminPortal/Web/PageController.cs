@@ -63,6 +63,23 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             return View(viewName: "~/Views/AdminPortal/Web/PageUpdate.cshtml");
         }
 
+        [HttpGet("{pageId:int}/data")]
+        public async Task<IActionResult> PageData(int pageId)
+        {
+            var page = await _Db.Pages.Where(c => c.Id == pageId)
+                .Select(s => new
+                {
+                    s.Name,
+                    s.Description,
+                    s.Section
+                }).FirstOrDefaultAsync();
+
+            if (page == null)
+                return NotFound();
+
+            return Ok(page);
+        }
+
         /// <summary>
         /// Returns a list of all pages within the website.
         /// </summary>
