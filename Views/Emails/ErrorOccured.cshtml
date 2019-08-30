@@ -23,9 +23,9 @@
             text-decoration: none;
         }
 
-        a:hover {
-            text-decoration: underline;
-        }
+            a:hover {
+                text-decoration: underline;
+            }
 
         abbr[title] {
             border-bottom: none;
@@ -51,17 +51,17 @@
             width: 100%;
         }
 
-        table th, table td {
-            border: solid #E0E0E0;
-            border-width: 1px 0;
-            padding: 8px 10px;
-        }
+            table th, table td {
+                border: solid #E0E0E0;
+                border-width: 1px 0;
+                padding: 8px 10px;
+            }
 
-        table th {
-            background-color: #E0E0E0;
-            font-weight: bold;
-            text-align: left;
-        }
+            table th {
+                background-color: #E0E0E0;
+                font-weight: bold;
+                text-align: left;
+            }
 
         .hidden-xs-down {
             display: none;
@@ -90,11 +90,11 @@
             padding: 0 15px;
         }
 
-        .container::after {
-            content: "";
-            display: table;
-            clear: both;
-        }
+            .container::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
 
         .exception-summary {
             background: #B0413E;
@@ -115,26 +115,26 @@
             padding: 30px 0;
         }
 
-        .exception-message, .exception-message a {
-            color: #FFF;
-            font-size: 21px;
-            font-weight: 400;
-            margin: 0;
-        }
+            .exception-message, .exception-message a {
+                color: #FFF;
+                font-size: 21px;
+                font-weight: 400;
+                margin: 0;
+            }
 
-        .exception-message.long {
-            font-size: 18px;
-        }
+                .exception-message.long {
+                    font-size: 18px;
+                }
 
-        .exception-message a {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
-            font-size: inherit;
-            text-decoration: none;
-        }
+                .exception-message a {
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+                    font-size: inherit;
+                    text-decoration: none;
+                }
 
-        .exception-message a:hover {
-            border-bottom-color: #ffffff;
-        }
+                    .exception-message a:hover {
+                        border-bottom-color: #ffffff;
+                    }
 
         .exception-illustration {
             flex-basis: 111px;
@@ -280,8 +280,7 @@
         </div>
     </div>
     <!-- End Header Overview -->
-    
-    <!-- Header Overview -->
+    <!-- Stack Trace -->
     <div class="container">
         <div class="trace trace-as-html">
             <table class="trace-details">
@@ -291,33 +290,36 @@
                             <h3 class="trace-class">
                                 <span class="exception_title">Exception Stack Trace:</span>
                             </h3>
-                            <p class="break-long-words trace-message"><a href="#innerexception">Skip to the Inner Exception</a>.</p>
+                            @if (!string.IsNullOrEmpty(Model.InnerException))
+                            {
+                                <p class="break-long-words trace-message">@Model.InnerException.</p>
+                            }
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (StackFrame frame in Model.Frames)
                     {
-                    <tr>
-                        <td>
-                            at
-                            <span class="trace-method">
-                                <a title="@frame.GetFileName()">
-                                    @frame.GetMethod().DeclaringType . @frame.GetMethod().Name (@frame.GetMethod().GetParameters())
-                                </a>
-                            </span>
-                           
-                            <span class="block trace-file-path">
-                                in <strong>@frame.GetFileName()</strong>
-                            </span>
-                            <span class="block">Line: @frame.GetFileLineNumber(), Column: @frame.GetFileColumnNumber()</span>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td>
+                                at
+                                <span class="trace-method">
+                                    <a title="@frame.GetFileName()">
+                                        @frame.GetMethod().DeclaringType . @frame.GetMethod().Name (@frame.GetMethod().GetParameters())
+                                    </a>
+                                </span>
+
+                                <span class="block trace-file-path">
+                                    in <strong>@frame.GetFileName()</strong>
+                                </span>
+                                <span class="block">Line: @frame.GetFileLineNumber(), Column: @frame.GetFileColumnNumber()</span>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
-    <!-- End Header Overview -->
+    <!-- End Stack Trace -->
 </body>
 </html>
