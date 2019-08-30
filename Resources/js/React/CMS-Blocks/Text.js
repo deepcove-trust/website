@@ -5,6 +5,7 @@ import Heading from './Text/Heading';
 import Content from './Text/Content';
 import $ from 'jQuery';
 import _ from 'lodash';
+import TwoWayBinding from '../Components/CKEditor';
 
 
 export const Mode = {
@@ -125,6 +126,8 @@ export default class TextBlock extends Component {
                     settings={this.props.settings}
                     editVal={this.editVal.bind(this)}
                 />
+
+                <TwoWayBinding />
             </Fragment>
         )
     }
