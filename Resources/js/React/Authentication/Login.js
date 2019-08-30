@@ -12,22 +12,25 @@ export default class Login extends Component {
 
         this.state = {
             loginFailed: false,
-            loginPending: false
+            loginPending: false,
+            returnUrl: ""
         }
     }
 
     attemptLogin(e) {
-        e.preventDefault();
-
+        e.preventDefault();        
         this.setState({
             loginPending: true
         });
 
+        let queryString = !!this.state.returnUrl ? `?ReturnUrl=${this.state.returnUrl}` : '';
+
         $.ajax({
             type: 'post',
-            url: `${baseUri}`,
+            url: `${baseUri}${queryString}`,
             data: $("form").serialize()
         }).done((url) => {
+            console.log(url);
             window.location.replace(url);
         }).fail((err) => {
             this.setState({
@@ -37,6 +40,14 @@ export default class Login extends Component {
 
             console.error(`[Login@attemptLogin] Error logging in: `, err.responseText);
         })
+    }
+    componentDidMount() {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('ReturnUrl')) {
+            this.setState({
+                returnUrl: urlParams.get('ReturnUrl')
+            });
+        }
     }
 
     render() {
