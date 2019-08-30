@@ -30,7 +30,6 @@ export default class Login extends Component {
             url: `${baseUri}${queryString}`,
             data: $("form").serialize()
         }).done((url) => {
-            console.log(url);
             window.location.replace(url);
         }).fail((err) => {
             this.setState({
