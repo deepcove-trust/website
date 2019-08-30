@@ -213,7 +213,7 @@
                             <h3 class="trace-class">
                                 <span class="exception_title">Error Overview:</span>
                             </h3>
-                            @*<p class="break-long-words trace-message">@Model.Message</p>*@
+                            <p class="break-long-words trace-message">@Model.Message</p>
                         </th>
                     </tr>
                 </thead>
@@ -221,28 +221,28 @@
                     <tr>
                         <td>
                             <span class="block trace-file-path">
-                                @*<strong>Time:</strong> @Model.EventTime*@
+                                <strong>Time:</strong> @Model.EventTime
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="block trace-file-path">
-                                @*<strong>Identity:</strong> @Model.UserIP @Model.UserName*@
+                                <strong>Identity:</strong> @Model.UserIP @Model.UserName
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="block trace-file-path">
-                                @*<strong>Requested URL:</strong> @Model.RequestMethod: <a href="@Model.Url">@Model.Url</a>*@
+                                <strong>Requested URL:</strong> @Model.RequestMethod: <a href="@Model.RequestUrl">@Model.RequestUrl</a>
                             </span>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <span class="block trace-file-path">
-                                @*<strong>User Agent:</strong> @Model.UserAgent*@
+                                <strong>User Agent:</strong> @Model.UserAgent
                             </span>
                         </td>
                     </tr>

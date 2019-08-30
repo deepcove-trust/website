@@ -34,7 +34,7 @@ namespace Deepcove_Trust_Website.Views.Emails.Models
         }
 
         // EXCEPTION INFORMATION
-        private StackFrame[] Frames { get; set; }
+        public StackFrame[] Frames { get; set; }
         public string InnerException { get; set; }
         public string Message { get; }
 
