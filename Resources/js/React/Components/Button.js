@@ -208,12 +208,12 @@ export class ConfirmModal extends Component {
                 </Button>
                 
                 <Modal id={`confirmodal`}>
-                    <h4>
+                    <h4 className="text-left">
                         <i className="far fa-exclamation-triangle pr-3"></i>
                         Really {this.props.question.toLowerCase()}?
                     </h4>
                     <hr className="pb-2"/>
-                    <p>{this.props.explanation}</p>
+                    <p className="text-left">{this.props.explanation}</p>
 
                     {confirmPhrase}
 
