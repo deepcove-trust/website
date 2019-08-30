@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace Deepcove_Trust_Website.Features.Emails
 {
@@ -29,6 +31,11 @@ namespace Deepcove_Trust_Website.Features.Emails
             EmailContact Sender,
             string subject,
             object vars
+        );
+
+        Task SendExceptionEmailAsync(
+            Exception ex,
+            HttpContext context
         );
     }
 }
