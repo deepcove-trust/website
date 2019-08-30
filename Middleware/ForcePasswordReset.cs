@@ -57,7 +57,7 @@ namespace Deepcove_Trust_Website.Middleware
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();
 
-                    // Fire off reset email.
+                    
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     _Smtp.SendRazorEmailAsync(null,
                         new EmailContact { Name = user.Name, Address = user.Email },
@@ -67,24 +67,22 @@ namespace Deepcove_Trust_Website.Middleware
                         {
                             Name = user.Name,
                             Token = reset.Token,
+                            Email = user.Email,
                             BaseUrl = _Http.Request.BaseUrl()
                         }
                     );
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 
-                    //We require them to change their password, 
-                    //let's log them out and tell hem why.
                     await _Http.SignOutAsync();
                     _Http.Response.Redirect("/error/password-reset");
-
-                }//If no password reset is required, go to next.
-            }// If user is not logged in, go to next.
+                }
+            }
 
             await _next.Invoke(_Http);
         }
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
+
     public static class ForcePasswordResetExtensions
     {
         public static IApplicationBuilder UseForcePasswordReset(this IApplicationBuilder builder)

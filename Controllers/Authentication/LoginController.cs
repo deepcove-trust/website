@@ -50,71 +50,81 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(IFormCollection request)
+        public async Task<IActionResult> Index(IFormCollection request, string ReturnUrl)
         {
-            try
+            if (!User.Identity.IsAuthenticated)
             {
-                Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
-
-                // No Account
-                if (account == null)
+                try
                 {
-                    _Logger.LogInformation("User attempted logging in with invalid email address");
-                    return Unauthorized("Invalid email or password");
+                    Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
+
+                    // No Account
+                    if (account == null)
+                    {
+                        _Logger.LogInformation("User attempted logging in with invalid email address");
+                        return Unauthorized("Invalid email or password");
+                    }
+
+                    // Invalid Password
+                    if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("password")) != PasswordVerificationResult.Success)
+                    {
+                        _Logger.LogInformation("User attempted logging into account belonging to {0} with invalid password", account.Name);
+                        return Unauthorized("Invalid email or password");
+                    }
+
+                    // Inactive Account
+                    if (!account.Active)
+                    {
+                        _Logger.LogInformation("User attempted logging into account belonging to {0}, but the account needs to be activated", account.Name);
+                        return Unauthorized("Your account requires activation from an administrator before you can login");
+                    }
+
+
+                    var claims = new List<Claim>
+                    {
+                        new Claim("id", account.Id.ToString()),
+                        new Claim("name", account.Name),
+                        new Claim("email", account.Email)
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    var authProperties = new AuthenticationProperties
+                    {
+                        AllowRefresh = true,
+                        IsPersistent = true,
+                    };
+
+                    await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                        new ClaimsPrincipal(claimsIdentity),
+                        authProperties);
+
+                    account.LastLogin = DateTime.UtcNow;
+                    await _Db.SaveChangesAsync();
+
+                    _Logger.LogDebug("User has logged into account belonging to {0}", account.Name);
                 }
-
-                // Invalid Password
-                if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("password")) != PasswordVerificationResult.Success)
+                catch (Exception ex)
                 {
-                    _Logger.LogInformation("User attempted logging into account belonging to {0} with invalid password", account.Name);
-                    return Unauthorized("Invalid email or password");
+                    _Logger.LogError("Error while logging in: {0}", ex.Message);
+                    _Logger.LogError(ex.StackTrace);
+                    return BadRequest("Something went wrong, please try again later");
                 }
-
-                // Inactive Account
-                if (!account.Active)
-                {
-                    _Logger.LogInformation("User attempted logging into account belonging to {0}, but the account needs to be activated", account.Name);
-                    return Unauthorized("Your account requires activation from an administrator before you can login");
-                }
-
-
-                var claims = new List<Claim>
-            {
-                new Claim("id", account.Id.ToString()),
-                new Claim("name", account.Name),
-                new Claim("email", account.Email)
-            };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var authProperties = new AuthenticationProperties
-                {
-                    AllowRefresh = true,
-                    IsPersistent = true,
-                };
-
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                    new ClaimsPrincipal(claimsIdentity),
-                    authProperties);
-
-                account.LastLogin = DateTime.UtcNow;
-                await _Db.SaveChangesAsync();
-
-                _Logger.LogDebug("User has logged into account belonging to {0}", account.Name);
-
-                return Ok(
-                    Url.Action(
-                        "Index",
-                        "AdminDashboard",
-                        new { area = "admin-portal" }
-                    ));
             }
-            catch (Exception ex)
+
+            if (string.IsNullOrEmpty(ReturnUrl))
             {
-                _Logger.LogError("Error while logging in: {0}", ex.Message);
-                _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                ReturnUrl = Url.Action(
+                    "Index",
+                    "AdminDashboard",
+                    new { area = "admin-portal" }
+                );
+            } else
+            {
+                ReturnUrl = this.Request.BaseUrl() + ReturnUrl.Substring(1);
             }
+
+            return Ok(ReturnUrl);
         }
 
         /// <summary>

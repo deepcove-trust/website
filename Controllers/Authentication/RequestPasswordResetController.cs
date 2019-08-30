@@ -77,6 +77,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                         {
                             Name = account.Name,
                             Token = reset.Token,
+                            Email = account.Email,
                             BaseUrl = this.Request.BaseUrl()
                         }
                     );
