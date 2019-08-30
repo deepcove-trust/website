@@ -20,7 +20,6 @@ namespace Deepcove_Trust_Website.Middleware
         {
             try
             {
-                throw new Exception();
                 await _next(httpContext);
             }
             catch (Exception ex)
