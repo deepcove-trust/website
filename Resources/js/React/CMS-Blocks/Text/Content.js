@@ -1,27 +1,22 @@
 ﻿import { Mode } from '../Text';
 import React, { Component, Fragment } from 'react';
-import { TextArea } from '../../Components/FormControl';
+import TwoWayBinding from '../../Components/CKEditor';
+
 
 export default class Content extends Component {
 
     render() {
-
-        let text = <p>{this.props.text}</p>;
         if (this.props.mode == Mode.Edit) {
-            text = (
+            return (
                 <Fragment>
                     <small className="text-muted">Text Content</small>
-                    <TextArea inputClass="form-control cms mb-2" value={this.props.text} rows={6} cb={this.props.editVal.bind(this, 'text')}></TextArea>
+                    <TwoWayBinding value={this.props.text} cb={this.props.editVal.bind(this, 'text')} id={12} />
                 </Fragment>
-            )
+            );
+        } else {
+            return (
+                <div dangerouslySetInnerHTML={{ __html: this.props.text }}></div>
+            );
         }
-
-        return (
-            <Fragment>
-                {text}
-            </Fragment>
-        );
-
     }
-
 }
