@@ -1,6 +1,12 @@
 ﻿@{
     var RouteData = ViewContext.RouteData;
     string RouteArea = RouteData.Values.ContainsKey("area") ? RouteData.Values["area"].ToString() : "";
+
+    string description = "The Deep Cove Outdoor Education Trust is a non-profit organisation that was established in 1971. Facilities provided by the trust include a 50 bed Hostel, Lodge, Apartments, Satellite Internet & a boat ramp.";
+    if(ViewData.ContainsKey("Description") && !string.IsNullOrEmpty(ViewData["Description"].ToString()))
+    {
+        description = ViewData["Description"].ToString();
+    }
 }
 @using Deepcove_Trust_Website.Features.RazorRender
 @inject WebSettingsService Settings
@@ -9,7 +15,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <meta name="description" content="The Deep Cove Outdoor Education Trust is a non-profit organisation that was established in 1971. Facilities provided by the trust include a 50 bed Hostel, Lodge, Apartments, Satellite Internet & a boat ramp.">
+    <meta name="description" content="@description">
     <meta name="keywords" content="Deep Cove, Deep Cove Outdoor Education Trust, Deep Cove Trust,Deep Cove Hostel, Deep Cove Camp, Deep Cove School Trips, Deep Cove Hostel">
     <meta name="author" content="Samuel Grant, Samuel Jackson and Mitchell Quarrie">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />

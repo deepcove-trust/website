@@ -46,6 +46,7 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["pageName"] = page.Name;
             ViewData["templateId"] = page.Template.Id;
             ViewData["pageId"] = page.Id;
+            ViewData["Description"] = page.Description;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
 
@@ -69,6 +70,7 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["pageName"] = page.Name;
             ViewData["templateId"] = page.Template.Id;
             ViewData["pageId"] = page.Id;
+            ViewData["Description"] = page.Description;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
 
