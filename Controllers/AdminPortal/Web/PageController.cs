@@ -156,38 +156,28 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             }
         }
 
-
-
-
-
-
-        /// <summary>
-        /// Returns the page metadata update view
-        /// </summary>
         [HttpGet("{pageId:int}")]
-        public async Task<IActionResult> UpdatePageIndex(int pageId)
+        //GET: /admin/pages/{pageId:int}
+        public async Task<IActionResult> Details(int pageId)
         {
-            Page page = await _Db.Pages.FindAsync(pageId);
-
-            if (page == null)
+            if (await _Db.Pages.FindAsync(pageId) == null)
                 return NotFound();
 
-            ViewData["PageId"] = page.Id;
-            return View(viewName: "~/Views/AdminPortal/Web/PageUpdate.cshtml");
+            ViewData["PageId"] = pageId;
+            return View(viewName: "~/Views/AdminPortal/PageUpdate.cshtml");
         }
 
         [HttpGet("{pageId:int}/data")]
-        public async Task<IActionResult> PageData(int pageId)
+        //GET: /admin/pages/{pageId}/data
+        public async Task<IActionResult> DetailsData(int pageId)
         {
             var page = await _Db.Pages
                 .Where(c => c.Id == pageId)
-                .Include(i => i.PageRevisions)
                 .Select(s => new
                 {
                     s.Name,
                     s.Description,
-                    s.Section,
-                    s.Latest.Template
+                    s.Section
                 }).FirstOrDefaultAsync();
 
             if (page == null)
@@ -196,8 +186,83 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             return Ok(page);
         }
 
-      
+        [HttpPut("{pageId:int}")]
+        //PUT /admin/pages/{pageId}
+        public async Task<IActionResult> UpdatePage(int pageId, IFormCollection request,
+            [Bind("Name", "Description", "Section")] Page changes)
+        {
+            Page page = await _Db.Pages.FindAsync(pageId);
+
+            if (page == null)
+                return NotFound();
+
+            try
+            {
+                page.Name = changes.Name;
+                page.Description = changes.Description;
+                page.Section = changes.Section;
+                page.Public = request.Bool("public");
+
+                await _Db.SaveChangesAsync();
+
+                return Ok(
+                    Url.Action("Index", "Page", null, "https"));
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogWarning("Error updating page settings: {0}", ex.Message);
+                _Logger.LogWarning(ex.StackTrace);
+                return BadRequest("There was an error updating the page settings. Please try again later.");
+            }
+        }
+            
         
+        [HttpDelete("{pageId}")]
+        //DELETE: /admin/pages/{pageId}
+        public async Task<IActionResult> Delete(int pageId)
+        {
+            try
+            {
+                var page = await _Db.Pages.Where(c => c.Id == pageId)
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionTextComponents)
+                            .ThenInclude(rtf => rtf.TextComponent)
+                    .FirstOrDefaultAsync();
+
+                if (page == null)
+                    return NotFound();
+
+                // First, mark all text fields for removal
+                foreach (PageRevision rev in page.PageRevisions)
+                {
+                    foreach (RevisionTextComponent rtf in rev.RevisionTextComponents)
+                    {
+                        _Db.Remove(rtf.TextComponent);
+                    }
+                    _Db.Remove(rev);
+                }
+
+                _Db.Remove(page);
+                await _Db.SaveChangesAsync();
+
+                _Logger.LogDebug("Page {0} has been deleted", page.Name);
+
+                return Ok(Url.Action(
+                    "Index",
+                    "Page", new
+                    {
+                        area = "admin-portal,web",
+                        filter = page.Section.ToString()
+                    })
+                );
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error deleting page {0}: {1}", pageId, ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later");
+            }
+        }
 
         /// <summary>
         /// *** DEPRECATED ***
@@ -310,80 +375,5 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 
         }
 
-        [HttpPost]
-        [Route("/api/page/{pageId:int}/visibility")]
-        public async Task<IActionResult> ToggleVisbility(int pageId)
-        {
-            try
-            {
-                var page = await _Db.Pages.Where(c => c.Id == pageId).FirstOrDefaultAsync();
-                if (page == null)
-                    return BadRequest("Page does not exist");
-
-                page.Public = !page.Public;
-
-                await _Db.SaveChangesAsync();
-
-                _Logger.LogDebug("Page {0} has been toggled to {1} visible.", page.Name, page.Public ? "" : "not");
-
-                return Ok();
-
-            }
-            catch (Exception ex)
-            {
-                _Logger.LogError("Error toggling visibility of page {0}: {1}", pageId, ex.Message);
-                _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later.");
-            }
-        }
-
-        [HttpDelete]
-        [Route("/api/page/{pageId:int}")]
-        public async Task<IActionResult> DeletePage(int pageId)
-        {
-            try
-            {
-                var page = await _Db.Pages.Where(c => c.Id == pageId)
-                    .Include(p => p.PageRevisions)
-                        .ThenInclude(pr => pr.RevisionTextComponents)
-                            .ThenInclude(rtf => rtf.TextComponent)
-                    .FirstOrDefaultAsync();
-
-                if (page == null)
-                {
-                    return NotFound("Page not found.");
-                }
-
-                // First, mark all text fields for removal
-                foreach (PageRevision rev in page.PageRevisions)
-                {
-                    foreach (RevisionTextComponent rtf in rev.RevisionTextComponents)
-                    {
-                        _Db.Remove(rtf.TextComponent);
-                    }
-                    _Db.Remove(rev);
-                }
-
-                _Db.Remove(page);
-                await _Db.SaveChangesAsync();
-
-                _Logger.LogDebug("Page {0} has been deleted", page.Name);
-
-                return Ok(Url.Action(
-                    "Index",
-                    "Page", new
-                    {
-                        area = "admin-portal,web",
-                        filter = page.Section.ToString()
-                    })
-                );
-            }
-            catch (Exception ex)
-            {
-                _Logger.LogError("Error deleting page {0}: {1}", pageId, ex.Message);
-                _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
-            }
-        }
     }
 }

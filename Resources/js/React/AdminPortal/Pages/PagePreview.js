@@ -23,28 +23,30 @@ export default class PagePreview extends Component {
                 <hr />
 
                 <div className="row">
-                    <div className="col-md-6 col-sm-12 pb-1">
-                        <Link btnClass="btn-info btn-block" href={`/${this.props.page.absoluteUrl}`}>
-                            View Page
+                    <div className="col-md-6 col-sm-12 pb-2 px-1">
+                        <Link btnClass="btn-outline-dark btn-block" href={`/${this.props.page.absoluteUrl}`}>
+                            View
                         </Link>
                     </div>
 
-                    <div className="col-md-6 col-sm-12 pb-1">
-                        <Link btnClass="btn btn-info btn-block" href={`/admin/web/pages/${this.props.page.id}`}>
-                            Edit Meta <i className="fas fa-pencil" />
+                    <div className="col-md-6 col-sm-12 pb-2 px-1">
+                        <Link btnClass="btn-outline-dark btn-block" href={`/admin/pages/${this.props.page.id}`}>
+                            Edit Settings
                         </Link>
                     </div>
 
-                    <div className="col-md-6 col-sm-12 pb-1">
+                    <div className="col-md-6 col-sm-12 pb-2 px-1">
                         <ToggleVisibility page={this.props.page}
+                            btnClass="btn btn-outline-dark btn-block"
                             baseUri={`/api/page`}
                             block={true}
                             u={this.props.u}
                         />
                     </div>
 
-                    <div className="col-md-6 col-sm-12 pb-1">
+                    <div className="col-md-6 col-sm-12 px-1">
                         <DeletePage page={this.props.page}
+                            className="btn btn-outline-dark btn-block"
                             u={this.props.u} />
                     </div>
                 </div>
@@ -68,14 +70,14 @@ class DeletePage extends Component {
 
     render() {
         return (
-            <ConfirmModal btnClass="btn btn-danger btn-block"
+            <ConfirmModal btnClass="btn btn-outline-danger btn-block"
                 question="delete page"
                 explanation="This action cannot be undone, all information will be lost"
                 actionText="YES Delete Page!"
                 confirmPhrase={this.props.page.name}
                 cb={this.deletePage.bind(this)}
             >
-                Delete Page <i className="fas fa-trash"></i>
+                Delete <i className="fas fa-exclamation-triangle"></i>
             </ConfirmModal>
         )
     }

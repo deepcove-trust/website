@@ -60,6 +60,7 @@ a.navbar-brand {
 .card {
     border: none;
     box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    border-radius: 0px;
 }
 
 .form-group > label.required:after{
@@ -93,6 +94,10 @@ button[disabled]{
 
 .btn-confirm > span {
     display: none;
+}
+
+.btn {
+    border-radius: 0px;
 }
 
 /* Sticky footer styles

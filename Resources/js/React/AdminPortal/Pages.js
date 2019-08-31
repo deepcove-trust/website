@@ -30,7 +30,7 @@ export default class Pages extends Component {
         }, () => {
             $.ajax({
                 type: 'get',
-                url: `${baseUri}data?filter=${this.state.filter}`
+                url: `${baseUri}/data?filter=${this.state.filter}`
             }).done((data) => {
                 this.setState({ pages: data });
             }).fail((err) => {

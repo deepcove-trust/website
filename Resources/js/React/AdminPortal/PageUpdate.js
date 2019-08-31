@@ -1,31 +1,23 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
-
-import ProgressBar from '../Components/ProgressBar';
 import PageMeta from './Pages/PageMeta';
-import SelectTemplate from './Pages/SelectTemplate';
 
 import $ from 'jquery';
 
-const baseUri = "/admin/web/pages";
+const baseUri = "/admin/pages";
 
 export default class UpdatePageWrapper extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            stage: 1,
             page: null,
             dataPageId: null
-            //CurrentSelectedTemplate
         }
     }
 
     componentDidMount() {
-        window.onbeforeunload = () => true;
-
         if (!document.getElementById('react_PageUpdate')) {
-
             throw "Error attaching to the DOM, no data attribute pageId found";
         }
 
@@ -46,12 +38,15 @@ export default class UpdatePageWrapper extends Component {
     }
 
     updatePage(e) {
-        console.log(`update page methid in pageupdate.js`, e)
-        /**
-         * 1. Check if selected template matches current, if it doesn't we need to take them to a confirm page to explain what might go wrong
-         * 2. If all is good, disable onBeforeUnload
-         * 3. Send PUT request 
-         */
+        $.ajax({
+            method: 'put',
+            url: `${baseUri}/${this.state.page.id}`,
+            data: e
+        }).done((url) => {
+            window.location.replace(url);
+        }).fail((err) => {
+            console.error(`[PageUpdate@updatePage] Error saving changes: `, err.responseText);
+        })
     }
 
     render() {
@@ -63,36 +58,12 @@ export default class UpdatePageWrapper extends Component {
             )
         }
 
-        let DivBlock;
-        if (this.state.stage == 1)
-            DivBlock = (
-                <PageMeta title="Update Page Details"
-                    data={this.state.page}
-                    cb={(pageResponse) => {
-                        this.setState({
-                            stage: 2,
-                            page: pageResponse
-                        });
-                    }}
-                />
-            );
-        else if (this.state.stage == 2)
-            DivBlock = (
-                <SelectTemplate
-                    cb={this.updatePage.bind(this)}
-                    activeTemplate={this.state.page.template}
-                    goBack={(stage) => {
-                        this.setState({
-                            stage: stage
-                        });
-                    }}
-                />
-            );
-
         return (
             <Fragment>
-                <ProgressBar progress={this.state.stage * 50} color="info" />
-                {DivBlock}
+                <PageMeta title="Page Settings"
+                    data={this.state.page}
+                    saveChanges={this.updatePage.bind(this)}
+                />
             </Fragment>
         );
     }

@@ -25,8 +25,6 @@ import './js/React/Errors/PasswordExpired';
 
 /* React - Page Templates */
 import './js/React/PageTemplates/ReactTemplate';
-import './js/React/PageTemplates/1';
-import './js/React/PageTemplates/2';
 
 /* Theme */
 //import './js/app.min';

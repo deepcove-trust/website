@@ -1,6 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
-import ReactTemplate1 from '1';
-import ReactTemplate2 from '2';
+import ReactTemplate1 from './1';
+import ReactTemplate2 from './2';
 import $ from 'jQuery';
 
 const components =
@@ -15,7 +15,7 @@ export default class ReactTemplate extends Component {
         super(props);
 
         this.state = {
-            pageId = null,
+            pageId: null,
             targetRevision: null,
             editMode: false,
             page: null
@@ -36,7 +36,7 @@ export default class ReactTemplate extends Component {
 
     render() {
 
-        let var Template = components[]
+        //let Template = components[]
 
         return (
 

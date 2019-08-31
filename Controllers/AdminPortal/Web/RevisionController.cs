@@ -32,8 +32,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// 
         /// If no revision ID is provided, the latest revision will be returned.
         /// </summary>
-        [HttpGet("{pageId:int}/revision/{revisionId?:int}")]
-        public async Task<IActionResult> GetRevision(int pageId, int revisionId = 0)
+        [HttpGet("{pageId:int}/revision/{revisionId?}")]
+        public async Task<IActionResult> GetRevision(int pageId, int? revisionId)
         {
             try
             {

@@ -60,6 +60,10 @@ export class LastTouched extends Component {
 }
 
 export class ToggleVisibility extends Component {
+    getClass() {
+        return this.props.btnClass || `btn btn-info float-right ${this.props.block ? 'btn-block' : ''}`;
+    }
+
     toggleVisibility() {
         $.ajax({
             type: 'post',
@@ -76,21 +80,19 @@ export class ToggleVisibility extends Component {
         if (this.props.page.public) {
             text = (
                 <Fragment>
-                    Hide Page &nbsp;
-                    <i className="fas fa-eye-slash"></i>
+                    Make Private
                 </Fragment>
             )
         } else {
             text = (
                 <Fragment>
-                    Show Page &nbsp;
-                    <i className="fas fa-eye"></i>
+                    Make Public
                 </Fragment>
             )
         }
 
         return (
-            <ConfirmButton btnClass={`btn btn-info float-right ${this.props.block ? 'btn-block' : ''}`} cb={this.toggleVisibility.bind(this)} >
+            <ConfirmButton btnClass={this.getClass()} cb={this.toggleVisibility.bind(this)} >
                 {text}
             </ConfirmButton>
         )

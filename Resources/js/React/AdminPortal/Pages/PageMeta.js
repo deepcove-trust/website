@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { PageDescription, PageName, PreviewUrl, WebsiteSection } from './MetaInputs';
 import { Button } from '../../Components/Button';
 import $ from 'jquery';
@@ -44,7 +44,10 @@ export default class PageMeta extends Component {
 
     submitChanges(e) {
         e.preventDefault();
-        this.props.cb(this.state.pageData);
+        if (this.props.cb)
+            this.props.cb(this.state.pageData);
+        else
+            this.props.saveChanges(this.state.pageData);
     }
 
     updateState(field, val) {
@@ -57,7 +60,19 @@ export default class PageMeta extends Component {
     }
 
     render() {
-        return (
+        let btnText = (
+            <Fragment>
+                Save Changes <i className="fas fa-check-circle" />
+            </Fragment>
+        )
+        if (!this.props.saveChanges)
+            btnText = (
+                <Fragment>
+                    Select a Template <i className="far fa-arrow-circle-right" />
+                </Fragment>
+            );
+    
+            return (
             <section className="fade1sec">
                 <div className="row">
                     <div className="col-12">
@@ -92,8 +107,8 @@ export default class PageMeta extends Component {
                     </div>
 
                     <div className="col-12">
-                        <Button btnClass="btn btn-info float-right" type="submit" disabled={!!this.state.errorText}>
-                            Select a Template <i className="far fa-arrow-circle-right"></i>
+                        <Button btnClass="btn btn-dark float-right" type="submit" disabled={!!this.state.errorText}>
+                            {btnText}
                         </Button>
                     </div>
                 </form>
