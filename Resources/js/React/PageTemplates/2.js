@@ -9,7 +9,7 @@ import $ from 'jquery';
 
 const baseUri = "/api/page"
 
-export default class ReactTemplate extends Component {
+export default class ReactTemplate2 extends Component {
     constructor(props) {
         super(props);
 
