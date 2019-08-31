@@ -15,12 +15,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
     [Authorize]
     [Area("admin-portal, web")]
-    [Route("/admin/web/pages/revisions")]
+    [Route("/api/pages")]
     public class RevisionController : Controller
     {
         private readonly WebsiteDataContext _Db;
         private readonly ILogger<RevisionController> _Logger;
-
+        
         public RevisionController(WebsiteDataContext _db, ILogger<RevisionController> _logger)
         {
             _Db = _db;
@@ -28,10 +28,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         }
 
         /// <summary>
-        /// Returns detailed data for a given page id and revision id.
+        /// Returns detailed data for a given page id and revision ID.
+        /// 
+        /// If no revision ID is provided, the latest revision will be returned.
         /// </summary>
-        [HttpGet("{pageId:int}/{revisionId:int}")]
-        public async Task<IActionResult> GetRevision(int pageId, int revisionId)
+        [HttpGet("{pageId:int}/revision/{revisionId?:int}")]
+        public async Task<IActionResult> GetRevision(int pageId, int revisionId = 0)
         {
             try
             {
@@ -43,7 +45,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     .Include(pr => pr.RevisionTextComponents)
                         .ThenInclude(rtc => rtc.TextComponent)
                             .ThenInclude(tc => tc.CmsButton)
-                    .Where(pr => pr.Page.Id == pageId && pr.Id == revisionId)
+                    .Where(pr => pr.Page.Id == pageId && (pr.Id == revisionId || revisionId == 0 ))
+                    .OrderByDescending(pr => pr.CreatedAt)
                     .Select(pr => new
                     {
                         pr.Id,
@@ -84,7 +87,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             }
         }
 
-        [HttpPost("{pageId:int}")]
+        [HttpPost("{pageId:int}/revision")]
         public async Task<IActionResult> CreateRevision(int pageId, IFormCollection request)
         {
             /* To be supplied in request body - 
@@ -159,7 +162,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// </summary>
         /// <param name="revisionId">The revision ID must belong to the given page.</param>
         /// <returns></returns>
-        [HttpPut("{pageId:int}/{revisionId:int}")]
+        [HttpPut("{pageId:int}/revision/{revisionId:int}")]
         public async Task<IActionResult> Revert(int pageId, int revisionId)
         {
             try
@@ -238,7 +241,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// Returns the ID, author, date and reason for each revision for the 
         /// given page ID.
         /// </summary>
-        [HttpGet("list/{pageId:int}")]
+        [HttpGet("{pageId:int}/revisions")]
         public async Task<IActionResult> GetAllRevisions(int pageId)
         {
             try
