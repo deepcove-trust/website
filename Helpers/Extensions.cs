@@ -74,5 +74,7 @@ namespace Deepcove_Trust_Website.Helpers
         /// </summary>
         /// <returns></returns>
         public static Uri BaseUrl(this HttpRequest request) => new Uri($"{request.Scheme}://{request.Host}");
+
+        public static bool EqualsIgnoreCase(this string s, string other) => s.ToLower() == other.ToLower();
     }
 }
