@@ -46,7 +46,6 @@
     "webpack-notifier": "^1.7.0"
   },
   "dependencies": {
-    "ckeditor4-react": "^1.0.0-beta.2",
     "jquery": "^3.4.1",
     "lodash": "^4.17.11",
     "react-datetime": "^2.16.3",
