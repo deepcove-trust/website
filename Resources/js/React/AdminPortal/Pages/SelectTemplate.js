@@ -44,7 +44,6 @@ export default class SelectTemplate extends Component {
         }
 
         let currentTemplate;
-        console.log(!this.props.activeTemplate)
         if (this.props.activeTemplate) {
             currentTemplate = (
                 <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
