@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
-    public class Template : BaseEntity
+    public class PageTemplate : BaseEntity
     {
         public  int Id { get; set; }
         [Required]
@@ -16,7 +16,7 @@ namespace Deepcove_Trust_Website.Models
         public int MediaAreas { get; set; }
 
         // Navigation Properties
-        public List<Page> Pages { get; set; }
+        public List<PageRevision> PageRevisions { get; set; }
         // End Navigation Properties
     }
 }

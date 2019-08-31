@@ -16,9 +16,9 @@ namespace Deepcove_Trust_Website.Data
             char separator = Path.DirectorySeparatorChar;            
 
             // Page Templates
-            List<Template> templatesSeed = JsonConvert.DeserializeObject<List<Template>>(File.ReadAllText($"Data{separator}Seeds{separator}templates.json"));
+            List<PageTemplate> templatesSeed = JsonConvert.DeserializeObject<List<PageTemplate>>(File.ReadAllText($"Data{separator}Seeds{separator}templates.json"));
 
-            foreach(Template template in templatesSeed)
+            foreach(PageTemplate template in templatesSeed)
             {
                 if(context.PageTemplates.Where(c => c.Name == template.Name).FirstOrDefault() == null)
                 {

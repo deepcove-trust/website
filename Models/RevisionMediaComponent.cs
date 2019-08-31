@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
-    public class RevisionTextField
+    public class RevisionMediaComponent
     {
         public int PageRevisionId { get; set; }
         public PageRevision PageRevision { get; set; }
-        public int TextFieldId { get; set; }
-        public TextField TextField { get; set; }
+        public int MediaComponentId { get; set; }
+        public MediaComponent MediaComponent { get; set; }
     }
 }

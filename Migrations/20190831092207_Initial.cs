@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,8 +13,7 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
@@ -32,12 +31,11 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CmsLink",
+                name: "CmsButtons",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(nullable: false),
                     Href = table.Column<string>(nullable: false),
                     IsButton = table.Column<bool>(nullable: false),
@@ -46,7 +44,20 @@ namespace Deepcove_Trust_Website.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CmsLink", x => x.Id);
+                    table.PrimaryKey("PK_CmsButtons", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "MediaComponent",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    SlotNo = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MediaComponent", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,8 +65,7 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true)
                 },
@@ -65,12 +75,31 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    DeletedAt = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    Public = table.Column<bool>(nullable: false),
+                    Section = table.Column<int>(nullable: false),
+                    QuickLink = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PageTemplates",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
@@ -89,8 +118,7 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     EmailBookings = table.Column<string>(nullable: true),
                     EmailGeneral = table.Column<string>(nullable: true),
                     UrlFacebook = table.Column<string>(nullable: true),
@@ -111,8 +139,7 @@ namespace Deepcove_Trust_Website.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Token = table.Column<string>(nullable: false),
                     ExpiresAt = table.Column<DateTime>(nullable: false),
                     AccountId = table.Column<int>(nullable: true)
@@ -129,24 +156,23 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TextField",
+                name: "TextComponents",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     SlotNo = table.Column<int>(nullable: false),
                     Heading = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
-                    LinkId = table.Column<int>(nullable: true)
+                    CmsButtonId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TextField", x => x.Id);
+                    table.PrimaryKey("PK_TextComponents", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TextField_CmsLink_LinkId",
-                        column: x => x.LinkId,
-                        principalTable: "CmsLink",
+                        name: "FK_TextComponents_CmsButtons_CmsButtonId",
+                        column: x => x.CmsButtonId,
+                        principalTable: "CmsButtons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -176,45 +202,18 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    DeletedAt = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Public = table.Column<bool>(nullable: false),
-                    Section = table.Column<int>(nullable: false),
-                    QuickLink = table.Column<int>(nullable: false),
-                    TemplateId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Pages_PageTemplates_TemplateId",
-                        column: x => x.TemplateId,
-                        principalTable: "PageTemplates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PageRevisions",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
+                    Reason = table.Column<string>(nullable: true),
                     CreatedById = table.Column<int>(nullable: true),
-                    PageId = table.Column<int>(nullable: true)
+                    PageId = table.Column<int>(nullable: true),
+                    TemplateId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -231,28 +230,58 @@ namespace Deepcove_Trust_Website.Migrations
                         principalTable: "Pages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_PageRevisions_PageTemplates_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "PageTemplates",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "RevisionTextField",
+                name: "RevisionMediaComponent",
                 columns: table => new
                 {
                     PageRevisionId = table.Column<int>(nullable: false),
-                    TextFieldId = table.Column<int>(nullable: false)
+                    MediaComponentId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RevisionTextField", x => new { x.PageRevisionId, x.TextFieldId });
+                    table.PrimaryKey("PK_RevisionMediaComponent", x => new { x.PageRevisionId, x.MediaComponentId });
                     table.ForeignKey(
-                        name: "FK_RevisionTextField_PageRevisions_PageRevisionId",
+                        name: "FK_RevisionMediaComponent_MediaComponent_MediaComponentId",
+                        column: x => x.MediaComponentId,
+                        principalTable: "MediaComponent",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RevisionMediaComponent_PageRevisions_PageRevisionId",
+                        column: x => x.PageRevisionId,
+                        principalTable: "PageRevisions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RevisionTextComponent",
+                columns: table => new
+                {
+                    PageRevisionId = table.Column<int>(nullable: false),
+                    TextComponentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RevisionTextComponent", x => new { x.PageRevisionId, x.TextComponentId });
+                    table.ForeignKey(
+                        name: "FK_RevisionTextComponent_PageRevisions_PageRevisionId",
                         column: x => x.PageRevisionId,
                         principalTable: "PageRevisions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RevisionTextField_TextField_TextFieldId",
-                        column: x => x.TextFieldId,
-                        principalTable: "TextField",
+                        name: "FK_RevisionTextComponent_TextComponents_TextComponentId",
+                        column: x => x.TextComponentId,
+                        principalTable: "TextComponents",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -273,15 +302,15 @@ namespace Deepcove_Trust_Website.Migrations
                 column: "PageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PageRevisions_TemplateId",
+                table: "PageRevisions",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Pages_Name",
                 table: "Pages",
                 column: "Name",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pages_TemplateId",
-                table: "Pages",
-                column: "TemplateId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PageTemplates_Name",
@@ -295,14 +324,19 @@ namespace Deepcove_Trust_Website.Migrations
                 column: "AccountId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RevisionTextField_TextFieldId",
-                table: "RevisionTextField",
-                column: "TextFieldId");
+                name: "IX_RevisionMediaComponent_MediaComponentId",
+                table: "RevisionMediaComponent",
+                column: "MediaComponentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TextField_LinkId",
-                table: "TextField",
-                column: "LinkId");
+                name: "IX_RevisionTextComponent_TextComponentId",
+                table: "RevisionTextComponent",
+                column: "TextComponentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TextComponents_CmsButtonId",
+                table: "TextComponents",
+                column: "CmsButtonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -314,7 +348,10 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "PasswordResets");
 
             migrationBuilder.DropTable(
-                name: "RevisionTextField");
+                name: "RevisionMediaComponent");
+
+            migrationBuilder.DropTable(
+                name: "RevisionTextComponent");
 
             migrationBuilder.DropTable(
                 name: "SystemSettings");
@@ -323,10 +360,13 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "NotificationChannels");
 
             migrationBuilder.DropTable(
+                name: "MediaComponent");
+
+            migrationBuilder.DropTable(
                 name: "PageRevisions");
 
             migrationBuilder.DropTable(
-                name: "TextField");
+                name: "TextComponents");
 
             migrationBuilder.DropTable(
                 name: "Accounts");
@@ -335,10 +375,10 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "Pages");
 
             migrationBuilder.DropTable(
-                name: "CmsLink");
+                name: "PageTemplates");
 
             migrationBuilder.DropTable(
-                name: "PageTemplates");
+                name: "CmsButtons");
         }
     }
 }

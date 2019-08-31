@@ -29,22 +29,25 @@ namespace Deepcove_Trust_Website.Controllers
 
         [AllowAnonymous]
         [Route("/{pageName}")]
-        public IActionResult MainPage(string pageName)
+        public async Task<IActionResult> MainPage(string pageName)
         {
-            Page page = _Db.Pages.Include(i => i.Template)
-                .Where(c => c.Name.ToLower() == pageName.Replace('-', ' ').ToLower() && c.Section == Section.main).FirstOrDefault();
+            Page page = await _Db.Pages
+                .Include(i => i.PageRevisions)
+                    .ThenInclude(i => i.Template)
+                .Where(c =>
+                    c.Name.EqualsIgnoreCase(pageName.Replace('-', ' '))
+                    && c.Section == Section.main)
+                .FirstOrDefaultAsync();
 
             if (page == null || (!page.Public && !User.Identity.IsAuthenticated))
                 return NotFound();
 
             // Todo: Mail Developers with custom exception
-            if (page.Template == null)
-            {
+            if (page.Latest.Template == null)
                 return BadRequest("Fatal error - no page template found.");
-            }
 
             ViewData["pageName"] = page.Name;
-            ViewData["templateId"] = page.Template.Id;
+            ViewData["templateId"] = page.Latest.Template.Id;
             ViewData["pageId"] = page.Id;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
@@ -53,41 +56,50 @@ namespace Deepcove_Trust_Website.Controllers
         [Route("/education/{pageName}")]
         public IActionResult EducationPage(string pageName)
         {
-            Page page = _Db.Pages.Include(i => i.Template)
-                .Where(c => c.Name.ToLower() == pageName.Replace('-', ' ').ToLower() && c.Section == Section.education).FirstOrDefault();
+            Page page = _Db.Pages
+                .Include(i => i.PageRevisions)
+                    .ThenInclude(i => i.Template)
+                .Where(c =>
+                    c.Name.EqualsIgnoreCase(pageName.Replace('-', ' '))
+                    && c.Section == Section.education)
+                .FirstOrDefault();
 
             if (page == null || !page.Public && !User.Identity.IsAuthenticated)
                 return NotFound();
 
             // Todo: Mail Developers with custom exception
-            if (page.Template == null)
+            if (page.Latest.Template == null)
             {
                 _Logger.LogError("Page {0} requested but page template is not specified.", pageName);
                 return BadRequest("Something went wrong, please try again later.");
             }
 
             ViewData["pageName"] = page.Name;
-            ViewData["templateId"] = page.Template.Id;
+            ViewData["templateId"] = page.Latest.Template.Id;
             ViewData["pageId"] = page.Id;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
 
         [AllowAnonymous]
         [Route("/api/page/{pageId:int}/{revisionId:int?}")]
-        public IActionResult PageContent(int pageId, int? revisionId)
+        public async Task<IActionResult> PageContent(int pageId, int? revisionId)
         {
             try
             {
-                var data = _Db.Pages
+                var pages = await _Db.Pages
                     .Include(i => i.PageRevisions)
                         .ThenInclude(i1 => i1.CreatedBy)
                     .Include(i => i.PageRevisions)
-                        .ThenInclude(pr => pr.RevisionTextFields)
-                        .ThenInclude(rtf => rtf.TextField)
-                        .ThenInclude(tf => tf.Link)
+                        .ThenInclude(i => i.RevisionTextComponents)
+                            .ThenInclude(rtf => rtf.TextComponent)
+                                .ThenInclude(tf => tf.CmsButton)
+                    .Include(i => i.PageRevisions)
+                        .ThenInclude(i => i.RevisionMediaComponents)
+                            .ThenInclude(i => i.MediaComponent)
                     .Where(p => p.Id == pageId)
-                    .ToList()
-                    .Select(s => new
+                    .ToListAsync();
+
+                var data = pages.Select(s => new
                     {
                         s.Id,
                         s.Name,
@@ -97,29 +109,37 @@ namespace Deepcove_Trust_Website.Controllers
                             at = s.Latest.CreatedAt,
                             by = s.Latest.CreatedBy?.Name
                         },
-                        text = s.Latest.RevisionTextFields.OrderBy(o => o.TextField.SlotNo).Select(s1 => new
-                        {
-                            s1.TextField.Id,
-                            pageId = s.Id,
-                            s1.TextField.Heading,
-                            s1.TextField.SlotNo,
-                            s1.TextField.Text,
-                            link = new
+                        text = s.Latest.RevisionTextComponents
+                            .OrderBy(o => o.TextComponent.SlotNo)
+                            .Select(s1 => new
                             {
-                                id = s1.TextField.Link?.Id,
-                                text = s1.TextField.Link?.Text,
-                                href = s1.TextField.Link?.Href,
-                                color = s1.TextField.Link?.Color,
-                                align = s1.TextField.Link?.Align,
-                                isButton = s1.TextField.Link?.IsButton
-                            }
-                        }),
-                        media = new { }, //s.GetRevision(null) != null ? s.GetRevision(null).Media : new { }
-                                         // if null, user is not authenticated
+                                s1.TextComponent.Id,
+                                pageId = s.Id,
+                                s1.TextComponent.Heading,
+                                s1.TextComponent.SlotNo,
+                                s1.TextComponent.Text,
+                                link = new
+                                {
+                                    id = s1.TextComponent.CmsButton?.Id,
+                                    text = s1.TextComponent.CmsButton?.Text,
+                                    href = s1.TextComponent.CmsButton?.Href,
+                                    color = s1.TextComponent.CmsButton?.Color,
+                                    align = s1.TextComponent.CmsButton?.Align,
+                                    isButton = s1.TextComponent.CmsButton?.IsButton
+                                }
+                            }),
+                        media = s.Latest.RevisionMediaComponents
+                            .OrderBy(o => o.MediaComponent.SlotNo)
+                            .Select(s1 => new {
+                                s1.MediaComponent.Id,
+                                s1.MediaComponent.SlotNo,                                
+                                // put media file data here
+                            }),
 
-                        other = new {
+                        other = new
+                        {
                             googleMaps = _Db.SystemSettings.OrderByDescending(o => o.Id).Select(settings => settings.UrlGoogleMaps).FirstOrDefault(),
-                            captchaSiteKey =  _Configuration.GetSection("RecaptchaSettings").GetValue<String>("SiteKey")
+                            captchaSiteKey = _Configuration.GetSection("RecaptchaSettings").GetValue<String>("SiteKey")
                         },
                         settings = User.Identity.IsAuthenticated ? new
                         {
@@ -139,6 +159,6 @@ namespace Deepcove_Trust_Website.Controllers
                 _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later.");
             }
-        }       
+        }
     }
 }

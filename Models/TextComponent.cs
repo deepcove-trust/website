@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
-    public class TextField
+    public class TextComponent
     {
         public int Id { get; set; }
         [Required]
@@ -18,8 +18,8 @@ namespace Deepcove_Trust_Website.Models
 
 
         // Navigation Properties
-        List<RevisionTextField> RevisionTextFields { get; set; }
-        public Link Link { get; set; }
+        List<RevisionTextComponent> RevisionTextComponents { get; set; }
+        public CmsButton CmsButton { get; set; }
         // End Navigation Properties
     }
 }

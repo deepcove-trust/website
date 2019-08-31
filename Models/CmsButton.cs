@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Models
         Right 
     }
 
-    public class Link
+    public class CmsButton
     {
         public int Id { get; set; }
         [Required]
@@ -54,7 +54,7 @@ namespace Deepcove_Trust_Website.Models
 
 
         // Navigation Properties
-        public List<TextField> TextFields { get; set; }
+        public List<TextComponent> TextFields { get; set; }
         // End Navigation Properties
     }
 }

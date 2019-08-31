@@ -51,6 +51,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             return View(viewName: "~/Views/AdminPortal/Web/PageNew.cshtml");
         }
 
+        /// <summary>
+        /// Returns the page metadata update view
+        /// </summary>
         [HttpGet("{pageId:int}")]
         public async Task<IActionResult> UpdatePageIndex(int pageId)
         {
@@ -66,13 +69,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         [HttpGet("{pageId:int}/data")]
         public async Task<IActionResult> PageData(int pageId)
         {
-            var page = await _Db.Pages.Where(c => c.Id == pageId)
+            var page = await _Db.Pages
+                .Where(c => c.Id == pageId)
+                .Include(i => i.PageRevisions)
                 .Select(s => new
                 {
                     s.Name,
                     s.Description,
                     s.Section,
-                    s.Template
+                    s.Latest.Template
                 }).FirstOrDefaultAsync();
 
             if (page == null)
@@ -102,34 +107,40 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// <param name="filter"></param>
         /// <returns></returns>
         [HttpGet("data")]
-        public async Task<IActionResult> PageList(string filter)
+        public async Task<IActionResult> GetPages(string filter)
         {
             if (!Enum.IsDefined(typeof(Section), filter))
                 return BadRequest($"Invalid filter. Please use one of the following: {string.Join(", ", Enum.GetNames(typeof(Section)))}");
 
             try
             {
-                return Ok(_Db.Pages
-                    .Where(w => w.Section == Enum.Parse<Section>(filter))
-                    .Include(i => i.PageRevisions)
-                    .Select(s => new
+                List<Page> pages = await _Db.Pages
+                    .Where(p => p.Section == Enum.Parse<Section>(filter))
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.Template)
+                    .Include(p => p.PageRevisions)
+                            .ThenInclude(t => t.CreatedBy)
+                    .ToListAsync();
+
+
+                return Ok(pages.Select(s => new
+                {
+                    s.Id,
+                    s.Name,
+                    template = new
                     {
-                        s.Id,
-                        s.Name,
-                        template = new
-                        {
-                            s.Template.Id,
-                            s.Template.Name
-                        },
-                        s.Description,
-                        s.Public,
-                        s.AbsoluteUrl
-                        //Updated = new
-                        //{
-                        //    at = s.Latest.CreatedAt,
-                        //    by = s.Latest.CreatedBy.Name
-                        //}
-                    }).ToList()
+                        s.Latest.Template.Id,
+                        s.Latest.Template.Name,
+                    },
+                    s.Description,
+                    s.Public,
+                    s.AbsoluteUrl,
+                    Updated = new
+                    {
+                        at = s.Latest.CreatedAt,
+                        by = s.Latest.CreatedBy != null ? s.Latest.CreatedBy.Name : ""
+                    }
+                }).ToList()
                 );
             }
             catch (Exception ex)
@@ -144,55 +155,84 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// Creates a new web page
         /// </summary>
         [HttpPost("new")]
-        public async Task<IActionResult> CreatePage(IFormCollection request, 
+        public async Task<IActionResult> CreatePage(IFormCollection request,
             [Bind("Name", "Description", "Section")] Page page)
         {
-            Template template = await _Db.PageTemplates.FindAsync(request.Int("templateId"));
+            PageTemplate template = await _Db.PageTemplates.FindAsync(request.Int("templateId"));
 
-            // Validate request inputs as per model data annotations
-            if (ModelState.IsValid && template != null)
+            if (template == null)
+            {
+                return BadRequest(string.Format("Invalid template ID provided ({0}) when trying to create new page.",
+                    request.Int("templateId")));
+            }
+
+            // Todo: Validate request inputs as per model data annotations
+
+            if (ModelState.IsValid)
             {
                 try
                 {
-                    page.Template = template;
                     await _Db.AddAsync(page);
 
                     // Create initial page revision
                     PageRevision pageRevision = new PageRevision
                     {
                         Page = page,
+                        Template = template,
                         CreatedBy = await _Db.Accounts.FindAsync(User.AccountId())
                     };
                     await _Db.AddAsync(pageRevision);
 
                     // Create empty text fields, and associate to new page
-                    for(int i = 0; i < template.TextAreas; i++)
+                    for (int i = 0; i < template.TextAreas; i++)
                     {
-                        TextField textField = new TextField { SlotNo = i };
+                        TextComponent textField = new TextComponent { SlotNo = i };
                         await _Db.AddAsync(textField);
-                        await _Db.AddAsync(new RevisionTextField
+                        await _Db.AddAsync(new RevisionTextComponent
                         {
-                            TextField = textField,
+                            TextComponent = textField,
                             PageRevision = pageRevision,
                         });
                     }
 
+                    // Create empty media fields, and associate to new page
+                    for (int i = 0; i < template.MediaAreas; i++)
+                    {
+                        MediaComponent mediaComponent = new MediaComponent { SlotNo = i };
+                        await _Db.AddAsync(mediaComponent);
+                        await _Db.AddAsync(new RevisionMediaComponent
+                        {
+                            PageRevisionId = pageRevision.Id,
+                            MediaComponentId = mediaComponent.Id
+                        });
+                    }
+
+                    // Save all to database in one transaction
                     await _Db.SaveChangesAsync();
+
+                    // Return new page URL to the caller
                     return Ok(this.Request.BaseUrl() + page.AbsoluteUrl);
 
-                }          
+                }
                 catch (Exception ex)
                 {
                     _Logger.LogWarning("Error creating new page: {0}", ex.Message);
                     _Logger.LogWarning(ex.StackTrace);
                     return BadRequest("There was an error creating the page. Please try again later.");
-                }                
+                }
             }
 
             // else model state isn't valid
             return BadRequest("There was a problem"); // Todo: give better feedback...
         }
 
+
+        
+        
+
+        /// <summary>
+        /// *** DEPRECATED ***
+        /// </summary>
         [HttpPost]
         [Route("/api/page/{pageId:int}/text/{slotNum:int}")]
         public async Task<IActionResult> UpdateTextField(int pageId, int slotNum, IFormCollection request)
@@ -202,10 +242,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 // Retrieve page from database
                 Page page = await _Db.Pages
                     .Include(p => p.PageRevisions)
-                        .ThenInclude(pr => pr.RevisionTextFields)
-                        .ThenInclude(rtf => rtf.TextField)
+                        .ThenInclude(pr => pr.RevisionTextComponents)
+                        .ThenInclude(rtf => rtf.TextComponent)
                     .Include(p => p.PageRevisions)
                         .ThenInclude(pr => pr.CreatedBy)
+                    .Include(p => p.PageRevisions)
+                        .ThenInclude(pr => pr.Template)
                     .FirstOrDefaultAsync(p => p.Id == pageId);
 
                 // Deal with null returns
@@ -222,28 +264,29 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 PageRevision newRevision = new PageRevision
                 {
                     Page = page,
-                    RevisionTextFields = new List<RevisionTextField>(),
-                    CreatedBy = await _Db.Accounts.FindAsync(1)   // (User.AccountId())
+                    Template = page.Latest.Template,
+                    RevisionTextComponents = new List<RevisionTextComponent>(),
+                    CreatedBy = await _Db.Accounts.FindAsync(User.AccountId())
                 };
 
                 // Generate the id field
                 await _Db.PageRevisions.AddAsync(newRevision);
 
                 // Link the new revision to the same fields as the existing revision
-                foreach (RevisionTextField field in latestRevision.RevisionTextFields)
+                foreach (RevisionTextComponent field in latestRevision.RevisionTextComponents)
                 {
                     // Only copy text fields across if they are not the one being edited
-                    if (field.TextField.SlotNo != slotNum)
+                    if (field.TextComponent.SlotNo != slotNum)
                     {
-                        newRevision.RevisionTextFields.Add(new RevisionTextField
+                        newRevision.RevisionTextComponents.Add(new RevisionTextComponent
                         {
                             PageRevisionId = newRevision.Id,
-                            TextFieldId = field.TextFieldId
+                            TextComponentId = field.TextComponentId
                         });
                     }
                 }
 
-                Link newLink = null;
+                CmsButton newButton = null;
 
                 // Create new link object if the updated text field includes one
                 if (!string.IsNullOrWhiteSpace(request.Str("link[text]")))
@@ -251,7 +294,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     Enum.TryParse(request.Str("link[color]"), true, out Color color);
                     Enum.TryParse(request.Str("link[align]"), true, out Align align);
 
-                    newLink = new Link
+                    newButton = new CmsButton
                     {
                         Text = request.Str("link[text]"),
                         Href = request.Str("link[href]"),
@@ -260,26 +303,26 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         Align = align
                     };
 
-                    await _Db.CmsLink.AddAsync(newLink);
+                    await _Db.CmsButtons.AddAsync(newButton);
                     await _Db.SaveChangesAsync();
                 }
 
                 // Create new textField with supplied text
-                TextField newField = new TextField
+                TextComponent newField = new TextComponent
                 {
                     SlotNo = slotNum,
                     Heading = request.Str("heading"), // get value from request                
                     Text = request.Str("text"),
-                    Link = newLink
+                    CmsButton = newButton
                 };
 
                 // Generate an Id for the new text field
-                await _Db.TextField.AddAsync(newField);
+                await _Db.TextComponents.AddAsync(newField);
 
-                newRevision.RevisionTextFields.Add(new RevisionTextField
+                newRevision.RevisionTextComponents.Add(new RevisionTextComponent
                 {
                     PageRevisionId = newRevision.Id,
-                    TextFieldId = newField.Id
+                    TextComponentId = newField.Id
                 });
 
                 // Save changes
@@ -333,8 +376,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             {
                 var page = await _Db.Pages.Where(c => c.Id == pageId)
                     .Include(p => p.PageRevisions)
-                        .ThenInclude(pr => pr.RevisionTextFields)
-                            .ThenInclude(rtf => rtf.TextField)
+                        .ThenInclude(pr => pr.RevisionTextComponents)
+                            .ThenInclude(rtf => rtf.TextComponent)
                     .FirstOrDefaultAsync();
 
                 if (page == null)
@@ -343,11 +386,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 }
 
                 // First, mark all text fields for removal
-                foreach(PageRevision rev in page.PageRevisions)
+                foreach (PageRevision rev in page.PageRevisions)
                 {
-                    foreach(RevisionTextField rtf in rev.RevisionTextFields)
+                    foreach (RevisionTextComponent rtf in rev.RevisionTextComponents)
                     {
-                        _Db.Remove(rtf.TextField);
+                        _Db.Remove(rtf.TextComponent);
                     }
                     _Db.Remove(rev);
                 }
