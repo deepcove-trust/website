@@ -1,58 +1,30 @@
-﻿import React, { Component } from 'react';
-import CKEditor from 'ckeditor4-react';
-CKEditor.editorUrl = '/ckeditor/ckeditor.js';
+﻿import React, { Component } from "react";
 
-class TwoWayBinding extends Component {
+export default class TwoWayBinding extends Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            data: this.props.value
-        };
-        this.handleChange = this.handleChange.bind(this);
-        this.onEditorChange = this.onEditorChange.bind(this);
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.value != this.state.data) {
-            this.setState({
-                data: nextProps.value
-            });
-        }
-    }
-
-    onEditorChange(evt) {
-        if (this.props.cb) {
-            this.props.cb(evt.editor.getData());
-        }
-
-        this.setState({
-            data: evt.editor.getData()
-        });
-    }
-
-    handleChange(changeEvent) {
-        if (this.props.cb) {
-            this.props.cb(changeEvent.target.value);
-        }
-
-        this.setState({
-            data: changeEvent.target.value
-        });
+        this.elementName = "editor_" + this.props.id;
+        this.componentDidMount = this.componentDidMount.bind(this);
     }
 
     render() {
-
         return (
-            <div>
-                <CKEditor
-                    id={this.props.id}
-                    data={this.state.data}
-                    onChange={this.onEditorChange}
-                    config={this.config} />
-            </div>
-        );
+            <textarea name={this.elementName} defaultValue={this.props.value}></textarea>
+        )
+    }
+
+    componentDidMount() {
+        let configuration = {
+            toolbar: "Basic"
+        };
+        CKEDITOR.replace(this.elementName, configuration);
+        CKEDITOR.instances[this.elementName].on("change", function () {
+            let data = CKEDITOR.instances[this.elementName].getData();
+            this.props.cb(data);
+        }.bind(this));
+    }
+
+    componentWillUnmount() {
+        CKEDITOR.instances[this.elementName].destroy();
     }
 }
-
-export default TwoWayBinding;

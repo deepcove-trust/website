@@ -10,7 +10,7 @@ export default class Content extends Component {
             return (
                 <Fragment>
                     <small className="text-muted">Text Content</small>
-                    <TwoWayBinding value={this.props.text} cb={this.props.editVal.bind(this, 'text')} id={12} />
+                    <TwoWayBinding value={this.props.text} cb={this.props.editVal.bind(this, 'text')} id={this.props.id} />
                 </Fragment>
             );
         } else {
