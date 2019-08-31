@@ -7,7 +7,7 @@ import SelectTemplate from './Pages/SelectTemplate';
 
 import $ from 'jquery';
 
-const baseUri = "/admin/web/pages/new";
+const baseUri = "/admin/pages/create";
 
 export default class NewPageWrapper extends Component {
     constructor(props) {

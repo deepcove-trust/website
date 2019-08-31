@@ -4,7 +4,7 @@ import { Link } from '../Components/Button';
 import PagePreview from './Pages/PagePreview';
 import $ from 'jquery';
 
-const baseUri = `/admin/web/pages`;
+const baseUri = `/admin/pages`;
 
 export default class Pages extends Component {
     constructor(props) {
@@ -30,7 +30,7 @@ export default class Pages extends Component {
         }, () => {
             $.ajax({
                 type: 'get',
-                url: `${baseUri}/data?filter=${this.state.filter}`
+                url: `${baseUri}data?filter=${this.state.filter}`
             }).done((data) => {
                 this.setState({ pages: data });
             }).fail((err) => {
@@ -54,7 +54,7 @@ export default class Pages extends Component {
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Pages</h1>
-                    <Link btnClass="btn btn-info float-right" href={`${baseUri}/new?filter=${this.state.filter}`}>
+                    <Link btnClass="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
                         New Page <i className="fas fa-file-plus"></i>
                     </Link>
                 </div>
