@@ -39,14 +39,14 @@ export default class EditActionModal extends Component {
         return (
             <Fragment>
                 <Button btnClass="btn btn-sm btn-info d-inline" type="button" cb={this.toggleModal.bind(this, this.props.slot)}>
-                    {this.props.btnText} &nbsp; <i class="fas fa-cog" />
+                    {this.props.btnText} &nbsp; <i className="fas fa-cog" />
                 </Button>
 
                 <Modal size="large" id={`edit-action-modal-${this.props.slotNo}`} title="Customize link">
 
-                    <div class="row">
+                    <div className="row">
 
-                        <div class="col-lg-8">
+                        <div className="col-lg-8">
                             <FormGroup htmlFor="link-text" label="Link Text">
                                 <Input type="text" id="link-text" value={this.state.link ? this.state.link.text : undefined} cb={this.editVal.bind(this, 'text')} required />
                             </FormGroup>
@@ -55,8 +55,8 @@ export default class EditActionModal extends Component {
                                 <Input type="url" id="link-href" value={this.state.link ? this.state.link.href : undefined} cb={this.editVal.bind(this, 'href')} required />
                             </FormGroup>
 
-                            <div class="row">
-                                <div class="col-lg-4">
+                            <div className="row">
+                                <div className="col-lg-4">
                                     <FormGroup htmlFor="link-color" label="Link Color">
                                         <Select id="link-color"
                                             options={this.props.settings.colors}
@@ -64,7 +64,7 @@ export default class EditActionModal extends Component {
                                             cb={this.editVal.bind(this, 'color')} />
                                     </FormGroup>
                                 </div>
-                                <div class="col-lg-4">
+                                <div className="col-lg-4">
                                     <FormGroup htmlFor="link-align" label="Link Alignment">
                                         <Select id="link-align"
                                             options={this.props.settings.alignments}
@@ -72,25 +72,25 @@ export default class EditActionModal extends Component {
                                             cb={this.editVal.bind(this, 'align')} />
                                     </FormGroup>
                                 </div>
-                                <div class="col-lg-4">
+                                <div className="col-lg-4">
                                     <Checkbox id="link-isButton" label="Show as Button" checked={this.state.link.isButton} cb={this.editVal.bind(this, 'isButton')} />
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-4">
-                            <h5 class="text-center">Preview</h5>
+                        <div className="col-lg-4">
+                            <h5 className="text-center">Preview</h5>
                             <TextBlockAction link={this.state.link} />
                         </div>
 
                     </div>
 
-                    <div class="float-right">
+                    <div className="float-right">
                         <Button btnClass="btn btn-danger mr-2" cb={this.toggleModal.bind(this)}>
-                            Cancel &nbsp; <i class="fas fa-times" />
+                            Cancel &nbsp; <i className="fas fa-times" />
                         </Button>
                         <Button btnClass="btn btn-success" cb={this.returnChanges.bind(this)}>
-                            Accept &nbsp; <i class="fas fa-check" />
+                            Accept &nbsp; <i className="fas fa-check" />
                         </Button>
                     </div>
 
