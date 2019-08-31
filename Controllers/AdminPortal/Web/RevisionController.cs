@@ -30,7 +30,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// <summary>
         /// Returns detailed data for a given page id and revision id.
         /// </summary>
-        [HttpGet("{pageId:int/{revisionId:int}")]
+        [HttpGet("{pageId:int}/{revisionId:int}")]
         public async Task<IActionResult> GetRevision(int pageId, int revisionId)
         {
             try
