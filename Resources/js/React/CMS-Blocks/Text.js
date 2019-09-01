@@ -19,6 +19,14 @@ export default class TextBlock extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (!nextProps.allowEdits) {
+            this.setState({
+                edit: false
+            });
+        }
+    }
+
     pushChanges() {
         this.setState({
             edit: false
@@ -65,7 +73,6 @@ export default class TextBlock extends Component {
                 <CmsButton edit={this.state.edit}
                     button={this.state.content.button}
                 />
-                {/* CmsBTN */}
             </Fragment>
         )
     }
