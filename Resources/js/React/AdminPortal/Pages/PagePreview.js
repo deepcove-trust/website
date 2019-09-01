@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import PreviewCard from './PreviewCard';
-import { Button, ConfirmModal, Link } from '../../Components/Button';
-import { ToggleVisibility } from '../../CMS-Blocks/PageMast';
+import { ConfirmModal, Link } from '../../Components/Button';
+import { ToggleVisibility } from '../../PageTemplates/PageControlButtons';
 import $ from 'jquery';
 
 export default class PagePreview extends Component {
@@ -37,7 +37,7 @@ export default class PagePreview extends Component {
 
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
                         <ToggleVisibility page={this.props.page}
-                            btnClass="btn btn-outline-dark btn-block"
+                            className="btn btn-outline-dark btn-block"
                             baseUri={`/api/page`}
                             block={true}
                             u={this.props.u}

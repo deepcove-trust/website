@@ -32,6 +32,7 @@ export default class ReactTemplate1 extends Component {
                         <TextBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.textComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
                         />
                     </div>
 
@@ -39,10 +40,7 @@ export default class ReactTemplate1 extends Component {
                         <TextBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.textComponents[1] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'text')}
-
-                        //baseUri={baseUri}
-                        //admin={this.state.data && !!this.state.data.settings}
-                        //settings={this.state.data ? this.state.data.settings : null}
+                            settings={this.props.data.enums}
                         />
                     </div>
 
@@ -50,10 +48,7 @@ export default class ReactTemplate1 extends Component {
                         <TextBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.textComponents[2] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'text')}
-
-                        //baseUri={baseUri}
-                        //admin={this.state.data && !!this.state.data.settings}
-                        //settings={this.state.data ? this.state.data.settings : null}
+                            settings={this.props.data.enums}
                         />
                     </div>
                 </div>

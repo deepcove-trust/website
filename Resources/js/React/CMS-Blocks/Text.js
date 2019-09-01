@@ -72,6 +72,7 @@ export default class TextBlock extends Component {
 
                 <CmsButton edit={this.state.edit}
                     button={this.state.content.button}
+                    settings={this.props.settings}
                 />
             </Fragment>
         )

@@ -79,7 +79,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         {
                             googleMaps = _Db.SystemSettings.Last().UrlGoogleMaps,
                             captchaSiteKey = _Config.GetSection("RecaptchaSettings").GetValue<String>("SiteKey")
-                        }
+                        },
+                        enums = User.Identity.IsAuthenticated ? new {
+                            Align = Enum.GetValues(typeof(Align)),
+                            Color = Enum.GetValues(typeof(Color))
+                        } : null
                     })
                     .FirstOrDefault();
 
