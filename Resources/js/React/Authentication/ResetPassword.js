@@ -12,6 +12,11 @@ export default class ResetPassword extends Component {
         this.state = {
             requestFailed: false,
             requestPending: false,
+            formData: {
+                email: "",
+                password: "",
+                passwordConfirm: ""
+            }
         }
     }
     
@@ -37,6 +42,23 @@ export default class ResetPassword extends Component {
         })
     }
 
+    componentDidMount() {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('email')) {
+            this.updateState('email',
+                decodeURIComponent(urlParams.get('email'))
+            )
+        }
+    }
+
+    updateState(field, val) {
+        let formData = this.state.formData;
+        formData[field] = val || "";
+        this.setState({
+            formData: formData
+        });
+    }
+
     render() {
         let requestFailed;
         if (this.state.requestFailed) {
@@ -54,15 +76,39 @@ export default class ResetPassword extends Component {
                     <h1 className="display-4 mb-5">New Password</h1>
 
                     <FormGroup>
-                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" autoFocus required />
+                        <Input type="email"
+                            name="email"
+                            placeHolder="Email"
+                            autoComplete="email"
+                            value={this.state.formData.email}
+                            cb={this.updateState.bind(this, 'email')}
+                            autoFocus
+                            required
+                        />
                     </FormGroup>
 
                     <FormGroup>
-                        <Input type="password" name="password" placeHolder="New Password" autoComplete="new-password" minLength="6" required />
+                        <Input type="password"
+                            name="password"
+                            placeHolder="New Password"
+                            autoComplete="new-password"
+                            minLength="6"
+                            value={this.state.formData.password}
+                            cb={this.updateState.bind(this, 'password')}
+                            required
+                        />
                     </FormGroup>
 
                     <FormGroup>
-                        <Input type="password" name="passswordConfirm" placeHolder="Retype Password" autoComplete="new-password" minLength="6" required />
+                        <Input type="password"
+                            name="passswordConfirm"
+                            placeHolder="Retype Password"
+                            autoComplete="new-password"
+                            minLength="6"
+                            value={this.state.formData.passwordConfirm}
+                            cb={this.updateState.bind(this, 'passwordConfirm')}
+                            required
+                        />
                     </FormGroup>
 
                     {requestFailed}

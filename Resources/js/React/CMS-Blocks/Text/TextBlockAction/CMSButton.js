@@ -12,7 +12,7 @@ export default class CMSButton extends Component {
                 return "text-right";
 
             default:
-                return false;
+                return "";
         }
     }
 

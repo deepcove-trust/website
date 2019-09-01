@@ -5,7 +5,6 @@ import TextContent from './TextComponents/TextContent';
 //Edit/Pencil Button?
 import _ from 'lodash';
 
-
 export default class TextBlock extends Component {
     constructor(props) {
         super(props);

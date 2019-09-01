@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Button, ConfirmButton } from '../../Components/Button';
+import { Button } from '../../Components/Button';
 
 const Mode = {
     View: 'view',
@@ -31,15 +31,15 @@ export default class EditButton extends Component {
 
         return (
             <div role="group" className="btn-group btn-group-sm pb-2 d-block">
-                <ConfirmButton btnClass="btn btn-danger" cb={this.props.cancelEditMode.bind(this)}>
+                <Button btnClass="btn btn-danger" cb={this.props.cancelEditMode.bind(this)}>
                     Cancel <i className="fas fa-times"></i>
-                </ConfirmButton>
+                </Button>
 
                 {btnCenter}
 
-                <ConfirmButton pending={this.props.requestPending} cb={this.props.saveChanges.bind(this)} btnClass="btn btn-success">
+                <Button pending={this.props.requestPending} cb={this.props.saveChanges.bind(this)} btnClass="btn btn-success">
                     Save <i className="fa fa-check"></i>
-                </ConfirmButton>
+                </Button>
             </div>
         )
     }
