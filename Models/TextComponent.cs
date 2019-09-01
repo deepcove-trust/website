@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
-    public class TextComponent
+    public class TextComponent : IEquatable<TextComponent>
     {
         public int Id { get; set; }
         [Required]
@@ -21,5 +21,13 @@ namespace Deepcove_Trust_Website.Models
         List<RevisionTextComponent> RevisionTextComponents { get; set; }
         public CmsButton CmsButton { get; set; }
         // End Navigation Properties
+
+        public bool Equals(TextComponent other)
+        {
+            return SlotNo == other.SlotNo
+                && Heading == other.Heading
+                && Text == other.Text
+                && CmsButton == other.CmsButton;
+        }
     }
 }

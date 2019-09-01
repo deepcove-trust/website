@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Models
         Right 
     }
 
-    public class CmsButton
+    public class CmsButton : IEquatable<CmsButton>
     {
         public int Id { get; set; }
         [Required]
@@ -55,5 +55,13 @@ namespace Deepcove_Trust_Website.Models
         // Navigation Properties
         public List<TextComponent> TextFields { get; set; }
         // End Navigation Properties
+
+        public bool Equals(CmsButton other)
+        {
+            return Text == other.Text
+                && Href == other.Href
+                && Color == other.Color
+                && Align == other.Align;
+        }
     }
 }
