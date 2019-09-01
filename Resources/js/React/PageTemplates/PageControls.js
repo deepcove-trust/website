@@ -12,8 +12,18 @@ export default class PageControls extends Component {
             );
 
         return (
-            <div className="row col-12">
-                <h1>TODO Edit TOOLBAR</h1>
+            <div className="row">
+                <div className="col-lg-4 offset-md-3 col-md-5 col-sm-12">
+                    other actions here
+                </div>
+                <div className="col-lg-4 offset-md-1 col-md-6 col-sm-12">
+                    <Button className="btn btn-dark btn-sm" cb={this.props.revert}>
+                        Revert Changes <i className="fas fa-undo" />
+                    </Button>
+                    <Button className="btn btn-success btn-sm" cb={this.props.publish}>
+                        Publish Changes <i className="fas fa-check-circle"/>
+                    </Button>
+                </div>
             </div>
         );
     }

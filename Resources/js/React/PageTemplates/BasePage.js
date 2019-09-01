@@ -45,6 +45,24 @@ export default class BasePage extends Component {
         });
     }
 
+    publishRevision() {
+        $.ajax({
+            method: 'post',
+            url: `${baseUri}/${this.state.pageId}/revision`,
+            data: {
+                reason: prompt("Please provide a revision message:"),
+                TextComponents: this.state.page.textComponents,
+                ImageComponents: {}
+            }
+        }).done(() => {
+            this.setState({
+                allowEdits: false
+            }, () => this.getData())
+        }).fail((err) => {
+            console.error(`[BasePage@publishRevision] Error posting new revision ${this.state.pageId} data: `, err.responseText);
+        })
+    }
+
     // This method is called when a check box is pushed 
     // while editing a single component
     receiveChanges(type, e) {
@@ -76,11 +94,17 @@ export default class BasePage extends Component {
                             allowEdits: mode
                         });
                     }}
+                    publish={this.publishRevision.bind(this)}
+                    revert={() => {
+                        this.setState({
+                            page: this.state.original,
+                            allowEdits: false
+                        });
+                    }}
                 />
 
                 <TemplateName data={this.state.page}
                     allowEdits={this.state.allowEdits}
-                    u={this.getData.bind(this)}
                     pushChanges={this.receiveChanges.bind(this)}
                 />
             </Fragment>
