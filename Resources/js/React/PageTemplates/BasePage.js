@@ -32,7 +32,6 @@ export default class BasePage extends Component {
     }
 
     getData() {
-        console.log(`${baseUri}/${this.state.pageId}/revision`)
         $.ajax({
             method: 'get',
             url: `${baseUri}/${this.state.pageId}/revision`

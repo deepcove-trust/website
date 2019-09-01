@@ -62,7 +62,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                                 txt.TextComponent.Heading,
                                 txt.TextComponent.Text,
                                 txt.TextComponent.SlotNo,
-                                link = txt.TextComponent.CmsButton != null ? new {
+                                button = txt.TextComponent.CmsButton != null ? new {
                                     txt.TextComponent.CmsButton.Id,
                                     txt.TextComponent.CmsButton.Align,
                                     txt.TextComponent.CmsButton.Color,

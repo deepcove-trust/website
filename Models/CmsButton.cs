@@ -9,8 +9,6 @@ using System.Threading.Tasks;
 namespace Deepcove_Trust_Website.Models
 {
     public enum Color {
-        [EnumMember(Value = "default")]
-        Default,
         [EnumMember(Value = "dark")]
         Dark,
         [EnumMember(Value = "danger")]
@@ -19,6 +17,8 @@ namespace Deepcove_Trust_Website.Models
         Info,
         [EnumMember(Value = "primary")]
         Primary,
+        [EnumMember(Value = "success")]
+        Success,
         [EnumMember(Value = "warning")]
         Warning 
     }
@@ -43,8 +43,7 @@ namespace Deepcove_Trust_Website.Models
         public string Text { get; set; }
         [Required]
         public string Href { get; set; }
-        [Required]
-        public bool IsButton { get; set; }
+
         [Required]
         [JsonConverter(typeof(Color))]
         public Color Color { get; set; }

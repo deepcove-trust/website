@@ -1,8 +1,8 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import { CKEditor } from '../../Components/FormControl';
 
 
-export default class TextContent extends Component {
+export default class Content extends Component {
     render() {
         if (!this.props.edit)
             return <div dangerouslySetInnerHTML={{ __html: this.props.content }}></div>;

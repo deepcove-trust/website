@@ -1,8 +1,8 @@
 ﻿import React, { Component, Fragment } from 'react';
 import Heading from './TextComponents/Heading';
-import TextContent from './TextComponents/TextContent';
-//Text Section Component
-//Edit/Pencil Button?
+import Content from './TextComponents/Content';
+import CmsButton from './TextComponents/CmsButton';
+
 import _ from 'lodash';
 
 export default class TextBlock extends Component {
@@ -56,12 +56,15 @@ export default class TextBlock extends Component {
                     pushChanges={this.pushChanges.bind(this)}
                 />
 
-                <TextContent id={this.state.content.id}
+                <Content id={this.state.content.id}
                     edit={this.state.edit}
                     content={this.state.content.text}
                     updateVal={this.updateVal.bind(this, 'text')}
                 />
 
+                <CmsButton edit={this.state.edit}
+                    button={this.state.content.button}
+                />
                 {/* CmsBTN */}
             </Fragment>
         )
