@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import { render } from 'react-dom';
 import PageMast from '../CMS-Blocks/PageMast';
 import TextBlock from '../CMS-Blocks/Text';
 import Media from '../CMS-Blocks/Media';
@@ -52,10 +51,10 @@ export default class ReactTemplate2 extends Component {
                         <Media />
                     </div>
 
-                    <PageMast page={this.state.data}
-                        baseUri={baseUri}
-                        u={this.getData.bind(this)}
-                    />
+                    <PageTitle title={this.props.data.name}
+                        public={this.props.data.public}
+                        created={this.props.data.created}
+                    />                  
 
                     <div className="col-lg-6 col-md-12 py-2">
                         <TextBlock
@@ -81,6 +80,3 @@ export default class ReactTemplate2 extends Component {
         );
     }
 }
-
-if (document.getElementById('react_template_2'))
-    render(<ReactTemplate />, document.getElementById('react_template_2'));    

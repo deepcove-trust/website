@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
@@ -20,11 +21,14 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
     {
         private readonly WebsiteDataContext _Db;
         private readonly ILogger<RevisionController> _Logger;
-        
-        public RevisionController(WebsiteDataContext _db, ILogger<RevisionController> _logger)
+        private readonly IConfiguration _Config;
+
+
+        public RevisionController(WebsiteDataContext _db, ILogger<RevisionController> _logger, IConfiguration config)
         {
             _Db = _db;
             _Logger = _logger;
+            _Config = config;
         }
 
         /// <summary>
@@ -32,50 +36,62 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// 
         /// If no revision ID is provided, the latest revision will be returned.
         /// </summary>
+        [AllowAnonymous]
         [HttpGet("{pageId:int}/revision/{revisionId?}")]
         public async Task<IActionResult> GetRevision(int pageId, int? revisionId)
         {
             try
             {
-                return Ok(await _Db.PageRevisions
-                    .Include(pr => pr.Page)
-                    .Include(pr => pr.CreatedBy)
-                    .Include(pr => pr.RevisionMediaComponents)
-                        .ThenInclude(rmc => rmc.MediaComponent)
-                    .Include(pr => pr.RevisionTextComponents)
-                        .ThenInclude(rtc => rtc.TextComponent)
-                            .ThenInclude(tc => tc.CmsButton)
-                    .Where(pr => pr.Page.Id == pageId && (pr.Id == revisionId || revisionId == 0 ))
-                    .OrderByDescending(pr => pr.CreatedAt)
-                    .Select(pr => new
-                    {
-                        pr.Id,
-                        templateId = pr.Template.Id,
-                        textComponents = pr.RevisionTextComponents.Select(rtc => new
+                var page = _Db.Pages.Where(c => c.Id == pageId)
+                    .Include(i => i.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionTextComponents)
+                            .ThenInclude(tc => tc.TextComponent)
+                                .ThenInclude(btn => btn.CmsButton)
+                    .Include(i => i.PageRevisions)
+                        .ThenInclude(revision => revision.Template)
+                    .ToList()
+                    .Select(s => new {
+                        s.Id,
+                        s.Name,
+                        s.Public,
+                        s.Section,
+                        templateId = s.GetRevision(revisionId).Template.Id,
+                        textComponents = s.GetRevision(revisionId).RevisionTextComponents.OrderBy(o => o.TextComponent.SlotNo)
+                            .Select(txt => new {
+                                txt.TextComponent.Id,
+                                txt.TextComponent.Heading,
+                                txt.TextComponent.Text,
+                                txt.TextComponent.SlotNo,
+                                link = txt.TextComponent.CmsButton != null ? new {
+                                    txt.TextComponent.CmsButton.Id,
+                                    txt.TextComponent.CmsButton.Align,
+                                    txt.TextComponent.CmsButton.Color,
+                                    txt.TextComponent.CmsButton.Href,
+                                    txt.TextComponent.CmsButton.Text
+                                } : null
+                            }).ToList(),                        
+                        mediaComponents = new { },
+                        s.GetRevision(revisionId).Created,
+                        /// <remarks>
+                        /// Global settings not tied to a revision, needed for some templates
+                        /// </remarks>
+                        otherComponents = new
                         {
-                            rtc.TextComponent.Id,
-                            rtc.TextComponent.SlotNo,
-                            rtc.TextComponent.Heading,
-                            rtc.TextComponent.Text,
-                            link = rtc.TextComponent.CmsButton == null ? null : new
-                            {
-                                rtc.TextComponent.CmsButton.Id,
-                                rtc.TextComponent.CmsButton.Text,
-                                rtc.TextComponent.CmsButton.Href,
-                                rtc.TextComponent.CmsButton.IsButton,
-                                rtc.TextComponent.CmsButton.Color,
-                                rtc.TextComponent.CmsButton.Align
-                            }
-                        }).ToList(),
-                        mediaComponents = pr.RevisionMediaComponents.Select(rmc => new
-                        {
-                            rmc.MediaComponent.Id,
-                            rmc.MediaComponent.SlotNo
-                            // Todo: add the rest here
-                        }).ToList()
+                            googleMaps = _Db.SystemSettings.Last().UrlGoogleMaps,
+                            captchaSiteKey = _Config.GetSection("RecaptchaSettings").GetValue<String>("SiteKey")
+                        }
                     })
-                    .FirstOrDefaultAsync()
-                    );
+                    .FirstOrDefault();
+
+                /**
+                 * Return 404 if
+                 * 1. No Page Exists
+                 * 2. The page is private, and the requestor is not authenticated
+                 */
+                if (page == null || !page.Public && !User.Identity.IsAuthenticated)
+                    return NotFound();
+
+                return Ok(page);
             }
             catch (Exception ex)
             {

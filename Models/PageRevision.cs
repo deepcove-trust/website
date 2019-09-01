@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
@@ -17,5 +15,17 @@ namespace Deepcove_Trust_Website.Models
         public List<RevisionTextComponent> RevisionTextComponents { get; set; }
         public List<RevisionMediaComponent> RevisionMediaComponents { get; set; }
         // End Navigation Properties
+
+        public object Created
+        {
+            get
+            {
+                return new
+                {
+                    At = CreatedAt.ToShortDateString(),
+                    By = CreatedBy?.Name
+                };
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ export class Button extends Component {
         }
 
         return (
-            <button className={this.props.btnClass || "btn btn-primary"}
+            <button className={this.props.btnClass || this.props.className || "btn btn-primary"}
                 type={this.props.type || "button"}
                 disabled={this.props.disabled || this.props.pending}
                 style={{ minWidth: `${this.state.width}px` }}
@@ -71,7 +71,7 @@ export class BtnGroup extends Component {
 
     render() {
         return (
-            <div role="group" className={`${this.direction()} ${this.size()} ${this.props.btnClass || ''}`}>
+            <div role="group" className={`${this.direction()} ${this.size()} ${this.props.btnClass || this.props.className || ''}`}>
                 {this.props.children}
             </div>
         )
@@ -129,7 +129,7 @@ export class ConfirmButton extends Component {
 
     getClass() {
         let confirm = this.state.confirmPending ? "btn-confirm" : "" ;
-        let baseClasses = this.props.btnClass || "btn btn-primary";
+        let baseClasses = this.props.btnClass || this.props.className || "btn btn-primary";
 
         return `${baseClasses} ${confirm}`;
     }
@@ -203,7 +203,7 @@ export class ConfirmModal extends Component {
 
         return (
             <Fragment>
-                <Button btnClass={this.props.btnClass || 'btn btn-danger'} cb={this.toggleModal.bind(this)}>
+                <Button btnClass={this.props.btnClass || this.props.className || 'btn btn-danger'} cb={this.toggleModal.bind(this)}>
                     {this.props.children}
                 </Button>
                 
@@ -240,7 +240,7 @@ export class ConfirmModal extends Component {
 export class Link extends Component {
     render() {
         return (
-            <a className={`btn ${this.props.btnClass}`}
+            <a className={`btn ${this.props.btnClass || this.props.className || ""}`}
                 href={this.props.href}
                 target={this.props.target || null}
             >

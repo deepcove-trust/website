@@ -139,7 +139,7 @@ export class Input extends Component {
                 type={this.getType()}
                 className={this.props.inputClass || "form-control"}
                 name={this.props.name || null}
-                value={this.state.value}
+                value={this.state.value || ""}
                 placeholder={this.props.placeHolder || null}
                 autoComplete={this.getAutoComplete()}
                 disabled={!!this.props.disabled}
@@ -196,7 +196,7 @@ export class Select extends Component {
                 disabled={!!this.props.disabled}
                 readOnly={!!this.props.readOnly}
                 required={!!this.props.required}
-                value={this.props.selected}
+                value={this.props.selected || ""}
                 onChange={this.handleChange.bind(this)}
             >
                 {selectOptions}
@@ -264,7 +264,7 @@ export class TextArea extends Component {
                 <textarea id={this.props.id || null}
                     className={this.props.inputClass || "form-control"}
                     name={this.props.name || null}
-                    value={this.state.value || ''}
+                    value={this.state.value || ""}
                     placeholder={this.props.placeHolder || null}
                     autoComplete={this.getAutoComplete()}
                     rows={this.props.rows || false}
