@@ -30,28 +30,30 @@ export default class ReactTemplate1 extends Component {
                 <div className="row pb-4">
                     <div className="col-lg-4 col-md-6 col-sm-12">
                         <TextBlock allowEdits={this.props.allowEdits}
-                            //baseUri={baseUri}
-                            //admin={this.state.data && !!this.state.data.settings}
                             content={this.props.data.textComponents[0] || null}
-                            //settings={this.state.data ? this.state.data.settings : null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
                         />
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-sm-12">
-                        <TextBlock
-                            baseUri={baseUri}
-                            admin={this.state.data && !!this.state.data.settings}                                    
-                            content={this.state.data ? this.state.data.text[1] : null}
-                            settings={this.state.data ? this.state.data.settings : null}
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[1] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+
+                        //baseUri={baseUri}
+                        //admin={this.state.data && !!this.state.data.settings}
+                        //settings={this.state.data ? this.state.data.settings : null}
                         />
                     </div>
 
                     <div className="col-lg-4 col-md-6 col-sm-12">
-                        <TextBlock
-                            baseUri={baseUri}
-                            admin={this.state.data && !!this.state.data.settings}
-                            content={this.state.data ? this.state.data.text[2] : null}
-                            settings={this.state.data ? this.state.data.settings : null}
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[2] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+
+                        //baseUri={baseUri}
+                        //admin={this.state.data && !!this.state.data.settings}
+                        //settings={this.state.data ? this.state.data.settings : null}
                         />
                     </div>
                 </div>

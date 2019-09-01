@@ -20,7 +20,8 @@ export default class BasePage extends Component {
             pageId: null,
             targetRevision: null,
             allowEdits: false,
-            page: null
+            page: null,
+            original: null
         };
     }
 
@@ -37,10 +38,26 @@ export default class BasePage extends Component {
             url: `${baseUri}/${this.state.pageId}/revision`
         }).done((data) => {
             this.setState({
-                page: data
+                page: data,
+                original: data
             });
         }).fail((err) => {
             console.error(`[BasePage@getData] Error getting page ${this.state.pageId} data: `, err.responseText);
+        });
+    }
+
+    // This method is called when a check box is pushed 
+    // while editing a single component
+    receiveChanges(type, e) {
+        let page = this.state.page;
+
+        if (type == 'text') {
+            page.textComponents[e.slotNo] = e;
+        } else if(type == 'media') {
+
+        }
+        this.setState({
+            page: page
         });
     }
 
@@ -65,6 +82,7 @@ export default class BasePage extends Component {
                 <TemplateName data={this.state.page}
                     allowEdits={this.state.allowEdits}
                     u={this.getData.bind(this)}
+                    pushChanges={this.receiveChanges.bind(this)}
                 />
             </Fragment>
         );

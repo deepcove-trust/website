@@ -19,6 +19,14 @@ export default class TextBlock extends Component {
         }
     }
 
+    pushChanges() {
+        this.setState({
+            edit: false
+        }, () => {
+            this.props.pushChanges(this.state.content);
+        })        
+    }
+
     updateVal(field, val) {
         let content = this.state.content;
         content[field] = val;
@@ -45,10 +53,13 @@ export default class TextBlock extends Component {
                             content: _.cloneDeep(this.props.content)
                         })
                     }}
+                    pushChanges={this.pushChanges.bind(this)}
                 />
 
-                <TextContent edit={this.state.edit}
+                <TextContent id={this.state.content.id}
+                    edit={this.state.edit}
                     content={this.state.content.text}
+                    updateVal={this.updateVal.bind(this, 'text')}
                 />
 
                 {/* CmsBTN */}

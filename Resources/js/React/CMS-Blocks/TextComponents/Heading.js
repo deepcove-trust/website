@@ -12,10 +12,12 @@ export default class Heading extends Component {
                     allowEdits={this.props.allowEdits}
                     setEditMode={this.props.setEditMode}
                     reset={this.props.reset}
+                    pushChanges={this.props.pushChanges}
                 />
 
                 <HeadingText edit={this.props.edit}
                     heading={this.props.heading}
+                    cb={this.props.updateVal}
                 />
             </Fragment>
         )
@@ -41,7 +43,7 @@ class EditButtons extends Component {
                         Undo <i className="fas fa-undo"/>
                     </Button>
 
-                    <Button className="btn btn-info border-dark btn-sm">
+                    <Button className="btn btn-info border-dark btn-sm" cb={this.props.pushChanges}>
                         <i className="fas fa-check" />
                     </Button>
                 </BtnGroup>
