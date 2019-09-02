@@ -24,6 +24,7 @@ export default class ReactTemplate1 extends Component {
                 <PageTitle title={this.props.data.name}
                     public={this.props.data.public}
                     created={this.props.data.created}
+                    displayAdmin={!!this.props.data.enums}
                 />
 
 
