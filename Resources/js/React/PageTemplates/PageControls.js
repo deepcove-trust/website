@@ -21,7 +21,7 @@ export default class PageControls extends Component {
                 <div className="col-lg-2 col-sm-6 text-center">
                     <div className="dropdown">
                         <button className="btn btn-dark btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> More Options  </button>
-                        <div role="menu" class="dropdown-menu text-left">
+                        <div role="menu" className="dropdown-menu text-left">
                             <EditPageSettings className="dropdown-item" pageId={this.props.page.id}/>
                             <ViewPageDashboard className="dropdown-item"/>
                         </div>
