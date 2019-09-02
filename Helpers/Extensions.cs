@@ -56,8 +56,8 @@ namespace Deepcove_Trust_Website.Helpers
             return x;
         }
 
-        public static dynamic Deserialize(this IFormCollection request, Type type, string serializedObject) => 
-            JsonConvert.DeserializeObject(serializedObject, type);
+        public static dynamic Deserialize(this IFormCollection request, Type type, string key) => 
+            JsonConvert.DeserializeObject(request.Str(key), type);
 
         /// <summary>
         /// Returns the value of a post field as a boolean.
