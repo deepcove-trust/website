@@ -13,7 +13,7 @@ export default class TextBlock extends Component {
             content: _.cloneDeep(this.props.content) || {
                 heading: "",
                 text: "",
-                link: {}
+                button: {}
             },
             edit: false 
         }
@@ -73,6 +73,7 @@ export default class TextBlock extends Component {
                 <CmsButton edit={this.state.edit}
                     button={this.state.content.button}
                     settings={this.props.settings}
+                    onSave={this.updateVal.bind(this)}
                 />
             </Fragment>
         )

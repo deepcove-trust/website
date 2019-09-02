@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
@@ -50,26 +51,29 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     .Include(i => i.PageRevisions)
                         .ThenInclude(revision => revision.Template)
                     .ToList()
-                    .Select(s => new {
+                    .Select(s => new
+                    {
                         s.Id,
                         s.Name,
                         s.Public,
                         s.Section,
                         templateId = s.GetRevision(revisionId).Template.Id,
                         textComponents = s.GetRevision(revisionId).RevisionTextComponents.OrderBy(o => o.TextComponent.SlotNo)
-                            .Select(txt => new {
+                            .Select(txt => new
+                            {
                                 txt.TextComponent.Id,
                                 txt.TextComponent.Heading,
                                 txt.TextComponent.Text,
                                 txt.TextComponent.SlotNo,
-                                button = txt.TextComponent.CmsButton != null ? new {
+                                button = txt.TextComponent.CmsButton != null ? new
+                                {
                                     txt.TextComponent.CmsButton.Id,
                                     txt.TextComponent.CmsButton.Align,
                                     txt.TextComponent.CmsButton.Color,
                                     txt.TextComponent.CmsButton.Href,
                                     txt.TextComponent.CmsButton.Text
                                 } : null
-                            }).ToList(),                        
+                            }).ToList(),
                         mediaComponents = new { },
                         s.GetRevision(revisionId).Created,
                         /// <remarks>
@@ -125,21 +129,58 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 if (page == null)
                     return BadRequest("No page exists for given page ID");
 
-                // Load template from database
-                PageTemplate template = await _Db.PageTemplates
-                    .FindAsync(request.Int("templateId"));
-                if (template == null)
-                    return BadRequest("No template exists for given template ID");
+                List<TextComponent> textComponents =
+                    request.Deserialize(typeof(List<TextComponent>), "textComponents");
+                
+                List<MediaComponent> mediaComponents = 
+                    request.Deserialize(typeof(List<MediaComponent>), "mediaComponents");
 
+                // Todo: Do this after the view has had template switching enabled
+                // Load template from database 
+                // PageTemplate template = await _Db.PageTemplates
+                //    .FindAsync(request.Int("templateId"));
+
+                // Fetch the original revision
+                PageRevision old = await _Db.PageRevisions
+                  .Include(pr => pr.Template)
+                  .Include(pr => pr.RevisionMediaComponents)
+                      .ThenInclude(rmc => rmc.MediaComponent)
+                  .Include(pr => pr.RevisionTextComponents)
+                      .ThenInclude(rtc => rtc.TextComponent)
+                          .ThenInclude(tc => tc.CmsButton)
+                  .Where(pr => pr.Page == page)
+                  .OrderByDescending(pr => pr.CreatedAt)
+                  .FirstOrDefaultAsync();
+
+                var oldRevision = new
+                {
+                    old.Template,
+                    TextComponents = old.RevisionTextComponents.Select(rtc => rtc.TextComponent).ToList(),
+                    MediaComponents = old.RevisionMediaComponents.Select(rmc => rmc.MediaComponent).ToList()
+                };
 
                 // Create the new page revision
                 PageRevision newRevision = new PageRevision
                 {
                     Page = page,
-                    Template = template,
+                    Template = oldRevision.Template,
                     Reason = request.Str("reason"),
                     CreatedBy = await _Db.Accounts.FindAsync(User.AccountId()),
                 };
+
+                for (int i = 0; i < newRevision.Template.TextAreas; i++)
+                {
+                    TextComponent textComponent;
+
+                    // Only save a new text component if it has changed
+                    if(textComponents[i] != oldRevision.TextComponents[i])
+                    {
+                        textComponent = new TextComponent
+                        {
+
+                        };
+                    }
+                }
 
                 /*
                  * For each text component slot, we will either:
