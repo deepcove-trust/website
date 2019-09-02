@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import PageMast from '../CMS-Blocks/PageMast';
+import PageMast from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import Media from '../CMS-Blocks/Media';
 

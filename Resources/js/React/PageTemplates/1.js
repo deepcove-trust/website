@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import GoogleMap from '../CMS-Blocks/GoogleMap';
-import PageTitle from '../CMS-Blocks/PageMast';
+import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import EmailForm from '../CMS-Blocks/EmailForm';
 
