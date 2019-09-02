@@ -186,8 +186,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     // Add association between component and new revision
                     await _Db.AddAsync(new RevisionTextComponent
                     {
-                        TextComponent = textComponent ?? oldRevision.TextComponents[i]
-                    }); ;
+                        TextComponent = textComponent ?? oldRevision.TextComponents[i],
+                        PageRevisionId = newRevision.Id
+                    });
 
                     await _Db.SaveChangesAsync();
                 }
