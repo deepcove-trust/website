@@ -36,6 +36,7 @@ export default class TextBlock extends Component {
     }
 
     updateVal(field, val) {
+        console.log(field + ' ' + val);
         let content = this.state.content;
         content[field] = val;
         this.setState({
@@ -75,6 +76,7 @@ export default class TextBlock extends Component {
                     button={this.state.content.button}
                     settings={this.props.settings}
                     onSave={this.updateVal.bind(this)}
+                    onDelete={this.updateVal.bind(this, 'button')}
                 />
             </Fragment>
         )

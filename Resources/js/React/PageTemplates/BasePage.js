@@ -46,21 +46,27 @@ export default class BasePage extends Component {
     }
 
     publishRevision() {
-        $.ajax({
-            method: 'post',
-            url: `${baseUri}/${this.state.pageId}/revision`,
-            data: {
-                reason: prompt("Please provide a revision message:"),
-                TextComponents: JSON.stringify(this.state.page.textComponents),
-                ImageComponents: {}
-            }
-        }).done(() => {
-            this.setState({
-                allowEdits: false
-            }, () => this.getData())
-        }).fail((err) => {
-            console.error(`[BasePage@publishRevision] Error posting new revision ${this.state.pageId} data: `, err.responseText);
-        })
+
+        var reason = prompt("Please provide a revision message:");
+
+        // If user has clicked 'Ok' and not 'Cancel'
+        if (reason) {
+            $.ajax({
+                method: 'post',
+                url: `${baseUri}/${this.state.pageId}/revision`,
+                data: {
+                    reason: reason,
+                    TextComponents: JSON.stringify(this.state.page.textComponents),
+                    ImageComponents: {}
+                }
+            }).done(() => {
+                this.setState({
+                    allowEdits: false
+                }, () => this.getData())
+            }).fail((err) => {
+                console.error(`[BasePage@publishRevision] Error posting new revision ${this.state.pageId} data: `, err.responseText);
+            })
+        }
     }
 
     // This method is called when a check box is pushed 
@@ -70,7 +76,7 @@ export default class BasePage extends Component {
 
         if (type == 'text') {
             page.textComponents[e.slotNo] = e;
-        } else if(type == 'media') {
+        } else if (type == 'media') {
 
         }
         this.setState({

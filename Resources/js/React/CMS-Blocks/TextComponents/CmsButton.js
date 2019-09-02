@@ -21,7 +21,11 @@ export default class CmsButton extends Component {
 
         let btn_edit;
         if (this.props.edit && this.props.settings)
-            btn_edit = <EditCmsButton onSave={this.props.onSave.bind(this, 'button')} button={this.props.button} settings={this.props.settings} />
+            btn_edit = <EditCmsButton
+                onSave={this.props.onSave.bind(this, 'button')}
+                onDelete={this.props.onDelete}
+                button={this.props.button}
+                settings={this.props.settings} />
         
         // NO Button
         if (!this.props.button) {
@@ -60,7 +64,7 @@ class EditCmsButton extends Component {
 
         this.state = {
             button: this.props.button || {
-                id: null,
+                id: null,                
                 align: "",
                 color: "",
                 href: "",
@@ -86,10 +90,6 @@ class EditCmsButton extends Component {
         $(`#CmsBtnConfig`).modal(e || 'toggle');
     }
 
-    removeButton() {
-        console.log('destroy');
-    }
-
     render() {
         if (!this.props.settings) return;
 
@@ -97,15 +97,15 @@ class EditCmsButton extends Component {
         let deleteOption, buttonProps = null;
         if (this.props.button) {
             deleteOption = (
-                <a className="dropdown-item" role="presentation" onClick={this.removeButton.bind(this)}>
+                <a className="dropdown-item" role="presentation" onClick={this.props.onDelete}>
                     Delete Button <i className="fas fa-exclmation-triangle text-danger" />
                 </a>
             )
             buttonProps = {
-                text: this.props.button.text,
-                href: this.props.button.href,
-                color: this.props.button.color,
-                align: this.props.button.align,
+                text: this.state.button.text,
+                href: this.state.button.href,
+                color: this.state.button.color,
+                align: this.state.button.align,
             };
         }
 
@@ -151,9 +151,14 @@ class EditCmsButton extends Component {
                                     options={this.props.settings.align}
                                     selected={buttonProps ? buttonProps.align : null} />
                             </FormGroup>
+                        </div>                                               
+
+                        <div className="col-6 text-center px-3 ">                            
+                            <p className="float-left mt-2">Preview &nbsp; &nbsp;</p>
+                            <Button className={`btn btn-${this.state.button.color} float-right`}>{this.state.button.text}</Button>
                         </div>
 
-                        <div className="col-12 text-right">
+                        <div className="col-6 text-right">
                             <Button className="btn btn-dark" cb={this.returnChanges.bind(this)}>Save</Button>
                         </div>
                     </div>
