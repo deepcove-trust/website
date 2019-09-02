@@ -8,10 +8,8 @@ const pageBaseUri = `/admin/pages`;
 
 export class EditPageSettings extends Component {
     render() {
-        return (
-            <Link className={this.props.className || `btn btn-outline-dark btn-block`}
-                href={`${pageBaseUri}/${this.props.pageId}`}> Edit Settings </Link>
-        )
+        return  <Link className={this.props.className || `btn btn-outline-dark btn-block`}
+                    href={`${pageBaseUri}/${this.props.pageId}`}> Edit Settings </Link>
     }
 }
 
@@ -59,5 +57,11 @@ export class ViewPage extends Component {
                 href={this.props.href || PageUrl(this.props.pageName, this.props.pageSection)}
             > View </Link>
         )
+    }
+}
+
+export class ViewPageDashboard extends Component {
+    render() {
+        return <Link className={this.props.className || `btn btn-outline-dark btn-block`} href={pageBaseUri}>Pages Dashboard</Link>
     }
 }
