@@ -88,6 +88,7 @@ export default class BasePage extends Component {
         return (
             <Fragment>
                 <PageControls allowEdits={this.state.allowEdits}
+                    page={this.state.page}
                     u={this.getData.bind(this)}
                     editMode={(mode) => {
                         this.setState({

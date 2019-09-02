@@ -24,16 +24,14 @@ namespace Deepcove_Trust_Website.Models
     }
 
     public enum Align {
-        [EnumMember(Value = "")]
-        Default,
-        [EnumMember(Value = "center")]
-        Center,
-        [EnumMember(Value = "block")] 
-        Block,
         [EnumMember(Value = "left")]
         Left,
-        [EnumMember(Value = "right")] 
-        Right 
+        [EnumMember(Value = "center")]
+        Center,
+        [EnumMember(Value = "right")]
+        Right,
+        [EnumMember(Value = "block")] 
+        Block
     }
 
     public class CmsButton : IEquatable<CmsButton>

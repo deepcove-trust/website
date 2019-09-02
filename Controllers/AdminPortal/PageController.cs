@@ -217,6 +217,27 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         }
             
         
+        [HttpPut("{pageId:int}/visibility")]
+        //PUT /admin/pages/{pageId}/visibility
+        public async Task<IActionResult> UpdatePageVisibility(int pageId, IFormCollection request)
+        {
+            try
+            {
+                Page page = await _Db.Pages.FindAsync(pageId);
+
+                if (page == null)
+                    return NotFound();
+
+                page.Public = request.Bool("visbility");
+                await _Db.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpDelete("{pageId}")]
         //DELETE: /admin/pages/{pageId}
         public async Task<IActionResult> Delete(int pageId)
