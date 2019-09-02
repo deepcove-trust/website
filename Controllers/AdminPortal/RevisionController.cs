@@ -170,41 +170,27 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 
                 for (int i = 0; i < newRevision.Template.TextAreas; i++)
                 {
-                    TextComponent textComponent;
+                    TextComponent textComponent = null;
 
                     // Only save a new text component if it has changed
-                    if(textComponents[i] != oldRevision.TextComponents[i])
+                    if(!textComponents[i].Equals(oldRevision.TextComponents[i]))
                     {
-                        textComponent = new TextComponent
-                        {
+                        textComponent = textComponents[i];
 
-                        };
+                        // Set ID to 0 so that EF Core assigns us a new one
+                        textComponent.Id = 0;
+
+                        await _Db.AddAsync(textComponent);
                     }
-                }
 
-                /*
-                 * For each text component slot, we will either:
-                 * a) Use the text component provided in the request body
-                 * or, if there is no component provided for that slot
-                 * b) Create a link between the new revision and the old revisions
-                 * component
-                 * 
-                 * TextComponent tc;
-                 * 
-                 * foreach(int i; i < number of text slots){
-                 *     if(request["textComponents"][i] != null){
-                 *         tc = new TextComponent { request supplies fields }
-                 *         db.add(tc) 
-                 *     }
-                 *     
-                 *     Create the link between the new revision and either the
-                 *     new text component, or the old revisions text component
-                 * }
-                 * 
-                 * ** Do the same for media text components **
-                 *     
-                 *  Save database changes
-                 */
+                    // Add association between component and new revision
+                    await _Db.AddAsync(new RevisionTextComponent
+                    {
+                        TextComponent = textComponent ?? oldRevision.TextComponents[i]
+                    }); ;
+
+                    await _Db.SaveChangesAsync();
+                }
 
                 _Logger.LogDebug("New page revision created for page {0} ({1}): {2}", pageId, page.Name, newRevision.Reason);
 
