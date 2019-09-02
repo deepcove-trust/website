@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,6 +55,9 @@ namespace Deepcove_Trust_Website.Helpers
 
             return x;
         }
+
+        public static dynamic Deserialize(this IFormCollection request, Type type, string serializedObject) => 
+            JsonConvert.DeserializeObject(serializedObject, type);
 
         /// <summary>
         /// Returns the value of a post field as a boolean.
