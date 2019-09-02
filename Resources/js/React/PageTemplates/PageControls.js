@@ -15,7 +15,7 @@ export default class PageControls extends Component {
         return (
             <div className="row text-center sticky-top bg-white pb-2" style={{ 'marginTop': '-1rem', 'borderBottom': 'black solid' }}>
                 <div className="col-12 mb-2">
-                    <i class="fas fa-tachometer-alt-slow" /> Editors Dashboard
+                    <i className="fas fa-tachometer-alt-slow" /> Editors Dashboard
                 </div>
 
                 <div className="col-lg-3 col-md-6 col-sm-12">
@@ -24,7 +24,8 @@ export default class PageControls extends Component {
 
                 <div className="col-lg-3 col-md-6 col-sm-12">
                     <ToggleVisibility className="btn btn-outline-dark btn-sm"
-                        public={this.props.public}
+                        public={this.props.page.public}
+                        pageId={this.props.page.id}
                         u={this.props.u}
                     />
                 </div>

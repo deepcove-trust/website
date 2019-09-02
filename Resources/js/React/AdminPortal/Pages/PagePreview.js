@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import PreviewCard from './PreviewCard';
 import { ConfirmModal, Link } from '../../Components/Button';
-import { ToggleVisibility } from '../../PageTemplates/PageControlButtons';
+import { ToggleVisibility, ViewPage, EditPageSettings } from '../../PageTemplates/PageControlButtons';
 import $ from 'jquery';
 
 export default class PagePreview extends Component {
@@ -24,22 +24,19 @@ export default class PagePreview extends Component {
 
                 <div className="row">
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
-                        <Link btnClass="btn-outline-dark btn-block" href={`/${this.props.page.absoluteUrl}`}>
-                            View
-                        </Link>
+                        <ViewPage href={`/${this.props.page.absoluteUrl}`} />
                     </div>
 
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
-                        <Link btnClass="btn-outline-dark btn-block" href={`/admin/pages/${this.props.page.id}`}>
-                            Edit Settings
-                        </Link>
+                        <EditPageSettings pageId={this.props.page.id} />
                     </div>
 
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
+
                         <ToggleVisibility page={this.props.page}
                             className="btn btn-outline-dark btn-block"
-                            baseUri={`/api/page`}
-                            block={true}
+                            public={this.props.page.public}
+                            pageId={this.props.page.id}
                             u={this.props.u}
                         />
                     </div>
