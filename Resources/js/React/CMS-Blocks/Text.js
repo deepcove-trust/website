@@ -50,6 +50,7 @@ export default class TextBlock extends Component {
                     edit={this.state.edit}
                     heading={this.state.content.heading}
                     updateVal={this.updateVal.bind(this, 'heading')}
+                    settings={!!this.props.settings}
                     setEditMode={(x) => {
                         this.setState({
                             edit: x

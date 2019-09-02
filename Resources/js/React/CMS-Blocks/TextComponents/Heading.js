@@ -11,6 +11,7 @@ export default class Heading extends Component {
                 <EditButtons edit={this.props.edit}
                     allowEdits={this.props.allowEdits}
                     setEditMode={this.props.setEditMode}
+                    settings={this.props.settings}
                     reset={this.props.reset}
                     pushChanges={this.props.pushChanges}
                 />
@@ -26,7 +27,7 @@ export default class Heading extends Component {
 
 class EditButtons extends Component {
     render() {
-        if (!this.props.allowEdits)
+        if (!this.props.allowEdits || !this.props.settings)
             return null;
 
         let btn;

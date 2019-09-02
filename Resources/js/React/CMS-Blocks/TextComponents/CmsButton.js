@@ -20,7 +20,7 @@ export default class CmsButton extends Component {
     render() {
 
         let btn_edit;
-        if (this.props.edit)
+        if (this.props.edit && this.props.settings)
             btn_edit = <EditCmsButton onSave={this.props.onSave.bind(this, 'button')} button={this.props.button} settings={this.props.settings} />
         
         // NO Button
@@ -91,6 +91,8 @@ class EditCmsButton extends Component {
     }
 
     render() {
+        if (!this.props.settings) return;
+
 
         let deleteOption, buttonProps = null;
         if (this.props.button) {

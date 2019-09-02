@@ -5,6 +5,9 @@ import { EditPageSettings, ToggleVisibility, ViewPageDashboard } from './PageCon
 
 export default class PageControls extends Component {
     render() {
+        if (this.props.settings)
+            return null;
+
         if (!this.props.allowEdits)
             return (
                 <Button btnClass="btn btn-dark float-right" cb={this.props.editMode.bind(this, true)}>
