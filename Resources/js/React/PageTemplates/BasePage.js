@@ -7,8 +7,8 @@ import $ from 'jQuery';
 
 const baseUri = `/api/pages`;
 const components = {
-    1: ReactTemplate1,
-    2: ReactTemplate2
+    0: ReactTemplate1,
+    1: ReactTemplate2
 }
 
 export default class BasePage extends Component {
@@ -63,6 +63,7 @@ export default class BasePage extends Component {
                 this.setState({
                     allowEdits: false
                 }, () => this.getData())
+                window.onbeforeunload = null;
             }).fail((err) => {
                 console.error(`[BasePage@publishRevision] Error posting new revision ${this.state.pageId} data: `, err.responseText);
             })
@@ -90,7 +91,7 @@ export default class BasePage extends Component {
             return <div />
 
         const TemplateName = components[this.state.page.templateId];
-
+        
         return (
             <Fragment>
                 <PageControls allowEdits={this.state.allowEdits}
@@ -98,12 +99,14 @@ export default class BasePage extends Component {
                     settings={!this.state.page.enums}
                     u={this.getData.bind(this)}
                     editMode={(mode) => {
+                        window.onbeforeunload = () => mode;
                         this.setState({
                             allowEdits: mode
                         });
                     }}
                     publish={this.publishRevision.bind(this)}
                     revert={() => {
+                        window.onbeforeunload = null;
                         this.setState({
                             page: this.state.original,
                             allowEdits: false

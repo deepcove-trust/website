@@ -236,3 +236,13 @@ html {
 #react_template {
     position: relative;
 }
+
+a[href^="tel:"] {
+    color: black;
+    text-decoration: none;
+}
+
+a[href^="mailto:"] {
+    color: black;
+    text-decoration: none;
+}
