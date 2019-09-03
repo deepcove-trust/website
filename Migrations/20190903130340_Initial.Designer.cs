@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190831092207_Initial")]
+    [Migration("20190903130340_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -80,8 +80,6 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Href")
                         .IsRequired();
-
-                    b.Property<bool>("IsButton");
 
                     b.Property<string>("Text")
                         .IsRequired();

@@ -38,7 +38,6 @@ namespace Deepcove_Trust_Website.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     Text = table.Column<string>(nullable: false),
                     Href = table.Column<string>(nullable: false),
-                    IsButton = table.Column<bool>(nullable: false),
                     Color = table.Column<int>(nullable: false),
                     Align = table.Column<int>(nullable: false)
                 },

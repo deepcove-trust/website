@@ -79,8 +79,6 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<string>("Href")
                         .IsRequired();
 
-                    b.Property<bool>("IsButton");
-
                     b.Property<string>("Text")
                         .IsRequired();
 
