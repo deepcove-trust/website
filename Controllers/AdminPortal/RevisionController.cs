@@ -168,6 +168,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     CreatedBy = await _Db.Accounts.FindAsync(User.AccountId()),
                 };
 
+                // Assign the new revision an ID
+                await _Db.AddAsync(newRevision);
+
                 for (int i = 0; i < newRevision.Template.TextAreas; i++)
                 {
                     TextComponent textComponent = null;
@@ -186,7 +189,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     // Add association between component and new revision
                     await _Db.AddAsync(new RevisionTextComponent
                     {
-                        TextComponent = textComponent ?? oldRevision.TextComponents[i],
+                        TextComponentId = textComponent?.Id ?? oldRevision.TextComponents[i].Id,
                         PageRevisionId = newRevision.Id
                     });
 

@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -43,10 +45,10 @@ namespace Deepcove_Trust_Website.Models
         public string Href { get; set; }
 
         [Required]
-        [JsonConverter(typeof(Color))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Color Color { get; set; }
         [Required]
-        [JsonConverter(typeof(Align))]
+        [JsonConverter(typeof(StringEnumConverter))]
         public Align Align { get; set; }
 
 

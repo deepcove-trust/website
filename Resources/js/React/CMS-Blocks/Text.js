@@ -36,7 +36,6 @@ export default class TextBlock extends Component {
     }
 
     updateVal(field, val) {
-        console.log(field + ' ' + val);
         let content = this.state.content;
         content[field] = val;
         this.setState({

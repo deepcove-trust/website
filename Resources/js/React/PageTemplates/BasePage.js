@@ -56,8 +56,8 @@ export default class BasePage extends Component {
                 url: `${baseUri}/${this.state.pageId}/revision`,
                 data: {
                     reason: reason,
-                    TextComponents: JSON.stringify(this.state.page.textComponents),
-                    ImageComponents: {}
+                    textComponents: JSON.stringify(this.state.page.textComponents),
+                    imageComponents: {}
                 }
             }).done(() => {
                 this.setState({
