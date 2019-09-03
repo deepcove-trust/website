@@ -58,7 +58,8 @@ namespace Deepcove_Trust_Website.Models
 
         public bool Equals(CmsButton other)
         {
-            return Text == other.Text
+            return other != null
+                && Text == other.Text
                 && Href == other.Href
                 && Color == other.Color
                 && Align == other.Align;

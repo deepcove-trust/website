@@ -28,7 +28,8 @@ namespace Deepcove_Trust_Website.Models
 
         public bool Equals(TextComponent other)
         {
-            return SlotNo == other.SlotNo
+            return other != null
+                && SlotNo == other.SlotNo
                 && Heading == other.Heading
                 && Text == other.Text
                 && CmsButton == other.CmsButton;

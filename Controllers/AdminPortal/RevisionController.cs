@@ -129,10 +129,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 if (page == null)
                     return BadRequest("No page exists for given page ID");
 
-                List<TextComponent> textComponents =
+                List<TextComponent> newRevisionTextComponents =
                     request.Deserialize(typeof(List<TextComponent>), "textComponents");
                 
-                List<MediaComponent> mediaComponents = 
+                List<MediaComponent> newRevisionMediaComponents = 
                     request.Deserialize(typeof(List<MediaComponent>), "mediaComponents");
 
                 // Todo: Do this after the view has had template switching enabled
@@ -155,8 +155,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 var oldRevision = new
                 {
                     old.Template,
-                    TextComponents = old.RevisionTextComponents.Select(rtc => rtc.TextComponent).ToList(),
-                    MediaComponents = old.RevisionMediaComponents.Select(rmc => rmc.MediaComponent).ToList()
+                    TextComponents = old.RevisionTextComponents
+                    .Select(rtc => rtc.TextComponent)
+                    .OrderBy(tc => tc.SlotNo)
+                    .ToList(),
+
+                    MediaComponents = old.RevisionMediaComponents
+                    .Select(rmc => rmc.MediaComponent)
+                    .OrderBy(tc => tc.SlotNo)
+                    .ToList()
                 };
 
                 // Create the new page revision
@@ -173,26 +180,37 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 
                 for (int i = 0; i < newRevision.Template.TextAreas; i++)
                 {
-                    TextComponent textComponent = null;
+                    TextComponent textComponentToSave = null;
 
                     // Only save a new text component if it has changed
-                    if(!textComponents[i].Equals(oldRevision.TextComponents[i]))
+                    if(!newRevisionTextComponents[i].Equals(oldRevision.TextComponents[i]))
                     {
-                        textComponent = textComponents[i];
+                        textComponentToSave = newRevisionTextComponents[i];
 
                         // Set ID to 0 so that EF Core assigns us a new one
-                        textComponent.Id = 0;
+                        textComponentToSave.Id = 0;
 
-                        await _Db.AddAsync(textComponent);
+                        // Save a new button if the components button does not yet exist in database.
+                        if (textComponentToSave.CmsButton != null 
+                            && !textComponentToSave.CmsButton.Equals(oldRevision.TextComponents[i].CmsButton))
+                        {
+                            await _Db.AddAsync(textComponentToSave.CmsButton);
+                        }
+
+                        // Generate ID for the new TextComponent
+                        await _Db.AddAsync(textComponentToSave);
                     }
 
                     // Add association between component and new revision
                     await _Db.AddAsync(new RevisionTextComponent
                     {
-                        TextComponentId = textComponent?.Id ?? oldRevision.TextComponents[i].Id,
+                        // Use the new components ID if it exists, other use existing (unchanged) component
+                        // from previous revision
+                        TextComponentId = textComponentToSave?.Id ?? oldRevision.TextComponents[i].Id,
                         PageRevisionId = newRevision.Id
                     });
 
+                    // Save all changes in one transaction
                     await _Db.SaveChangesAsync();
                 }
 

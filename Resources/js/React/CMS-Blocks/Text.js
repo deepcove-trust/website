@@ -76,7 +76,7 @@ export default class TextBlock extends Component {
                     button={this.state.content.button}
                     settings={this.props.settings}
                     onSave={this.updateVal.bind(this)}
-                    onDelete={this.updateVal.bind(this, 'button')}
+                    onDelete={this.updateVal.bind(this, 'button', null)}
                 />
             </Fragment>
         )

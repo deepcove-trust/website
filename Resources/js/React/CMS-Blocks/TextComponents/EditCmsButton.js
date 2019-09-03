@@ -10,9 +10,9 @@ export default class EditCmsButton extends Component {
 
         this.state = {
             button: this.props.button || {
-                id: null,
-                align: "",
-                color: "",
+                id: 0,
+                align: "left",
+                color: "dark",
                 href: "",
                 text: ""
             }
@@ -20,7 +20,8 @@ export default class EditCmsButton extends Component {
     }
 
     editVal(field, value) {
-        let button = this.state.button;
+        console.log(field + ' ' + value);
+        let button =  this.state.button;
         button[field] = value;
         this.setState({
             button: button
@@ -47,12 +48,6 @@ export default class EditCmsButton extends Component {
                     Delete Button <i className="fas fa-exclmation-triangle text-danger" />
                 </a>
             )
-            buttonProps = {
-                text: this.state.button.text,
-                href: this.state.button.href,
-                color: this.state.button.color,
-                align: this.state.button.align,
-            };
         }
 
         return (
@@ -71,11 +66,11 @@ export default class EditCmsButton extends Component {
                     <div className="row text-left">
                         <div className="col-12">
                             <FormGroup label="Button Text: " required>
-                                <Input cb={this.editVal.bind(this, 'text')} type="text" value={buttonProps ? buttonProps.text : null} />
+                                <Input cb={this.editVal.bind(this, 'text')} type="text" value={this.state.button.text} />
                             </FormGroup>
 
                             <FormGroup label="URL: " required>
-                                <Input type="href" cb={this.editVal.bind(this, 'href')} value={buttonProps ? buttonProps.href : null} />
+                                <Input type="href" cb={this.editVal.bind(this, 'href')} value={this.state.button.href} />
                                 <p className="my-2">Or create a download link <span className="font-italic">(Coming Sooon!)</span></p>
                                 <Button className="btn btn-dark" disabled>
                                     Choose File <i className="fas fa-file-check" />
@@ -87,7 +82,7 @@ export default class EditCmsButton extends Component {
                             <FormGroup label="Select Color">
                                 <Select cb={this.editVal.bind(this, 'color')}
                                     options={this.props.settings.color}
-                                    selected={buttonProps ? buttonProps.color : null} />
+                                    selected={this.state.button.color} />
                             </FormGroup>
                         </div>
 
@@ -95,7 +90,7 @@ export default class EditCmsButton extends Component {
                             <FormGroup label="Alignment">
                                 <Select cb={this.editVal.bind(this, 'align')}
                                     options={this.props.settings.align}
-                                    selected={buttonProps ? buttonProps.align : null} />
+                                    selected={this.state.button.align} />
                             </FormGroup>
                         </div>
 
