@@ -10,7 +10,7 @@ export default class PageControls extends Component {
 
         if (!this.props.allowEdits)
             return (
-                <Button btnClass="btn btn-dark float-right" cb={this.props.editMode.bind(this, true)}>
+                <Button className="btn btn-dark float-right editPage" cb={this.props.editMode.bind(this, true)}>
                     Edit Page
                 </Button>
             );

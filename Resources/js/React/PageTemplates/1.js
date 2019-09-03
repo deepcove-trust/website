@@ -54,7 +54,7 @@ export default class ReactTemplate1 extends Component {
                     </div>
                 </div>
 
-                <div className="row">
+                <div className="row pt-2">
                     <div className="col-lg-6 col-md-12 pb-2">
                         <EmailForm config={this.props.data.otherComponents.captchaSiteKey}/>
                     </div>

@@ -225,3 +225,14 @@ html {
 .fade5sec {
     animation: fadein 3s linear;
 }
+
+/** Website Editor Buttons */
+.editPage {
+    position: absolute;
+    right: 20px;
+    z-index: 1000;
+}
+
+#react_template {
+    position: relative;
+}
