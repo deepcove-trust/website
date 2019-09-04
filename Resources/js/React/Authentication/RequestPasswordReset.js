@@ -70,7 +70,7 @@ export default class RequestPasswordReset extends Component {
         if (!this.state.emailSent) {
             btn_submit = (
                 <FormGroup>
-                    <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
+                    <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
                 </FormGroup>
             )
         }

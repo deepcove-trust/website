@@ -55,6 +55,35 @@ export class Checkbox extends Component {
     }
 }
 
+export class CKEditor extends Component {
+    constructor(props) {
+        super(props);
+        this.elementName = "editor_" + this.props.id;
+        this.componentDidMount = this.componentDidMount.bind(this);
+    }
+
+    render() {
+        return (
+            <textarea name={this.elementName} defaultValue={this.props.value}></textarea>
+        )
+    }
+
+    componentDidMount() {
+        let configuration = {
+            toolbar: "Basic"
+        };
+        CKEDITOR.replace(this.elementName, configuration);
+        CKEDITOR.instances[this.elementName].on("change", function () {
+            let data = CKEDITOR.instances[this.elementName].getData();
+            this.props.cb(data);
+        }.bind(this));
+    }
+
+    componentWillUnmount() {
+        CKEDITOR.instances[this.elementName].destroy();
+    }
+}
+
 export class FormGroup extends Component {
     render() {
         let label;
@@ -139,7 +168,7 @@ export class Input extends Component {
                 type={this.getType()}
                 className={this.props.inputClass || "form-control"}
                 name={this.props.name || null}
-                value={this.state.value}
+                value={this.state.value || ""}
                 placeholder={this.props.placeHolder || null}
                 autoComplete={this.getAutoComplete()}
                 disabled={!!this.props.disabled}
@@ -196,7 +225,7 @@ export class Select extends Component {
                 disabled={!!this.props.disabled}
                 readOnly={!!this.props.readOnly}
                 required={!!this.props.required}
-                value={this.props.selected}
+                value={this.props.selected || ""}
                 onChange={this.handleChange.bind(this)}
             >
                 {selectOptions}
@@ -264,7 +293,7 @@ export class TextArea extends Component {
                 <textarea id={this.props.id || null}
                     className={this.props.inputClass || "form-control"}
                     name={this.props.name || null}
-                    value={this.state.value || ''}
+                    value={this.state.value || ""}
                     placeholder={this.props.placeHolder || null}
                     autoComplete={this.getAutoComplete()}
                     rows={this.props.rows || false}

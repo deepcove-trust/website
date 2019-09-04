@@ -71,7 +71,7 @@ export default class Register extends Component {
                     {helperLabel}
 
                     <FormGroup>
-                        <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}>Create Account</Button>
+                        <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}>Create Account</Button>
                     </FormGroup>
                 </form>
             </div>

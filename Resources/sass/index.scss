@@ -29,6 +29,9 @@ body {
     background-color: rgba(254, 254, 254, 0.7);
     padding: 0px;
 }
+.alert {
+    border-radius: 0px;
+}
 
 .alert-cookies {
     margin-bottom: 0;
@@ -60,6 +63,7 @@ a.navbar-brand {
 .card {
     border: none;
     box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    border-radius: 0px;
 }
 
 .form-group > label.required:after{
@@ -93,6 +97,10 @@ button[disabled]{
 
 .btn-confirm > span {
     display: none;
+}
+
+.btn {
+    border-radius: 0px;
 }
 
 /* Sticky footer styles
@@ -216,4 +224,25 @@ html {
 
 .fade5sec {
     animation: fadein 3s linear;
+}
+
+/** Website Editor Buttons */
+.editPage {
+    position: absolute;
+    right: 20px;
+    z-index: 1000;
+}
+
+#react_template {
+    position: relative;
+}
+
+a[href^="tel:"] {
+    color: black;
+    text-decoration: none;
+}
+
+a[href^="mailto:"] {
+    color: black;
+    text-decoration: none;
 }

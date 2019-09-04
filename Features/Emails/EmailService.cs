@@ -6,8 +6,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Data;
 using Deepcove_Trust_Website.Features.RazorRender;
+using Deepcove_Trust_Website.Views.Emails.Models;
+using Microsoft.AspNetCore.Http;
 using MailKit.Net.Smtp;
 using MimeKit;
+
 
 namespace Deepcove_Trust_Website.Features.Emails
 {
@@ -25,7 +28,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             _Logger = logger;
             _Db = db;
         }
-
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         public async Task SendEmailAsync(EmailContact sender, EmailContact recipient, string subject, string message)
         {
             try
@@ -112,9 +115,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             if (CcRecipients != null)
             {
                 foreach (EmailContact recipient in CcRecipients)
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     SendEmailAsync(Sender, recipient, $"FWD: {subject}", message);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
         }
 
@@ -139,10 +140,35 @@ namespace Deepcove_Trust_Website.Features.Emails
             if (CcRecipients != null)
             {
                 foreach (EmailContact recipient in CcRecipients)
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                     SendEmailAsync(Sender, recipient, $"FWD: {subject}", message);
-#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
         }
+
+        public async Task SendExceptionEmailAsync(Exception ex, HttpContext context)
+        {
+            List<EmailContact> Developers = await _Db.NotificationChannels.Where(c => c.Name == "Developer Exceptions")
+                .Select(s => s.ChannelMemberships
+                    .Select(s1 => new EmailContact
+                    {
+                        Name = s1.Account.Name,
+                        Address = s1.Account.Email
+                    }).ToList()
+                ).FirstOrDefaultAsync();
+
+            if(Developers != null)
+            {
+                foreach (EmailContact dev in Developers)
+                    //SendEmailAsync(null, dev, "Woops, something went wrong!", ex.Message);
+                    try
+                    {
+                        SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context));
+                    }
+                    catch(Exception exa) {
+                        Console.WriteLine(exa.Message);
+                    }
+                    
+            }
+        }
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 }

@@ -3,5 +3,6 @@
     public class PasswordReset : _EmailLayout
     {
         public string Token { get; set; }
+        public string Email { get; set; }
     }
 }

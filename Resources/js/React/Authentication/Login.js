@@ -12,20 +12,22 @@ export default class Login extends Component {
 
         this.state = {
             loginFailed: false,
-            loginPending: false
+            loginPending: false,
+            returnUrl: ""
         }
     }
 
     attemptLogin(e) {
-        e.preventDefault();
-
+        e.preventDefault();        
         this.setState({
             loginPending: true
         });
 
+        let queryString = !!this.state.returnUrl ? `?ReturnUrl=${this.state.returnUrl}` : '';
+
         $.ajax({
             type: 'post',
-            url: `${baseUri}`,
+            url: `${baseUri}${queryString}`,
             data: $("form").serialize()
         }).done((url) => {
             window.location.replace(url);
@@ -37,6 +39,14 @@ export default class Login extends Component {
 
             console.error(`[Login@attemptLogin] Error logging in: `, err.responseText);
         })
+    }
+    componentDidMount() {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('ReturnUrl')) {
+            this.setState({
+                returnUrl: urlParams.get('ReturnUrl')
+            });
+        }
     }
 
     render() {
@@ -66,7 +76,7 @@ export default class Login extends Component {
                     {loginFailed}
 
                     <FormGroup>
-                        <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
+                        <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
                     </FormGroup>
 
                     <a className="forgot" href="/reset-password">Forgot your email or password?</a>

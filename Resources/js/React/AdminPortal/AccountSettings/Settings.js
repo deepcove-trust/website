@@ -101,7 +101,7 @@ export default class Settings extends Component {
                         />
                     </FormGroup>
 
-                    <Button btnClass="btn btn-primary mt-4" pending={this.state.requestPending} type="submit">Update Settings</Button>
+                    <Button className="btn btn-primary mt-4" pending={this.state.requestPending} type="submit">Update Settings</Button>
                 </form>
             </Fragment>
         )

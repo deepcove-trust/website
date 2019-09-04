@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,9 @@ namespace Deepcove_Trust_Website.Helpers
             return x;
         }
 
+        public static dynamic Deserialize(this IFormCollection request, Type type, string key) => 
+            JsonConvert.DeserializeObject(request.Str(key), type);
+
         /// <summary>
         /// Returns the value of a post field as a boolean.
         /// </summary>
@@ -74,5 +78,7 @@ namespace Deepcove_Trust_Website.Helpers
         /// </summary>
         /// <returns></returns>
         public static Uri BaseUrl(this HttpRequest request) => new Uri($"{request.Scheme}://{request.Host}");
+
+        public static bool EqualsIgnoreCase(this string s, string other) => s.ToLower() == other.ToLower();
     }
 }

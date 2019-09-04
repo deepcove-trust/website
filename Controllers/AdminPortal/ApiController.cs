@@ -88,6 +88,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             }
             catch (Exception ex)
             {
+                _Logger.LogError("Error validating page name {0}: {1}", request.Str("name"), ex.Message);
+                _Logger.LogError(ex.StackTrace);
                 return BadRequest("We were unable to validate your page name, please wait 60 seconds and try again.");
             }
             
