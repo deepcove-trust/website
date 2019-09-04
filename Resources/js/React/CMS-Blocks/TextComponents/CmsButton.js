@@ -34,11 +34,13 @@ export default class CmsButton extends Component {
             );
         }
 
+        let target;
         let linkText = this.props.button.text;
         if (isExternalUrl(this.props.button.href)) {
+            target = '_blank';
             linkText = (
                 <Fragment>
-                    {`${this.props.button.text}  `}
+                    {`${this.props.button.text}`} &nbsp;
                     <i className="fas fa-external-link-alt" />
                 </Fragment>
             );
@@ -47,6 +49,7 @@ export default class CmsButton extends Component {
             <BtnGroup className={`d-block ${this.align()} mt-2`}>
                 <Link className={`btn btn-sm ${this.props.button.align == 'block' ? 'btn-block mb-1' : ''} ${this.color()}`}
                     href={this.props.button.href}
+                    target={target}
                 >
                     {linkText}
                 </Link>

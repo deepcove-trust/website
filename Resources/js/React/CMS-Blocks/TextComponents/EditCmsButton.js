@@ -2,6 +2,7 @@
 import { FormGroup, Input, Select } from '../../Components/FormControl';
 import { Button } from '../../Components/Button';
 import { Modal } from '../../Components/Modal';
+import { isExternalUrl } from '../../../helpers';
 import $ from 'jquery';
 
 export default class EditCmsButton extends Component {
@@ -52,6 +53,15 @@ export default class EditCmsButton extends Component {
             )
         }
 
+        let externalIcon;
+        if (this.state.button) {
+            if (isExternalUrl(this.state.button.href)) {
+                externalIcon = (
+                    <i className="fas fa-external-link-alt" />
+                    )
+            }
+        }
+
         return (
             <Fragment>
                 <div className="dropdown d-inline ml-1">
@@ -100,7 +110,10 @@ export default class EditCmsButton extends Component {
 
                             <div className="col-9 text-center px-3">
                                 <p className="mt-2 float-left">Preview &nbsp; &nbsp;</p>
-                                <Button className={`btn btn-${this.state.button.color}`}>{this.state.button.text}</Button>
+                                <Button className={`btn btn-${this.state.button.color}`}>
+                                    {this.state.button.text} &nbsp;
+                                    {externalIcon}
+                                </Button>
                             </div>
 
                             <div className="col-3 text-right">
