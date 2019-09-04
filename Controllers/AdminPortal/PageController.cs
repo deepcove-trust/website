@@ -175,6 +175,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 .Where(c => c.Id == pageId)
                 .Select(s => new
                 {
+                    s.Id,
                     s.Name,
                     s.Description,
                     s.Section

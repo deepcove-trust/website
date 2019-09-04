@@ -45,7 +45,7 @@ export default class CmsButton extends Component {
         }
         return (
             <BtnGroup className={`d-block ${this.align()} mt-2`}>
-                <Link className={`btn btn-sm ${this.props.button.align == 'block' ? 'btn-block' : ''} ${this.color()}`}
+                <Link className={`btn btn-sm ${this.props.button.align == 'block' ? 'btn-block mb-1' : ''} ${this.color()}`}
                     href={this.props.button.href}
                 >
                     {linkText}

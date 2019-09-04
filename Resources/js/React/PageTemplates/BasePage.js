@@ -7,8 +7,8 @@ import $ from 'jQuery';
 
 const baseUri = `/api/pages`;
 const components = {
-    0: ReactTemplate1,
-    1: ReactTemplate2
+    1: ReactTemplate1,
+    2: ReactTemplate2
 }
 
 export default class BasePage extends Component {

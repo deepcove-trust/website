@@ -1,13 +1,13 @@
 [
   {
-    "Id":  0,
+    "Id":  1,
     "Name": "Contact Us",
     "Description": "A contact us layout that features three text areas, an email form and Google Maps integration.",
     "TextAreas": 3,
     "MediaAreas": 0
   },
   {
-    "Id":  1,
+    "Id":  2,
     "Name": "Feature Page",
     "Description": "A clean two column layout with a feature image.",
     "TextAreas": 2,
