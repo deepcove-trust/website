@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Models;
 using System.Threading.Tasks;
 using System.Threading;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Deepcove_Trust_Website.Data
 {
@@ -19,6 +21,10 @@ namespace Deepcove_Trust_Website.Data
         public DbSet<PageTemplate> PageTemplates { get; set; }
         public DbSet<SystemSettings> SystemSettings { get; set; }
         public DbSet<NotificationChannel> NotificationChannels { get; set; }
+        public DbSet<BaseMedia> Media { get; set; }
+        public DbSet<ImageMedia> ImageMedia { get; set; }
+        public DbSet<AudioMedia> AudioMedia { get; set; }
+        public DbSet<GeneralMedia> GeneralMedia { get; set; }
 
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
@@ -87,6 +93,11 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<CmsButton>().Property(p => p.Align).HasConversion(c => (int)c, c => (Align)c);
             modelBuilder.Entity<CmsButton>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
             // End Enum Conversions
+
+            // Other conversions
+            modelBuilder.Entity<ImageMedia>().Property(p => p.Filenames)
+                .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<Dictionary<string, string>>(c));
+            // End other conversions
 
             // Define keys for junction tables
             modelBuilder.Entity<ChannelMembership>()
