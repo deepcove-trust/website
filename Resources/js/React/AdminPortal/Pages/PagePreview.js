@@ -67,7 +67,7 @@ class DeletePage extends Component {
 
     render() {
         return (
-            <ConfirmModal btnClass="btn btn-outline-danger btn-block"
+            <ConfirmModal className="btn btn-outline-danger btn-block"
                 question="delete page"
                 explanation="This action cannot be undone, all information will be lost"
                 actionText="YES Delete Page!"

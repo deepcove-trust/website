@@ -66,7 +66,7 @@ export default class SelectTemplate extends Component {
                     {templates}
 
                     <div className="col-12">
-                        <Button btnClass="btn btn-info float-left" cb={this.props.goBack.bind(this, 1)}>
+                        <Button className="btn btn-info float-left" cb={this.props.goBack.bind(this, 1)}>
                             <i className="far fa-arrow-circle-left"></i> Back
                         </Button>
                     </div>
@@ -81,20 +81,20 @@ class Template extends Component {
         let button; 
         if (!this.props.active) {
             button = (
-                <Button btnClass="btn btn-info d-block mx-auto" cb={this.props.cb.bind(this, this.props.template)}>
+                <Button className="btn btn-info d-block mx-auto" cb={this.props.cb.bind(this, this.props.template)}>
                     Use this template <i className="fas fa-check"></i>
                 </Button>
             )
         } else if (this.props.active && this.props.active.id == this.props.template.id) {
             button = (
-                <Button btnClass="btn btn-success d-block mx-auto" cb={this.props.cb.bind(this, this.props.template)}>
+                <Button className="btn btn-success d-block mx-auto" cb={this.props.cb.bind(this, this.props.template)}>
                     Keep this template <i className="fas fa-check"></i>
                 </Button>
             );
         } else {
             let html = <ModalMessage active={this.props.active} template={this.props.template} />;
             button = (
-                <ConfirmModal btnClass="btn btn-info d-block mx-auto" question="change template" actionText="Yes, Change my Template" explanation={html} cb={this.props.cb.bind(this, this.props.template)}>
+                <ConfirmModal className="btn btn-info d-block mx-auto" question="change template" actionText="Yes, Change my Template" explanation={html} cb={this.props.cb.bind(this, this.props.template)}>
                     Use This Template <i className="fas fa-exclamation-circle"></i>
                 </ConfirmModal>
             );

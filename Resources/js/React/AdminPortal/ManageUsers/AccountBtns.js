@@ -41,7 +41,7 @@ export class DeleteUser extends Component {
 
     render() {
         return (
-            <ConfirmButton btnClass="btn btn-danger mt-3 mx-1" cb={this.DeleteUser.bind(this)} pending={this.state.requestPending}>
+            <ConfirmButton className="btn btn-danger mt-3 mx-1" cb={this.DeleteUser.bind(this)} pending={this.state.requestPending}>
                 Delete User <i className="fas fa-user-times"></i>
             </ConfirmButton>
         )
@@ -82,7 +82,7 @@ export class ResetPassword extends Component {
 
     render() {
         return (
-            <ConfirmButton btnClass="btn btn-dark mt-3 mx-1" cb={this.ResetPassword.bind(this)} pending={this.state.requestPending}>
+            <ConfirmButton className="btn btn-dark mt-3 mx-1" cb={this.ResetPassword.bind(this)} pending={this.state.requestPending}>
                 Reset Password <i className="fas fa-user-lock"></i>
             </ConfirmButton>
         )
@@ -94,18 +94,18 @@ export class EditButtons extends Component {
         let buttons;
         if (this.props.mode == Mode.View) {
             buttons = (
-                <Button btnClass="btn btn-info btn-sm" cb={this.props.setModeCb.bind(this, Mode.Edit)}>
+                <Button className="btn btn-info btn-sm" cb={this.props.setModeCb.bind(this, Mode.Edit)}>
                     Edit <i className="fas fa-pencil"></i>
                 </Button>
             )
         } else {
             buttons = (
                 <div role="group" class="btn-group btn-group-sm">
-                    <Button btnClass="btn btn-danger" cb={this.props.cancelCb.bind(this)}>
+                    <Button className="btn btn-danger" cb={this.props.cancelCb.bind(this)}>
                         Cancel <i className="fas fa-times"></i>
                     </Button>
 
-                    <Button btnClass="btn btn-success" cb={this.props.updateCb.bind(this)}>
+                    <Button className="btn btn-success" cb={this.props.updateCb.bind(this)}>
                         Save <i className="fas fa-check"></i>
                     </Button>
                 </div>

@@ -76,7 +76,7 @@ export default class Login extends Component {
                     {loginFailed}
 
                     <FormGroup>
-                        <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
+                        <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
                     </FormGroup>
 
                     <a className="forgot" href="/reset-password">Forgot your email or password?</a>

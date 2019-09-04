@@ -56,11 +56,11 @@ export class Section extends Component {
         if (this.state.value != this.props.section.title) {
             actions = (
                 <BtnGroup size="sm" className='float-right pb-2'>
-                    <ConfirmButton btnClass="btn btn-danger" cb={this.cancelChange.bind(this)}>
+                    <ConfirmButton className="btn btn-danger" cb={this.cancelChange.bind(this)}>
                         Cancel <i className="fas fa-times"></i>
                     </ConfirmButton>
 
-                    <ConfirmButton btnClass="btn btn-success" cb={this.saveChange.bind(this, this.props.sectionId)}>
+                    <ConfirmButton className="btn btn-success" cb={this.saveChange.bind(this, this.props.sectionId)}>
                         Save <i className="fas fa-check"></i>
                     </ConfirmButton>
                 </BtnGroup >

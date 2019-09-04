@@ -107,7 +107,7 @@ export default class PageMeta extends Component {
                     </div>
 
                     <div className="col-12">
-                        <Button btnClass="btn btn-dark float-right" type="submit" disabled={!!this.state.errorText}>
+                        <Button className="btn btn-dark float-right" type="submit" disabled={!!this.state.errorText}>
                             {btnText}
                         </Button>
                     </div>

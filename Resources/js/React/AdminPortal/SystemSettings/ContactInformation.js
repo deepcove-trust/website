@@ -120,7 +120,7 @@ export default class ContactInformation extends Component {
                     />
 
                     <FormGroup label="&#8291;">
-                        <Button btnClass="btn btn-primary d-block" type="submit" pending={this.state.requestPending}>
+                        <Button className="btn btn-primary d-block" type="submit" pending={this.state.requestPending}>
                             Update Settings <i className="fas fa-check-circle"></i>
                         </Button>
                     </FormGroup>

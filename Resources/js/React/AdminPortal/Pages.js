@@ -54,7 +54,7 @@ export default class Pages extends Component {
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Pages</h1>
-                    <Link btnClass="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
+                    <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
                         New Page <i className="fas fa-file-plus"></i>
                     </Link>
                 </div>
