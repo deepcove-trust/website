@@ -67,4 +67,9 @@
     <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Resources\js\React\AdminPortal\ManageMedia\" />
+  </ItemGroup>
+
 </Project>
