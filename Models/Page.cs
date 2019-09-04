@@ -20,8 +20,7 @@ namespace Deepcove_Trust_Website.Models
         public Section Section { get; set; }
         public QuickLinkSection QuickLink { get; set; }
 
-        // Navigation Properties
-        public Template Template { get; set; }
+        // Navigation Properties        
         public List<PageRevision> PageRevisions { get; set; }
         // End Navigation Properties
 

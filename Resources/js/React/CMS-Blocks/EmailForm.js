@@ -48,17 +48,7 @@ class Form extends Component {
                 message: null,
                 code: null,
                 sendToBookings: false
-            },
-            key: false,
-        }
-    }
-
-
-    componentDidUpdate() {
-        if (!!this.props.config && !this.state.key) {
-            this.setState({
-                key: true
-            });
+            }
         }
     }
 
@@ -96,10 +86,6 @@ class Form extends Component {
         });
     }
 
-    hitMe(f, v) {
-        console.log(`f ${f} : v ${v}`)
-    }
-
     verify(e) {
         if (!!e) {
             let mail = this.state.mail;
@@ -121,10 +107,6 @@ class Form extends Component {
     }
 
     render() {
-        if (!this.state.key)
-            return <i className="fad fa-spinner-third"></i>
-
-
         let errorText;
         if (!!this.state.errText)
             errorText = <small className="text-danger d-block pb-2">{this.state.errText}</small>

@@ -114,7 +114,7 @@ export default class ResetPassword extends Component {
                     {requestFailed}
 
                     <FormGroup>
-                        <Button btnClass={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
+                        <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}> Reset My Password</Button>
                     </FormGroup>
                 </form>
             </div>

@@ -41,6 +41,10 @@
     <Compile Remove="Migrations\20190821095454_update settings table.Designer.cs" />
     <Compile Remove="Migrations\20190822014112_Update Site Setings.cs" />
     <Compile Remove="Migrations\20190822014112_Update Site Setings.Designer.cs" />
+    <Compile Remove="Migrations\20190824091417_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190824091417_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190831040050_Initial.cs" />
+    <Compile Remove="Migrations\20190831040050_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,53 +53,6 @@
 
   <ItemGroup>
     <None Include="Data\Seeds\SystemSettings.json" />
-    <None Include="wwwroot\ckeditor\adapters\jquery.js" />
-    <None Include="wwwroot\ckeditor\build-config.js" />
-    <None Include="wwwroot\ckeditor\CHANGES.md" />
-    <None Include="wwwroot\ckeditor\ckeditor.js" />
-    <None Include="wwwroot\ckeditor\config.js" />
-    <None Include="wwwroot\ckeditor\contents.css" />
-    <None Include="wwwroot\ckeditor\lang\en.js" />
-    <None Include="wwwroot\ckeditor\LICENSE.md" />
-    <None Include="wwwroot\ckeditor\plugins\a11yhelp\dialogs\a11yhelp.js" />
-    <None Include="wwwroot\ckeditor\plugins\a11yhelp\dialogs\lang\en-gb.js" />
-    <None Include="wwwroot\ckeditor\plugins\a11yhelp\dialogs\lang\_translationstatus.txt" />
-    <None Include="wwwroot\ckeditor\plugins\clipboard\dialogs\paste.js" />
-    <None Include="wwwroot\ckeditor\plugins\dialog\dialogDefinition.js" />
-    <None Include="wwwroot\ckeditor\plugins\icons.png" />
-    <None Include="wwwroot\ckeditor\plugins\icons_hidpi.png" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\CHANGELOG.md" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\dialogs\dialog.css" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\dialogs\options.js" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\dialogs\toolbar.css" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\LICENSE.md" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\README.md" />
-    <None Include="wwwroot\ckeditor\plugins\scayt\skins\moono-lisa\scayt.css" />
-    <None Include="wwwroot\ckeditor\README.md" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\dialog.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\dialog_ie.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\dialog_ie8.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\dialog_iequirks.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\editor.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\editor_gecko.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\editor_ie.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\editor_ie8.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\editor_iequirks.css" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\icons.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\icons_hidpi.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\arrow.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\close.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\hidpi\close.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\hidpi\lock-open.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\hidpi\lock.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\hidpi\refresh.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\lock-open.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\lock.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\refresh.png" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\images\spinner.gif" />
-    <None Include="wwwroot\ckeditor\skins\moono-lisa\readme.md" />
-    <None Include="wwwroot\ckeditor\styles.js" />
-    <None Include="wwwroot\ckeditor\vendor\promise.js" />
   </ItemGroup>
 
 
@@ -108,11 +65,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

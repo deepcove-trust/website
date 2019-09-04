@@ -2,11 +2,8 @@
     var RouteData = ViewContext.RouteData;
     string RouteArea = RouteData.Values.ContainsKey("area") ? RouteData.Values["area"].ToString() : "";
 
-    string description = "The Deep Cove Outdoor Education Trust is a non-profit organisation that was established in 1971. Facilities provided by the trust include a 50 bed Hostel, Lodge, Apartments, Satellite Internet & a boat ramp.";
-    if(ViewData.ContainsKey("Description") && !string.IsNullOrEmpty(ViewData["Description"].ToString()))
-    {
-        description = ViewData["Description"].ToString();
-    }
+    string description = ViewData["Description"]?.ToString() ?? "The Deep Cove Outdoor Education Trust is a non-profit organisation that was established in 1971. Facilities provided by the trust include a 50 bed Hostel, Lodge, Apartments, Satellite Internet & a boat ramp.";
+
 }
 @using Deepcove_Trust_Website.Features.RazorRender
 @inject WebSettingsService Settings

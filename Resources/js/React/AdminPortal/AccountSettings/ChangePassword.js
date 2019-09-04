@@ -114,7 +114,7 @@ export default class ChangePassword extends Component {
                     <small className="text-danger d-block">{this.state.requestFailed}</small>
                 </FormGroup>   
 
-                <Button btnClass="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
+                <Button className="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
             </form>
         )
     }

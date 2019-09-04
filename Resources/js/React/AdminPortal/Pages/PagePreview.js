@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import PreviewCard from './PreviewCard';
-import { Button, ConfirmModal, Link } from '../../Components/Button';
-import { ToggleVisibility } from '../../CMS-Blocks/PageMast';
+import { ConfirmModal, Link } from '../../Components/Button';
+import { ToggleVisibility, ViewPage, EditPageSettings } from '../../PageTemplates/PageControlButtons';
 import $ from 'jquery';
 
 export default class PagePreview extends Component {
@@ -23,28 +23,27 @@ export default class PagePreview extends Component {
                 <hr />
 
                 <div className="row">
-                    <div className="col-md-6 col-sm-12 pb-1">
-                        <Link btnClass="btn-info btn-block" href={`/${this.props.page.absoluteUrl}`}>
-                            View Page
-                        </Link>
+                    <div className="col-md-6 col-sm-12 pb-2 px-1">
+                        <ViewPage href={`/${this.props.page.absoluteUrl}`} />
                     </div>
 
-                    <div className="col-md-6 col-sm-12 pb-1">
-                        <Button btnClass="btn btn-info btn-block">
-                            Edit Meta <i className="fas fa-pencil" />
-                        </Button>
+                    <div className="col-md-6 col-sm-12 pb-2 px-1">
+                        <EditPageSettings pageId={this.props.page.id} />
                     </div>
 
-                    <div className="col-md-6 col-sm-12 pb-1">
+                    <div className="col-md-6 col-sm-12 pb-2 px-1">
+
                         <ToggleVisibility page={this.props.page}
-                            baseUri={`/api/page`}
-                            block={true}
+                            className="btn btn-outline-dark btn-block"
+                            public={this.props.page.public}
+                            pageId={this.props.page.id}
                             u={this.props.u}
                         />
                     </div>
 
-                    <div className="col-md-6 col-sm-12 pb-1">
+                    <div className="col-md-6 col-sm-12 px-1">
                         <DeletePage page={this.props.page}
+                            className="btn btn-outline-dark btn-block"
                             u={this.props.u} />
                     </div>
                 </div>
@@ -68,14 +67,14 @@ class DeletePage extends Component {
 
     render() {
         return (
-            <ConfirmModal btnClass="btn btn-danger btn-block"
+            <ConfirmModal className="btn btn-outline-danger btn-block"
                 question="delete page"
                 explanation="This action cannot be undone, all information will be lost"
                 actionText="YES Delete Page!"
                 confirmPhrase={this.props.page.name}
                 cb={this.deletePage.bind(this)}
             >
-                Delete Page <i className="fas fa-trash"></i>
+                Delete <i className="fas fa-exclamation-triangle"></i>
             </ConfirmModal>
         )
     }
