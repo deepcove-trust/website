@@ -26,17 +26,24 @@ export default class ManageMedia extends Component {
     render() {
         const Template = sections[this.state.tab];
 
+        let uploadBtn;
+        if (this.state.tab != 3) {
+            uploadBtn = (
+                <Button className="btn btn-dark  float-right" cb={() => this.setState({
+                        tab: 3
+                    })
+                }>
+                    Upload File <i className="fas fa-upload"></i>
+                </Button>    
+            )
+        }
+
         return (
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Media Center</h1>
 
-                    <Button className="btn btn-dark  float-right" cb={() => this.setState({
-                            tab: 3
-                        })
-                    }>
-                        Upload File <i className="fas fa-upload"></i>
-                    </Button>
+                    {uploadBtn}
                 </div>
 
                 <div className="col-12 fade1sec">
