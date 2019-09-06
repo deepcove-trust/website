@@ -246,3 +246,30 @@ a[href^="mailto:"] {
     color: black;
     text-decoration: none;
 }
+
+/* UPLOAD STUFF HERE */
+.dragable-container{
+    margin-left:20px;
+    margin-right:20px;
+}
+
+.dragable-container > div:hover {
+    background-color: rgba(128, 128, 128, 0.18);
+    transition: 0.55s;
+}
+
+p.fileuploader {
+    border: dashed thin !important;
+    padding: 90px 0px 90px 0px;
+    text-align: center;
+}
+
+.fileuploader input[type="file"] {
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+    color: transparent;
+    opacity: 0;
+}

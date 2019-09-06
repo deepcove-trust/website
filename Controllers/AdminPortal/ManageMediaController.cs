@@ -59,7 +59,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         /// saves smaller copies if the file is an image.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile file, IFormCollection request)
+        public async Task<IActionResult> Index(IFormFile file, IFormCollection request)
         {
             throw new NotImplementedException();
         }
