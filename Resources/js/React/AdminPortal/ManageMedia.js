@@ -41,7 +41,7 @@ export default class ManageMedia extends Component {
         return (
             <div className="row">
                 <div className="col-12">
-                    <h1 className="text-center">Media Center</h1>
+                    <h1 className="text-center">Media Centre</h1>
 
                     {uploadBtn}
                 </div>
