@@ -8,7 +8,7 @@ export default class CropImage extends Component {
         super(props);
 
         this.state = {
-            src: URL.createObjectURL(this.props.image),
+            src: this.props.image,
             crop: {
                 unit: 'px',
                 x: 0,
@@ -22,12 +22,20 @@ export default class CropImage extends Component {
         this.setState({crop})
     }
 
-    convertSize(v) {        
-        if (!!v || v == 0) return 'n/a';
+    convertSize(bytes) {        
+        if (!bytes || bytes == 0) return 'n/a';
 
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+        return Math.round(bytes / Math.pow(1024, i), 2).toFixed(2) + ' ' + sizes[i];
+    }
+
+    fileDimensions(file) {
+        if (!file.height || !file.width) {
+            return 'N/A';
+        }
+
+        return `${file.height.toFixed(0)}x${this.state.crop.width.toFixed(0)} px`;
     }
 
     render() {
@@ -37,14 +45,16 @@ export default class CropImage extends Component {
                     <Button className="btn btn-dark" cb={this.props.cb.bind(this, null, false)}>
                         Go Back <i className="far fa-undo" />
                     </Button>
-                    <Button className="btn btn-dark float-right">
+                    <Button className="btn btn-dark float-right" cb={this.props.cb.bind(this, this.state.src, true, null)}>
                         Upload Without Cropping <i className="fas fa-upload"/>
                     </Button>
                 </div>
+
                 <div className="col-lg-8 col-md-10 col-sm-12 text-center" style={{ 'position': 'relative' }}>
                     <div style={{ 'position': 'absoulte', 'left': '0px', 'top': '0px', 'width': '100%', 'backgroundColor': 'rgba(34, 75, 102, 0.07)' }}>
                         <ReactCrop crop={this.state.crop}
-                            src={this.state.src}
+                            src={this.state.src.file}
+                            ruleOfThirds={true}
                             onChange={this.onCrop.bind(this)}
                         />
                     </div>
@@ -71,12 +81,12 @@ export default class CropImage extends Component {
                                 <tbody>
                                     <tr>
                                         <td>Dimensions</td>
-                                        <td>HxW px</td>
-                                        <td>{this.state.crop.height}x{this.state.crop.width} px</td>
+                                        <td></td>
+                                        <td>{this.fileDimensions(this.state.crop)}</td>
                                     </tr>
                                     <tr>
                                         <td>File Size</td>
-                                        <td></td>
+                                        <td>{this.convertSize(this.props.image.size)}</td>
                                         <td></td>
                                     </tr>
                                 </tbody>
@@ -84,7 +94,13 @@ export default class CropImage extends Component {
                         </div>
 
 
-                        <Button className="btn btn-success d-block mx-auto">
+                        <Button className="btn btn-success d-block mx-auto" cb={this.props.cb.bind(this, this.state.src, true, {
+                                X: this.state.crop.x,
+                                Y: this.state.crop.y,
+                                Height: this.state.crop.height,
+                                Width: this.state.crop.width,
+                            })
+                        }>
                             Crop and Upload <i className="far fa-crop" />
                         </Button>
                     </Panel>

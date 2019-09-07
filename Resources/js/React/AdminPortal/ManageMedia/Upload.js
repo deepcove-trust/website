@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import CropImage from './UploadWidget/CropImage';
 import SelectFile from './UploadWidget/SelectFile';
+import UploadFile from './UploadWidget/UploadFile';
 
 import _ from 'lodash';
 import $ from 'jquery';
@@ -11,7 +12,8 @@ export default class Upload extends Component {
 
         this.state = {
             file: null,
-            triggerUpload: false
+            triggerUpload: false,
+            cropData: null
         }
     }
 
@@ -19,23 +21,29 @@ export default class Upload extends Component {
         console.log(evt.target.files[0])
     }
 
-    updateState(file, triggerUpload) {
-        console.log(null, file, triggerUpload)
-        this.setState({ file, triggerUpload });
+    updateState(file, triggerUpload, cropData) {
+        this.setState({ file, triggerUpload, cropData });
     }
 
     render() {
-        let View;
+        let View = <p>Something went wrong, please refresh your page</p>
         if (!this.state.file) {
             View = (
                 <SelectFile cb={this.updateState.bind(this)} />
-            )
+            );
         } else if (this.state.file && this.state.triggerUpload) {
-            View = <p>It's UPLOADTIME</p>;//Upload Component
+            View = (
+                <UploadFile src={this.state.file}
+                    cropData={this.state.cropData}
+                    cb={this.updateState.bind(this)}
+                />
+            );
         } else if (this.state.file && !this.state.triggerUpload) {
-            View = <CropImage image={this.state.file} cb={this.updateState.bind(this)} />
-        } else {
-            View = <p>Something went wrong, please refresh your page</p>
+            View = (
+                <CropImage image={this.state.file}
+                    cb={this.updateState.bind(this)}
+                />
+            );
         }
 
         return (

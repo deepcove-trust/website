@@ -9,9 +9,9 @@ namespace Deepcove_Trust_Website.Models.ArgumentModels
     public class CropArguments
     {
         [Required]
-        public double TopLeftX { get; set; }
+        public double X { get; set; }
         [Required]
-        public double TopLeftY { get; set; }
+        public double Y { get; set; }
         [Required]
         public double Height { get; set; }
         [Required]

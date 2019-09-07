@@ -2,15 +2,47 @@
 import { Button } from '../../../Components/Button';
 import ReactTooltip from 'react-tooltip'
 
+const allowTypes = ["image/jpg", "image/png", "audio/mp3", "audio/wav", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".ppxt"];
+const maxSize = 3000000;//3Mb in Bytes 
+
 export default class SelectFile extends Component {
+
     imageSelected(evt) {
         evt.preventDefault();
         evt.stopPropagation();
 
-        this.props.cb(
-            evt.target.files[0],
-            !evt.target.files[0].type.includes("image/")
-        )
+        var file = this.validateFileSize(evt.target.files[0]);
+        if (!file) return;
+
+        const FR = new FileReader();
+        FR.addEventListener("load", () => {
+            this.props.cb(
+                {
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    lastModified: file.lastModified,
+                    file: FR.result
+                },
+                !file.type.includes("image/"),
+                null
+            );
+        }, false)
+
+        FR.readAsDataURL(file);
+
+        //this.props.cb(file, !file.type.includes("image/"));
+    }
+
+    validateFileSize(file) {
+        if (!file) return;
+        // Block files that are too large
+        if (file.size > maxSize) {
+            alert(`${file.name} is too big. The maximum file size is ${maxSize / 1000000}MB`);
+            return null;
+        }
+
+        return file;
     }
 
     render() {
@@ -26,7 +58,7 @@ export default class SelectFile extends Component {
                                 </p>
 
                                 <input type="file"
-                                    accept="image/jpg,image/png,audio/mp3,audio/wav,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+                                    accept={allowTypes}
                                     onChange={this.imageSelected.bind(this)}
                                     ref={(x) => this.fileInput = x}
                                 />
