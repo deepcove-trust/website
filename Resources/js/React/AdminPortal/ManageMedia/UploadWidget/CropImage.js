@@ -94,7 +94,9 @@ export default class CropImage extends Component {
                         </div>
 
 
-                        <Button className="btn btn-success d-block mx-auto" cb={this.props.cb.bind(this, this.state.src, true, {
+                        <Button className="btn btn-success d-block mx-auto"
+                            disabled={this.state.crop.height == 0 && this.state.crop.width == 0}
+                            cb={this.props.cb.bind(this, this.state.src, true, {
                                 X: this.state.crop.x,
                                 Y: this.state.crop.y,
                                 Height: this.state.crop.height,

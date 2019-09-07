@@ -36,6 +36,7 @@ export default class Upload extends Component {
                 <UploadFile src={this.state.file}
                     cropData={this.state.cropData}
                     cb={this.updateState.bind(this)}
+                    done={this.props.setTab.bind(this, 1)}
                 />
             );
         } else if (this.state.file && !this.state.triggerUpload) {

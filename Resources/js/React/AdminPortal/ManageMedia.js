@@ -47,7 +47,7 @@ export default class ManageMedia extends Component {
                 </div>
 
                 <div className="col-12 fade1sec">
-                    <Template data={null} />
+                    <Template data={null} setTab={(tab) => this.setState({ tab })}/>
                 </div>
             </div>    
         )
