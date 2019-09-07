@@ -25,8 +25,12 @@ export default class UploadFile extends Component {
         $.ajax({
             method: 'post',
             url: '/admin/media',
-            data: formData,
-            processData: false
+            data: {
+                file: this.state.src.file,
+                fileName: this.state.src.name,
+                fileType: this.state.src.type,
+                cropData: this.state.cropData || null
+            }
         }).done((data) => {
             console.log("Wahoo", data);
         }).fail((err) => {
