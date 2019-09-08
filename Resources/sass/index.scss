@@ -5,6 +5,7 @@
 @import './bootstrap.min.css';
 @import './footer.scss';
 
+@import './ReactImageCrop';
 
 /* Custom CSS */
 @import './Authentication.scss';
@@ -16,6 +17,11 @@ $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import '~@fortawesome/fontawesome-pro/scss/solid';
 @import '~@fortawesome/fontawesome-pro/scss/brands';
 
+@import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
+
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Gayathri', sans-serif;
+}
 
 body {
     background: url(/images/background.jpg);
@@ -264,12 +270,32 @@ p.fileuploader {
     text-align: center;
 }
 
-.fileuploader input[type="file"] {
+
+/** NEW NEW NEW NEW */
+.upload-container {
+    position: relative;
+}
+
+.upload-box {
+    border: thin dashed #424242;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 50px 0px 50px 0px;
+}
+
+.upload-container:hover {
+    transition: 0.33s;
+    background-color: rgba(40, 45, 50, 0.15);
+}
+
+.upload-container input[type="file"] {
+    position: absolute;
     height: 100%;
     width: 100%;
     top: 0px;
     left: 0px;
-    position: absolute;
-    color: transparent;
     opacity: 0;
+    color: transparent;
+    cursor: pointer;
 }
