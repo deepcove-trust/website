@@ -78,5 +78,10 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["Description"] = page.Description;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
+
+        public IActionResult HomePage()
+        {
+            return Ok("This is the Home Page");
+        }
     }
 }
