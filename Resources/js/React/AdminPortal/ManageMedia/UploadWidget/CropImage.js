@@ -13,7 +13,7 @@ export default class CropImage extends Component {
                 unit: 'px',
                 x: 0,
                 y: 0,
-                aspect: 1/1
+                aspect: this.props.forceSquare ? 1/1 : null
             }
         }
     }
