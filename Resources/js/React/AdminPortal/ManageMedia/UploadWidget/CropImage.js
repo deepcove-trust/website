@@ -35,7 +35,7 @@ export default class CropImage extends Component {
             return 'N/A';
         }
 
-        return `${file.height.toFixed(0)}x${this.state.crop.width.toFixed(0)} px`;
+        return `${file.height.toFixed(0)}x${file.width.toFixed(0)} px`;
     }
 
     render() {
