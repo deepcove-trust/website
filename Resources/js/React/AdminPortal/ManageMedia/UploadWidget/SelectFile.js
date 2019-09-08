@@ -2,7 +2,7 @@
 import { Button } from '../../../Components/Button';
 import ReactTooltip from 'react-tooltip'
 
-const allowTypes = ["image/jpg", "image/png", "audio/mp3", "audio/wav", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".ppxt"];
+const allowTypes = [".jpg", ".jpeg", "image/png", "audio/mp3", "audio/wav", ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".ppxt"];
 const maxSize = 3000000;//3Mb in Bytes 
 
 export default class SelectFile extends Component {
@@ -75,7 +75,7 @@ export default class SelectFile extends Component {
                 </div>
                 <ReactTooltip />
                 <p className="text-center" data-html={true}
-                    data-tip=".mp3, .wav, .jpg, .png, .PDF,<br/>MS Excel (xls/xlsx)<br/>MS Word (doc/docx)<br/>MS PowerPoint (ppt/ppxt)">What files can I upload?
+                    data-tip=".mp3, .wav, .jpg, .jpeg, .png, .PDF,<br/>MS Excel (xls/xlsx)<br/>MS Word (doc/docx)<br/>MS PowerPoint (ppt/ppxt)">What files can I upload?
                 </p>
             </Fragment>
         )
