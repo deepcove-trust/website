@@ -110,7 +110,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 // Generate a backend filename for the uploaded file - same extension as uploaded file.
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(uploadedName);
-                string filepath = Path.Combine("Storage", "media", "images", filename);             
+                string filepath = Path.Combine("Storage", "Media", "Images", filename);             
 
                 string fileType = request.Str("fileType");
 
@@ -260,7 +260,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(oldImage.Filename);
 
                 // Save the file again, passing in crop data                
-                ImageUtils.SaveImage(await System.IO.File.ReadAllBytesAsync(oldImage.FilePath), Path.Combine("Storage", "media", "images", filename), args);
+                ImageUtils.SaveImage(await System.IO.File.ReadAllBytesAsync(oldImage.FilePath), Path.Combine("Storage", "Media", "Images", filename), args);
 
                 ImageMedia newImage = new ImageMedia
                 {
@@ -294,7 +294,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             List<string> folders = new List<string> { "Images", "Audio", "Documents" };
 
             foreach (string folder in folders)
-                Directory.CreateDirectory(Path.Join("Storage", "media", folder));
+                Directory.CreateDirectory(Path.Join("Storage", "Media", folder));
         }
     }
 }

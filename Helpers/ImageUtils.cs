@@ -107,7 +107,7 @@ namespace Deepcove_Trust_Website.Helpers
         private static Dictionary<string, dynamic> SaveScaledCopies(Image image, string filename)
         {
             List<ImageVersion> versions = new List<ImageVersion>();
-            string basePath = Path.Combine("Storage", "media", "images", Path.GetFileNameWithoutExtension(filename));
+            string basePath = Path.Combine("Storage", "Media", "Images", Path.GetFileNameWithoutExtension(filename));
             Directory.CreateDirectory(basePath);
 
             // Collect initial metadata on the image
@@ -133,7 +133,7 @@ namespace Deepcove_Trust_Website.Helpers
             return new Dictionary<string, dynamic> {
                 { "width", initialWidth },
                 {"height", initialHeight },
-                { "size", new FileInfo(Path.Combine("Storage", "media", "images", filename)).Length },
+                { "size", new FileInfo(Path.Combine("Storage", "Media", "Images", filename)).Length },
                 {"versions", versions }
             };
         }

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -55,7 +56,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 else
                 {
                     ImageMedia imageFile = (ImageMedia)file;
-                    // Return the appropriate image 
+                    // Return the appropriate image                     		
+                    if (!System.IO.File.Exists(imageFile.GetImagePath(width)))
+                        System.IO.File.Create(imageFile.GetImagePath(width));
+
                     return File(imageFile.GetImagePath(width), imageFile.MediaType.Mime);
                 }
             }
