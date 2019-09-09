@@ -78,5 +78,27 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["Description"] = page.Description;
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
+
+        public async Task<IActionResult> HomePage()
+        {
+            var page = await _Db.Pages.
+                Include(i => i.PageRevisions)
+                    .ThenInclude(i => i.Template)
+                .Where(c => c.Name == "")
+                .FirstOrDefaultAsync();
+
+            if (page == null || (!page.Public && !User.Identity.IsAuthenticated))
+                return NotFound();
+
+            // Todo: Mail Developers with custom exception
+            if (page.Latest.Template == null)
+                return BadRequest("Fatal error - no page template found.");
+
+            ViewData["pageName"] = "Deep Cove Outdoor Education Trust";
+            ViewData["templateId"] = page.Latest.Template.Id;
+            ViewData["pageId"] = page.Id;
+            ViewData["Description"] = page.Description;
+            return View(viewName: "~/Views/PageTemplate.cshtml");
+        }
     }
 }

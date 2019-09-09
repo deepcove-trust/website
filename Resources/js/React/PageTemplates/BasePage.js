@@ -3,12 +3,15 @@ import { render } from 'react-dom';
 import PageControls from './PageControls';
 import ReactTemplate1 from './1';
 import ReactTemplate2 from './2';
+import ReactTemplate3 from './3';
 import $ from 'jQuery';
+
 
 const baseUri = `/api/pages`;
 const components = {
     1: ReactTemplate1,
-    2: ReactTemplate2
+    2: ReactTemplate2,
+    3: ReactTemplate3
 }
 
 export default class BasePage extends Component {
