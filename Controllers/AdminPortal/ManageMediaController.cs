@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Deepcove_Trust_Website.Data;
 using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Models;
-using Deepcove_Trust_Website.Models.ArgumentModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
