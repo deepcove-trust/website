@@ -110,7 +110,9 @@ namespace Deepcove_Trust_Website.Helpers
             // Iterate through each of the predefined widths, and create a copy 
             // of the image at this width - unless the image is already smaller
             // than the width.
-            foreach (ImageVersion version in ImageVersion.All)
+            List<ImageVersion> versions = ImageVersion.All;
+            versions.Reverse();
+            foreach (ImageVersion version in versions)
             {
                 if (image.Width > version.Width)
                 {
