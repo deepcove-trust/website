@@ -99,6 +99,10 @@ namespace Deepcove_Trust_Website
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                name: "Home",
+                template: "",
+                defaults: new { controller = "Website", action = "HomePage" });
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
