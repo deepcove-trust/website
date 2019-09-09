@@ -94,9 +94,14 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<CmsButton>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
             // End Enum Conversions
 
+            // Enum class conversions
+            modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType).HasConversion(c => c.Index, c => (MediaType)c);
+
             // Other conversions
             modelBuilder.Entity<ImageMedia>().Property(p => p.Filenames)
                 .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<Dictionary<string, string>>(c));
+            modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType)
+                .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<MediaType>(c));
             // End other conversions
 
             // Define keys for junction tables

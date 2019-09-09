@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -90,6 +91,18 @@ namespace Deepcove_Trust_Website.Helpers
                     Math.Floor((double)dayDiff / 7));
 
             return null;
+        }
+
+        public static void SaveFile(string base64file, string path)
+        {
+            if (string.IsNullOrEmpty(path)) throw new ArgumentException("Path must not be null or empty");
+
+            // Will throw exception if file already exists
+            using (FileStream stream = new FileStream(path, FileMode.CreateNew))
+            {
+                stream.Write(base64file.DecodeBase64Bytes());
+            }
+
         }
     }
 }

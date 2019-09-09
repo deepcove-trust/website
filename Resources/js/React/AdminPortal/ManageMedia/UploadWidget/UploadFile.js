@@ -28,9 +28,9 @@ export default class UploadFile extends Component {
             url: '/admin/media',
             data: {
                 file: this.state.src.file,
-                fileName: this.state.src.name,
+                filename: this.state.src.name,
                 fileType: this.state.src.type,
-                cropData: this.state.cropData || null
+                cropData: JSON.stringify(this.state.cropData)
             }
         }).done(() =>
             this.setState({ completed: true })

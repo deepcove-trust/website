@@ -13,16 +13,16 @@ export default class CropImage extends Component {
                 unit: 'px',
                 x: 0,
                 y: 0,
-                aspect: this.props.forceSquare ? 1/1 : null
+                aspect: this.props.forceAspect
             }
         }
     }
 
     onCrop(crop) {
-        this.setState({crop})
+        this.setState({ crop })
     }
 
-    convertSize(bytes) {        
+    convertSize(bytes) {
         if (!bytes || bytes == 0) return 'n/a';
 
         var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
@@ -46,7 +46,7 @@ export default class CropImage extends Component {
                         Go Back <i className="far fa-undo" />
                     </Button>
                     <Button className="btn btn-dark float-right" cb={this.props.cb.bind(this, this.state.src, true, null)}>
-                        Upload Without Cropping <i className="fas fa-upload"/>
+                        Upload Without Cropping <i className="fas fa-upload" />
                     </Button>
                 </div>
 
@@ -66,7 +66,7 @@ export default class CropImage extends Component {
                         <p><i className="fas fa-check text-success" /> Only crop an image to exclude content</p>
                         <p><i className="fas fa-times text-danger" /> Don't reduce image size unnecessarily </p>
                         <p>Smaller versions of this image will be used for smaller devices</p>
-                                                
+
 
                         Stats:
                         <div className="table-responsive">
@@ -97,12 +97,12 @@ export default class CropImage extends Component {
                         <Button className="btn btn-success d-block mx-auto"
                             disabled={this.state.crop.height == 0 && this.state.crop.width == 0}
                             cb={this.props.cb.bind(this, this.state.src, true, {
-                                X: this.state.crop.x,
-                                Y: this.state.crop.y,
-                                Height: this.state.crop.height,
-                                Width: this.state.crop.width,
+                                X: parseInt(this.state.crop.x),
+                                Y: parseInt(this.state.crop.y),
+                                Height: parseInt(this.state.crop.height),
+                                Width: parseInt(this.state.crop.width),
                             })
-                        }>
+                            }>
                             Crop and Upload <i className="far fa-crop" />
                         </Button>
                     </Panel>
