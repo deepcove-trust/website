@@ -29,7 +29,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// If the file is an image, and a width is provided, the controller will return the 
         /// most appropriate image size for the width.
         /// 
-        /// If no size is provided, the controller will return the largest available size.
+        /// If no size is provided, the controller will return the thumbnail.
         /// 
         /// 
         /// </summary>
@@ -50,7 +50,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 // Return file if not image
                 if (file.GetCategory() != MediaCategory.Image)
                 {
-                    return File(file.Path, file.MediaType.Mime);
+                    return File(file.FilePath, file.MediaType.Mime);
                 }
                 else
                 {

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using Deepcove_Trust_Website.Helpers;
 
 namespace Deepcove_Trust_Website.Data
 {
@@ -94,15 +95,11 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<CmsButton>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
             // End Enum Conversions
 
-            // Enum class conversions
-            modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType).HasConversion(c => c.Index, c => (MediaType)c);
-
-            // Other conversions
+            // Conversions
+            modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType).HasConversion(c => c.Mime, c => MediaType.FromString(c));
             modelBuilder.Entity<ImageMedia>().Property(p => p.Versions)
-                .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<Dictionary<string, string>>(c));
-            modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType)
-                .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<MediaType>(c));
-            // End other conversions
+                .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<List<ImageVersion>>(c));
+            // End conversions
 
             // Define keys for junction tables
             modelBuilder.Entity<ChannelMembership>()

@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Storage\media\**" />
+    <Content Remove="Storage\media\**" />
+    <EmbeddedResource Remove="Storage\media\**" />
+    <None Remove="Storage\media\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20190707204004_Initial Migation.cs" />
     <Compile Remove="Migrations\20190707204004_Initial Migation.Designer.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.cs" />
@@ -47,6 +54,16 @@
     <Compile Remove="Migrations\20190831040050_Initial.Designer.cs" />
     <Compile Remove="Migrations\20190903214252_Initial Migration.cs" />
     <Compile Remove="Migrations\20190903214252_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190904111056_Initial.cs" />
+    <Compile Remove="Migrations\20190904111056_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190909072441_modify_media.cs" />
+    <Compile Remove="Migrations\20190909072441_modify_media.Designer.cs" />
+    <Compile Remove="Migrations\20190909103014_intial.cs" />
+    <Compile Remove="Migrations\20190909103014_intial.Designer.cs" />
+    <Compile Remove="Migrations\20190909103050_Initial.cs" />
+    <Compile Remove="Migrations\20190909103050_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190909110323_size_to_long.cs" />
+    <Compile Remove="Migrations\20190909110323_size_to_long.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,7 +90,7 @@
 
   <ItemGroup>
     <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
-    <Folder Include="Storage\media\" />
+    <Folder Include="Storage\" />
   </ItemGroup>
 
 

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using SixLabors.ImageSharp.PixelFormats;
+using Newtonsoft.Json;
 
 namespace Deepcove_Trust_Website.Helpers
 {
@@ -15,7 +16,9 @@ namespace Deepcove_Trust_Website.Helpers
     /// </summary>
     public class ImageVersion
     {
+        [JsonProperty("code")]
         public string Code { get; private set; }
+        [JsonProperty("width")]
         public int Width { get; private set; }
 
         public static List<ImageVersion> All { get => new List<ImageVersion>() { XXS, XS, S, M, L, XL, XXL }; }
@@ -58,7 +61,7 @@ namespace Deepcove_Trust_Website.Helpers
         /// Use within a try-catch.
         /// </summary>
         /// <returns>Dictionary to be peristed in the database, under [ImageMedia.Filenames].</returns>
-        public static Dictionary<string, string> SaveImage(Image image, string path, CropData cropData = null)
+        public static Dictionary<string, dynamic> SaveImage(Image image, string path, CropData cropData = null)
         {
             if (string.IsNullOrEmpty(path))
                 throw new ArgumentException("Path must not be null or empty.");
@@ -74,13 +77,13 @@ namespace Deepcove_Trust_Website.Helpers
             return SaveScaledCopies(image, Path.GetFileName(path));
         }
 
-        public static Dictionary<string, string> SaveImage(byte[] imageBytes, string path, CropData cropData = null)
+        public static Dictionary<string, dynamic> SaveImage(byte[] imageBytes, string path, CropData cropData = null)
         {
             Image image = Image.Load(imageBytes);
             return SaveImage(image, path, cropData);
         }
 
-        public static Dictionary<string, string> SaveImage(string base64Image, string path, CropData cropData = null)
+        public static Dictionary<string, dynamic> SaveImage(string base64Image, string path, CropData cropData = null)
         {
             Image image = Image.Load(base64Image.DecodeBase64Bytes());
             return SaveImage(image, path, cropData);
@@ -101,28 +104,38 @@ namespace Deepcove_Trust_Website.Helpers
         /// <param name="image"></param>
         /// <param name="filename"></param>
         /// <returns></returns>
-        private static Dictionary<string, string> SaveScaledCopies(Image image, string filename)
+        private static Dictionary<string, dynamic> SaveScaledCopies(Image image, string filename)
         {
-            Dictionary<string, string> savedVersions = new Dictionary<string, string>();
-            string basePath = Path.Join("Storage", "images", Path.GetFileNameWithoutExtension(filename));
+            List<ImageVersion> versions = new List<ImageVersion>();
+            string basePath = Path.Combine("Storage", "media", "images", Path.GetFileNameWithoutExtension(filename));
             Directory.CreateDirectory(basePath);
+
+            // Collect initial metadata on the image
+            int initialWidth = image.Width;
+            int initialHeight = image.Height;
+
 
             // Iterate through each of the predefined widths, and create a copy 
             // of the image at this width - unless the image is already smaller
             // than the width.
-            List<ImageVersion> versions = ImageVersion.All;
-            versions.Reverse();
-            foreach (ImageVersion version in versions)
+            List<ImageVersion> allVersions = ImageVersion.All;
+            allVersions.Reverse();
+            foreach (ImageVersion version in allVersions)
             {
                 if (image.Width > version.Width)
                 {
                     ScaleImage(image, version.Width);
                     image.Save(Path.Join(basePath, $"{version.Code}_{filename}"));
-                    savedVersions.Add(version.Code, $"{version.Code}_{filename}");
+                    versions.Add(version);
                 }
-            }
+            }            
 
-            return savedVersions;
+            return new Dictionary<string, dynamic> {
+                { "width", initialWidth },
+                {"height", initialHeight },
+                { "size", new FileInfo(Path.Combine("Storage", "media", "images", filename)).Length },
+                {"versions", versions }
+            };
         }
 
         /// <summary>
@@ -133,6 +146,6 @@ namespace Deepcove_Trust_Website.Helpers
         {
             // Setting width as 0 means that ImageSharp will maintain aspect ratio.
             image.Mutate(ctx => ctx.Resize(new Size(width, 0)));
-        }        
+        }
     }
 }
