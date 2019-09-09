@@ -8,7 +8,7 @@ namespace Deepcove_Trust_Website.Models
 {
     public class AudioMedia : BaseMedia
     {
-        [JsonProperty("duaration")]
+        [JsonProperty("duration")]
         public double Duration { get; set; }
     }
 }

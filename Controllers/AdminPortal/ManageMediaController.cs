@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Deepcove_Trust_Website.Data;
 using Deepcove_Trust_Website.Helpers;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -25,7 +27,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         public ManageMediaController(WebsiteDataContext Db, ILogger<ManageMediaController> Logger)
         {
             _Db = Db;
-            _Logger = Logger;
+            _Logger = Logger;            
         }
 
         [HttpGet]
@@ -37,7 +39,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         /// <summary>
         /// Returns data for all media files stored in the database.
         /// </summary>        
-        [HttpGet("all")]
+        [HttpGet("data")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _Db.Media.Select(media => new
@@ -46,12 +48,46 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.IsPublic,
                 media.MediaType,
                 media.Name,
-                media.Size,
-                media.CreatedAt,
                 thumbnail = media.GetType() == typeof(ImageMedia) ?
-                    ((ImageMedia)media).Filenames["thumbnail"]
+                    ((ImageMedia)media).Versions["thumbnail"]
                 : null
             }).ToListAsync());
+        }
+
+        [HttpGet("data/{id:int}")]
+        public async Task<IActionResult> GetOne(int id)
+        {
+            try
+            {
+                BaseMedia mediaFile = await _Db.Media.FindAsync(id);
+                ImageMedia imageFile = mediaFile as ImageMedia;
+                AudioMedia audioFile = mediaFile as AudioMedia;
+                if (mediaFile == null) return NotFound("No file exists for the supplied ID");
+
+                return Ok(new
+                {
+                    mediaFile.Id,
+                    mediaFile.Name,
+                    mediaFile.Path,
+                    mediaFile.IsPublic,
+                    mediaFile.Size,
+                    height = imageFile?.Height,
+                    width = imageFile?.Width,
+                    versions = imageFile?.Versions,
+                    title = imageFile?.Title,
+                    alt = imageFile?.Alt,
+                    duration = audioFile?.Duration,
+                    tags = mediaFile.Tags()
+                });
+
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error retrieving file data: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later.");
+            }
+
         }
 
         /// <summary>
@@ -59,9 +95,46 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         /// saves smaller copies if the file is an image.
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Index(IFormFile file, IFormCollection request)
+        public async Task<IActionResult> Index(IFormCollection request)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // Create required directories if not existing
+                EnsureInit();
+
+                // Deserialize cropping data if applicable
+                CropData cropData = null;
+                if (request.Str("cropData") != null)
+                    cropData = JsonConvert.DeserializeObject<CropData>(request.Str("cropData"));
+
+
+                // Original filename
+                string uploadedName = request.Str("filename");
+
+                // Generate a backend filename for the uploaded file - same extension as uploaded file.
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(uploadedName);
+
+                BaseMedia mediaFile;
+                string fileType = request.Str("fileType");
+
+                // Determine what type of file has been uploaded and act accordingly (may want to refactor these)
+
+                if (new[] { "image/jpg", "image/jpeg", "image/png" }.Contains(fileType))
+                {
+                    // Save image and all associated versions of it.
+                    var filenames = ImageUtils.SaveImage(request.Str("file")
+                        .Split(',')[1], Path.Join("Storage", "images", filename), cropData);
+
+                }
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error uploading file: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest("Something went wrong, please try again later.");
+            }
         }
 
         /// <summary>
@@ -129,7 +202,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     ImageMedia image = (ImageMedia)media;
 
                     // Delete all versions of the image
-                    foreach (KeyValuePair<string, string> version in image.Filenames)
+                    foreach (KeyValuePair<string, string> version in image.Versions)
                     {
                         // Delete the file with the filename 'version.value', if it exists                                            
                     }
@@ -154,7 +227,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         }
 
         [HttpPatch("{id:int}/crop")]
-        public async Task<IActionResult> Crop(int id, CropArguments args)
+        public async Task<IActionResult> Crop(int id, CropData args)
         {
             try
             {
@@ -169,8 +242,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 if (oldImage == null)
                     return BadRequest("Unable to crop non-image media file.");
 
+                // Generate new GUID
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(oldImage.Filename);
 
-                // Call the code that crops the image
+                // Save the file again, passing in crop data                
+                ImageUtils.SaveImage(await System.IO.File.ReadAllBytesAsync(oldImage.Path), Path.Join("Storage", "images", filename), args);
 
                 ImageMedia newImage = new ImageMedia
                 {
@@ -182,7 +258,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 await _Db.AddAsync(newImage);
 
-                await _Db.SaveChangesAsync();                
+                await _Db.SaveChangesAsync();
 
                 _Logger.LogDebug("Media file {0} cropped - new file ID is {1}", id, newImage.Id);
 
@@ -194,6 +270,17 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later.");
             }
-        }        
+        }
+
+        /// <summary>
+        /// Ensure that the directories required for media storage exist.
+        /// </summary>
+        private void EnsureInit()
+        {
+            List<string> folders = new List<string> { "Images", "Audio", "Documents" };
+
+            foreach (string folder in folders)
+                Directory.CreateDirectory(Path.Join("Storage", folder));
+        }
     }
 }

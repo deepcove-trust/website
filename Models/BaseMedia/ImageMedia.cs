@@ -17,8 +17,8 @@ namespace Deepcove_Trust_Website.Models
         public double Height { get; set; }
         [JsonProperty("width")]
         public double Width { get; set; }
-        [JsonProperty("filenames")]
-        public Dictionary<string, string> Filenames { get; set; }
+        [JsonProperty("versions")]
+        public Dictionary<string, string> Versions { get; set; }
 
         // --------------------------
 
@@ -35,7 +35,7 @@ namespace Deepcove_Trust_Website.Models
 
             ImageVersion bestVersion = GetBestFit(width);
 
-            return Filenames[bestVersion.Code];
+            return Versions[bestVersion.Code];
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Deepcove_Trust_Website.Models
         {
             // Get sizing data for available versions.
             List<ImageVersion> versions = ImageVersion.All
-                .Where(v => Filenames.ContainsKey(v.Code))
+                .Where(v => Versions.ContainsKey(v.Code))
                 .OrderBy(v => v.Width)
                 .ToList();
 

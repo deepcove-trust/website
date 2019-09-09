@@ -98,7 +98,7 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType).HasConversion(c => c.Index, c => (MediaType)c);
 
             // Other conversions
-            modelBuilder.Entity<ImageMedia>().Property(p => p.Filenames)
+            modelBuilder.Entity<ImageMedia>().Property(p => p.Versions)
                 .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<Dictionary<string, string>>(c));
             modelBuilder.Entity<BaseMedia>().Property(p => p.MediaType)
                 .HasConversion(c => JsonConvert.SerializeObject(c), c => JsonConvert.DeserializeObject<MediaType>(c));
