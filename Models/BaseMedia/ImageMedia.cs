@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,7 +19,7 @@ namespace Deepcove_Trust_Website.Models
         [JsonProperty("width")]
         public double Width { get; set; }
         [JsonProperty("versions")]
-        public Dictionary<string, string> Versions { get; set; }
+        public List<ImageVersion> Versions { get; set; }
 
         // --------------------------
 
@@ -26,16 +27,23 @@ namespace Deepcove_Trust_Website.Models
         /// Return the path of the most appropriate image for displaying 
         /// at a given width (in pixels)
         /// 
-        /// Returns largest image size if no width provided.
+        /// Returns the thumbnail size if no width provided.
         /// </summary>
         public string GetImagePath(int width = 0)
         {
-            // Return largest option if width is not supplied / 0
-            if(width == 0) { }
+            ImageVersion bestVersion;
 
-            ImageVersion bestVersion = GetBestFit(width);
+            // Return thumbnail option if width is not supplied
+            if (width == 0)
+                bestVersion = Versions.Aggregate((l, r) => l.Width < r.Width ? l : r);
+            else
+                bestVersion = GetBestFit(width);
 
-            return Versions[bestVersion.Code];
+            return Path.Combine(
+                Path.GetDirectoryName(FilePath),
+                Path.GetFileNameWithoutExtension(FilePath),
+                $"{bestVersion.Code}_{Filename}");
+
         }
 
         /// <summary>
@@ -44,31 +52,25 @@ namespace Deepcove_Trust_Website.Models
         /// </summary>
         private ImageVersion GetBestFit(int width)
         {
-            // Get sizing data for available versions.
-            List<ImageVersion> versions = ImageVersion.All
-                .Where(v => Versions.ContainsKey(v.Code))
-                .OrderBy(v => v.Width)
-                .ToList();
-
             // Reference for the following
             //https://tiny.cc/4dbfcz
 
-            int index = versions.BinarySearch(ImageVersion.CustomVersion(width));
+            int index = Versions.BinarySearch(ImageVersion.CustomVersion(width));
 
             // Width is below smallest option, return smallest option
-            if (width <= versions[0].Width)
-                return versions[0];
+            if (width <= Versions[0].Width)
+                return Versions[0];
 
             // Required width matches a version perfectly
             if (0 < index)
-                return versions[index];
+                return Versions[index];
 
             // Otherwise we find close above and closest below
 
             ImageVersion above, below;
             index = ~index; //bitwise complement - don't ask
-            below = versions[index - 1];
-            above = versions[index];
+            below = Versions[index - 1];
+            above = Versions[index];
 
             // Now return below if the supplied width above by less than 10 percent
             // of the difference between the above and below versions.

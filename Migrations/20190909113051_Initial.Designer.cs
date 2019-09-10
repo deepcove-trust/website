@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190909072441_modify_media")]
-    partial class modify_media
+    [Migration("20190909113051_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -68,15 +68,15 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
+                    b.Property<string>("FilePath");
+
                     b.Property<bool>("IsPublic");
 
                     b.Property<string>("MediaType");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Path");
-
-                    b.Property<int>("Size");
+                    b.Property<long>("Size");
 
                     b.Property<DateTime>("UpdatedAt");
 
@@ -356,11 +356,11 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Alt");
 
-                    b.Property<string>("Filenames");
-
                     b.Property<double>("Height");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("Versions");
 
                     b.Property<double>("Width");
 

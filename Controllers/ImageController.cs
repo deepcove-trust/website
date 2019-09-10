@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -29,7 +30,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// If the file is an image, and a width is provided, the controller will return the 
         /// most appropriate image size for the width.
         /// 
-        /// If no size is provided, the controller will return the largest available size.
+        /// If no size is provided, the controller will return the thumbnail.
         /// 
         /// 
         /// </summary>
@@ -50,12 +51,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 // Return file if not image
                 if (file.GetCategory() != MediaCategory.Image)
                 {
-                    return File(file.Path, file.MediaType.Mime);
+                    return File(file.FilePath, file.MediaType.Mime);
                 }
                 else
                 {
                     ImageMedia imageFile = (ImageMedia)file;
-                    // Return the appropriate image 
+                    // Return the appropriate image                     		
+                    if (!System.IO.File.Exists(imageFile.GetImagePath(width)))
+                        System.IO.File.Create(imageFile.GetImagePath(width));
+
                     return File(imageFile.GetImagePath(width), imageFile.MediaType.Mime);
                 }
             }

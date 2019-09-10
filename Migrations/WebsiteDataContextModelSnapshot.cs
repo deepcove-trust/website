@@ -66,15 +66,15 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
+                    b.Property<string>("FilePath");
+
                     b.Property<bool>("IsPublic");
 
                     b.Property<string>("MediaType");
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Path");
-
-                    b.Property<int>("Size");
+                    b.Property<long>("Size");
 
                     b.Property<DateTime>("UpdatedAt");
 
@@ -354,11 +354,11 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Alt");
 
-                    b.Property<string>("Filenames");
-
                     b.Property<double>("Height");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("Versions");
 
                     b.Property<double>("Width");
 

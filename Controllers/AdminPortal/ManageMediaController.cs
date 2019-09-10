@@ -47,9 +47,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.IsPublic,
                 media.MediaType,
                 media.Name,
-                thumbnail = media.GetType() == typeof(ImageMedia) ?
-                    ((ImageMedia)media).Versions["thumbnail"]
-                : null
+                thumbnail = ((media as ImageMedia) != null ? (media as ImageMedia).GetImagePath(0) : null) // Todo: tidy this
             }).ToListAsync());
         }
 
@@ -67,7 +65,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 {
                     mediaFile.Id,
                     mediaFile.Name,
-                    mediaFile.Path,
+                    mediaFile.FilePath,
                     mediaFile.IsPublic,
                     mediaFile.Size,
                     height = imageFile?.Height,
@@ -112,8 +110,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 // Generate a backend filename for the uploaded file - same extension as uploaded file.
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(uploadedName);
+                string filepath = Path.Combine("Storage", "Media", "Images", filename);             
 
-                BaseMedia mediaFile;
                 string fileType = request.Str("fileType");
 
                 // Determine what type of file has been uploaded and act accordingly (may want to refactor these)
@@ -121,11 +119,32 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 if (new[] { "image/jpg", "image/jpeg", "image/png" }.Contains(fileType))
                 {
                     // Save image and all associated versions of it.
-                    var filenames = ImageUtils.SaveImage(request.Str("file")
-                        .Split(',')[1], Path.Join("Storage", "images", filename), cropData);
+                    var filedata = ImageUtils.SaveImage(request.Str("file")
+                        .Split(',')[1], filepath , cropData);
+
+                    // Create database record to track images
+                    ImageMedia dbImageMedia = new ImageMedia {
+                        Name = Path.GetFileNameWithoutExtension(uploadedName),
+                        MediaType =  MediaType.FromString(request.Str("fileType")),
+                        FilePath = filepath,
+                        IsPublic = false,
+                        Size = filedata["size"],
+                        Title = request.Str("title"),
+                        Alt = request.Str("alt"),
+                        Width = filedata["width"],
+                        Height = filedata["height"],
+                        Versions = filedata["versions"]
+                    };
+
+                    await _Db.AddAsync(dbImageMedia);                    
+
 
                 }
 
+                // Todo: Implement saves for non images
+
+
+                await _Db.SaveChangesAsync();
                 return Ok();
             }
             catch (Exception ex)
@@ -200,11 +219,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 {
                     ImageMedia image = (ImageMedia)media;
 
-                    // Delete all versions of the image
-                    foreach (KeyValuePair<string, string> version in image.Versions)
-                    {
-                        // Delete the file with the filename 'version.value', if it exists                                            
-                    }
+                    // Now delete
                 }
 
                 // Finally, delete the media file itself
@@ -245,7 +260,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 string filename = Guid.NewGuid().ToString() + Path.GetExtension(oldImage.Filename);
 
                 // Save the file again, passing in crop data                
-                ImageUtils.SaveImage(await System.IO.File.ReadAllBytesAsync(oldImage.Path), Path.Join("Storage", "images", filename), args);
+                ImageUtils.SaveImage(await System.IO.File.ReadAllBytesAsync(oldImage.FilePath), Path.Combine("Storage", "Media", "Images", filename), args);
 
                 ImageMedia newImage = new ImageMedia
                 {
@@ -279,7 +294,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             List<string> folders = new List<string> { "Images", "Audio", "Documents" };
 
             foreach (string folder in folders)
-                Directory.CreateDirectory(Path.Join("Storage", folder));
+                Directory.CreateDirectory(Path.Join("Storage", "Media", folder));
         }
     }
 }
