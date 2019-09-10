@@ -14,3 +14,4 @@ appsettings.json
 # Misc
 .npmrc
 appsettings.json
+Storage/*
