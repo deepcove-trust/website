@@ -14,14 +14,14 @@ namespace Deepcove_Trust_Website.Helpers
     /// <summary>
     /// Simple enumeration class
     /// </summary>
-    public class ImageVersion
+    public class ImageVersion : IComparable<ImageVersion>
     {
         [JsonProperty("code")]
         public string Code { get; private set; }
         [JsonProperty("width")]
         public int Width { get; private set; }
 
-        public static List<ImageVersion> All { get => new List<ImageVersion>() { XXS, XS, S, M, L, XL, XXL }; }
+        public static List<ImageVersion> All { get => new List<ImageVersion>() { XS, S, M, L, XL, XXL }; }
 
         public static ImageVersion XXL = new ImageVersion { Code = "XXL", Width = 2500 };
         public static ImageVersion XL = new ImageVersion { Code = "XL", Width = 1500 };
@@ -29,9 +29,10 @@ namespace Deepcove_Trust_Website.Helpers
         public static ImageVersion M = new ImageVersion { Code = "M", Width = 750 };
         public static ImageVersion S = new ImageVersion { Code = "S", Width = 500 };
         public static ImageVersion XS = new ImageVersion { Code = "XS", Width = 300 };
-        public static ImageVersion XXS = new ImageVersion { Code = "XXS", Width = 100 };
 
         public static ImageVersion CustomVersion(int width) => new ImageVersion { Code = "Custom", Width = width };
+
+        public int CompareTo(ImageVersion other) => Width.CompareTo(other.Width);        
     }
 
     public class CropData

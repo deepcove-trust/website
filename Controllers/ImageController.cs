@@ -60,7 +60,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     if (!System.IO.File.Exists(imageFile.GetImagePath(width)))
                         System.IO.File.Create(imageFile.GetImagePath(width));
 
-                    return File(imageFile.GetImagePath(width), imageFile.MediaType.Mime);
+                    return File(await System.IO.File.ReadAllBytesAsync(imageFile.GetImagePath(width)), imageFile.MediaType.Mime);
                 }
             }
             catch (Exception ex)
