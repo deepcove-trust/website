@@ -47,7 +47,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.IsPublic,
                 media.MediaType,
                 media.Name,
-                thumbnail = ((media as ImageMedia) != null ? (media as ImageMedia).GetImagePath(0) : null) // Todo: tidy this
+                media.Filename
             }).ToListAsync());
         }
 
