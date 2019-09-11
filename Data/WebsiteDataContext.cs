@@ -7,6 +7,7 @@ using System.Threading;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using Deepcove_Trust_Website.Helpers;
+using Deepcove_Trust_Website.DiscoverDeepCove;
 
 namespace Deepcove_Trust_Website.Data
 {
@@ -26,6 +27,29 @@ namespace Deepcove_Trust_Website.Data
         public DbSet<ImageMedia> ImageMedia { get; set; }
         public DbSet<AudioMedia> AudioMedia { get; set; }
         public DbSet<GeneralMedia> GeneralMedia { get; set; }
+
+        // ----- Discover Deep Cove DB Sets ----------------
+
+        public DbSet<Config> Config { get; set; }
+        
+        // Fact-files
+        public DbSet<FactFileEntry> FactFileEntries { get; set; }
+        public DbSet<FactFileNugget> FactFileNuggets { get; set; }
+        public DbSet<FactFileCategory> FactFileCategories { get; set; }
+        public DbSet<FactFileEntryImage> FactFileEntryImages { get; set; }
+
+        // Quiz models
+        public DbSet<Quiz> Quizzes { get; set; }        
+        public DbSet<QuizAnswer> QuizAnswers { get; set; }
+        public DbSet<QuizQuestion> QuizQuestions { get; set; }
+
+        // Activity models
+        public DbSet<Track> Tracks { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        public DbSet<ActivityImage> ActivityImages { get; set; }
+
+
+        // --------------------------------------------------
 
 
         public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
@@ -93,6 +117,10 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<Page>().Property(p => p.QuickLink).HasConversion(c => (int)c, c => (QuickLinkSection)c);
             modelBuilder.Entity<CmsButton>().Property(p => p.Align).HasConversion(c => (int)c, c => (Align)c);
             modelBuilder.Entity<CmsButton>().Property(p => p.Color).HasConversion(c => (int)c, c => (Color)c);
+
+            // Discover Deep Cove
+            modelBuilder.Entity<Activity>().Property(p => p.ActivityType).HasConversion(c => (int)c, c => (ActivityType)c);
+
             // End Enum Conversions
 
             // Conversions
@@ -110,6 +138,16 @@ namespace Deepcove_Trust_Website.Data
 
             modelBuilder.Entity<RevisionMediaComponent>()
                 .HasKey(e => new { e.PageRevisionId, e.MediaComponentId });
+
+            // -- Discover Deep Cove
+
+            modelBuilder.Entity<ActivityImage>()
+                .HasKey(e => new { e.ActivityId, e.ImageId });
+
+            modelBuilder.Entity<FactFileEntryImage>()
+                .HasKey(e => new { e.FactFileEntryId, e.ImageId });
+
+            // ---------------------
 
             // Place unique constraints onto appropriate properties
 
