@@ -6,7 +6,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
     {
         public int Id { get; set; }
 
-        public bool Activated { get; set; }
+        public bool Active { get; set; }
 
         public string Name { get; set; }
 

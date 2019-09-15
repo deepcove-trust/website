@@ -18,12 +18,15 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         [JsonProperty("body_text")]
         public string BodyText { get; set; }
 
+        public bool Active { get; set; }
+
         // Navigation Properties
         public FactFileCategory Category { get; set; }
         public ImageMedia MainImage { get; set; }
         public AudioMedia ListenAudio { get; set; }
         public AudioMedia PronounceAudio { get; set; }
         public List<FactFileEntryImage> FactFileEntryImages { get; set; }
+        public List<FactFileNugget> FactFileNuggets { get; set; }
         // End Navigation Properties
     }
 }

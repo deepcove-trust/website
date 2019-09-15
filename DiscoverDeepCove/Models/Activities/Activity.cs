@@ -8,7 +8,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
 {
     public enum ActivityType { informational, countActivity, photographActivity, pictureSelectActivity, pictureTapActivity, textAnswerActivity }
 
-    public class Activity : BaseMedia
+    public class Activity : BaseEntity
     {
         public int Id { get; set; }
 
