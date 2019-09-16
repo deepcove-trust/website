@@ -12,6 +12,10 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
     {
         public int Id { get; set; }
 
+        public int TrackId { get; set; }
+        public int? FactFileId { get; set; }
+        public int? ImageId { get; set; }
+
         [JsonProperty("activity_type")]
         public ActivityType ActivityType { get; set; }
 

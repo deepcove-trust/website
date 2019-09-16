@@ -10,6 +10,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
 
         public string Name { get; set; }
 
+        // Nav properties
         public List<Activity> Activities { get; set; }
     }
 }

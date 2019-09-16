@@ -6,6 +6,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
     public class FactFileNugget
     {
         public int Id { get; set; }
+        public int? ImageId { get; set; }
+        public int FactFileEntryId { get; set; }
 
         [JsonProperty("order_index")]
         public int OrderIndex { get; set; }

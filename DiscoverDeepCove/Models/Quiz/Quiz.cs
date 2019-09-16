@@ -8,6 +8,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
     public class Quiz : BaseEntity
     {
         public int Id { get; set; }
+        public int ImageId { get; set; }
 
         public bool Active { get; set; }
 

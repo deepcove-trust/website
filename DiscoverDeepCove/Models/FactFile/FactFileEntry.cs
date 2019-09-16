@@ -8,6 +8,10 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
     public class FactFileEntry : BaseEntity
     {
         public int Id { get; set; }
+        public int CategoryId { get; set; }
+        public int MainImageId { get; set; }
+        public int? ListenAudioId { get; set; }
+        public int? PronounceAudioId { get; set; }
 
         [JsonProperty("primary_name")]
         public string PrimaryName { get; set; }
