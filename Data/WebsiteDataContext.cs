@@ -145,7 +145,7 @@ namespace Deepcove_Trust_Website.Data
                 .HasKey(e => new { e.ActivityId, e.ImageId });
 
             modelBuilder.Entity<FactFileEntryImage>()
-                .HasKey(e => new { e.FactFileEntryId, e.ImageId });
+                .HasKey(e => new { e.FactFileEntryId, e.MediaFileId });
 
             // ---------------------
 
