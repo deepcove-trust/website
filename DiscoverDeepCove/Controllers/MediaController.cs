@@ -49,17 +49,12 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
         /// Gets the meta data about the requested media
         /// </summary>
         /// <param name="Ids">Space seperated URL query example <code>?ids=20 21 545</code></param>
-        /// <returns></returns>
-        [HttpGet("data")]
-        public IActionResult Data(string Ids)
+        [HttpGet("{id:int}")]
+        public IActionResult Data(int id)
         {
             try
             {
-                int[] MediaIds = Array.ConvertAll(Ids.Replace("%20", " ").Split(' '),
-                    s => int.Parse(s)
-                );
-
-                return Ok(_Db.Media.Where(c => MediaIds.Contains(c.Id)).Select(s => new
+                return Ok(_Db.Media.Where(c => c.Id == id).Select(s => new
                     {
                         s.Id,
                         s.MediaType,
@@ -68,7 +63,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                         s.Filename,
                         s.FilePath,
                         s.UpdatedAt
-                    }).ToList()
+                    }).FirstOrDefault()
                 );
             }
             catch(Exception ex)
