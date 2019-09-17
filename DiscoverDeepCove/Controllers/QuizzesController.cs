@@ -41,12 +41,12 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
             }
         }
 
-        [HttpGet("{Id:int}")]
-        public IActionResult Quiz(int Id)
+        [HttpGet("{id:int}")]
+        public IActionResult Quiz(int id)
         {
             try
             {
-                var Quiz = _Db.Quizzes.Where(c => c.Id == Id)
+                var Quiz = _Db.Quizzes.Where(c => c.Id == id)
                     .Select(s => new
                     {
                         s.Id,
