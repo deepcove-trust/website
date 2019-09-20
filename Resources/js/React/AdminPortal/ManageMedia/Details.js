@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
 import Media from '../../CMS-Blocks/Media';
 import { Button } from '../../Components/Button';
+import MediaLocations from './DetailsWidget/Locations';
+import MetaData from './DetailsWidget/Metadata';
+import Delete from './DetailsWidget/Delete';
 
 export default class Details extends Component {
     render() {
@@ -8,46 +11,24 @@ export default class Details extends Component {
             <div className="row">
                 <div className="col-lg-4 col-md-6 col-sm-12">
                     <Media file={this.props.data} />
+
+                    <div className="mt-2">
+                        <Button className="btn btn-info btn-sm mx-1" disabled>
+                            Re-Crop Image <i className="far fa-crop" />
+                        </Button>
+
+                        <Delete id={this.props.data.id} />
+                    </div>
                 </div>
 
                 <div className="col-lg-4 col-md-6 col-sm-12">
-                    <h3>Detials</h3>
-                    <dl>
-                        <dt>Name:</dt>
-                        <dd>{this.props.data.name}.{this.props.data.mediaType.value.toLowerCase()}</dd>
-
-                        <dt>Size on Disk (Includes all Versions):</dt>
-                        <dd>.</dd>
-
-                        <dt>Source</dt>
-                        <dd>.</dd>
-                    </dl>
-
-                    <Button className="btn btn-dark btn-sm mx-1" disabled>
-                        Edit Details <i className="fas fa-pencil"/>
-                    </Button>
-
-                    <Button className="btn btn-info btn-sm mx-1" disabled>
-                        Re-Crop Image <i className="far fa-crop"/>
-                    </Button>
-
-                    <Button className="btn btn-danger btn-sm mx-1" disabled>
-                        Delete <i className="far fa-trash" />
-                    </Button>
+                    <MetaData file={this.props.data}
+                        cb={null}
+                    />
                 </div>
 
                 <div className="col-lg-4 col-md-6 col-sm-12">
-                    <h3>Locations</h3>
-
-                    <p>Displays where the file is used. Files used in the mobile application or website cannot be deleted:</p>
-
-                    <dl>
-                        <dt>Website</dt>
-                        <dd>n/a</dd>
-
-                        <dt>Mobile Application</dt>
-                        <dd>n/a</dd>
-                    </dl>
+                    <MediaLocations file={this.props.data}/>
                 </div>
             </div>
         )

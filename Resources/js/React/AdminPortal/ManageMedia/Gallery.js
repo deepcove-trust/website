@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import $ from 'jquery';
+import Delete from './DetailsWidget/Delete';
 
 export default class Gallery extends Component {
     constructor(props) {
@@ -73,10 +74,8 @@ class Item extends Component {
                         {tags}
                     </div>
 
-                    <Button className="btn btn-outline-dark mx-1" cb={this.props.cb}>Edit</Button>
-                    <Button className="btn btn-outline-danger mx-1" disabled>
-                        Delete <i className="fas fa-trash" />
-                    </Button>
+                    <Button className="btn btn-outline-dark btn-sm mx-1" cb={this.props.cb}>Edit</Button>
+                    <Delete id={this.props.data.id} />
                 </div>
             </div>
         )
