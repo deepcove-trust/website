@@ -39,7 +39,7 @@ export default class ManageMedia extends Component {
         }
 
         let galleryBtn;
-        if (this.state.tab != 2) {
+        if (this.state.tab != 1) {
             galleryBtn = (
                 <Button className="btn btn-dark float-right" cb={() => this.setState({
                         tab: 1

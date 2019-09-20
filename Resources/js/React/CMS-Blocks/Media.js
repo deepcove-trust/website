@@ -31,7 +31,9 @@ export default class Media extends Component {
     }
 
     ImageUrl() {
-        return `https://via.placeholder.com/${this.state.Width}x${this.state.Height}?text=Media%20Component%20Placeholder`;
+        let defaultUrl = `https://via.placeholder.com/${this.state.Width}x${this.state.Height}?text=Media%20Component%20Placeholder`;
+
+        return this.props.file ? `/media?filename=${this.props.file.filename}&size=${this.state.Width}` : defaultUrl;
     }
 
     render() {
