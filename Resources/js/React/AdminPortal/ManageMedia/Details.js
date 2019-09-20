@@ -14,18 +14,12 @@ export default class Details extends Component {
                     <h3>Detials</h3>
                     <dl>
                         <dt>Name:</dt>
-                        <dd>{this.props.data.name}</dd>
+                        <dd>{this.props.data.name}.{this.props.data.mediaType.value.toLowerCase()}</dd>
 
-                        <dt>Type:</dt>
-                        <dd>{this.props.data.mediaType.mime}</dd>
-
-                        <dt>HDD Space Used:</dt>
+                        <dt>Size on Disk (Includes all Versions):</dt>
                         <dd>.</dd>
 
-                        <dt>Avaliable Sizes</dt>
-                        <dd>.</dd>
-
-                        <dt>Copyright</dt>
+                        <dt>Source</dt>
                         <dd>.</dd>
                     </dl>
 
@@ -44,6 +38,16 @@ export default class Details extends Component {
 
                 <div className="col-lg-4 col-md-6 col-sm-12">
                     <h3>Locations</h3>
+
+                    <p>Displays where the file is used. Files used in the mobile application or website cannot be deleted:</p>
+
+                    <dl>
+                        <dt>Website</dt>
+                        <dd>n/a</dd>
+
+                        <dt>Mobile Application</dt>
+                        <dd>n/a</dd>
+                    </dl>
                 </div>
             </div>
         )
