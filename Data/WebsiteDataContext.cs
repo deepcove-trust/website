@@ -158,16 +158,32 @@ namespace Deepcove_Trust_Website.Data
                 .HasIndex(e => e.Name).IsUnique();
 
             // -- Configure relationship between QuizQuestion and correct QuizAnswer
-            modelBuilder.Entity<QuizQuestion>()
-                .HasOne(qq => qq.CorrectAnswer)
-                .WithOne(qa => qa.QuizQuestion)
-                .HasForeignKey<QuizAnswer>(qq => qq.QuizQuestionId);
+            //modelBuilder.Entity<QuizQuestion>()
+            //    .HasOne(qq => qq.CorrectAnswer)
+            //    .WithOne(qa => qa.QuizQuestion)
+            //    .HasForeignKey<QuizAnswer>(qq => qq.QuizQuestionId);
 
             // -- Configure relationship between activities and media files
             modelBuilder.Entity<Activity>().HasMany(a => a.ActivityImages).WithOne(ai => ai.Activity).HasForeignKey(ai => ai.ActivityId).OnDelete(DeleteBehavior.Restrict);
 
             // -- Configure relationships between fact file entries and media files
             modelBuilder.Entity<FactFileEntry>().HasMany(ff => ff.FactFileEntryImages).WithOne(ei => ei.FactFileEntry).HasForeignKey(ei => ei.FactFileEntryId).OnDelete(DeleteBehavior.Restrict);            
+        }
+
+        /// <summary>
+        /// Adds the items in the list to the database, turning IDENTITY_INSERT on
+        /// for the insertion. This allows insertion of explicit ID values.
+        /// </summary>
+        public void AddRangeWithIdentityInsert<T>(IEnumerable<T> items, string tableName)
+        {
+            string onString = $"SET IDENTITY_INSERT dbo.{tableName} ON";
+            string offString = $"SET IDENTITY_INSERT dbo.{tableName} OFF";
+            Database.OpenConnection();
+            Database.ExecuteSqlCommand(onString);
+            foreach(T item in items) Add(item);
+            SaveChanges();
+            Database.ExecuteSqlCommand(offString);
+            Database.CloseConnection();
         }
     }
 }

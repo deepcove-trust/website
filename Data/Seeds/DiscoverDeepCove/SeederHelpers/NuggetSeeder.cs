@@ -18,7 +18,6 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         {
             return new FactFileNugget
             {
-                Id = Id,
                 FactFileEntryId = factFileId,
                 OrderIndex = OrderIndex,
                 Name = Name,

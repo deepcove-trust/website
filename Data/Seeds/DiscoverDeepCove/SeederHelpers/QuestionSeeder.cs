@@ -29,6 +29,9 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
                 
         }
 
-        public List<QuizAnswer> GetAnswers() => Answers;
+        public List<QuizAnswer> GetAnswers() {
+            foreach (QuizAnswer answer in Answers) answer.QuizQuestionId = Id;
+            return Answers;
+        }
     }
 }

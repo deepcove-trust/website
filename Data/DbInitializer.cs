@@ -1,4 +1,4 @@
-﻿using deepcove_dotnet.Data;
+﻿using Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers;
 using Deepcove_Trust_Website.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;

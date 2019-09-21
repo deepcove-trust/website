@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190917035158_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20190921123153_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -221,18 +221,13 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<int>("QuizQuestionId");
 
-                    b.Property<int?>("QuizQuestionId1");
-
                     b.Property<string>("Text");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ImageId");
 
-                    b.HasIndex("QuizQuestionId")
-                        .IsUnique();
-
-                    b.HasIndex("QuizQuestionId1");
+                    b.HasIndex("QuizQuestionId");
 
                     b.ToTable("QuizAnswers");
                 });
@@ -258,6 +253,10 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AudioId");
+
+                    b.HasIndex("CorrectAnswerId")
+                        .IsUnique()
+                        .HasFilter("[CorrectAnswerId] IS NOT NULL");
 
                     b.HasIndex("ImageId");
 
@@ -717,13 +716,9 @@ namespace Deepcove_Trust_Website.Migrations
                         .HasForeignKey("ImageId");
 
                     b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "QuizQuestion")
-                        .WithOne("CorrectAnswer")
-                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", "QuizQuestionId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion")
                         .WithMany("Answers")
-                        .HasForeignKey("QuizQuestionId1");
+                        .HasForeignKey("QuizQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", b =>
@@ -731,6 +726,10 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasOne("Deepcove_Trust_Website.Models.AudioMedia", "Audio")
                         .WithMany()
                         .HasForeignKey("AudioId");
+
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", "CorrectAnswer")
+                        .WithOne("CorrectForQuestion")
+                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "CorrectAnswerId");
 
                     b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
                         .WithMany()

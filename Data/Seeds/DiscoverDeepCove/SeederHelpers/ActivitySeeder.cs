@@ -11,6 +11,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         public int Id { get; set; }
         public bool Active { get; set; }
         public int? ImageId { get; set; }
+        public int? FactFileId { get; set; }
         public ActivityType ActivityType { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -26,6 +27,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
             {
                 Id = Id,
                 TrackId = trackId,
+                FactFileId = FactFileId,
                 Active = Active,
                 ImageId = ImageId,
                 ActivityType = ActivityType,

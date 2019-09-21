@@ -26,6 +26,7 @@ namespace Deepcove_Trust_Website
                 catch (Exception ex)
                 {
                     logger.LogError("Error seeding database tables: {0}", ex.Message);
+                    logger.LogError("Inner exception: {0}", ex.InnerException.Message);
                     logger.LogError(ex.StackTrace);
                 }
             }

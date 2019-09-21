@@ -15,26 +15,26 @@
           {
             "Id": 1,
             "Text": "Kea",
-            "image_id": null,
-            "question_id": 1
+            "ImageId": null,
+            "QuestionId": 1
           },
           {
             "Id": 2,
             "Text": "Weka",
-            "image_id": null,
-            "question_id": 1
+            "ImageId": null,
+            "QuestionId": 1
           },
           {
             "Id": 3,
             "Text": "Wood Pigeon",
-            "image_id": null,
-            "question_id": 1
+            "ImageId": null,
+            "QuestionId": 1
           },
           {
             "Id": 4,
             "Text": "Kakapo",
-            "image_id": null,
-            "question_id": 1
+            "ImageId": null,
+            "QuestionId": 1
           }
         ]
       },
@@ -47,26 +47,26 @@
           {
             "Id": 5,
             "Text": null,
-            "image_id": 2,
-            "question_id": 2
+            "ImageId": 2,
+            "QuestionId": 2
           },
           {
             "Id": 6,
             "Text": null,
-            "image_id": 15,
-            "question_id": 2
+            "ImageId": 15,
+            "QuestionId": 2
           },
           {
             "Id": 7,
             "Text": null,
-            "image_id": 6,
-            "question_id": 2
+            "ImageId": 6,
+            "QuestionId": 2
           },
           {
             "Id": 8,
             "Text": null,
-            "image_id": 11,
-            "question_id": 2
+            "ImageId": 11,
+            "QuestionId": 2
           }
         ]
       }

@@ -12,17 +12,18 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         public int? ImageId { get; set; }
         public int QuizId { get; set; } 
 
-        [JsonProperty("TrueFalseAnswer")]
+        [JsonProperty("true_false_answer")]
         public bool? TrueFalseAnswer { get; set; }
 
         public string Text { get; set; }
 
         // Navigation Properties
         public AudioMedia Audio { get; set; }
-
+        [InverseProperty("QuizQuestion")]
         public List<QuizAnswer> Answers { get; set; }
 
         [JsonProperty("correct_answer")]
+        [InverseProperty("CorrectForQuestion")]
         public QuizAnswer CorrectAnswer { get; set; }
 
         public ImageMedia Image { get; set; }

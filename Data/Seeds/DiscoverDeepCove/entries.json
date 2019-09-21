@@ -11,8 +11,8 @@
     "Nuggets": [
       {
         "orderIndex": 0,
-        "name": "",
-        "text": "",
+        "name": "Test Nugget",
+        "text": "This is a test nugget.",
         "imageId": ""
       }
     ],
@@ -28,12 +28,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Black-billed Gull text goes here"
   },
@@ -47,12 +41,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Fantail text goes here"
   },
@@ -66,12 +54,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Grey Warbler text goes here"
   },
@@ -85,12 +67,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Kaka text goes here"
   },
@@ -104,12 +80,6 @@
     "MainImageId": 2,
     "GalleryImages": [ 2, 3 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Kea text goes here"
   },
@@ -123,12 +93,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Kiwi text goes here"
   },
@@ -142,12 +106,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Paradise Duck text goes here"
   },
@@ -161,12 +119,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Rifleman text goes here"
   },
@@ -180,12 +132,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Silvereye text goes here"
   },
@@ -199,12 +145,6 @@
     "MainImageId": 6,
     "GalleryImages": [ 6, 7 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Tomtit text goes here"
   },
@@ -218,12 +158,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Weka text goes here"
   },
@@ -237,12 +171,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Wood Pigeon text goes here"
   },
@@ -256,12 +184,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Blue Cod text goes here"
   },
@@ -275,12 +197,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Groper text goes here"
   },
@@ -294,12 +210,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Red Gurnard text goes here"
   },
@@ -313,12 +223,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Sea Perch text goes here"
   },
@@ -332,12 +236,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Seven-gilled Shark text goes here"
   },
@@ -351,12 +249,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Spotty text goes here"
   },
@@ -370,12 +262,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Black Tree Fern text goes here"
   },
@@ -389,12 +275,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Celery Pine text goes here"
   },
@@ -408,12 +288,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Hard Tree Fern text goes here"
   },
@@ -427,12 +301,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Mountain Beech text goes here"
   },
@@ -446,12 +314,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Rimu text goes here"
   },
@@ -465,12 +327,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Soft Tree Fern text goes here"
   },
@@ -484,12 +340,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Totara text goes here"
   },
@@ -503,12 +353,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Crown Fern text goes here"
   },
@@ -522,12 +366,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Hebe text goes here"
   },
@@ -541,12 +379,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Hen and Chicken Fern text goes here"
   },
@@ -560,12 +392,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Karamu text goes here"
   },
@@ -579,12 +405,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Marble Leaf text goes here"
   },
@@ -598,12 +418,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Stinkwood text goes here"
   },
@@ -617,12 +431,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "",
-        "text": "",
-        "imageId": ""
-      }
     ],
     "BodyText": "Tutu text goes here"
   }

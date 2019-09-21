@@ -88,6 +88,10 @@
     <Compile Remove="Migrations\20190916050538_initial.Designer.cs" />
     <Compile Remove="Migrations\20190916051110_m.cs" />
     <Compile Remove="Migrations\20190916051110_m.Designer.cs" />
+    <Compile Remove="Migrations\20190917035158_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190917035158_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190921090005_Second.cs" />
+    <Compile Remove="Migrations\20190921090005_Second.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -113,7 +117,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
     <Folder Include="Storage\" />
   </ItemGroup>
