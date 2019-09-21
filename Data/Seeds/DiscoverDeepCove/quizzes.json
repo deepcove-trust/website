@@ -4,7 +4,7 @@
     "Title": "Birds of Deep Cove",
     "ImageId": 2,
     "UnlockCode": "123456",
-    "Activated": true,
+    "Active": true,
     "Questions": [
       {
         "Id": 1,

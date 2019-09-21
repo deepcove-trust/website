@@ -15,6 +15,8 @@ namespace deepcove_dotnet.Data
 {    
     public static class DiscoverDeepCoveSeeder
     {
+        static string basePath = Path.Combine("Data", "Seeds", "DiscoverDeepCove");
+
         public static void Seed(WebsiteDataContext context)
         {
             // Check whether database has already got data in it.
@@ -23,7 +25,9 @@ namespace deepcove_dotnet.Data
 
             //------------------------------------------------------------------
 
-            StreamReader mediaJson = new StreamReader("Data/Json/media.json");
+            
+
+            StreamReader mediaJson = new StreamReader(Path.Combine(basePath, "media.json"));
             List<BaseMedia> media = JsonConvert.DeserializeObject<List<BaseMedia>>(mediaJson.ReadToEnd());
             mediaJson.Close();
 
@@ -31,7 +35,7 @@ namespace deepcove_dotnet.Data
 
             //------------------------------------------------------------------
 
-            StreamReader tracksJson = new StreamReader("Data/Json/tracks.json");
+            StreamReader tracksJson = new StreamReader(Path.Combine(basePath, "tracks.json"));
             List<TrackSeeder> tracks = JsonConvert.DeserializeObject<List<TrackSeeder>>(tracksJson.ReadToEnd());
             tracksJson.Close();
 
@@ -41,7 +45,7 @@ namespace deepcove_dotnet.Data
 
             //-----------------------------------------------------------------
 
-            StreamReader categoriesJson = new StreamReader("Data/Json/categories.json");
+            StreamReader categoriesJson = new StreamReader(Path.Combine(basePath, "categories.json"));
             List<FactFileCategory> categories = JsonConvert.DeserializeObject<List<FactFileCategory>>(categoriesJson.ReadToEnd());
             categoriesJson.Close();
 
@@ -49,7 +53,7 @@ namespace deepcove_dotnet.Data
 
             //------------------------------------------------------------------
 
-            StreamReader entriesJson = new StreamReader("Data/Json/entries.json");
+            StreamReader entriesJson = new StreamReader(Path.Combine(basePath, "entries.json"));
             List<EntrySeeder> entries = JsonConvert.DeserializeObject<List<EntrySeeder>>(entriesJson.ReadToEnd());
             entriesJson.Close();
 
@@ -59,7 +63,7 @@ namespace deepcove_dotnet.Data
 
             //-------------------------------------------------------------------
 
-            StreamReader quizzesJson = new StreamReader("Data/Json/quizzes.json");
+            StreamReader quizzesJson = new StreamReader(Path.Combine(basePath, "quizzes.json"));
             List<QuizSeeder> quizzes = JsonConvert.DeserializeObject<List<QuizSeeder>>(quizzesJson.ReadToEnd());
             quizzesJson.Close();
 

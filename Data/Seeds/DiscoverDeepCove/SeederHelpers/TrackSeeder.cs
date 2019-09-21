@@ -1,5 +1,4 @@
-﻿using deepcove_dotnet.Models.DataModels.Activities;
-using deepcove_dotnet.Models.DataModels.JunctionModels;
+﻿using Deepcove_Trust_Website.DiscoverDeepCove;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ namespace deepcove_dotnet.Data.SeedClasses
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public bool Activated { get; set; }        
+        public bool Active { get; set; }        
         public List<ActivitySeeder> Activities { get; set; }
 
         public Track ToTrack()
@@ -20,7 +19,7 @@ namespace deepcove_dotnet.Data.SeedClasses
             {
                 Id = Id,
                 Name = Name,
-                Activated = Activated
+                Active = Active
             };
         }
 

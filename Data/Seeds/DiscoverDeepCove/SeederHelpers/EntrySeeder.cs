@@ -1,9 +1,6 @@
-﻿using deepcove_dotnet.Models.DataModels.FactFile;
-using deepcove_dotnet.Models.DataModels.JunctionModels;
-using System;
+﻿using Deepcove_Trust_Website.DiscoverDeepCove;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace deepcove_dotnet.Data.SeedClasses
 {

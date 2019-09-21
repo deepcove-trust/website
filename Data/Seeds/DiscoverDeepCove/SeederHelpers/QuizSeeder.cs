@@ -1,4 +1,4 @@
-﻿using deepcove_dotnet.Models.DataModels.Quiz;
+﻿using Deepcove_Trust_Website.DiscoverDeepCove;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace deepcove_dotnet.Data.SeedClasses
         public int Id { get; set; }
         public int ImageId { get; set; }
         public string UnlockCode { get; set; }
-        public bool Activated { get; set; }
+        public bool Active { get; set; }
         public string Title { get; set; }
         public List<QuestionSeeder> Questions { get; set; }
 
@@ -23,7 +23,7 @@ namespace deepcove_dotnet.Data.SeedClasses
                 Title = Title,
                 ImageId = ImageId,
                 UnlockCode = UnlockCode,
-                Activated = Activated
+                Active = Active
             };
         }
 

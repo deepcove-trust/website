@@ -1,6 +1,4 @@
-﻿using deepcove_dotnet.Models.DataModels;
-using deepcove_dotnet.Models.DataModels.Activities;
-using deepcove_dotnet.Models.DataModels.JunctionModels;
+﻿using Deepcove_Trust_Website.DiscoverDeepCove;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +9,15 @@ namespace deepcove_dotnet.Data.SeedClasses
     public class ActivitySeeder
     {
         public int Id { get; set; }
-        public bool Activated { get; set; }
+        public bool Active { get; set; }
         public int? ImageId { get; set; }
         public ActivityType ActivityType { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string Task { get; set; }
         public string QrCode { get; set; }
-        public double XCoord { get; set; }
-        public double YCoord { get; set; }
+        public double CoordX { get; set; }
+        public double CoordY { get; set; }
         public List<int> ImageOptions { get; set; }
 
         public Activity ToActivity(int trackId)
@@ -28,15 +26,15 @@ namespace deepcove_dotnet.Data.SeedClasses
             {
                 Id = Id,
                 TrackId = trackId,
-                Activated = Activated,
+                Active = Active,
                 ImageId = ImageId,
                 ActivityType = ActivityType,
                 Title = Title,
                 Description = Description,
                 Task = Task,
                 QrCode = QrCode,
-                XCoord = XCoord,
-                YCoord = YCoord
+                CoordX = CoordX,
+                CoordY = CoordX
             };
         }        
 

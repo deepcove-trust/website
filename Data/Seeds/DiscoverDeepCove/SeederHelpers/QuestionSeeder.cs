@@ -1,4 +1,4 @@
-﻿using deepcove_dotnet.Models.DataModels.Quiz;
+﻿using Deepcove_Trust_Website.DiscoverDeepCove;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace deepcove_dotnet.Data.SeedClasses
         public int Id { get; set; }
         public string Text { get; set; }
         public int? CorrectAnswerId { get; set; }
-        public int? TrueFalseAnswer { get; set; }
+        public bool? TrueFalseAnswer { get; set; }
         public int? ImageId { get; set; }
         public List<QuizAnswer> Answers { get; set; }
 
