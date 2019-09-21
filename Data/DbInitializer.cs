@@ -1,4 +1,5 @@
-﻿using Deepcove_Trust_Website.Models;
+﻿using deepcove_dotnet.Data;
+using Deepcove_Trust_Website.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System;
@@ -13,10 +14,10 @@ namespace Deepcove_Trust_Website.Data
     {
         public static void Initialize(WebsiteDataContext context)
         {
-            char separator = Path.DirectorySeparatorChar;            
+            string basePath = Path.Combine("Data", "Seeds");
 
             // Page Templates
-            List<PageTemplate> templatesSeed = JsonConvert.DeserializeObject<List<PageTemplate>>(File.ReadAllText($"Data{separator}Seeds{separator}templates.json"));
+            List<PageTemplate> templatesSeed = JsonConvert.DeserializeObject<List<PageTemplate>>(File.ReadAllText(Path.Combine(basePath, "templates.json")));
 
             foreach(PageTemplate template in templatesSeed)
             {
@@ -29,7 +30,7 @@ namespace Deepcove_Trust_Website.Data
             context.SaveChanges();
 
             // Notification Channels
-            List<NotificationChannel> channelsSeed = JsonConvert.DeserializeObject<List<NotificationChannel>>(File.ReadAllText($"Data{separator}Seeds{separator}notificationChannels.json"));
+            List<NotificationChannel> channelsSeed = JsonConvert.DeserializeObject<List<NotificationChannel>>(File.ReadAllText(Path.Combine(basePath, "notificationChannels.json")));
             
             foreach(NotificationChannel channel in channelsSeed)
             {
@@ -44,11 +45,14 @@ namespace Deepcove_Trust_Website.Data
             // System Settings - Only runs once
             if (!context.SystemSettings.Any())
             {
-                SystemSettings settings = JsonConvert.DeserializeObject<SystemSettings>(File.ReadAllText($"Data{separator}Seeds{separator}SystemSettings.json"));
+                SystemSettings settings = JsonConvert.DeserializeObject<SystemSettings>(File.ReadAllText(Path.Combine(basePath, "SystemSettings.json")));
                 context.Add(settings);
             }
             // End System Settings
             context.SaveChanges();
+
+            // Seed Discover Deep Cove data
+            DiscoverDeepCoveSeeder.Seed(context);
         }
     }
 }

@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "file_type": 1,
+    "Name": "no_image",
+    "Path": "images/no_image.png"
+  },
+  {
+    "Id": 2,
+    "file_type": 0,
+    "Name": "kea_1",
+    "Path": "images/kea_1.jpg"
+  },
+  {
+    "Id": 3,
+    "file_type": 0,
+    "Name": "kea_2",
+    "Path": "images/kea_2.jpg"
+  },
+  {
+    "Id": 4,
+    "file_type": 2,
+    "Name": "kea_call",
+    "Path": "audio/kea_call.mp3"
+  },
+  {
+    "Id": 5,
+    "file_type": 2,
+    "Name": "kea_pronounce",
+    "Path": "audio/kea_pronounce.mp3"
+  },
+  {
+    "Id": 6,
+    "file_type": 0,
+    "Name": "tomtit_1",
+    "Path": "images/tomtit_1.jpg"
+  },
+  {
+    "Id": 7,
+    "file_type": 0,
+    "Name": "tomtit_2",
+    "Path": "images/tomtit_2.jpg"
+  },
+  {
+    "Id": 8,
+    "file_type": 2,
+    "Name": "tomtit_audio",
+    "Path": "audio/tomtit_audio.mp3"
+  },
+  {
+    "Id": 9,
+    "file_type": 0,
+    "Name": "rimu_1",
+    "Path": "images/rimu_1.jpg"
+  },
+  {
+    "Id": 10,
+    "file_type": 0,
+    "Name": "totara_1",
+    "Path": "images/totara_1.jpg"
+  },
+  {
+    "Id": 11,
+    "file_type": 0,
+    "Name": "frog",
+    "Path": "images/frog.jpg"
+  },
+  {
+    "Id": 12,
+    "file_type": 1,
+    "Name": "brasell_point",
+    "Path": "images/brasell_point.png"
+  },
+  {
+    "Id": 13,
+    "file_type": 0,
+    "Name": "tree_stump",
+    "Path": "images/tree_stump.jpg"
+  },
+  {
+    "Id": 14,
+    "file_type": 0,
+    "Name": "helena_falls",
+    "Path": "images/helena_falls.jpg"
+  },
+  {
+    "Id": 15,
+    "file_type": 0,
+    "Name": "weka_1",
+    "Path": "images/weka_1.jpg"
+  }
+]

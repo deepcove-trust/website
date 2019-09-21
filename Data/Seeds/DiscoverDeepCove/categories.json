@@ -1,0 +1,18 @@
+[
+  {
+    "Id": 1,
+    "Name": "Birds"
+  },
+  {
+    "Id": 2,
+    "Name": "Trees"
+  },
+  {
+    "Id": 3,
+    "Name": "Plants"
+  },
+  {
+    "Id": 4,
+    "Name": "Fish"
+  }
+]

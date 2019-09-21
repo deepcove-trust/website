@@ -1,0 +1,629 @@
+﻿[
+  {
+    "Id": 1,
+    "CategoryId": 1,
+    "PrimaryName": "Bellbird",
+    "AltName": "Korimako",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Bellbird text goes here"
+  },
+  {
+    "Id": 2,
+    "CategoryId": 1,
+    "PrimaryName": "Black-billed Gull",
+    "AltName": "Tarāpuka",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Black-billed Gull text goes here"
+  },
+  {
+    "Id": 3,
+    "CategoryId": 1,
+    "PrimaryName": "Fantail",
+    "AltName": "Pīwakawaka",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Fantail text goes here"
+  },
+  {
+    "Id": 4,
+    "CategoryId": 1,
+    "PrimaryName": "Grey Warbler",
+    "AltName": "Riroriro",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Grey Warbler text goes here"
+  },
+  {
+    "Id": 5,
+    "CategoryId": 1,
+    "PrimaryName": "Kākā",
+    "AltName": "",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Kaka text goes here"
+  },
+  {
+    "Id": 6,
+    "CategoryId": 1,
+    "PrimaryName": "Kea",
+    "AltName": "",
+    "ListenAudioId": 4,
+    "PronounceAudioId": 5,
+    "MainImageId": 2,
+    "GalleryImages": [ 2, 3 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Kea text goes here"
+  },
+  {
+    "Id": 7,
+    "CategoryId": 1,
+    "PrimaryName": "Kiwi",
+    "AltName": "Tokoeka",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Kiwi text goes here"
+  },
+  {
+    "Id": 8,
+    "CategoryId": 1,
+    "PrimaryName": "Paradise Duck",
+    "AltName": "Pūtangitangi",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Paradise Duck text goes here"
+  },
+  {
+    "Id": 9,
+    "CategoryId": 1,
+    "PrimaryName": "Rifleman",
+    "AltName": "Titipounamu",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Rifleman text goes here"
+  },
+  {
+    "Id": 10,
+    "CategoryId": 1,
+    "PrimaryName": "Silvereye",
+    "AltName": "Tahou",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Silvereye text goes here"
+  },
+  {
+    "Id": 11,
+    "CategoryId": 1,
+    "PrimaryName": "Tomtit",
+    "AltName": "Ngirungiru",
+    "ListenAudioId": 8,
+    "PronounceAudioId": null,
+    "MainImageId": 6,
+    "GalleryImages": [ 6, 7 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Tomtit text goes here"
+  },
+  {
+    "Id": 12,
+    "CategoryId": 1,
+    "PrimaryName": "Weka",
+    "AltName": "",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Weka text goes here"
+  },
+  {
+    "Id": 13,
+    "CategoryId": 1,
+    "PrimaryName": "Wood Pigeon",
+    "AltName": "Kererū",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Wood Pigeon text goes here"
+  },
+  {
+    "Id": 14,
+    "CategoryId": 4,
+    "PrimaryName": "Blue Cod",
+    "AltName": "Raawaru",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Blue Cod text goes here"
+  },
+  {
+    "Id": 15,
+    "CategoryId": 4,
+    "PrimaryName": "Groper",
+    "AltName": "Hapuku",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Groper text goes here"
+  },
+  {
+    "Id": 16,
+    "CategoryId": 4,
+    "PrimaryName": "Red Gurnard",
+    "AltName": "Kumu Kumu",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Red Gurnard text goes here"
+  },
+  {
+    "Id": 17,
+    "CategoryId": 4,
+    "PrimaryName": "Sea Perch",
+    "AltName": "Pohuiakaroa",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Sea Perch text goes here"
+  },
+  {
+    "Id": 18,
+    "CategoryId": 4,
+    "PrimaryName": "Seven-gilled Shark",
+    "AltName": "Tuatina",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Seven-gilled Shark text goes here"
+  },
+  {
+    "Id": 19,
+    "CategoryId": 4,
+    "PrimaryName": "Spotty",
+    "AltName": "Pakirikiri",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Spotty text goes here"
+  },
+  {
+    "Id": 20,
+    "CategoryId": 2,
+    "PrimaryName": "Black Tree Fern",
+    "AltName": "Mamaku",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Black Tree Fern text goes here"
+  },
+  {
+    "Id": 21,
+    "CategoryId": 2,
+    "PrimaryName": "Celery Pine",
+    "AltName": "Toatoa",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Celery Pine text goes here"
+  },
+  {
+    "Id": 22,
+    "CategoryId": 2,
+    "PrimaryName": "Hard/Rough Tree Fern",
+    "AltName": "Wheki",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Hard Tree Fern text goes here"
+  },
+  {
+    "Id": 23,
+    "CategoryId": 2,
+    "PrimaryName": "Mountain Beech",
+    "AltName": "Tawhairauriki",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Mountain Beech text goes here"
+  },
+  {
+    "Id": 24,
+    "CategoryId": 2,
+    "PrimaryName": "Rimu",
+    "AltName": "",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Rimu text goes here"
+  },
+  {
+    "Id": 25,
+    "CategoryId": 2,
+    "PrimaryName": "Soft Tree Fern",
+    "AltName": "Katote",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Soft Tree Fern text goes here"
+  },
+  {
+    "Id": 26,
+    "CategoryId": 2,
+    "PrimaryName": "Tōtara",
+    "AltName": "",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Totara text goes here"
+  },
+  {
+    "Id": 27,
+    "CategoryId": 3,
+    "PrimaryName": "Crown Fern",
+    "AltName": "Piuoiu / Petipeti",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Crown Fern text goes here"
+  },
+  {
+    "Id": 28,
+    "CategoryId": 3,
+    "PrimaryName": "Hebe",
+    "AltName": "Koromiko",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Hebe text goes here"
+  },
+  {
+    "Id": 29,
+    "CategoryId": 3,
+    "PrimaryName": "Hen and Chicken Fern",
+    "AltName": "Pikopiko / Mouku",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Hen and Chicken Fern text goes here"
+  },
+  {
+    "Id": 30,
+    "CategoryId": 3,
+    "PrimaryName": "Karamu",
+    "AltName": "",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Karamu text goes here"
+  },
+  {
+    "Id": 31,
+    "CategoryId": 3,
+    "PrimaryName": "Marble Leaf",
+    "AltName": "Putaputaweta",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Marble Leaf text goes here"
+  },
+  {
+    "Id": 32,
+    "CategoryId": 3,
+    "PrimaryName": "Stinkwood",
+    "AltName": "Hupiro",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Stinkwood text goes here"
+  },
+  {
+    "Id": 33,
+    "CategoryId": 3,
+    "PrimaryName": "Tutu",
+    "AltName": "",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "",
+        "text": "",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Tutu text goes here"
+  }
+]
