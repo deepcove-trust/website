@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace deepcove_dotnet.Data.SeedClasses
+namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
 {
     public class EntrySeeder
     {
@@ -31,7 +31,7 @@ namespace deepcove_dotnet.Data.SeedClasses
                 MainImageId = MainImageId
             };
         }
-
+        
         public List<FactFileNugget> GetFactFileNuggets()
         {
             return Nuggets?.Select(n => n.ToFactFileNugget(Id)).ToList();

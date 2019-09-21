@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace deepcove_dotnet.Data.SeedClasses
+namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
 {
     public class QuizSeeder
     {
