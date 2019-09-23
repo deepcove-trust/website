@@ -92,6 +92,8 @@
     <Compile Remove="Migrations\20190917035158_Initial Migration.Designer.cs" />
     <Compile Remove="Migrations\20190921090005_Second.cs" />
     <Compile Remove="Migrations\20190921090005_Second.Designer.cs" />
+    <Compile Remove="Migrations\20190921123153_Initial.cs" />
+    <Compile Remove="Migrations\20190921123153_Initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -119,6 +121,7 @@
   <ItemGroup>
     <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
     <Folder Include="Storage\" />
+    <Folder Include="wwwroot\audio\" />
   </ItemGroup>
 
 

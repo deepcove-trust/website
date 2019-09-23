@@ -58,13 +58,13 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                     {
                         s.Id,
                         s.MediaType.Category,
-                        Title = (s as ImageMedia) != null ? (s as ImageMedia).Title : s.Filename,
+                        Name = (s as ImageMedia) != null ? (s as ImageMedia).Title : s.Filename,
                         Source = "Source here", 
-                        Show_Copyright = false, 
+                        show_copyright = false, 
                         s.Size,
                         s.Filename,
-                        Updated_At = s.UpdatedAt
-                    }).FirstOrDefault()
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
+                }).FirstOrDefault()
                 );
             }
             catch(Exception ex)
