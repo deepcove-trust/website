@@ -51,6 +51,10 @@ namespace Deepcove_Trust_Website.Models
         public MediaType MediaType { get; set; }
         [JsonProperty("path")]
         public string FilePath { get; set; }
+        [JsonProperty("source")]
+        public string Source { get; set; }
+        [JsonProperty("showCopyright")]
+        public bool ShowCopyright { get; set; }
         [JsonProperty("isPublic")]
         public bool IsPublic { get; set; }
         [JsonProperty("size")]

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Linq;
 using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
 {
-    [Route("/api/app/quizzes")]
+    [Route("/api/app/media")]
     public class MediaController : Controller
     {
         private WebsiteDataContext _Db;
@@ -31,11 +32,11 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                 return Ok(_Db.Media.Where(c => c.IsPublic).Select(s => new
                     {
                         s.Id,
-                        s.MediaType,
                         s.Size,
-                        s.UpdatedAt
+                        s.Filename,
+                        UpdatedAt = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).ToList()
-                );
+                );;
             }
             catch(Exception ex)
             {
@@ -46,9 +47,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
         }
 
         /// <summary>
-        /// Gets the meta data about the requested media
+        /// Gets the meta data about the requested media.
         /// </summary>
-        /// <param name="Ids">Space seperated URL query example <code>?ids=20 21 545</code></param>
         [HttpGet("{id:int}")]
         public IActionResult Data(int id)
         {
@@ -57,12 +57,13 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                 return Ok(_Db.Media.Where(c => c.Id == id).Select(s => new
                     {
                         s.Id,
-                        s.MediaType,
-                        s.Name,
+                        s.MediaType.Category,
+                        Title = (s as ImageMedia) != null ? (s as ImageMedia).Title : s.Filename,
+                        Source = "Source here", 
+                        Show_Copyright = false, 
                         s.Size,
                         s.Filename,
-                        s.FilePath,
-                        s.UpdatedAt
+                        Updated_At = s.UpdatedAt
                     }).FirstOrDefault()
                 );
             }
@@ -72,13 +73,6 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                 _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later.");
             }
-        }
-
-        [HttpPost("")]
-        public IActionResult Download(IFormCollection request)
-        {
-            // Get an array of image ints from the body "ids". Then return a zip of those files??
-            throw new NotImplementedException();
         }
     }
 }
