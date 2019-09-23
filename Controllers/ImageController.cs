@@ -51,7 +51,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 // Return file if not image
                 if (file.GetCategory() != MediaCategory.Image)
                 {
-                    return File(file.FilePath, file.MediaType.Mime);
+                    return File(await System.IO.File.ReadAllBytesAsync(file.FilePath), file.MediaType.Mime);
                 }
                 else
                 {
