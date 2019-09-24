@@ -28,7 +28,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                     {
                         s.Id,
                         s.Title,
-                        updated_at = s.UpdatedAt
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).ToList();
 
                 return Ok(Quizzes);

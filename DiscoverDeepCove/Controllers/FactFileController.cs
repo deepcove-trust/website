@@ -29,7 +29,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                     .Select(s => new
                     {
                         s.Id,
-                        s.UpdatedAt
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).ToList()
                 );
             }
@@ -56,17 +56,17 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                         s.AltName,
                         s.PrimaryName,
                         s.BodyText,
-                        Category_Name = s.Category.Id,
-                        Main_Image_Id = s.MainImage.Id,
-                        Listen_Audio_Id = s.ListenAudio.Id,
-                        Pronounce_Audio_Id = s.PronounceAudio.Id,
-                        Images = s.FactFileEntryImages.Select(s1 => s1.MediaFile.Id),
-                        Nuggets = _Db.FactFileNuggets.Where(c => c.FactFileEntry.Id == id).Select(s1 => new
+                        category_name = s.Category.Id,
+                        main_image_id = s.MainImage.Id,
+                        listen_audio_id = s.ListenAudio.Id,
+                        pronounce_audio_id = s.PronounceAudio.Id,
+                        images = s.FactFileEntryImages.Select(s1 => s1.MediaFile.Id),
+                        nuggets = _Db.FactFileNuggets.Where(c => c.FactFileEntry.Id == id).Select(s1 => new
                         {
                             s1.Id,
-                            Image_Id = s1.Image.Id,
+                            image_id = s1.Image.Id,
                             s1.Name,
-                            s1.OrderIndex,
+                            order_index = s1.OrderIndex,
                             s1.Text
                         }).ToList()
                     }).FirstOrDefault();

@@ -54,7 +54,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                     .Select(s => new
                     {
                         s.Id,
-                        s.UpdatedAt
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).ToList();
 
                 return Ok(Activities);
