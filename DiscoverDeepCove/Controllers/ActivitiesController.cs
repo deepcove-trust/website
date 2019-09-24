@@ -28,7 +28,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                 {
                     s.Id,
                     s.Title,
-                    s.UpdatedAt
+                    updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                 }).ToList());
             }
             catch(Exception ex)
@@ -50,19 +50,19 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                         s.Id,
                         s.Title,
                         s.Description,
-                        s.ActivityType,
-                        Image_Id = s.Image.Id,                        
+                        activity_type = s.ActivityType,
+                        image_id = s.Image.Id,                        
 
-                        s.CoordX,
-                        s.CoordY,
-                        s.QrCode,
+                        coord_x = s.CoordX,
+                        coord_y = s.CoordY,
+                        qr_code = s.QrCode,
                         Track = s.Track.Id,
 
                         s.Task,
-                        Activity_Images_Id = s.ActivityImages.Select(s1 => s1.Image.Id).ToList(),
-                        Fact_File_Id = s.FactFile.Id,
+                        activity_images_id = s.ActivityImages.Select(s1 => s1.Image.Id).ToList(),
+                        fact_file_id = s.FactFile.Id,
                         
-                        s.UpdatedAt
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).FirstOrDefault();
 
                 if (Activity == null) return NotFound();

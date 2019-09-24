@@ -26,10 +26,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         {
             try
             {
-                return Ok(_Db.Config.Select(s => new
-                {
-                    s.MasterUnlockCode
-                }).Last());
+                return Ok(_Db.Config.First());           
             }
             catch(Exception ex)
             {

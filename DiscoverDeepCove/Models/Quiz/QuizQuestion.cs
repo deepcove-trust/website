@@ -10,6 +10,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         public int Id { get; set; }
         public int? CorrectAnswerId { get; set; }
         public int? ImageId { get; set; }
+        public int? AudioId { get; set; }
         public int QuizId { get; set; } 
 
         [JsonProperty("true_false_answer")]

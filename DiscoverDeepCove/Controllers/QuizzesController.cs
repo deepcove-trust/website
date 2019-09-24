@@ -28,7 +28,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                     {
                         s.Id,
                         s.Title,
-                        s.UpdatedAt
+                        updated_at = s.UpdatedAt
                     }).ToList();
 
                 return Ok(Quizzes);
@@ -46,30 +46,31 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         {
             try
             {
-                var Quiz = _Db.Quizzes.Where(c => c.Id == id)
+                var Quiz = _Db.Quizzes                    
+                    .Where(c => c.Id == id)                    
                     .Select(s => new
                     {
                         s.Id,
                         s.Title,
-                        Cover_Image_Id = s.Image.Id,
-                        Questions = s.Questions.Select(question => new
+                        image_id = s.Image.Id,
+                        unlock_code = s.UnlockCode,
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"),
+                        questions = s.Questions.Select(question => new
                         {
                             question.Id,
-                            Audio_Id = question.Audio.Id,
-                            Image_Id = question.Image.Id,
-                            Quiz_Id = question.Quiz.Id,
+                            audio_id = question.AudioId,
+                            image_id = question.ImageId,
+                            quiz_id = question.QuizId,
                             question.Text,
-                            TrueFalseAnswer = question.TrueFalseAnswer ?? null,
-                            Answers = question.Answers.Select(answer => new
+                            true_false_answer = question.TrueFalseAnswer ?? null,
+                            answers = question.Answers != null ? question.Answers.Select(answer => new
                             {
                                 answer.Id,
-                                Image_Id = answer.Image.Id,
+                                image_id = answer.ImageId,
                                 answer.Text
-                            }).ToList(),
-                            Correct_Answer_Id = question.CorrectAnswer.Id
-                        }).ToList(),
-                        s.UnlockCode,
-                        s.UpdatedAt
+                            }).ToList() : null,
+                            correct_answer_id = question.CorrectAnswerId
+                        }).ToList(),                        
                     }).FirstOrDefault();
 
                 if (Quiz == null) return NotFound();
