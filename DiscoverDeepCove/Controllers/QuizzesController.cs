@@ -66,6 +66,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                             answers = question.Answers != null ? question.Answers.Select(answer => new
                             {
                                 answer.Id,
+                                quiz_question_id = answer.QuizQuestionId,
                                 image_id = answer.ImageId,
                                 answer.Text
                             }).ToList() : null,
