@@ -2,6 +2,7 @@
   {
     "Id": 1,
     "CategoryId": 1,
+    "Active":  true,
     "PrimaryName": "Bellbird",
     "AltName": "Korimako",
     "ListenAudioId": null,
@@ -21,6 +22,7 @@
   {
     "Id": 2,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Black-billed Gull",
     "AltName": "Tarāpuka",
     "ListenAudioId": null,
@@ -34,6 +36,7 @@
   {
     "Id": 3,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Fantail",
     "AltName": "Pīwakawaka",
     "ListenAudioId": null,
@@ -47,6 +50,7 @@
   {
     "Id": 4,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Grey Warbler",
     "AltName": "Riroriro",
     "ListenAudioId": null,
@@ -60,8 +64,9 @@
   {
     "Id": 5,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Kākā",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
@@ -73,8 +78,9 @@
   {
     "Id": 6,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Kea",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": 4,
     "PronounceAudioId": 5,
     "MainImageId": 2,
@@ -86,6 +92,7 @@
   {
     "Id": 7,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Kiwi",
     "AltName": "Tokoeka",
     "ListenAudioId": null,
@@ -99,6 +106,7 @@
   {
     "Id": 8,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Paradise Duck",
     "AltName": "Pūtangitangi",
     "ListenAudioId": null,
@@ -112,6 +120,7 @@
   {
     "Id": 9,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Rifleman",
     "AltName": "Titipounamu",
     "ListenAudioId": null,
@@ -125,6 +134,7 @@
   {
     "Id": 10,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Silvereye",
     "AltName": "Tahou",
     "ListenAudioId": null,
@@ -138,6 +148,7 @@
   {
     "Id": 11,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Tomtit",
     "AltName": "Ngirungiru",
     "ListenAudioId": 8,
@@ -151,8 +162,9 @@
   {
     "Id": 12,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Weka",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
@@ -164,6 +176,7 @@
   {
     "Id": 13,
     "CategoryId": 1,
+    "Active": true,
     "PrimaryName": "Wood Pigeon",
     "AltName": "Kererū",
     "ListenAudioId": null,
@@ -177,6 +190,7 @@
   {
     "Id": 14,
     "CategoryId": 4,
+    "Active": true,
     "PrimaryName": "Blue Cod",
     "AltName": "Raawaru",
     "ListenAudioId": null,
@@ -190,6 +204,7 @@
   {
     "Id": 15,
     "CategoryId": 4,
+    "Active": true,
     "PrimaryName": "Groper",
     "AltName": "Hapuku",
     "ListenAudioId": null,
@@ -203,6 +218,7 @@
   {
     "Id": 16,
     "CategoryId": 4,
+    "Active": true,
     "PrimaryName": "Red Gurnard",
     "AltName": "Kumu Kumu",
     "ListenAudioId": null,
@@ -216,6 +232,7 @@
   {
     "Id": 17,
     "CategoryId": 4,
+    "Active": true,
     "PrimaryName": "Sea Perch",
     "AltName": "Pohuiakaroa",
     "ListenAudioId": null,
@@ -229,6 +246,7 @@
   {
     "Id": 18,
     "CategoryId": 4,
+    "Active": true,
     "PrimaryName": "Seven-gilled Shark",
     "AltName": "Tuatina",
     "ListenAudioId": null,
@@ -242,6 +260,7 @@
   {
     "Id": 19,
     "CategoryId": 4,
+    "Active": true,
     "PrimaryName": "Spotty",
     "AltName": "Pakirikiri",
     "ListenAudioId": null,
@@ -255,6 +274,7 @@
   {
     "Id": 20,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Black Tree Fern",
     "AltName": "Mamaku",
     "ListenAudioId": null,
@@ -268,6 +288,7 @@
   {
     "Id": 21,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Celery Pine",
     "AltName": "Toatoa",
     "ListenAudioId": null,
@@ -281,6 +302,7 @@
   {
     "Id": 22,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Hard/Rough Tree Fern",
     "AltName": "Wheki",
     "ListenAudioId": null,
@@ -294,6 +316,7 @@
   {
     "Id": 23,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Mountain Beech",
     "AltName": "Tawhairauriki",
     "ListenAudioId": null,
@@ -307,8 +330,9 @@
   {
     "Id": 24,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Rimu",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
@@ -320,6 +344,7 @@
   {
     "Id": 25,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Soft Tree Fern",
     "AltName": "Katote",
     "ListenAudioId": null,
@@ -333,8 +358,9 @@
   {
     "Id": 26,
     "CategoryId": 2,
+    "Active": true,
     "PrimaryName": "Tōtara",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
@@ -346,6 +372,7 @@
   {
     "Id": 27,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Crown Fern",
     "AltName": "Piuoiu / Petipeti",
     "ListenAudioId": null,
@@ -359,6 +386,7 @@
   {
     "Id": 28,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Hebe",
     "AltName": "Koromiko",
     "ListenAudioId": null,
@@ -372,6 +400,7 @@
   {
     "Id": 29,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Hen and Chicken Fern",
     "AltName": "Pikopiko / Mouku",
     "ListenAudioId": null,
@@ -385,8 +414,9 @@
   {
     "Id": 30,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Karamu",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
@@ -398,6 +428,7 @@
   {
     "Id": 31,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Marble Leaf",
     "AltName": "Putaputaweta",
     "ListenAudioId": null,
@@ -411,6 +442,7 @@
   {
     "Id": 32,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Stinkwood",
     "AltName": "Hupiro",
     "ListenAudioId": null,
@@ -424,8 +456,9 @@
   {
     "Id": 33,
     "CategoryId": 3,
+    "Active": true,
     "PrimaryName": "Tutu",
-    "AltName": "",
+    "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,

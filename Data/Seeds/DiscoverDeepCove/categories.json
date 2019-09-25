@@ -1,18 +1,22 @@
 [
   {
     "Id": 1,
-    "Name": "Birds"
+    "Name": "Birds",
+    "Active": true
   },
   {
     "Id": 2,
-    "Name": "Trees"
+    "Name": "Trees",
+    "Active": true
   },
   {
     "Id": 3,
-    "Name": "Plants"
+    "Name": "Plants",
+    "Active": true
   },
   {
     "Id": 4,
-    "Name": "Fish"
+    "Name": "Fish",
+    "Active":  true
   }
 ]

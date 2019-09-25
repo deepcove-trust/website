@@ -10,6 +10,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         public int CategoryId { get; set; }
         public string PrimaryName { get; set; }
         public string AltName { get; set; }
+        public bool Active { get; set; }
         public string BodyText { get; set; }
         public int? ListenAudioId { get; set; }
         public int? PronounceAudioId { get; set; }
@@ -23,6 +24,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
             {
                 Id = Id,
                 CategoryId = CategoryId,
+                Active = Active,
                 PrimaryName = PrimaryName,
                 AltName = AltName,
                 BodyText = BodyText,

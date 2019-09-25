@@ -23,11 +23,10 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         {
             try
             {
-                return Ok(_Db.Activities.Where(c => c.Active)
+                return Ok(_Db.Activities.Where(c => c.Active && c.Track.Active)
                 .Select(s => new
                 {
                     s.Id,
-                    s.Title,
                     updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                 }).ToList());
             }
@@ -44,23 +43,24 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         {
             try
             {
-                var Activity = _Db.Activities.Where(c => c.Id == id && c.Active)
+                var Activity = _Db.Activities.Where(c => c.Id == id && c.Active & c.Track.Active)
                     .Select(s => new
                     {
                         s.Id,
                         s.Title,
                         s.Description,
-                        activity_type = s.ActivityType,
-                        image_id = s.Image.Id,                        
+                        track_id = s.TrackId,
+                        activity_type = (int)s.ActivityType,
+                        image_id = s.ImageId,                        
 
                         coord_x = s.CoordX,
                         coord_y = s.CoordY,
                         qr_code = s.QrCode,
-                        Track = s.Track.Id,
+                        Track = s.TrackId,
 
                         s.Task,
-                        activity_images_id = s.ActivityImages.Select(s1 => s1.Image.Id).ToList(),
-                        fact_file_id = s.FactFile.Id,
+                        activity_images = s.ActivityImages.Select(s1 => s1.ImageId).ToList(),
+                        fact_file_id = s.FactFileId,
                         
                         updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).FirstOrDefault();

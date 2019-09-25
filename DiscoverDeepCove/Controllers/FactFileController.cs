@@ -3,6 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Deepcove_Trust_Website.Data;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 
 namespace Deepcove_Trust_Website.DiscoverDeepCove
 {
@@ -25,7 +26,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         {
             try
             {
-                return Ok(_Db.FactFileEntries.Where(c => c.Active)
+                return Ok(_Db.FactFileEntries
+                    .Where(c => c.Active && c.Category.Active)
                     .Select(s => new
                     {
                         s.Id,
@@ -46,30 +48,35 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         /// </summary>
         [HttpGet("{id:int}")]
         public IActionResult FileEntry(int id)
-        {
+        {            
             try
             {
-                var factFile = _Db.FactFileEntries.Where(c => c.Id == id && c.Active)
+                var factFile = _Db.FactFileEntries
+                    .Where(c => c.Id == id && c.Active && c.Category.Active)
                     .Select(s => new
                     {
                         s.Id,
-                        s.AltName,
-                        s.PrimaryName,
-                        s.BodyText,
-                        category_name = s.Category.Id,
-                        main_image_id = s.MainImage.Id,
-                        listen_audio_id = s.ListenAudio.Id,
-                        pronounce_audio_id = s.PronounceAudio.Id,
-                        images = s.FactFileEntryImages.Select(s1 => s1.MediaFile.Id),
-                        nuggets = _Db.FactFileNuggets.Where(c => c.FactFileEntry.Id == id).Select(s1 => new
+                        alt_name = s.AltName,
+                        primary_name = s.PrimaryName,
+                        updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"),
+                        body_text = s.BodyText,
+                        category_id = s.CategoryId,
+                        main_image_id = s.MainImageId,
+                        listen_audio_id = s.ListenAudioId,
+                        pronounce_audio_id = s.PronounceAudioId,
+                        images = s.FactFileEntryImages.Select(s1 => s1.MediaFileId),
+                        nuggets = _Db.FactFileNuggets.Where(c => c.FactFileEntryId == id).Select(nugget => new
                         {
-                            s1.Id,
-                            image_id = s1.Image.Id,
-                            s1.Name,
-                            order_index = s1.OrderIndex,
-                            s1.Text
+                            nugget.Id,
+                            fact_file_entry_id = nugget.FactFileEntryId,
+                            image_id = nugget.ImageId,
+                            nugget.Name,
+                            order_index = nugget.OrderIndex,
+                            nugget.Text
                         }).ToList()
                     }).FirstOrDefault();
+
+                if (factFile == null) return NotFound();
 
                 return Ok(factFile);
             }
@@ -89,7 +96,9 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         {
             try
             {
-                return Ok(_Db.FactFileCategories.Select(s => new
+                return Ok(_Db.FactFileCategories
+                    .Where(c => c.Active)
+                    .Select(s => new
                 {
                     s.Id,
                     s.Name
