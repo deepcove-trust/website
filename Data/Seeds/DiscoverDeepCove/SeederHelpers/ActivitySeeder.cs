@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
                 Task = Task,
                 QrCode = QrCode,
                 CoordX = CoordX,
-                CoordY = CoordX
+                CoordY = CoordY
             };
         }        
 
