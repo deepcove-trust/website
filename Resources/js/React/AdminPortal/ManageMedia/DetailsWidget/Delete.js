@@ -24,7 +24,7 @@ export default class Delete extends Component {
 
     render() {
         return ( 
-            <Button className="btn btn-outline-danger btn-sm" cb={this.delete.bind(this, this.props.id)}>
+            <Button className="btn btn-danger btn-sm" cb={this.delete.bind(this, this.props.id)}>
                 Delete <i className="fas fa-trash"/>
             </Button>
         )

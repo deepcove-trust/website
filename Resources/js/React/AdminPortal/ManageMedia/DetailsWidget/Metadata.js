@@ -1,10 +1,11 @@
 ﻿import React, { Component, Fragment } from 'react';
-import { Button, BtnGroup } from '../../../Components/Button';
-import { convertSize } from '../../../../helpers';
-import _ from 'lodash';
-import $ from 'jquery';
-import { FormGroup, Input, Checkbox } from '../../../Components/FormControl';
+import Panel from '../../../Components/Panel';
+import MetaButtons from './MetaButtons';
+import FileProperties from './FileProperties';
 
+import $ from 'jquery';
+import _ from 'lodash';
+import FileDetails from './FileDetails';
 
 const baseUri = "/admin/media"
 
@@ -14,12 +15,12 @@ export default class MetaData extends Component {
 
         this.state = {
             edit: false,
-            file: null
+            file: null,
+            default: null
         }
     }
 
     componentDidMount() {
-        console.log(`${baseUri}/data/${this.props.file.id}`)
         $.ajax({
             method: 'get',
             url: `${baseUri}/data/${this.props.file.id}`
@@ -27,221 +28,58 @@ export default class MetaData extends Component {
             this.setState({
                 file,
                 default: _.cloneDeep(file)
-            });
+            })
         }).fail((err) => {
-            console.error(`[MetaData@getData] Error getting data: `, err.responseText);
+            console.error(`[Metadata@getData] Error getting file data: `, err.responseText);
         })
     }
 
-    updateFile(field, val) {
+    submitChanges() {
+        console.log("update file ajax call here.")
+        console.log("set edit to false, then cb?")
+    }
+
+    updateField(field, val) {
         console.log(field, val)
+
         let file = this.state.file;
         file[field] = val;
-
         this.setState({
             file
         });
     }
 
-    submitChanges(id) {
-        $.ajax({
-            method: 'patch',
-            url: `${baseUri}/${id}`,
-            data: {
-                'id': this.state.file.id,
-                'name': this.state.file.name,
-                'title': this.state.file.title,
-                'alt': this.state.file.alt,
-                'source': this.state.file.source.info,
-                'showCopyright': this.state.file.source.showCopyright
-            }
-        }).done(() => {
-            //What do?
-        }).fail((err) => {
-
-        });
-    }
-
     render() {
-        if (!this.state.file)
-            return <div />
+        if (!this.state.file) return <div />
 
         return (
-            <div className="row">
-                <div className="col-12">
-                    <h3>Details</h3>
-                </div>
-
-                <div className="col-md-6 col-sm-12">
-                    <Title title={this.state.file.title}
-                        name={this.state.file.name}
-                        edit={this.state.edit}
-                        cb={this.updateFile.bind(this, 'title')}
-                    />
-                    <AltText altText={this.state.file.alt}
-                        edit={this.state.edit}
-                        cb={this.updateFile.bind(this, 'alt')}
-                    />
-                    <Source source={this.state.file.source}
-                        edit={this.state.edit}
-                        cb={this.updateFile.bind(this, 'source')}
+            <Fragment>
+                <div className="py-3">
+                    <FileDetails edit={this.state.edit}
+                        file={this.state.file}
+                        cb={this.updateField.bind(this)}
                     />
                 </div>
 
-                <div className="col-md-6 col-sm-12">
-                    <FormGroup label="Size:">
-                        <input type="text" className="form-control-plaintext"
-                            value={convertSize(this.state.file.size) || ""}
-                            disabled
-                        />
-                    </FormGroup>
-
-                    <FormGroup label="Type:">
-                        <input type="text" className="form-control-plaintext"
-                            value={this.state.file.mediaType.value.toLowerCase() || ""}
-                            disabled
-                        />
-                    </FormGroup>
-                </div>
-
-                <div className="col-12">
-                    <EditButtons editMode={this.state.edit}
-                        setEditMode={() => {
-                            this.setState({
-                                edit: true
-                            })
-                        }}
-
-                        save={this.submitChanges.bind(this, this.props.file.id)}
-
-                        reset={() => {
-                            this.setState({
-                                edit: false,
-                                file: _.cloneDeep(this.state.default)
-                            })
-                        }}
+                <div className="py-3">
+                    <FileProperties edit={this.state.edit}
+                        file={this.state.file}
+                        cb={this.updateField.bind(this)}
                     />
                 </div>
-            </div>
-        )
-    }
-}
 
-class EditButtons extends Component {
-    render() {
-        if (this.props.editMode) {
-            return (
-                <BtnGroup>
-                    <Button className="btn btn-danger btn-sm" cb={this.props.reset}>
-                        Cancel <i className="fas fa-times"/>
-                    </Button>
-
-                    <Button className="btn btn-success btn-sm" cb={this.props.save}>
-                        Save <i className="fas fa-check" />
-                    </Button>
-                </BtnGroup>
-            )
-        } else {
-            return (
-                <Button className="btn btn-dark btn-sm mx-1" cb={this.props.setEditMode}>
-                    Edit Details <i className="fas fa-pencil" />
-                </Button>
-            )
-        }
-    }
-}
-
-class Title extends Component {
-    render() {
-        let input = this.props.edit ? <Input type="text"
-            value={this.props.title || this.props.name || ""}
-            cb={this.props.cb} />
-
-            : <input type="text" className="form-control-plaintext"
-                value={this.props.title || this.props.name || ""}
-                disabled />
-        
-        return (
-            <FormGroup label="Title:">
-                {input}
-            </FormGroup>
-        )
-    }
-}
-
-class AltText extends Component {
-    render() {
-        let input = this.props.edit ? <Input type="text"
-            value={this.props.altText || ""}
-            cb={this.props.cb} />
-
-            : <input type="text" className="form-control-plaintext"
-                value={this.props.altText || ""}
-                disabled />
-
-        return ( 
-            <FormGroup label="Alt Text:">
-                {input}
-            </FormGroup>
-        )
-    }
-}
-
-class Source extends Component {
-    updateSource(e) {
-        this.props.cb({
-            info: e,
-            showCopyright: this.props.source.showCopyright
-        })
-    }
-
-    toggleSource(e) {
-        this.props.cb({
-            info: this.props.source.info,
-            showCopyright: e
-        })
-    }
-
-    render() {
-        let input;
-        if (this.props.edit) {
-            input = (
-                <Input type="text"
-                    value={this.props.source.info || ""}
-                    cb={this.updateSource.bind(this)}
+                <MetaButtons edit={this.state.edit}
+                    fileId={this.state.file.id}
+                    setEdit={(edit) => this.setState({ edit })}
+                    saveChanges={this.submitChanges.bind(this)}
+                    cancel={() => {
+                        this.setState({
+                            edit: false,
+                            file: _.cloneDeep(this.state.file)
+                        });
+                    }}
                 />
-            )
-        } else {
-            input = (
-                <input type="text" className="form-control-plaintext"
-                    value={this.props.source.info || ""}
-                    disabled
-                />                
-            )
-        }
-
-        let copyright;
-        if (this.props.edit) {
-            copyright = (
-                <Checkbox id="ShowCopyright"
-                    checked={this.props.source.showCopyright}
-                    label="Display source information"
-                    cb={this.toggleSource.bind(this)}
-                />
-            )
-        } else if (this.props.source && this.props.source.showCopyright) {
-            copyright = (
-                <small className="text-muted mt-0">
-                    <i className="far fa-copyright" /> Display copyright
-                </small>
-            )
-        }
-        
-        return (
-            <FormGroup label="Source:">
-                {input}
-                {copyright}
-            </FormGroup>
+            </Fragment>
         )
     }
 }
