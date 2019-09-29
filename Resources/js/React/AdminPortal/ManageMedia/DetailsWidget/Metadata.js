@@ -47,7 +47,14 @@ export default class MetaData extends Component {
         $.ajax({
             method: 'patch',
             url: `${baseUri}/${id}`,
-            data: this.state.file
+            data: {
+                'id': this.state.file.id,
+                'name': this.state.file.name,
+                'title': this.state.file.title,
+                'alt': this.state.file.alt,
+                'source': this.state.file.source.info,
+                'showCopyright': this.state.file.source.showCopyright
+            }
         }).done(() => {
             //What do?
         }).fail((err) => {
@@ -62,7 +69,7 @@ export default class MetaData extends Component {
         return (
             <div className="row">
                 <div className="col-12">
-                    <h3>Detials</h3>
+                    <h3>Details</h3>
                 </div>
 
                 <div className="col-md-6 col-sm-12">
@@ -105,7 +112,7 @@ export default class MetaData extends Component {
                             })
                         }}
 
-                        save={null}
+                        save={this.submitChanges.bind(this, this.props.file.id)}
 
                         reset={() => {
                             this.setState({
