@@ -43,7 +43,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 if (string.IsNullOrEmpty(filename)) return NotFound("No filename provided");
 
                 BaseMedia file = await _Db.Media
-                    .Where(m => (User.Identity.IsAuthenticated || m.IsPublic) && m.Filename == filename)
+                    .Where(m => m.Filename == filename)
                     .FirstOrDefaultAsync();
 
                 if (file == null) return NotFound("No file exists for the supplied filename");

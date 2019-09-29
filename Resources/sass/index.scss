@@ -79,6 +79,10 @@ a.navbar-brand {
     font-weight: bolder;
 }
 
+.form-group > label {
+    font-weight: bold;
+}
+
 .custom-checkbox > label[title], .custom-checkbox > label[data-tip] {
     text-decoration: underline;
     text-decoration-style: dotted;

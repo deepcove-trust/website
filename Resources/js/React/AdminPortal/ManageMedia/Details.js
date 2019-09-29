@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import Media from '../../CMS-Blocks/Media';
 import { Button } from '../../Components/Button';
-import MediaLocations from './DetailsWidget/Locations';
 import MetaData from './DetailsWidget/Metadata';
 import Delete from './DetailsWidget/Delete';
 
@@ -21,14 +20,10 @@ export default class Details extends Component {
                     </div>
                 </div>
 
-                <div className="col-lg-4 col-md-6 col-sm-12">
+                <div className="col-md-6 col-sm-12">
                     <MetaData file={this.props.data}
                         cb={null}
                     />
-                </div>
-
-                <div className="col-lg-4 col-md-6 col-sm-12">
-                    <MediaLocations file={this.props.data}/>
                 </div>
             </div>
         )

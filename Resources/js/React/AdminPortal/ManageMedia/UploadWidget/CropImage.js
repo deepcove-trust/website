@@ -1,7 +1,8 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import ReactCrop from 'react-image-crop';
 import { Button } from '../../../Components/Button';
 import Panel from '../../../Components/Panel';
+import { convertSize } from '../../../../helpers';
 
 export default class CropImage extends Component {
     constructor(props) {
@@ -20,14 +21,6 @@ export default class CropImage extends Component {
 
     onCrop(crop) {
         this.setState({ crop })
-    }
-
-    convertSize(bytes) {
-        if (!bytes || bytes == 0) return 'n/a';
-
-        var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
-        return Math.round(bytes / Math.pow(1024, i), 2).toFixed(2) + ' ' + sizes[i];
     }
 
     fileDimensions(file) {
@@ -86,7 +79,7 @@ export default class CropImage extends Component {
                                     </tr>
                                     <tr>
                                         <td>File Size</td>
-                                        <td>{this.convertSize(this.props.image.size)}</td>
+                                        <td>{convertSize(this.props.image.size)}</td>
                                         <td></td>
                                     </tr>
                                 </tbody>

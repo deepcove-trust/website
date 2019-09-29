@@ -44,7 +44,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             return Ok(await _Db.Media.Select(media => new
             {
                 media.Id,
-                media.IsPublic,
                 media.MediaType,
                 media.Name,
                 media.Filename
@@ -66,8 +65,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     mediaFile.Id,
                     mediaFile.Name,
                     mediaFile.FilePath,
-                    mediaFile.IsPublic,
                     mediaFile.Size,
+                    mediaFile.MediaType,
+                    Source = new {
+                        mediaFile.ShowCopyright,
+                        info = mediaFile.Source
+                    },
+                    mediaFile.ShowCopyright,
                     height = imageFile?.Height,
                     width = imageFile?.Width,
                     versions = imageFile?.Versions,
@@ -127,7 +131,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                         Name = Path.GetFileNameWithoutExtension(uploadedName),
                         MediaType =  MediaType.FromString(request.Str("fileType")),
                         FilePath = filepath,
-                        IsPublic = false,
                         Size = filedata["size"],
                         Title = request.Str("title"),
                         Alt = request.Str("alt"),

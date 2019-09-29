@@ -39,7 +39,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// </summary>
         [AllowAnonymous]
         [HttpGet("{pageId:int}/revision/{revisionId?}")]
-        public async Task<IActionResult> GetRevision(int pageId, int? revisionId)
+        public IActionResult GetRevision(int pageId, int? revisionId)
         {
             try
             {
