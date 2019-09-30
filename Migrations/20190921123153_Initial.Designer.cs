@@ -4,18 +4,20 @@ using Deepcove_Trust_Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    partial class WebsiteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20190921123153_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -327,15 +329,13 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("FilePath");
 
+                    b.Property<bool>("IsPublic");
+
                     b.Property<string>("MediaType");
 
                     b.Property<string>("Name");
 
-                    b.Property<bool>("ShowCopyright");
-
                     b.Property<long>("Size");
-
-                    b.Property<string>("Source");
 
                     b.Property<DateTime>("UpdatedAt");
 

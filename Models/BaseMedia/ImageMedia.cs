@@ -29,8 +29,12 @@ namespace Deepcove_Trust_Website.Models
         /// 
         /// Returns the thumbnail size if no width provided.
         /// </summary>
-        public string GetImagePath(int width = 0)
+        public string GetImagePath(int width = 0, bool original = false)
         {
+            // If the request is for the original, return it
+            if (original) return FilePath;            
+
+            // Otherwise, determine the appropriate size to return
             ImageVersion bestVersion;
 
             // Return thumbnail option if width is not supplied

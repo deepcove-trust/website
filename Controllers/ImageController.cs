@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index(string filename, int width = 0)
+        public async Task<IActionResult> Index(string filename, int width = 0, bool original = false)
         {
             try
             {
@@ -51,16 +51,14 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 // Return file if not image
                 if (file.GetCategory() != MediaCategory.Image)
                 {
-                    return File(file.FilePath, file.MediaType.Mime);
+                    return File(await System.IO.File.ReadAllBytesAsync(file.FilePath), file.MediaType.Mime);
                 }
                 else
                 {
                     ImageMedia imageFile = (ImageMedia)file;
                     // Return the appropriate image                     		
-                    if (!System.IO.File.Exists(imageFile.GetImagePath(width)))
-                        System.IO.File.Create(imageFile.GetImagePath(width));
 
-                    return File(await System.IO.File.ReadAllBytesAsync(imageFile.GetImagePath(width)), imageFile.MediaType.Mime);
+                    return File(await System.IO.File.ReadAllBytesAsync(imageFile.GetImagePath(width, original)), imageFile.MediaType.Mime);
                 }
             }
             catch (Exception ex)
