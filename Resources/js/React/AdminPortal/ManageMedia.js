@@ -38,16 +38,37 @@ export default class ManageMedia extends Component {
             )
         }
 
+        let galleryBtn;
+        if (this.state.tab != 1) {
+            galleryBtn = (
+                <Button className="btn btn-dark float-right" cb={() => this.setState({
+                        tab: 1
+                    })
+                }>    
+                    Gallery
+                </Button>
+            )
+        }
+
         return (
             <div className="row">
                 <div className="col-12">
                     <h1 className="text-center">Media Centre</h1>
-
                     {uploadBtn}
+                    {galleryBtn}
                 </div>
 
                 <div className="col-12 fade1sec">
-                    <Template data={null} setTab={(tab) => this.setState({ tab })}/>
+                    <Template data={this.state.media || null}
+                        setTab={(tab) => this.setState({
+                                tab
+                            })
+                        }
+                        viewDetails={(media) => this.setState({
+                            tab: 2,
+                            media
+                        })
+                    } />
                 </div>
             </div>    
         )

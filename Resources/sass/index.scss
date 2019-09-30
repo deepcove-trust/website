@@ -4,11 +4,12 @@
 /* Import Bootstrap Theme */
 @import './bootstrap.min.css';
 @import './footer.scss';
-
+@import './typography_and_text.scss';
 @import './ReactImageCrop';
 
 /* Custom CSS */
 @import './Authentication.scss';
+@import './media.scss';
 
 /* Import Font Awesome 5 Pro */
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
@@ -78,6 +79,10 @@ a.navbar-brand {
     font-weight: bolder;
 }
 
+.form-group > label {
+    font-weight: bold;
+}
+
 .custom-checkbox > label[title], .custom-checkbox > label[data-tip] {
     text-decoration: underline;
     text-decoration-style: dotted;
@@ -138,22 +143,6 @@ button.accept-policy {
     line-height: inherit;
 }
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    /* Set the fixed height of the footer here */
-    height: 60px;
-    line-height: 60px; /* Vertically center the text there */
-}
 
 @keyframes fadein {
     from {
@@ -241,61 +230,4 @@ html {
 
 #react_template {
     position: relative;
-}
-
-a[href^="tel:"] {
-    color: black;
-    text-decoration: none;
-}
-
-a[href^="mailto:"] {
-    color: black;
-    text-decoration: none;
-}
-
-/* UPLOAD STUFF HERE */
-.dragable-container{
-    margin-left:20px;
-    margin-right:20px;
-}
-
-.dragable-container > div:hover {
-    background-color: rgba(128, 128, 128, 0.18);
-    transition: 0.55s;
-}
-
-p.fileuploader {
-    border: dashed thin !important;
-    padding: 90px 0px 90px 0px;
-    text-align: center;
-}
-
-
-/** NEW NEW NEW NEW */
-.upload-container {
-    position: relative;
-}
-
-.upload-box {
-    border: thin dashed #424242;
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    padding: 50px 0px 50px 0px;
-}
-
-.upload-container:hover {
-    transition: 0.33s;
-    background-color: rgba(40, 45, 50, 0.15);
-}
-
-.upload-container input[type="file"] {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0px;
-    left: 0px;
-    opacity: 0;
-    color: transparent;
-    cursor: pointer;
 }

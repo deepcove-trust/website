@@ -59,6 +59,7 @@ namespace Deepcove_Trust_Website.Models
         public bool IsPublic { get; set; }
         [JsonProperty("size")]
         public long Size { get; set; }
+        public string Source { get; set; }
 
         [NotMapped]
         [JsonProperty("filename")]

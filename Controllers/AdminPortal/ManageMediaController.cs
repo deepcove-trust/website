@@ -44,7 +44,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             return Ok(await _Db.Media.Select(media => new
             {
                 media.Id,
-                media.IsPublic,
                 media.MediaType,
                 media.Name,
                 media.Filename
@@ -66,8 +65,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     mediaFile.Id,
                     mediaFile.Name,
                     mediaFile.FilePath,
-                    mediaFile.IsPublic,
                     mediaFile.Size,
+                    mediaFile.MediaType,
+                    Source = new {
+                        mediaFile.ShowCopyright,
+                        info = mediaFile.Source
+                    },
+                    mediaFile.ShowCopyright,
                     height = imageFile?.Height,
                     width = imageFile?.Width,
                     versions = imageFile?.Versions,
@@ -127,7 +131,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                         Name = Path.GetFileNameWithoutExtension(uploadedName),
                         MediaType =  MediaType.FromString(request.Str("fileType")),
                         FilePath = filepath,
-                        IsPublic = false,
                         Size = filedata["size"],
                         Title = request.Str("title"),
                         Alt = request.Str("alt"),
@@ -170,16 +173,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 // All types of media have a name, so we can update that
                 media.Name = request.Str("name");
+                media.Source = request.Str("source");
+                media.ShowCopyright = request.Bool("showCopyright");
 
-                // If file is an image, we can also set the title and alt-text
-                ImageMedia image = media as ImageMedia;
-                if (image != null)
+                // If file is an image, we can also set the title and alt-text                
+                if (media is ImageMedia)
                 {
-                    image.Title = request.Str("title");
-                    image.Alt = request.Str("alt");
-                    await _Db.AddAsync(image);
+                    (media as ImageMedia).Title = request.Str("title");
+                    (media as ImageMedia).Alt = request.Str("alt");
                 }
-                else await _Db.AddAsync(media);
 
                 // Save changes
                 await _Db.SaveChangesAsync();
