@@ -1,14 +1,16 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
-import $ from 'jquery';
+import { Input } from '../../Components/FormControl';
 import Delete from './DetailsWidget/Delete';
+import $ from 'jquery';
 
 export default class Gallery extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            data: null
+            data: null,
+            search: null
         }
     }
 
@@ -21,7 +23,6 @@ export default class Gallery extends Component {
             method: 'get',
             url: `/admin/media/data`
         }).done((mediaGallery) => {
-            console.log(mediaGallery)
             this.setState({
                 data: mediaGallery
             });
@@ -33,7 +34,9 @@ export default class Gallery extends Component {
     render() {
         let media;
         if (this.state.data) {
-            media = this.state.data.map((media, key) => {
+            media = this.state.data.map((media, key) => {                
+                if (!!this.state.search && !media.name.toLowerCase().includes(this.state.search.toLowerCase())) return <div />;
+
                 return (
                     <div className="col-md-6 col-lg-4" key={key}>
                         <Item data={media} cb={this.props.viewDetails.bind(this, media)} />
@@ -46,15 +49,23 @@ export default class Gallery extends Component {
             <div className="row pt-3">
                 <div className="col-12">
                     <h1 className="text-center">Media Gallery</h1>
-
-                    <div className="pb-4">
-                        <Button className="btn btn-dark btn-sm float-right" cb={this.props.setTab.bind(this, 3)}>
-                            Upload File <i className="fas fa-upload" />
-                        </Button>
-                    </div>
-
-                    <hr />
                 </div>
+
+                <div className="col-md-8 col-sm-12">
+                    <Input type="text"
+                        placeHolder="Search..."
+                        value={this.state.search}
+                        cb={(search) => this.setState({ search })}
+                    />
+                </div>
+
+                <div className="col-md-4 col-sm-12 pb-4">
+                    <Button className="btn btn-dark btn-sm float-right" cb={this.props.setTab.bind(this, 3)}>
+                        Upload File <i className="fas fa-upload" />
+                    </Button>
+                </div>
+
+                <hr />
 
                 {media}
             </div>
