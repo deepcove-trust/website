@@ -52,12 +52,6 @@ export default class ManageMedia extends Component {
 
         return (
             <div className="row">
-                <div className="col-12">
-                    <h1 className="text-center">Media Centre</h1>
-                    {uploadBtn}
-                    {galleryBtn}
-                </div>
-
                 <div className="col-12 fade1sec">
                     <Template data={this.state.media || null}
                         setTab={(tab) => this.setState({

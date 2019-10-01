@@ -44,6 +44,18 @@ export default class Gallery extends Component {
 
         return (
             <div className="row pt-3">
+                <div className="col-12">
+                    <h1 className="text-center">Media Gallery</h1>
+
+                    <div className="pb-4">
+                        <Button className="btn btn-dark btn-sm float-right" cb={this.props.setTab.bind(this, 3)}>
+                            Upload File <i className="fas fa-upload" />
+                        </Button>
+                    </div>
+
+                    <hr />
+                </div>
+
                 {media}
             </div>
         )
@@ -60,7 +72,7 @@ class Item extends Component {
         }
 
         return (
-            <div className="card border-0 transform-on-hover">
+            <div className="card border-0 mb-2 transform-on-hover">
                 <img src={`/media?filename=${this.props.data.filename}`} alt={this.props.data.name} className="card-img-top" />
 
                 <div className="card-body text-center">
@@ -74,7 +86,7 @@ class Item extends Component {
                         {tags}
                     </div>
 
-                    <Button className="btn btn-outline-dark btn-sm mx-1" cb={this.props.cb}>Edit</Button>
+                    <Button className="btn btn-dark btn-sm mx-1" cb={this.props.cb}>Edit</Button>
                     <Delete id={this.props.data.id} />
                 </div>
             </div>

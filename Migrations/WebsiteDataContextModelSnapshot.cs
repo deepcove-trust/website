@@ -96,6 +96,8 @@ namespace Deepcove_Trust_Website.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active");
+
                     b.Property<string>("Name");
 
                     b.HasKey("Id");
@@ -326,6 +328,8 @@ namespace Deepcove_Trust_Website.Migrations
                         .IsRequired();
 
                     b.Property<string>("FilePath");
+
+                    b.Property<bool>("IsPublic");
 
                     b.Property<string>("MediaType");
 
