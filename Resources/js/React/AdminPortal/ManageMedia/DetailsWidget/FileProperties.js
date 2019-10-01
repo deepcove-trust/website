@@ -4,9 +4,12 @@ import Panel from '../../../Components/Panel';
 
 export default class FileProperties extends Component {
     render() {
+
+        var title = this.props.file.mediaType.category + ' Properties';
+
         return (
             <Panel>
-                <h4 className="text-center">FileProperties</h4>
+                <h4 className="text-center">{title}</h4>
 
                 <div className="table-responsive">
                     <table className="table table-sm">

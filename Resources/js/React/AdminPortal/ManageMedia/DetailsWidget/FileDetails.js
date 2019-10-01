@@ -66,11 +66,13 @@ class Source extends Component {
     }
 
     render() {
-        let field = <Fragment>&copy; {this.props.file.source.info}</Fragment>
+        let field = this.props.file.source.showCopyright
+            ? <Fragment>&copy; {this.props.file.source.info}</Fragment>
+            : <Fragment>{this.props.file.source.info}</Fragment>
         if (this.props.edit) {
             field = (
                 <Input type="text"
-                    value={this.props.file.source.info}
+                    value={this.state.file.source.info}
                     cb={this.props.cb}
                 />
             )
