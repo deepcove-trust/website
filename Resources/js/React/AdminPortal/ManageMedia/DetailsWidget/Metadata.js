@@ -1,11 +1,10 @@
 ﻿import React, { Component, Fragment } from 'react';
-import Panel from '../../../Components/Panel';
-import MetaButtons from './MetaButtons';
 import FileProperties from './FileProperties';
+import MetaButtons from './MetaButtons';
+import FileDetails from './FileDetails';
 
 import $ from 'jquery';
 import _ from 'lodash';
-import FileDetails from './FileDetails';
 
 const baseUri = "/admin/media"
 
@@ -21,6 +20,10 @@ export default class MetaData extends Component {
     }
 
     componentDidMount() {
+        this.getData();
+    }
+
+    getData() {
         $.ajax({
             method: 'get',
             url: `${baseUri}/data/${this.props.file.id}`
@@ -35,8 +38,22 @@ export default class MetaData extends Component {
     }
 
     submitChanges() {
-        console.log("update file ajax call here.")
-        console.log("set edit to false, then cb?")
+        let file = this.state.file;
+        $.ajax({
+            method: 'put',
+            url: `${baseUri}/${this.state.file.id}`,
+            data: {
+                name: file.name,
+                source: file.source.info,
+                showCopyright: file.source.showCopyright,
+                title: file.title,
+                alt: file.title
+            }
+        }).done(() => {
+            this.getData();
+        }).err((err) => {
+            console.error(`[Metadata@submitChanges] Error saving changes to the file: `, err.responseText);
+        })
     }
 
     updateField(field, val) {
@@ -52,7 +69,7 @@ export default class MetaData extends Component {
 
         return (
             <Fragment>
-                <div className="py-3">
+                <div className="pb-3">
                     <FileDetails edit={this.state.edit}
                         file={this.state.file}
                         cb={this.updateField.bind(this)}

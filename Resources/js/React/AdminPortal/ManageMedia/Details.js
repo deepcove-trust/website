@@ -29,7 +29,6 @@ export default class Details extends Component {
 
                 <div className="col-md-6 col-sm-12">
                     <MetaData file={this.props.data}
-                        cb={null}
                     />
                 </div>
             </div>
