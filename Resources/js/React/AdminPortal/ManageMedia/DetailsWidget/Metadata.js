@@ -40,8 +40,6 @@ export default class MetaData extends Component {
     }
 
     updateField(field, val) {
-        console.log(field, val)
-
         let file = this.state.file;
         file[field] = val;
         this.setState({
@@ -75,7 +73,7 @@ export default class MetaData extends Component {
                     cancel={() => {
                         this.setState({
                             edit: false,
-                            file: _.cloneDeep(this.state.file)
+                            file: _.cloneDeep(this.state.default)
                         });
                     }}
                 />
