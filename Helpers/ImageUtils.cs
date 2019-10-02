@@ -32,7 +32,9 @@ namespace Deepcove_Trust_Website.Helpers
 
         public static ImageVersion CustomVersion(int width) => new ImageVersion { Code = "Custom", Width = width };
 
-        public int CompareTo(ImageVersion other) => Width.CompareTo(other.Width);        
+        public int CompareTo(ImageVersion other) => Width.CompareTo(other.Width);
+
+        public override string ToString() => $"ImageVersion - Code: {Code} | Width: {Width}";
     }
 
     public class CropData
@@ -129,7 +131,11 @@ namespace Deepcove_Trust_Website.Helpers
                     image.Save(Path.Join(basePath, $"{version.Code}_{filename}"));
                     versions.Add(version);
                 }
-            }            
+            }
+
+            // Store the image version by width, ascending - required for binary search 
+            // function when determining correct image for a given width
+            versions.Reverse();
 
             return new Dictionary<string, dynamic> {
                 { "width", initialWidth },
