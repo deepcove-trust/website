@@ -59,8 +59,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                         s.Id,
                         s.MediaType.Category,
                         Name = (s as ImageMedia) != null ? (s as ImageMedia).Title : s.Filename,
-                        Source = "Source here", 
-                        show_copyright = false, 
+                        s.Source,
+                        show_copyright = s.ShowCopyright, 
                         s.Size,
                         s.Filename,
                         updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
