@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
-import { Input } from '../../Components/FormControl';
+import { Input, FormGroup, Select } from '../../Components/FormControl';
 import Delete from './DetailsWidget/Delete';
 import $ from 'jquery';
 
@@ -10,12 +10,25 @@ export default class Gallery extends Component {
 
         this.state = {
             data: null,
-            search: null
+            search: null,
+            filter: null
         }
     }
 
     componentDidMount() {
         this.getData();
+    }
+
+    Filter(x) {
+        var result = true;
+
+        if (this.state.filter && x.mediaType.category != this.state.filter)
+            result = false;
+
+        if (this.state.search && !x.name.toLowerCase().includes(this.state.search.toLowerCase()))
+            result = false;
+
+        return result;
     }
 
     getData() {
@@ -34,8 +47,8 @@ export default class Gallery extends Component {
     render() {
         let media;
         if (this.state.data) {
-            media = this.state.data.map((media, key) => {                
-                if (!!this.state.search && !media.name.toLowerCase().includes(this.state.search.toLowerCase())) return <div />;
+            media = this.state.data.map((media, key) => {
+                if (!this.Filter(media)) return <div key={key}/>;
 
                 return (
                     <div className="col-md-6 col-lg-4" key={key}>
@@ -51,12 +64,23 @@ export default class Gallery extends Component {
                     <h1 className="text-center">Media Gallery</h1>
                 </div>
 
-                <div className="col-md-8 col-sm-12">
-                    <Input type="text"
-                        placeHolder="Search..."
-                        value={this.state.search}
-                        cb={(search) => this.setState({ search })}
-                    />
+                <div className="col-md-4 col-sm-12">
+                    <FormGroup label="Search:">
+                        <Input type="text"
+                            placeHolder="File Name..."
+                            value={this.state.search}
+                            cb={(search) => this.setState({ search })}
+                        />
+                    </FormGroup>
+                </div>
+
+                <div className="col-md-4 col-sm-12">
+                    <FormGroup label="Type:">
+                        <Select selected={this.state.filter}
+                            options={["", "Audio", "Image", "File"]}
+                            cb={(filter) => this.setState({ filter })}
+                        />
+                    </FormGroup>
                 </div>
 
                 <div className="col-md-4 col-sm-12 pb-4">

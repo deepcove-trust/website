@@ -68,10 +68,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     mediaFile.Size,
                     mediaFile.MediaType,
                     Source = new {
-                        mediaFile.ShowCopyright,
+                        showCopyright = mediaFile.ShowCopyright,
                         info = mediaFile.Source
                     },
-                    mediaFile.ShowCopyright,
                     height = imageFile?.Height,
                     width = imageFile?.Width,
                     versions = imageFile?.Versions,

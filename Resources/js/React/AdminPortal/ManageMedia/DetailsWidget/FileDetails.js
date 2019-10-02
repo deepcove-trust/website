@@ -51,29 +51,24 @@ class Name extends Component {
 }
 
 class Source extends Component {
-    updateSource(e) {
+    update(source, showCopyright) {
         this.props.cb({
-            info: e,
-            showCopyright: this.props.source.showCopyright
-        })
-    }
-
-    toggleSource(e) {
-        this.props.cb({
-            info: this.props.source.info,
-            showCopyright: e
-        })
+            info: source || "",
+            showCopyright: showCopyright || false
+        });
     }
 
     render() {
-        let field = this.props.file.source.showCopyright
-            ? <Fragment>&copy; {this.props.file.source.info}</Fragment>
-            : <Fragment>{this.props.file.source.info}</Fragment>
+        let source = this.props.file.source || { info: "", showCopyright: false };
+        let field = source.showCopyright ? <span>&copy; {source.info}</span> : <span>{source.info}</span>
+
         if (this.props.edit) {
             field = (
                 <Input type="text"
-                    value={this.props.file.source.info}
-                    cb={this.props.cb}
+                    value={source.info}
+                    cb={(x) => {
+                        this.update(x, source.showCopyright)
+                    }}
                 />
             )
         }
@@ -81,10 +76,13 @@ class Source extends Component {
         let toggle;
         if (this.props.edit) {
             toggle = (
-                <Checkbox checked={this.props.file.source.showCopyright}
+                <Checkbox checked={source.showCopyright}
                     label="Show Copyright Symbol?"
                     labelAlign="left"
-                    cb={this.toggleSource.bind(this)}
+                    cb={(x) => {
+                        console.log(x)
+                        this.update(source.info, x)
+                    }}
                 />
             )
         }
