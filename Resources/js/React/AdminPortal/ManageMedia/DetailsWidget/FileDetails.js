@@ -72,7 +72,7 @@ class Source extends Component {
         if (this.props.edit) {
             field = (
                 <Input type="text"
-                    value={this.state.file.source.info}
+                    value={this.props.file.source.info}
                     cb={this.props.cb}
                 />
             )

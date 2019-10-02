@@ -15,7 +15,8 @@ export default class MetaData extends Component {
         this.state = {
             edit: false,
             file: null,
-            default: null
+            default: null,
+            pending: false
         }
     }
 
@@ -30,7 +31,9 @@ export default class MetaData extends Component {
         }).done((file) => {
             this.setState({
                 file,
-                default: _.cloneDeep(file)
+                default: _.cloneDeep(file),
+                edit: false,
+                pending: false
             })
         }).fail((err) => {
             console.error(`[Metadata@getData] Error getting file data: `, err.responseText);
@@ -38,21 +41,26 @@ export default class MetaData extends Component {
     }
 
     submitChanges() {
-        let file = this.state.file;
-        $.ajax({
-            method: 'put',
-            url: `${baseUri}/${this.state.file.id}`,
-            data: {
-                name: file.name,
-                source: file.source.info,
-                showCopyright: file.source.showCopyright,
-                title: file.title,
-                alt: file.title
-            }
-        }).done(() => {
-            this.getData();
-        }).err((err) => {
-            console.error(`[Metadata@submitChanges] Error saving changes to the file: `, err.responseText);
+        this.setState({
+            pending: true,
+            edit: false
+        }, () => {
+            let file = this.state.file;
+            $.ajax({
+                method: 'patch',
+                url: `${baseUri}/${this.state.file.id}`,
+                data: {
+                    name: file.name,
+                    source: file.source.info,
+                    showCopyright: file.source.showCopyright,
+                    title: file.title,
+                    alt: file.title
+                }
+            }).done(() => {
+                this.getData();
+            }).fail((err) => {
+                console.error(`[Metadata@submitChanges] Error saving changes to the file: `, err.responseText);
+            })
         })
     }
 
@@ -85,6 +93,7 @@ export default class MetaData extends Component {
 
                 <MetaButtons edit={this.state.edit}
                     fileId={this.state.file.id}
+                    pending={this.state.pending}
                     setEdit={(edit) => this.setState({ edit })}
                     saveChanges={this.submitChanges.bind(this)}
                     cancel={() => {

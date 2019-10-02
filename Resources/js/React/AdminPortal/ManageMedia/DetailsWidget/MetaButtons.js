@@ -34,7 +34,7 @@ export default class MetaButtons extends Component {
                     </div>
 
                     <div className="col-md-4 col-sm-12">
-                        <Button className="btn btn-info btn-sm" cb={this.props.saveChanges}>
+                        <Button className="btn btn-info btn-sm" cb={this.props.saveChanges} pending={this.props.pending}>
                             Save <i className="fas fa-check" />
                         </Button>
                     </div>
