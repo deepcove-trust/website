@@ -69,16 +69,21 @@ namespace Deepcove_Trust_Website.Models
             if (0 < index)
                 return Versions[index];
 
-            // Otherwise we find close above and closest below
+            // Get the bitwise complement of the value returned by the binary search
+            index = ~index;
 
-            ImageVersion above, below;
-            index = ~index; //bitwise complement - don't ask
+            // If the complement is equal to the list count, then the requested value 
+            // was higher than what we have available, so return our biggest version
+            if(index == Versions.Count)
+                return Versions[index - 1];
+
+            // Otherwise get the image version above and the version below
+            ImageVersion above, below;            
             below = Versions[index - 1];
             above = Versions[index];
 
-            // Now return below if the supplied width above by less than 10 percent
-            // of the difference between the above and below versions.
-
+            // If the requested width is less than 10% larger than the smaller image, return the
+            // smaller image, otherwise return the larger one.
             return (width - below.Width < (above.Width - below.Width) * 0.1) ? below : above;
 
         }
