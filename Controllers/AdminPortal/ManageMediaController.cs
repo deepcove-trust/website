@@ -112,15 +112,17 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 string uploadedName = request.Str("filename");
 
                 // Generate a backend filename for the uploaded file - same extension as uploaded file.
-                string filename = Guid.NewGuid().ToString() + Path.GetExtension(uploadedName);
-                string filepath = Path.Combine("Storage", "Media", "Images", filename);             
+                string filename = Guid.NewGuid().ToString() + Path.GetExtension(uploadedName);                         
 
                 string fileType = request.Str("fileType");
 
                 // Determine what type of file has been uploaded and act accordingly (may want to refactor these)
 
-                if (new[] { "image/jpg", "image/jpeg", "image/png" }.Contains(fileType))
+                // FOR IMAGES
+                if (MediaType.MimesForCategory(MediaCategory.Image).Contains(fileType))
                 {
+                    string filepath = Path.Combine("Storage", "Media", "Images", filename);
+
                     // Save image and all associated versions of it.
                     var filedata = ImageUtils.SaveImage(request.Str("file")
                         .Split(',')[1], filepath , cropData);
@@ -128,7 +130,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     // Create database record to track images
                     ImageMedia dbImageMedia = new ImageMedia {
                         Name = Path.GetFileNameWithoutExtension(uploadedName),
-                        MediaType =  MediaType.FromString(request.Str("fileType")),
+                        MediaType =  MediaType.FromString(fileType),
                         FilePath = filepath,
                         Size = filedata["size"],
                         Title = request.Str("title"),
@@ -138,13 +140,56 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                         Versions = filedata["versions"]
                     };
 
-                    await _Db.AddAsync(dbImageMedia);                    
-
-
+                    await _Db.AddAsync(dbImageMedia);
                 }
 
-                // Todo: Implement saves for non images
+                // FOR AUDIO
+                else if(MediaType.MimesForCategory(MediaCategory.Audio).Contains(fileType))
+                {
+                    string filepath = Path.Combine("Storage", "Media", "Audio", filename);
 
+                    // Save the audio file
+                    byte[] bytes = request.Str("file").Split(',')[1].DecodeBase64Bytes();
+                    System.IO.File.WriteAllBytes(filepath, bytes);                    
+
+                    // Create the media database record
+                    AudioMedia audioMedia = new AudioMedia
+                    {
+                        Name = Path.GetFileNameWithoutExtension(uploadedName),
+                        MediaType = MediaType.FromString(fileType),
+                        FilePath = filepath,
+                        Size = new FileInfo(filepath).Length,
+                        Duration = 0, // Todo: determine the duration
+                    };
+
+                    await _Db.AddAsync(audioMedia);
+                }
+
+                // FOR GENERAL
+                else if (MediaType.MimesForCategory(MediaCategory.General).Contains(fileType))
+                {
+                    string filepath = Path.Combine("Storage", "Media", "Documents", filename);
+
+                    // Save the file
+                    byte[] bytes = request.Str("file").Split(',')[1].DecodeBase64Bytes();
+                    System.IO.File.WriteAllBytes(filepath, bytes);
+
+                    // Create the media database record
+                    GeneralMedia generalMedia = new GeneralMedia
+                    {
+                        Name = Path.GetFileNameWithoutExtension(uploadedName),
+                        MediaType = MediaType.FromString(fileType),
+                        FilePath = filepath,
+                        Size = new FileInfo(filepath).Length,                        
+                    };
+
+                    await _Db.AddAsync(generalMedia);
+                }
+
+                else
+                {
+                    return BadRequest("File type not supported!");
+                }
 
                 await _Db.SaveChangesAsync();
                 return Ok();
@@ -215,19 +260,30 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 // Todo: Check whether the media file is being used in the website or app
                 // and prevent deletion if so.
+                Dictionary<string, HashSet<int>> usages = media.GetUsages(_Db);
 
-                if (media.GetType() == typeof(ImageMedia))
+                // If the usages dictionary has keys, file is used
+                if(usages.Count > 0)
                 {
-                    ImageMedia image = (ImageMedia)media;
+                    // Todo: Stop the deletion!
+                    return BadRequest("File is being used, unable to delete!");
+                }
 
-                    // Now delete
+                // Otherwise, we can go ahead and delete
+
+                if (media is ImageMedia)
+                {
+                    // Delete the directory containing image versions
+                    string dirPath = Path.Combine("Storage", "Media", "Images", Path.GetFileNameWithoutExtension(media.Filename));
+                    Directory.Delete(dirPath, recursive: true);
                 }
 
                 // Finally, delete the media file itself
-
+                System.IO.File.Delete(media.FilePath);
 
                 // And remove its record in the database
                 _Db.Remove(media);
+                await _Db.SaveChangesAsync();
 
                 _Logger.LogDebug("Media file {0} deleted", id);
 
