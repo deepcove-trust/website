@@ -3,17 +3,20 @@ import ReactCrop from 'react-image-crop';
 import { Button } from '../../../Components/Button';
 import Panel from '../../../Components/Panel';
 import { convertSize } from '../../../../helpers';
+import $ from 'jquery';
 
 export default class CropImage extends Component {
     constructor(props) {
         super(props);
-        console.log(this.props.image)
+        
         this.state = {
             src: this.props.image,
             crop: {
                 unit: 'px',
                 x: 0,
                 y: 0,
+                prevH: 0,
+                prevW: 0,
                 aspect: this.props.forceAspect
             },
             base: {
@@ -49,6 +52,13 @@ export default class CropImage extends Component {
                 base
             });
         }
+    }
+
+    cropImage() {
+        let crop = this.state.crop;
+        crop['prevH'] = $(".ReactCrop__image").height();
+        crop['prevY'] = $(".ReactCrop__image").width();
+        this.props.cb(this.state.src, true, crop)
     }
 
     render() {
@@ -109,14 +119,8 @@ export default class CropImage extends Component {
 
                         <Button className="btn btn-success d-block mx-auto"
                             disabled={this.state.crop.height == 0 && this.state.crop.width == 0}
-                            cb={this.props.cb.bind(this, this.state.src, true, {
-                                    X: parseInt(this.state.crop.x),
-                                    Y: parseInt(this.state.crop.y),
-                                    Height: parseInt(this.state.crop.height),
-                                    Width: parseInt(this.state.crop.width),
-                                    base: this.state.base
-                                })
-                            }>
+                            cb={this.cropImage.bind(this)}
+                        >
                             Crop and Upload <i className="far fa-crop" />
                         </Button>
                     </Panel>
