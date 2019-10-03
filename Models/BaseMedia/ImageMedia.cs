@@ -32,7 +32,8 @@ namespace Deepcove_Trust_Website.Models
         public string GetImagePath(int width = 0, bool original = false)
         {
             // If the request is for the original, return it
-            if (original) return FilePath;            
+            // Also return original if it is so small so as not to have any other versions
+            if (original || Versions.Count == 0) return FilePath;            
 
             // Otherwise, determine the appropriate size to return
             ImageVersion bestVersion;
