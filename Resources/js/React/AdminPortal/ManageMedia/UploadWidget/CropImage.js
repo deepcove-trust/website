@@ -7,7 +7,7 @@ import { convertSize } from '../../../../helpers';
 export default class CropImage extends Component {
     constructor(props) {
         super(props);
-
+        console.log(this.props.image)
         this.state = {
             src: this.props.image,
             crop: {
@@ -15,6 +15,10 @@ export default class CropImage extends Component {
                 x: 0,
                 y: 0,
                 aspect: this.props.forceAspect
+            },
+            base: {
+                height: 0,
+                width: 0
             }
         }
     }
@@ -29,6 +33,22 @@ export default class CropImage extends Component {
         }
 
         return `${file.height.toFixed(0)}x${file.width.toFixed(0)} px`;
+    }
+
+    componentDidMount() {
+        var img = new Image();
+        img.src = this.props.image.file;
+        const self = this;
+        img.onload = function () {
+            let base = {
+                'width': img.width,
+                'height': img.height
+            }
+            
+            self.setState({
+                base
+            });
+        }
     }
 
     render() {
@@ -74,7 +94,7 @@ export default class CropImage extends Component {
                                 <tbody>
                                     <tr>
                                         <td>Dimensions</td>
-                                        <td></td>
+                                        <td>{this.fileDimensions(this.state.base)}</td>
                                         <td>{this.fileDimensions(this.state.crop)}</td>
                                     </tr>
                                     <tr>
@@ -90,11 +110,12 @@ export default class CropImage extends Component {
                         <Button className="btn btn-success d-block mx-auto"
                             disabled={this.state.crop.height == 0 && this.state.crop.width == 0}
                             cb={this.props.cb.bind(this, this.state.src, true, {
-                                X: parseInt(this.state.crop.x),
-                                Y: parseInt(this.state.crop.y),
-                                Height: parseInt(this.state.crop.height),
-                                Width: parseInt(this.state.crop.width),
-                            })
+                                    X: parseInt(this.state.crop.x),
+                                    Y: parseInt(this.state.crop.y),
+                                    Height: parseInt(this.state.crop.height),
+                                    Width: parseInt(this.state.crop.width),
+                                    base: this.state.base
+                                })
                             }>
                             Crop and Upload <i className="far fa-crop" />
                         </Button>
