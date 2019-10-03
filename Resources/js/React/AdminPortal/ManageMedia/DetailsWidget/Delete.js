@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Button } from '../../../Components/Button';
+import { ConfirmButton } from '../../../Components/Button';
 import $ from 'jquery';
 
 const baseUri = '/admin/media';
@@ -24,9 +24,9 @@ export default class Delete extends Component {
 
     render() {
         return ( 
-            <Button className="btn btn-danger btn-sm" cb={this.delete.bind(this, this.props.id)}>
+            <ConfirmButton className="btn btn-danger btn-sm" cb={this.delete.bind(this, this.props.id)}>
                 Delete <i className="fas fa-trash"/>
-            </Button>
+            </ConfirmButton>
         )
     }
 }

@@ -52,7 +52,10 @@ export default class Gallery extends Component {
 
                 return (
                     <div className="col-md-6 col-lg-4" key={key}>
-                        <Item data={media} cb={this.props.viewDetails.bind(this, media)} />
+                        <Item data={media}
+                            refresh={this.getData.bind(this)}
+                            cb={this.props.viewDetails.bind(this, media)}
+                        />
                     </div>
                 )
             });
@@ -122,7 +125,7 @@ class Item extends Component {
                     </div>
 
                     <Button className="btn btn-dark btn-sm mx-1" cb={this.props.cb}>Edit</Button>
-                    <Delete id={this.props.data.id} />
+                    <Delete id={this.props.data.id} cb={this.props.refresh} />
                 </div>
             </div>
         )

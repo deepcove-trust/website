@@ -96,6 +96,7 @@ export default class MetaData extends Component {
                     pending={this.state.pending}
                     setEdit={(edit) => this.setState({ edit })}
                     saveChanges={this.submitChanges.bind(this)}
+                    deleteCb={this.props.deleteCb}
                     cancel={() => {
                         this.setState({
                             edit: false,

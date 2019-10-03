@@ -29,6 +29,7 @@ export default class Details extends Component {
 
                 <div className="col-md-6 col-sm-12">
                     <MetaData file={this.props.data}
+                        deleteCb={this.props.setTab.bind(this, 1)}
                     />
                 </div>
             </div>
