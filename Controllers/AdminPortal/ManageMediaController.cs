@@ -188,7 +188,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 else
                 {
-                    return BadRequest("File type not supported!");
+                    return new UnsupportedMediaTypeResult();
                 }
 
                 await _Db.SaveChangesAsync();
@@ -198,7 +198,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             {
                 _Logger.LogError("Error uploading file: {0}", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later.");
+                return BadRequest("Something went wrong, please try again later.");                
             }
         }
 
@@ -265,8 +265,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 // If the usages dictionary has keys, file is used
                 if(usages.Count > 0)
                 {
-                    // Todo: Stop the deletion!
-                    return BadRequest("File is being used, unable to delete!");
+                    return new StatusCodeResult(406);   // Not Acceptable Status Code                 
                 }
 
                 // Otherwise, we can go ahead and delete
@@ -275,7 +274,14 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 {
                     // Delete the directory containing image versions
                     string dirPath = Path.Combine("Storage", "Media", "Images", Path.GetFileNameWithoutExtension(media.Filename));
-                    Directory.Delete(dirPath, recursive: true);
+                    try
+                    {
+                        Directory.Delete(dirPath, recursive: true);
+                    }
+                    catch(DirectoryNotFoundException ex)
+                    {
+                        _Logger.LogWarning("While deleting image {0}: Version directory not found. Continuing.", id);
+                    }
                 }
 
                 // Finally, delete the media file itself
