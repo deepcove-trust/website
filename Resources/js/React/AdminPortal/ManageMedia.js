@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Gallery from './ManageMedia/Gallery';
-import Detials from './ManageMedia/Details';
+import Details from './ManageMedia/Details';
 import Upload from './ManageMedia/Upload';
 
 import { Button } from '../Components/Button';
@@ -9,7 +9,7 @@ import { Button } from '../Components/Button';
 
 const sections = {
     1: Gallery,
-    2: Detials,
+    2: Details,
     3: Upload
 }
 
