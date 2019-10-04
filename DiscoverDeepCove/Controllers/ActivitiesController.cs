@@ -32,7 +32,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
             }
             catch(Exception ex)
             {
-                _Logger.LogError("Error retrieving fact file entries list: {0}", ex.Message);
+                _Logger.LogError("Error retrieving activities list: {0}", ex.Message);
                 _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later.");
             }
@@ -71,7 +71,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
             }
             catch(Exception ex)
             {
-                _Logger.LogError("Error retrieving fact file entry data: {0}", ex.Message);
+                _Logger.LogError("Error retrieving activity data: {0}", ex.Message);
                 _Logger.LogError(ex.StackTrace);
                 return BadRequest("Something went wrong, please try again later.");
             }
