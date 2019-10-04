@@ -1,3 +1,11 @@
+export function convertSize(bytes) {
+    if (!bytes || bytes == 0) return 'n/a';
+
+    var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+    return Math.round(bytes / Math.pow(1024, i), 2).toFixed(2) + ' ' + sizes[i];
+}
+
 export function isExternalUrl(href) {
     if (!href) {
         return;

@@ -47,12 +47,12 @@ namespace Deepcove_Trust_Website
             if (Configuration.GetSection("ConnectionStrings").GetValue<string>("Use") == "MsSqlConnection")
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
+                    options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Transient);
             } 
             else
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseMySql(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MySqlConnection")), ServiceLifetime.Scoped);
+                    options.UseMySql(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MySqlConnection")), ServiceLifetime.Transient);
             }
 
             // Email Config
@@ -90,14 +90,18 @@ namespace Deepcove_Trust_Website
                 app.UseHsts();
             }
 
-            app.UseDeveloperExceptionMails();
+            //app.UseDeveloperExceptionMails();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            app.UseActiveAccounts();
-            app.UseForcePasswordReset();
+            //app.UseActiveAccounts();
+            //app.UseForcePasswordReset();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                name: "Home",
+                template: "",
+                defaults: new { controller = "Website", action = "HomePage" });
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

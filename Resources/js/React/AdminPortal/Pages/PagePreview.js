@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import PreviewCard from './PreviewCard';
-import { ConfirmModal, Link } from '../../Components/Button';
+import { ConfirmModal } from '../../Components/Button';
 import { ToggleVisibility, ViewPage, EditPageSettings } from '../../PageTemplates/PageControlButtons';
 import $ from 'jquery';
 
@@ -56,8 +56,7 @@ class DeletePage extends Component {
     deletePage() {
         $.ajax({
             type: 'delete',
-            data: this.props.page.id,
-            url: `/api/page/${this.props.page.id}`
+            url: `/admin/pages/${this.props.page.id}`
         }).done(() => {
             this.props.u();
         }).fail((err) => {

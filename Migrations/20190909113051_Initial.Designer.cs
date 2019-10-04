@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20190903214252_Initial Migration")]
-    partial class InitialMigration
+    [Migration("20190909113051_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -53,6 +53,38 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.BaseMedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<bool>("IsPublic");
+
+                    b.Property<string>("MediaType");
+
+                    b.Property<string>("Name");
+
+                    b.Property<long>("Size");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Media");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseMedia");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.ChannelMembership", b =>
@@ -300,6 +332,39 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasIndex("CmsButtonId");
 
                     b.ToTable("TextComponents");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.AudioMedia", b =>
+                {
+                    b.HasBaseType("Deepcove_Trust_Website.Models.BaseMedia");
+
+                    b.Property<double>("Duration");
+
+                    b.HasDiscriminator().HasValue("AudioMedia");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.GeneralMedia", b =>
+                {
+                    b.HasBaseType("Deepcove_Trust_Website.Models.BaseMedia");
+
+                    b.HasDiscriminator().HasValue("GeneralMedia");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.ImageMedia", b =>
+                {
+                    b.HasBaseType("Deepcove_Trust_Website.Models.BaseMedia");
+
+                    b.Property<string>("Alt");
+
+                    b.Property<double>("Height");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("Versions");
+
+                    b.Property<double>("Width");
+
+                    b.HasDiscriminator().HasValue("ImageMedia");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.ChannelMembership", b =>

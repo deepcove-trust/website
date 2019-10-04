@@ -17,6 +17,7 @@ import './js/React/AdminPortal/Pages';
 import './js/React/AdminPortal/PagesNew';
 import './js/React/AdminPortal/PageUpdate';
 import './js/React/AdminPortal/SystemSettings';
+import './js/React/AdminPortal/ManageMedia';
 import './js/React/CMS-Blocks/Text';
 
 /* React Error Pages */

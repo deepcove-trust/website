@@ -1,0 +1,113 @@
+[
+  {
+    "Id": 1,
+    "Name": "Brasell Point",
+    "Active": true,
+    "Activities": [
+      {
+        "Id": 1,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 0,
+        "Title": "Welcome",
+        "Description": "Description here",
+        "Task": "Task here",
+        "QrCode": "077282",
+        "CoordX": 167.154939,
+        "CoordY": -45.463618,
+        "FactFileId":  1
+      },
+      {
+        "Id": 2,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Count the frogs",
+        "Description": "Description here",
+        "Task": "Task here",
+        "QrCode": "075668",
+        "CoordX": 167.148249,
+        "CoordY": -45.463325
+      },
+      {
+        "Id": 3,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 2,
+        "FactFileId" :  24,
+        "Title": "Big Rimu",
+        "Description": "Description here",
+        "Task": "Task here",
+        "QrCode": "052631",
+        "CoordX": 167.157503,
+        "CoordY": -45.462806
+      },
+      {
+        "Id": 4,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 3,
+        "Title": "Find the Kea",
+        "Description": "Description here",
+        "Task": "Task here",
+        "QrCode": "045713",
+        "CoordX": 167.157717,
+        "CoordY": -45.463453,
+        "ImageOptions": [ 2, 6, 11 ]
+      },
+      {
+        "Id": 5,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 4,
+        "Title": "Get to the Point!",
+        "Description": "Description here",
+        "Task": "Task here",
+        "QrCode": "029793",
+        "CoordX": 167.157739,
+        "CoordY": -45.464115
+      },
+      {
+        "Id": 6,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 5,
+        "Title": "Stumped!",
+        "Description": "Description here",
+        "Task": "Task here",
+        "QrCode": "043254",
+        "CoordX": 167.157857,
+        "CoordY": -45.464348
+      }
+    ]
+  },
+  {
+    "Id": 2,
+    "Name": "Helena Falls",
+    "Active": true,
+    "Activities": [
+      {
+        "Id": 7,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Hanging Valley",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "050110",
+        "CoordX": 167.150856,
+        "CoordY": -45.466248
+      }
+    ]
+  },
+  {
+    "Id": 3,
+    "Name": "Hanging Valley",
+    "Active": false
+  },
+  {
+    "Id": 4,
+    "Name": "Around the Hostel",
+    "Active": false
+  }
+]
