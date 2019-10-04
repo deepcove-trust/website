@@ -39,7 +39,8 @@ namespace Deepcove_Trust_Website.Helpers
 
     public class CropData
     {
-        public int x, y, width, height;
+        public double x, y, width, height, prevW, prevH;
+
     }
 
     public static class ImageUtils
@@ -54,8 +55,16 @@ namespace Deepcove_Trust_Website.Helpers
         /// <param name="height">Height (in pixels) of the rectangle to be retained.</param>
         private static void CropImage(Image image, CropData cropData)
         {
+            // Adjust crop values for scaled down preview image
+            int scaleFactor = (int)(image.Width / cropData.prevW);
+
             image.Mutate(ctx => ctx.Crop(
-                new Rectangle(cropData.x, cropData.y, cropData.width, cropData.height)));
+                new Rectangle(
+                    (int)cropData.x * scaleFactor,
+                    (int)cropData.y * scaleFactor,
+                    (int)cropData.width * scaleFactor,
+                    (int)cropData.height * scaleFactor)
+                ));
         }
 
         /// <summary>

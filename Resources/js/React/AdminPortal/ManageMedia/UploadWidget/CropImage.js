@@ -57,7 +57,7 @@ export default class CropImage extends Component {
     cropImage() {
         let crop = this.state.crop;
         crop['prevH'] = $(".ReactCrop__image").height();
-        crop['prevY'] = $(".ReactCrop__image").width();
+        crop['prevW'] = $(".ReactCrop__image").width();
         this.props.cb(this.state.src, true, crop)
     }
 
