@@ -100,6 +100,12 @@
     <Compile Remove="Migrations\20190923054227_Alter Base Media.Designer.cs" />
     <Compile Remove="Migrations\20190924223717_initil.cs" />
     <Compile Remove="Migrations\20190924223717_initil.Designer.cs" />
+    <Compile Remove="Migrations\20191001064128_Initial Migration.cs" />
+    <Compile Remove="Migrations\20191001064128_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20191003082616_initial.cs" />
+    <Compile Remove="Migrations\20191003082616_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191004091805_second.cs" />
+    <Compile Remove="Migrations\20191004091805_second.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
