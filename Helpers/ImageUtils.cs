@@ -56,15 +56,15 @@ namespace Deepcove_Trust_Website.Helpers
         private static void CropImage(Image image, CropData cropData)
         {
             // Adjust crop values for scaled down preview image
-            int scaleFactor = (int)(image.Width / cropData.prevW);
+            double scaleFactor = image.Width / cropData.prevW;
 
             image.Mutate(ctx => ctx.Crop(
                 new Rectangle(
-                    (int)cropData.x * scaleFactor,
-                    (int)cropData.y * scaleFactor,
-                    (int)cropData.width * scaleFactor,
-                    (int)cropData.height * scaleFactor)
-                ));
+                    (int)(cropData.x * scaleFactor),
+                    (int)(cropData.y * scaleFactor),
+                    (int)(cropData.width * scaleFactor),
+                    (int)(cropData.height * scaleFactor)
+                )));
         }
 
         /// <summary>
