@@ -235,7 +235,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                _Logger.LogWarning("Error updating page settings: {0}", ex.Message);
+                _Logger.LogWarning(ex.StackTrace);
+                return BadRequest("There was an error updating the page settings. Please try again later.");
             }
         }
 

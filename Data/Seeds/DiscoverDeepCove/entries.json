@@ -1,0 +1,470 @@
+﻿[
+  {
+    "Id": 1,
+    "CategoryId": 1,
+    "Active":  true,
+    "PrimaryName": "Bellbird",
+    "AltName": "Korimako",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+      {
+        "orderIndex": 0,
+        "name": "Test Nugget",
+        "text": "This is a test nugget.",
+        "imageId": ""
+      }
+    ],
+    "BodyText": "Bellbird text goes here"
+  },
+  {
+    "Id": 2,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Black-billed Gull",
+    "AltName": "Tarāpuka",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Black-billed Gull text goes here"
+  },
+  {
+    "Id": 3,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Fantail",
+    "AltName": "Pīwakawaka",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Fantail text goes here"
+  },
+  {
+    "Id": 4,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Grey Warbler",
+    "AltName": "Riroriro",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Grey Warbler text goes here"
+  },
+  {
+    "Id": 5,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Kākā",
+    "AltName": null,
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Kaka text goes here"
+  },
+  {
+    "Id": 6,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Kea",
+    "AltName": null,
+    "ListenAudioId": 4,
+    "PronounceAudioId": 5,
+    "MainImageId": 2,
+    "GalleryImages": [ 2, 3 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Kea text goes here"
+  },
+  {
+    "Id": 7,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Kiwi",
+    "AltName": "Tokoeka",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Kiwi text goes here"
+  },
+  {
+    "Id": 8,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Paradise Duck",
+    "AltName": "Pūtangitangi",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Paradise Duck text goes here"
+  },
+  {
+    "Id": 9,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Rifleman",
+    "AltName": "Titipounamu",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Rifleman text goes here"
+  },
+  {
+    "Id": 10,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Silvereye",
+    "AltName": "Tahou",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Silvereye text goes here"
+  },
+  {
+    "Id": 11,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Tomtit",
+    "AltName": "Ngirungiru",
+    "ListenAudioId": 8,
+    "PronounceAudioId": null,
+    "MainImageId": 6,
+    "GalleryImages": [ 6, 7 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Tomtit text goes here"
+  },
+  {
+    "Id": 12,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Weka",
+    "AltName": null,
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Weka text goes here"
+  },
+  {
+    "Id": 13,
+    "CategoryId": 1,
+    "Active": true,
+    "PrimaryName": "Wood Pigeon",
+    "AltName": "Kererū",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Wood Pigeon text goes here"
+  },
+  {
+    "Id": 14,
+    "CategoryId": 4,
+    "Active": true,
+    "PrimaryName": "Blue Cod",
+    "AltName": "Raawaru",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Blue Cod text goes here"
+  },
+  {
+    "Id": 15,
+    "CategoryId": 4,
+    "Active": true,
+    "PrimaryName": "Groper",
+    "AltName": "Hapuku",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Groper text goes here"
+  },
+  {
+    "Id": 16,
+    "CategoryId": 4,
+    "Active": true,
+    "PrimaryName": "Red Gurnard",
+    "AltName": "Kumu Kumu",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Red Gurnard text goes here"
+  },
+  {
+    "Id": 17,
+    "CategoryId": 4,
+    "Active": true,
+    "PrimaryName": "Sea Perch",
+    "AltName": "Pohuiakaroa",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Sea Perch text goes here"
+  },
+  {
+    "Id": 18,
+    "CategoryId": 4,
+    "Active": true,
+    "PrimaryName": "Seven-gilled Shark",
+    "AltName": "Tuatina",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Seven-gilled Shark text goes here"
+  },
+  {
+    "Id": 19,
+    "CategoryId": 4,
+    "Active": true,
+    "PrimaryName": "Spotty",
+    "AltName": "Pakirikiri",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Spotty text goes here"
+  },
+  {
+    "Id": 20,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Black Tree Fern",
+    "AltName": "Mamaku",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Black Tree Fern text goes here"
+  },
+  {
+    "Id": 21,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Celery Pine",
+    "AltName": "Toatoa",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Celery Pine text goes here"
+  },
+  {
+    "Id": 22,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Hard/Rough Tree Fern",
+    "AltName": "Wheki",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Hard Tree Fern text goes here"
+  },
+  {
+    "Id": 23,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Mountain Beech",
+    "AltName": "Tawhairauriki",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Mountain Beech text goes here"
+  },
+  {
+    "Id": 24,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Rimu",
+    "AltName": null,
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Rimu text goes here"
+  },
+  {
+    "Id": 25,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Soft Tree Fern",
+    "AltName": "Katote",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Soft Tree Fern text goes here"
+  },
+  {
+    "Id": 26,
+    "CategoryId": 2,
+    "Active": true,
+    "PrimaryName": "Tōtara",
+    "AltName": null,
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Totara text goes here"
+  },
+  {
+    "Id": 27,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Crown Fern",
+    "AltName": "Piuoiu / Petipeti",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Crown Fern text goes here"
+  },
+  {
+    "Id": 28,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Hebe",
+    "AltName": "Koromiko",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Hebe text goes here"
+  },
+  {
+    "Id": 29,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Hen and Chicken Fern",
+    "AltName": "Pikopiko / Mouku",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Hen and Chicken Fern text goes here"
+  },
+  {
+    "Id": 30,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Karamu",
+    "AltName": null,
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Karamu text goes here"
+  },
+  {
+    "Id": 31,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Marble Leaf",
+    "AltName": "Putaputaweta",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Marble Leaf text goes here"
+  },
+  {
+    "Id": 32,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Stinkwood",
+    "AltName": "Hupiro",
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Stinkwood text goes here"
+  },
+  {
+    "Id": 33,
+    "CategoryId": 3,
+    "Active": true,
+    "PrimaryName": "Tutu",
+    "AltName": null,
+    "ListenAudioId": null,
+    "PronounceAudioId": null,
+    "MainImageId": 1,
+    "GalleryImages": [ 1 ],
+    "Nuggets": [
+    ],
+    "BodyText": "Tutu text goes here"
+  }
+]

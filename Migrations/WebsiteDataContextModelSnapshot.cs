@@ -15,9 +15,270 @@ namespace Deepcove_Trust_Website.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Activity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<int>("ActivityType");
+
+                    b.Property<double>("CoordX");
+
+                    b.Property<double>("CoordY");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<string>("Description");
+
+                    b.Property<int?>("FactFileId");
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<string>("QrCode");
+
+                    b.Property<string>("Task");
+
+                    b.Property<string>("Title");
+
+                    b.Property<int>("TrackId");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactFileId");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("TrackId");
+
+                    b.ToTable("Activities");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.ActivityImage", b =>
+                {
+                    b.Property<int>("ActivityId");
+
+                    b.Property<int>("ImageId");
+
+                    b.HasKey("ActivityId", "ImageId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("ActivityImages");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Config", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("MasterUnlockCode");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Config");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileCategory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FactFileCategories");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("AltName");
+
+                    b.Property<string>("BodyText");
+
+                    b.Property<int>("CategoryId");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<int?>("ListenAudioId");
+
+                    b.Property<int>("MainImageId");
+
+                    b.Property<string>("PrimaryName");
+
+                    b.Property<int?>("PronounceAudioId");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("ListenAudioId");
+
+                    b.HasIndex("MainImageId");
+
+                    b.HasIndex("PronounceAudioId");
+
+                    b.ToTable("FactFileEntries");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntryImage", b =>
+                {
+                    b.Property<int>("FactFileEntryId");
+
+                    b.Property<int>("MediaFileId");
+
+                    b.HasKey("FactFileEntryId", "MediaFileId");
+
+                    b.HasIndex("MediaFileId");
+
+                    b.ToTable("FactFileEntryImages");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileNugget", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("FactFileEntryId");
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("OrderIndex");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FactFileEntryId");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("FactFileNuggets");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Quiz", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<int>("ImageId");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("UnlockCode");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("Quizzes");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<int>("QuizQuestionId");
+
+                    b.Property<string>("Text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("QuizQuestionId");
+
+                    b.ToTable("QuizAnswers");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AudioId");
+
+                    b.Property<int?>("CorrectAnswerId");
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<int>("QuizId");
+
+                    b.Property<string>("Text");
+
+                    b.Property<bool?>("TrueFalseAnswer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudioId");
+
+                    b.HasIndex("CorrectAnswerId")
+                        .IsUnique()
+                        .HasFilter("[CorrectAnswerId] IS NOT NULL");
+
+                    b.HasIndex("ImageId");
+
+                    b.HasIndex("QuizId");
+
+                    b.ToTable("QuizQuestions");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Track", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tracks");
+                });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Account", b =>
                 {
@@ -51,6 +312,42 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.BaseMedia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired();
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<bool>("IsPublic");
+
+                    b.Property<string>("MediaType");
+
+                    b.Property<string>("Name");
+
+                    b.Property<bool>("ShowCopyright");
+
+                    b.Property<long>("Size");
+
+                    b.Property<string>("Source");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Media");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("BaseMedia");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.ChannelMembership", b =>
@@ -298,6 +595,154 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasIndex("CmsButtonId");
 
                     b.ToTable("TextComponents");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.AudioMedia", b =>
+                {
+                    b.HasBaseType("Deepcove_Trust_Website.Models.BaseMedia");
+
+                    b.Property<double>("Duration");
+
+                    b.HasDiscriminator().HasValue("AudioMedia");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.GeneralMedia", b =>
+                {
+                    b.HasBaseType("Deepcove_Trust_Website.Models.BaseMedia");
+
+                    b.HasDiscriminator().HasValue("GeneralMedia");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.ImageMedia", b =>
+                {
+                    b.HasBaseType("Deepcove_Trust_Website.Models.BaseMedia");
+
+                    b.Property<string>("Alt");
+
+                    b.Property<double>("Height");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("Versions");
+
+                    b.Property<double>("Width");
+
+                    b.HasDiscriminator().HasValue("ImageMedia");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Activity", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", "FactFile")
+                        .WithMany()
+                        .HasForeignKey("FactFileId");
+
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.Track", "Track")
+                        .WithMany("Activities")
+                        .HasForeignKey("TrackId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.ActivityImage", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.Activity", "Activity")
+                        .WithMany("ActivityImages")
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.FactFileCategory", "Category")
+                        .WithMany("FactFileEntries")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.AudioMedia", "ListenAudio")
+                        .WithMany()
+                        .HasForeignKey("ListenAudioId");
+
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "MainImage")
+                        .WithMany()
+                        .HasForeignKey("MainImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.AudioMedia", "PronounceAudio")
+                        .WithMany()
+                        .HasForeignKey("PronounceAudioId");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntryImage", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", "FactFileEntry")
+                        .WithMany("FactFileEntryImages")
+                        .HasForeignKey("FactFileEntryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "MediaFile")
+                        .WithMany()
+                        .HasForeignKey("MediaFileId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileNugget", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", "FactFileEntry")
+                        .WithMany("FactFileNuggets")
+                        .HasForeignKey("FactFileEntryId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Quiz", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "QuizQuestion")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuizQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.AudioMedia", "Audio")
+                        .WithMany()
+                        .HasForeignKey("AudioId");
+
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", "CorrectAnswer")
+                        .WithOne("CorrectForQuestion")
+                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "CorrectAnswerId");
+
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
+
+                    b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.Quiz", "Quiz")
+                        .WithMany("Questions")
+                        .HasForeignKey("QuizId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.ChannelMembership", b =>

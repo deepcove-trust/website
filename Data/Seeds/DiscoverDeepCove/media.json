@@ -1,0 +1,92 @@
+[
+  {
+    "Id": 1,
+    "FileType": 1,
+    "Name": "no_image",
+    "Path": "Storage/Media/Images/no_image.png"
+  },
+  {
+    "Id": 2,
+    "FileType": 0,
+    "Name": "kea_1",
+    "Path": "Storage/Media/Images/kea_1.jpg"
+  },
+  {
+    "Id": 3,
+    "FileType": 0,
+    "Name": "kea_2",
+    "Path": "Storage/Media/Images/kea_2.jpg"
+  },
+  {
+    "Id": 4,
+    "FileType": 3,
+    "Name": "kea_call",
+    "Path": "Storage/Media/Audio/kea_call.mp3"
+  },
+  {
+    "Id": 5,
+    "FileType": 3,
+    "Name": "kea_pronounce",
+    "Path": "Storage/Media/Audio/kea_pronounce.mp3"
+  },
+  {
+    "Id": 6,
+    "FileType": 0,
+    "Name": "tomtit_1",
+    "Path": "Storage/Media/Images/tomtit_1.jpg"
+  },
+  {
+    "Id": 7,
+    "FileType": 0,
+    "Name": "tomtit_2",
+    "Path": "Storage/Media/Images/tomtit_2.jpg"
+  },
+  {
+    "Id": 8,
+    "FileType": 3,
+    "Name": "tomtit_audio",
+    "Path": "Storage/Media/Audio/tomtit_audio.mp3"
+  },
+  {
+    "Id": 9,
+    "FileType": 0,
+    "Name": "rimu_1",
+    "Path": "Storage/Media/Images/rimu_1.jpg"
+  },
+  {
+    "Id": 10,
+    "FileType": 0,
+    "Name": "totara_1",
+    "Path": "Storage/Media/Images/totara_1.jpg"
+  },
+  {
+    "Id": 11,
+    "FileType": 0,
+    "Name": "frog",
+    "Path": "Storage/Media/Images/frog.jpg"
+  },
+  {
+    "Id": 12,
+    "FileType": 1,
+    "Name": "brasell_point",
+    "Path": "Storage/Media/Images/brasell_point.png"
+  },
+  {
+    "Id": 13,
+    "FileType": 0,
+    "Name": "tree_stump",
+    "Path": "Storage/Media/Images/tree_stump.jpg"
+  },
+  {
+    "Id": 14,
+    "FileType": 0,
+    "Name": "helena_falls",
+    "Path": "Storage/Media/Images/helena_falls.jpg"
+  },
+  {
+    "Id": 15,
+    "FileType": 0,
+    "Name": "weka_1",
+    "Path": "Storage/Media/Images/weka_1.jpg"
+  }
+]

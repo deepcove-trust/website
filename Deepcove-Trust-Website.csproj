@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Storage\media\**" />
+    <Content Remove="Storage\media\**" />
+    <EmbeddedResource Remove="Storage\media\**" />
+    <None Remove="Storage\media\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Migrations\20190707204004_Initial Migation.cs" />
     <Compile Remove="Migrations\20190707204004_Initial Migation.Designer.cs" />
     <Compile Remove="Migrations\20190709230510_Initial Migration.cs" />
@@ -45,6 +52,60 @@
     <Compile Remove="Migrations\20190824091417_Initial Migration.Designer.cs" />
     <Compile Remove="Migrations\20190831040050_Initial.cs" />
     <Compile Remove="Migrations\20190831040050_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190903214252_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190903214252_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190904111056_Initial.cs" />
+    <Compile Remove="Migrations\20190904111056_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190909072441_modify_media.cs" />
+    <Compile Remove="Migrations\20190909072441_modify_media.Designer.cs" />
+    <Compile Remove="Migrations\20190909103014_intial.cs" />
+    <Compile Remove="Migrations\20190909103014_intial.Designer.cs" />
+    <Compile Remove="Migrations\20190909103050_Initial.cs" />
+    <Compile Remove="Migrations\20190909103050_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190909110323_size_to_long.cs" />
+    <Compile Remove="Migrations\20190909110323_size_to_long.Designer.cs" />
+    <Compile Remove="Migrations\20190909113051_Initial.cs" />
+    <Compile Remove="Migrations\20190909113051_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190916043042_mm.cs" />
+    <Compile Remove="Migrations\20190916043042_mm.Designer.cs" />
+    <Compile Remove="Migrations\20190916043119_mmm.cs" />
+    <Compile Remove="Migrations\20190916043119_mmm.Designer.cs" />
+    <Compile Remove="Migrations\20190916043144_mmmm.cs" />
+    <Compile Remove="Migrations\20190916043144_mmmm.Designer.cs" />
+    <Compile Remove="Migrations\20190916043604_mmmmm.cs" />
+    <Compile Remove="Migrations\20190916043604_mmmmm.Designer.cs" />
+    <Compile Remove="Migrations\20190916044019_mmmmmmm.cs" />
+    <Compile Remove="Migrations\20190916044019_mmmmmmm.Designer.cs" />
+    <Compile Remove="Migrations\20190916044623_mm.cs" />
+    <Compile Remove="Migrations\20190916044623_mm.Designer.cs" />
+    <Compile Remove="Migrations\20190916045216_i.cs" />
+    <Compile Remove="Migrations\20190916045216_i.Designer.cs" />
+    <Compile Remove="Migrations\20190916045529_i.cs" />
+    <Compile Remove="Migrations\20190916045529_i.Designer.cs" />
+    <Compile Remove="Migrations\20190916050231_m.cs" />
+    <Compile Remove="Migrations\20190916050231_m.Designer.cs" />
+    <Compile Remove="Migrations\20190916050538_initial.cs" />
+    <Compile Remove="Migrations\20190916050538_initial.Designer.cs" />
+    <Compile Remove="Migrations\20190916051110_m.cs" />
+    <Compile Remove="Migrations\20190916051110_m.Designer.cs" />
+    <Compile Remove="Migrations\20190917035158_Initial Migration.cs" />
+    <Compile Remove="Migrations\20190917035158_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20190921090005_Second.cs" />
+    <Compile Remove="Migrations\20190921090005_Second.Designer.cs" />
+    <Compile Remove="Migrations\20190921123153_Initial.cs" />
+    <Compile Remove="Migrations\20190921123153_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190923020044_Initial.cs" />
+    <Compile Remove="Migrations\20190923020044_Initial.Designer.cs" />
+    <Compile Remove="Migrations\20190923054227_Alter Base Media.cs" />
+    <Compile Remove="Migrations\20190923054227_Alter Base Media.Designer.cs" />
+    <Compile Remove="Migrations\20190924223717_initil.cs" />
+    <Compile Remove="Migrations\20190924223717_initil.Designer.cs" />
+    <Compile Remove="Migrations\20191001064128_Initial Migration.cs" />
+    <Compile Remove="Migrations\20191001064128_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20191003082616_initial.cs" />
+    <Compile Remove="Migrations\20191003082616_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191004091805_second.cs" />
+    <Compile Remove="Migrations\20191004091805_second.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -65,6 +126,31 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
+    <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
   </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
+    <Folder Include="Storage\" />
+    <Folder Include="wwwroot\audio\" />
+  </ItemGroup>
+
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptTarget>ES5</TypeScriptTarget>
+    <TypeScriptJSXEmit>React</TypeScriptJSXEmit>
+    <TypeScriptModuleKind />
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptRemoveComments>False</TypeScriptRemoveComments>
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
+  </PropertyGroup>
 
 </Project>

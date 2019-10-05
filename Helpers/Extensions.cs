@@ -72,6 +72,11 @@ namespace Deepcove_Trust_Website.Helpers
             return x;
         }
 
+        /// <summary>
+        /// Returns true if the request contains a value for all of the keys provided.
+        /// </summary>
+        public static bool ContainsKeys(this IFormCollection request, string[] keys) =>        
+            keys.All(key => request.ContainsKey(key));
 
         /// <summary>
         /// Gets the base URI for the website
@@ -80,5 +85,7 @@ namespace Deepcove_Trust_Website.Helpers
         public static Uri BaseUrl(this HttpRequest request) => new Uri($"{request.Scheme}://{request.Host}");
 
         public static bool EqualsIgnoreCase(this string s, string other) => s.ToLower() == other.ToLower();
+
+        public static byte[] DecodeBase64Bytes(this string encoded) => System.Convert.FromBase64String(encoded);
     }
 }
