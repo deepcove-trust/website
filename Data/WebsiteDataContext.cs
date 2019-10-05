@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.DiscoverDeepCove;
+using Microsoft.Extensions.Configuration;
 
 namespace Deepcove_Trust_Website.Data
 {
@@ -51,12 +52,15 @@ namespace Deepcove_Trust_Website.Data
 
         // --------------------------------------------------
 
+        IConfiguration _configuration;
 
-        public WebsiteDataContext(DbContextOptions<WebsiteDataContext> options) : base(options)
+        public WebsiteDataContext(IConfiguration configuration, DbContextOptions<WebsiteDataContext> options) : base(options)
         {
             // Temporarily disabled as it seems to prevent database rollbacks.
             // Auto runs migrations
             //Database.Migrate();
+
+            _configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -179,10 +183,10 @@ namespace Deepcove_Trust_Website.Data
             string onString = $"SET IDENTITY_INSERT dbo.{tableName} ON";
             string offString = $"SET IDENTITY_INSERT dbo.{tableName} OFF";
             Database.OpenConnection();
-            Database.ExecuteSqlCommand(onString);
+            if (_configuration.GetSection("ConnectionStrings").GetValue<string>("Use") == "MsSqlConnection") Database.ExecuteSqlCommand(onString);
             foreach(T item in items) Add(item);
             SaveChanges();
-            Database.ExecuteSqlCommand(offString);
+            if (_configuration.GetSection("ConnectionStrings").GetValue<string>("Use") == "MsSqlConnection") Database.ExecuteSqlCommand(offString);
             Database.CloseConnection();
         }
     }
