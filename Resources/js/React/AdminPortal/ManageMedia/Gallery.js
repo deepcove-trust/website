@@ -111,7 +111,7 @@ class Item extends Component {
 
         return (
             <div className="card border-0 mb-2 transform-on-hover">
-                <img src={`/media?filename=${this.props.data.filename}`} alt={this.props.data.name} className="card-img-top" />
+                <img src={`/media?filename=${this.props.data.filename}`} alt={this.props.data.alt} className="card-img-top" />
 
                 <div className="card-body text-center">
                     <h6>{this.props.data.name || "untitled"}</h6>

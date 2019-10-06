@@ -54,7 +54,7 @@ export default class MetaData extends Component {
                     source: file.source.info,
                     showCopyright: file.source.showCopyright,
                     title: file.title,
-                    alt: file.title
+                    alt: file.alt
                 }
             }).done(() => {
                 this.getData();
