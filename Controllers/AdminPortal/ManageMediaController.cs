@@ -46,8 +46,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.Id,
                 media.MediaType,
                 media.Name,
-                media.Filename
-            }).ToListAsync());
+                media.Filename,
+                Alt = media is ImageMedia ? ((ImageMedia)media).Alt : null
+             }).ToListAsync());
         }
 
         [HttpGet("data/{id:int}")]
