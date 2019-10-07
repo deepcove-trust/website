@@ -35,6 +35,19 @@
     padding-top: 60px;
 }
 
+.gallery-img {
+    height: 280px;
+    object-fit: cover;
+}
+
+audio.overImg {
+    display: block;
+    height: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -25px;
+}
+
 .gallery-block .heading {
     margin-bottom: 50px;
     text-align: center;
