@@ -13,6 +13,8 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         public int FileType { get; set; }
         public string Name { get; set; }
         public string Path { get; set; }
+        public string Source { get; set; }
+        public bool ShowCopyright { get; set; }
         public MediaType MediaType { get => (MediaType)FileType; }
 
         public BaseMedia ToBaseMedia()
@@ -27,6 +29,8 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
                         MediaType = MediaType,
                         FilePath = Path,
                         IsPublic = true,
+                        Source = Source,
+                        ShowCopyright = ShowCopyright,
                         Title = Name,
                         Alt = Name,
                         Height = 0,

@@ -10,12 +10,6 @@
     "MainImageId": 1,
     "GalleryImages": [ 1 ],
     "Nuggets": [
-      {
-        "orderIndex": 0,
-        "name": "Test Nugget",
-        "text": "This is a test nugget.",
-        "imageId": ""
-      }
     ],
     "BodyText": "Bellbird text goes here"
   },
@@ -27,8 +21,8 @@
     "AltName": "Tarāpuka",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 5,
+    "GalleryImages": [ 5 ],
     "Nuggets": [
     ],
     "BodyText": "Black-billed Gull text goes here"
@@ -41,8 +35,8 @@
     "AltName": "Pīwakawaka",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 7,
+    "GalleryImages": [ 7 ],
     "Nuggets": [
     ],
     "BodyText": "Fantail text goes here"
@@ -55,8 +49,8 @@
     "AltName": "Riroriro",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 8,
+    "GalleryImages": [ 8 ],
     "Nuggets": [
     ],
     "BodyText": "Grey Warbler text goes here"
@@ -69,8 +63,8 @@
     "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 11,
+    "GalleryImages": [ 11, 10, 9 ],
     "Nuggets": [
     ],
     "BodyText": "Kaka text goes here"
@@ -81,13 +75,13 @@
     "Active": true,
     "PrimaryName": "Kea",
     "AltName": null,
-    "ListenAudioId": 4,
-    "PronounceAudioId": 5,
+    "ListenAudioId": 33,
+    "PronounceAudioId": 34,
     "MainImageId": 2,
-    "GalleryImages": [ 2, 3 ],
+    "GalleryImages": [ 2, 3, 32 ],
     "Nuggets": [
     ],
-    "BodyText": "Kea text goes here"
+    "BodyText": "The world's only Alpine Parrot, the Kea is native to the South Island of New Zealand. Found mainly around the Southern Alps and high land regions of the South Island, adult Keas grow to be around 46 centimeters long and weigh up to 1.1Kg. The Kea’s has a mix of green and orange feathers, with bright orange feathers under wing. "
   },
   {
     "Id": 7,
@@ -97,8 +91,8 @@
     "AltName": "Tokoeka",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 4,
+    "GalleryImages": [ 4 ],
     "Nuggets": [
     ],
     "BodyText": "Kiwi text goes here"
@@ -111,8 +105,8 @@
     "AltName": "Pūtangitangi",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 12,
+    "GalleryImages": [ 12 ],
     "Nuggets": [
     ],
     "BodyText": "Paradise Duck text goes here"
@@ -125,8 +119,8 @@
     "AltName": "Titipounamu",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 13,
+    "GalleryImages": [ 13 ],
     "Nuggets": [
     ],
     "BodyText": "Rifleman text goes here"
@@ -139,8 +133,8 @@
     "AltName": "Tahou",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 14,
+    "GalleryImages": [ 14 ],
     "Nuggets": [
     ],
     "BodyText": "Silvereye text goes here"
@@ -151,10 +145,10 @@
     "Active": true,
     "PrimaryName": "Tomtit",
     "AltName": "Ngirungiru",
-    "ListenAudioId": 8,
+    "ListenAudioId": 35,
     "PronounceAudioId": null,
-    "MainImageId": 6,
-    "GalleryImages": [ 6, 7 ],
+    "MainImageId": 15,
+    "GalleryImages": [ 15 ],
     "Nuggets": [
     ],
     "BodyText": "Tomtit text goes here"
@@ -167,8 +161,8 @@
     "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 16,
+    "GalleryImages": [ 16 ],
     "Nuggets": [
     ],
     "BodyText": "Weka text goes here"
@@ -181,8 +175,8 @@
     "AltName": "Kererū",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 18,
+    "GalleryImages": [ 18 ],
     "Nuggets": [
     ],
     "BodyText": "Wood Pigeon text goes here"
@@ -195,8 +189,8 @@
     "AltName": "Raawaru",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 19,
+    "GalleryImages": [ 19 ],
     "Nuggets": [
     ],
     "BodyText": "Blue Cod text goes here"
@@ -209,8 +203,8 @@
     "AltName": "Hapuku",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 20,
+    "GalleryImages": [ 20 ],
     "Nuggets": [
     ],
     "BodyText": "Groper text goes here"
@@ -223,8 +217,8 @@
     "AltName": "Kumu Kumu",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 21,
+    "GalleryImages": [ 21 ],
     "Nuggets": [
     ],
     "BodyText": "Red Gurnard text goes here"
@@ -237,8 +231,8 @@
     "AltName": "Pohuiakaroa",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 22,
+    "GalleryImages": [ 22 ],
     "Nuggets": [
     ],
     "BodyText": "Sea Perch text goes here"
@@ -251,8 +245,8 @@
     "AltName": "Tuatina",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 23,
+    "GalleryImages": [ 23 ],
     "Nuggets": [
     ],
     "BodyText": "Seven-gilled Shark text goes here"
@@ -265,8 +259,8 @@
     "AltName": "Pakirikiri",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 24,
+    "GalleryImages": [ 24 ],
     "Nuggets": [
     ],
     "BodyText": "Spotty text goes here"
@@ -279,8 +273,8 @@
     "AltName": "Mamaku",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 25,
+    "GalleryImages": [ 25 ],
     "Nuggets": [
     ],
     "BodyText": "Black Tree Fern text goes here"
@@ -293,8 +287,8 @@
     "AltName": "Toatoa",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 26,
+    "GalleryImages": [ 26 ],
     "Nuggets": [
     ],
     "BodyText": "Celery Pine text goes here"
@@ -307,8 +301,8 @@
     "AltName": "Wheki",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 27,
+    "GalleryImages": [ 27 ],
     "Nuggets": [
     ],
     "BodyText": "Hard Tree Fern text goes here"
@@ -321,8 +315,8 @@
     "AltName": "Tawhairauriki",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 28,
+    "GalleryImages": [ 28 ],
     "Nuggets": [
     ],
     "BodyText": "Mountain Beech text goes here"
@@ -335,8 +329,8 @@
     "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 29,
+    "GalleryImages": [ 29 ],
     "Nuggets": [
     ],
     "BodyText": "Rimu text goes here"
@@ -349,8 +343,8 @@
     "AltName": "Katote",
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 30,
+    "GalleryImages": [ 30 ],
     "Nuggets": [
     ],
     "BodyText": "Soft Tree Fern text goes here"
@@ -363,8 +357,8 @@
     "AltName": null,
     "ListenAudioId": null,
     "PronounceAudioId": null,
-    "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "MainImageId": 31,
+    "GalleryImages": [ 32 ],
     "Nuggets": [
     ],
     "BodyText": "Totara text goes here"
@@ -378,7 +372,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Crown Fern text goes here"
@@ -392,7 +386,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Hebe text goes here"
@@ -406,7 +400,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Hen and Chicken Fern text goes here"
@@ -420,7 +414,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Karamu text goes here"
@@ -434,7 +428,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Marble Leaf text goes here"
@@ -448,7 +442,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Stinkwood text goes here"
@@ -462,7 +456,7 @@
     "ListenAudioId": null,
     "PronounceAudioId": null,
     "MainImageId": 1,
-    "GalleryImages": [ 1 ],
+    "GalleryImages": [ ],
     "Nuggets": [
     ],
     "BodyText": "Tutu text goes here"

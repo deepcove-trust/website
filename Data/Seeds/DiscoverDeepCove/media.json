@@ -1,92 +1,299 @@
 [
   {
     "Id": 1,
-    "FileType": 1,
-    "Name": "no_image",
-    "Path": "Storage/Media/Images/no_image.png"
+    "FileType": 0,
+    "Name": "bellbird",
+    "Path": "Storage/Media/Images/90d0bbc4-46b7-4f42-8580-858fe57bbb34.jpg",
+    "Source": "Stefan Marks",
+    "ShowCopyright": true
   },
   {
     "Id": 2,
     "FileType": 0,
     "Name": "kea_1",
-    "Path": "Storage/Media/Images/kea_1.jpg"
+    "Path": "Storage/Media/Images/eb8de5ee-9d33-479a-b8e4-542097bf7b2d.jpg",
+    "Source": "Benhi Dixon",
+    "ShowCopyright": true
+  },
+  {
+    "Id": 32,
+    "FileType": 0,
+    "Name": "kea_2",
+    "Path": "Storage/Media/Images/d4d01d53-61cb-41f6-9348-aa653a7f5bc8.jpg",
+    "Source": "Daniel Pietzsch",
+    "ShowCopyright": true
   },
   {
     "Id": 3,
-    "FileType": 0,
-    "Name": "kea_2",
-    "Path": "Storage/Media/Images/kea_2.jpg"
+    "FileType": 1,
+    "Name": "kea_3",
+    "Path": "Storage/Media/Images/99e632e3-11c1-43ad-96a0-b3b3517a4646.png",
+    "Source": "Department of Conservation",
+    "ShowCopyright": true
   },
   {
     "Id": 4,
-    "FileType": 3,
-    "Name": "kea_call",
-    "Path": "Storage/Media/Audio/kea_call.mp3"
+    "FileType": 0,
+    "Name": "kiwi",
+    "Path": "Storage/Media/Images/a0515b7a-02d4-403a-9bea-3a5906f52871.jpg",
+    "Source": "Department of Conservation",
+    "ShowCopyright": true
   },
   {
     "Id": 5,
-    "FileType": 3,
-    "Name": "kea_pronounce",
-    "Path": "Storage/Media/Audio/kea_pronounce.mp3"
+    "FileType": 0,
+    "Name": "black-billed gull",
+    "Path": "Storage/Media/Images/a9df67d6-6045-4738-85f6-b993d7fec579.jpg",
+    "Source": "Department of Conservation",
+    "ShowCopyright": true
   },
   {
     "Id": 6,
     "FileType": 0,
-    "Name": "tomtit_1",
-    "Path": "Storage/Media/Images/tomtit_1.jpg"
+    "Name": "tui",
+    "Path": "Storage/Media/Images/a3cc0ed0-5715-4c59-a58f-adeb2a6e2a96.jpg",
+    "Source": "Leon Berard",
+    "ShowCopyright": true
   },
   {
     "Id": 7,
     "FileType": 0,
-    "Name": "tomtit_2",
-    "Path": "Storage/Media/Images/tomtit_2.jpg"
+    "Name": "fantail",
+    "Path": "Storage/Media/Images/dc751b52-d2b3-424a-8075-8b7889396363.jpg",
+    "Source": "James Mortimer",
+    "ShowCopyright": true
   },
   {
     "Id": 8,
-    "FileType": 3,
-    "Name": "tomtit_audio",
-    "Path": "Storage/Media/Audio/tomtit_audio.mp3"
+    "FileType": 0,
+    "Name": "grey warbler",
+    "Path": "Storage/Media/Images/9a428ac3-0299-49e8-80d5-e64d8b3c843b.jpg",
+    "Source": null,
+    "ShowCopyright": false
   },
   {
     "Id": 9,
     "FileType": 0,
-    "Name": "rimu_1",
-    "Path": "Storage/Media/Images/rimu_1.jpg"
+    "Name": "kaka_1",
+    "Path": "Storage/Media/Images/2565e9bf-734b-4acf-80f3-a1e096c60353.jpg",
+    "Source": "Anja Kohler",
+    "ShowCopyright": true
   },
   {
     "Id": 10,
     "FileType": 0,
-    "Name": "totara_1",
-    "Path": "Storage/Media/Images/totara_1.jpg"
+    "Name": "kaka_2",
+    "Path": "Storage/Media/Images/99c4a192-6a41-4e0c-91af-ef38125efb9b.jpg",
+    "Source": "Sarah Stirrup",
+    "ShowCopyright": true
   },
   {
     "Id": 11,
     "FileType": 0,
-    "Name": "frog",
-    "Path": "Storage/Media/Images/frog.jpg"
+    "Name": "kaka_3",
+    "Path": "Storage/Media/Images/0d5b0204-19dd-43ab-b9c7-3db32aee15bb.jpg",
+    "Source": null,
+    "ShowCopyright": false
   },
   {
     "Id": 12,
-    "FileType": 1,
-    "Name": "brasell_point",
-    "Path": "Storage/Media/Images/brasell_point.png"
+    "FileType": 0,
+    "Name": "paradise duck",
+    "Path": "Storage/Media/Images/ff71a736-3edd-4428-ad40-57d883411157.jpg",
+    "Source": "Michael Hamilton",
+    "ShowCopyright": true
   },
   {
     "Id": 13,
     "FileType": 0,
-    "Name": "tree_stump",
-    "Path": "Storage/Media/Images/tree_stump.jpg"
+    "Name": "rifleman",
+    "Path": "Storage/Media/Images/69f7eda3-66a6-4f49-b91e-caf80ee63c92.jpg",
+    "Source": null,
+    "ShowCopyright": false
   },
   {
     "Id": 14,
     "FileType": 0,
-    "Name": "helena_falls",
-    "Path": "Storage/Media/Images/helena_falls.jpg"
+    "Name": "silvereye",
+    "Path": "Storage/Media/Images/e4de7e47-63ad-438d-af76-78d65244e4bc.jpg",
+    "Source": "JJ Harrison",
+    "ShowCopyright": true
   },
   {
     "Id": 15,
     "FileType": 0,
-    "Name": "weka_1",
-    "Path": "Storage/Media/Images/weka_1.jpg"
+    "Name": "tomtit",
+    "Path": "Storage/Media/Images/467f25f5-bc79-40b1-9887-4ddcba522914.jpg",
+    "Source": "Graham Commins",
+    "ShowCopyright": true
+  },
+  {
+    "Id": 16,
+    "FileType": 0,
+    "Name": "weka",
+    "Path": "Storage/Media/Images/e137ffa5-8d06-4086-afcd-068df921df27.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 17,
+    "FileType": 0,
+    "Name": "blue duck",
+    "Path": "Storage/Media/Images/e22c6e86-8eb0-45d9-9876-d1b56bd7b63e.jpg",
+    "Source": "Tyrone Smith",
+    "ShowCopyright": true
+  },
+  {
+    "Id": 18,
+    "FileType": 0,
+    "Name": "wood pigeon",
+    "Path": "Storage/Media/Images/783c4d1e-6078-4c48-b253-ad0f59b4c7b8.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 19,
+    "FileType": 0,
+    "Name": "blue cod",
+    "Path": "Storage/Media/Images/6b72455d-52d9-4d1b-8ed5-fe3fc3d2a817.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 20,
+    "FileType": 0,
+    "Name": "groper",
+    "Path": "Storage/Media/Images/67074fee-57be-4766-8f13-67520257c0f4.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 21,
+    "FileType": 0,
+    "Name": "red gurnard",
+    "Path": "Storage/Media/Images/a5446d00-8206-4b20-8811-e98733178338.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 22,
+    "FileType": 0,
+    "Name": "sea perch",
+    "Path": "Storage/Media/Images/61e06fac-f069-426e-a3cf-82a25b57e62a.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 23,
+    "FileType": 0,
+    "Name": "seven gilled shark",
+    "Path": "Storage/Media/Images/f610039d-57b9-4f20-bbfb-02762db2743f.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 24,
+    "FileType": 0,
+    "Name": "spotty",
+    "Path": "Storage/Media/Images/1182c2eb-8205-4537-b14f-7cf8265d6c7f.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 25,
+    "FileType": 0,
+    "Name": "black tree fern",
+    "Path": "Storage/Media/Images/0e98ef2f-930d-44c1-86f4-eea949387156.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 26,
+    "FileType": 1,
+    "Name": "celery pine",
+    "Path": "Storage/Media/Images/f573669c-d260-4908-a9f0-16cee249caa0.png",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 27,
+    "FileType": 0,
+    "Name": "hard/rough tree fern",
+    "Path": "Storage/Media/Images/9ed0f508-8da9-4349-9ef2-830ec3bd8ba6.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 28,
+    "FileType": 0,
+    "Name": "mountain beech",
+    "Path": "Storage/Media/Images/fe86932c-9f78-41a2-93b3-97e14d70ea88.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 29,
+    "FileType": 0,
+    "Name": "rimu",
+    "Path": "Storage/Media/Images/ef1e59f2-ea53-4310-8700-309d231cc50f.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 30,
+    "FileType": 0,
+    "Name": "soft tree fern",
+    "Path": "Storage/Media/Images/fe1ccc2b-0760-4389-b827-7ef9e6b23607.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 31,
+    "FileType": 0,
+    "Name": "totara",
+    "Path": "Storage/Media/Images/26699992-ef59-4d13-87d5-0cd6e85e2cda.jpg",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  // 32 is used for kea
+  {
+    "Id": 33,
+    "FileType": 3,
+    "Name": "kea_call",
+    "Path": "Storage/Media/Audio/d6d77037-a958-4bb8-b8e7-5a0f2a1b6bfc.mp3",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 34,
+    "FileType": 3,
+    "Name": "kea_pronounce",
+    "Path": "Storage/Media/Audio/15f14bab-fa8a-4021-9911-cf8f3abbe285.mp3",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 35,
+    "FileType": 3,
+    "Name": "tomtit_audio",
+    "Path": "Storage/Media/Audio/ad89cd2a-885f-4545-9e34-68db7773bcb7.mp3",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 36,
+    "FileType": 1,
+    "Name": "brasell point",
+    "Path": "Storage/Media/Images/e5bff86f-2ea1-48df-8f86-ff947220d3dc.png",
+    "Source": null,
+    "ShowCopyright": false
+  },
+  {
+    "Id": 37,
+    "FileType": 0,
+    "Name": "tree stump",
+    "Path": "Storage/Media/Images/f0ab335a-ba56-4030-9520-79547fac77d6.jpg",
+    "Source": null,
+    "ShowCopyright": false
   }
 ]
