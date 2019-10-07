@@ -62,7 +62,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                             image_id = question.ImageId,
                             quiz_id = question.QuizId,
                             question.Text,
-                            true_false_answer = question.TrueFalseAnswer ?? null,
+                            true_false_answer = question.TrueFalseAnswer,
                             answers = question.Answers != null ? question.Answers.Select(answer => new
                             {
                                 answer.Id,
