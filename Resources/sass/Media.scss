@@ -35,6 +35,19 @@
     padding-top: 60px;
 }
 
+.gallery-img {
+    height: 280px;
+    object-fit: cover;
+}
+
+audio.overImg {
+    display: block;
+    height: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -25px;
+}
+
 .gallery-block .heading {
     margin-bottom: 50px;
     text-align: center;
@@ -86,4 +99,30 @@
         transform: translateY(-10px) scale(1.02);
         box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15) !important;
     }
+}
+
+/* Detials Page
+-------------------------------------------------- */
+.detials-container {
+    position: relative;
+}
+
+.detials-container > img {
+    position: absolute;
+    height: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+}
+
+.detials-container > audio {
+    position: absolute;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    height: 30px;
 }

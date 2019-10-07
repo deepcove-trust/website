@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NAudio.Wave;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -46,8 +47,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.Id,
                 media.MediaType,
                 media.Name,
-                media.Filename
-            }).ToListAsync());
+                media.Filename,
+                Alt = media is ImageMedia ? ((ImageMedia)media).Alt : null
+             }).ToListAsync());
         }
 
         [HttpGet("data/{id:int}")]
@@ -150,7 +152,16 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                     // Save the audio file
                     byte[] bytes = request.Str("file").Split(',')[1].DecodeBase64Bytes();
-                    System.IO.File.WriteAllBytes(filepath, bytes);                    
+                    System.IO.File.WriteAllBytes(filepath, bytes);
+
+                    // Read the audio file to determine its duration - it will either be mp3(mpeg) or wav
+
+                    WaveStream audioReader;
+
+                    if (fileType == MediaType.Wav.Mime)
+                        audioReader = new WaveFileReader(filepath);                    
+                    else                    
+                        audioReader = new Mp3FileReader(filepath);
 
                     // Create the media database record
                     AudioMedia audioMedia = new AudioMedia
@@ -159,7 +170,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                         MediaType = MediaType.FromString(fileType),
                         FilePath = filepath,
                         Size = new FileInfo(filepath).Length,
-                        Duration = 0, // Todo: determine the duration
+                        Duration = Math.Round(audioReader.TotalTime.TotalSeconds)
                     };
 
                     await _Db.AddAsync(audioMedia);
@@ -278,7 +289,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     {
                         Directory.Delete(dirPath, recursive: true);
                     }
-                    catch(DirectoryNotFoundException ex)
+                    catch(DirectoryNotFoundException)
                     {
                         _Logger.LogWarning("While deleting image {0}: Version directory not found. Continuing.", id);
                     }
