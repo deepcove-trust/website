@@ -99,7 +99,7 @@
       {
         "Id": 4,
         "Text": "Is the Kea accurately described as 'mischievious'?",
-        "TrueFalseAnswer": true
+        "TrueFalseAnswer": 1
       }
     ]
   },
