@@ -27,7 +27,7 @@
         "Description": "Soft Tree Ferns are common in this area. How many can you see?",
         "Task": null,
         "QrCode": "075668",
-        "CoordX": 167.148249,
+        "CoordX": 167.158249,
         "CoordY": -45.463325
       },
       {
@@ -92,19 +92,129 @@
         "Active": true,
         "ImageId": 1,
         "ActivityType": 1,
-        "Title": "Welcome to Hanging Valley",
+        "Title": "Welcome to Helena Falls",
         "Description": "Count the items.",
         "Task": "Task here",
         "QrCode": "050110",
-        "CoordX": 167.150856,
-        "CoordY": -45.466248
+        "CoordX": 167.165594,
+        "CoordY": -45.471346
+      },
+      {
+        "Id": 8,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000000",
+        "CoordX": 167.166811,
+        "CoordY": -45.470968
+      },
+      {
+        "Id": 9,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000001",
+        "CoordX": 167.166092,
+        "CoordY": -45.469770
+      },
+      {
+        "Id": 10,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000002",
+        "CoordX": 167.163816,
+        "CoordY": -45.466443
+      },
+      {
+        "Id": 11,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000003",
+        "CoordX": 167.166011,
+        "CoordY": -45.465673
+      },
+      {
+        "Id": 12,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000004",
+        "CoordX": 167.166416,
+        "CoordY": -45.464749
       }
     ]
   },
   {
     "Id": 3,
     "Name": "Hanging Valley",
-    "Active": false
+    "Active": true,
+    "Activities": [
+      {
+        "Id": 13,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000005",
+        "CoordX": 167.153090,
+        "CoordY": -45.464820
+      },
+      {
+        "Id": 14,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000006",
+        "CoordX": 167.151357,
+        "CoordY": -45.466281
+      },
+      {
+        "Id": 15,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000007",
+        "CoordX": 167.148879,
+        "CoordY": -45.468081
+      },
+      {
+        "Id": 16,
+        "Active": true,
+        "ImageId": 1,
+        "ActivityType": 1,
+        "Title": "Welcome to Helena Falls",
+        "Description": "Count the items.",
+        "Task": "Task here",
+        "QrCode": "000008",
+        "CoordX": 167.145965,
+        "CoordY": -45.469178
+      }
+    ]
   },
   {
     "Id": 4,
