@@ -7,6 +7,20 @@ export default class FileProperties extends Component {
 
         var title = this.props.file.mediaType.category + ' Properties';
 
+        let imageProperties;
+        if (this.props.file.mediaType.mime.includes("image/")) {
+            imageProperties = (
+                <Fragment>
+                    <AltText edit={this.props.edit}
+                        file={this.props.file}
+                        cb={this.props.cb.bind(this, 'alt')}
+                    />
+
+                    <Dimensions file={this.props.file} />
+                </Fragment>
+            )
+        }
+
         return (
             <Panel>
                 <h4 className="text-center">{title}</h4>
@@ -19,12 +33,7 @@ export default class FileProperties extends Component {
                                 cb={this.props.cb.bind(this, 'title')}
                             />
 
-                            <AltText edit={this.props.edit}
-                                file={this.props.file}
-                                cb={this.props.cb.bind(this, 'alt')}
-                            />
-
-                            <Dimensions file={this.props.file} />
+                            {imageProperties}
                         </tbody>
                     </table>
                 </div>
