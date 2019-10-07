@@ -11,7 +11,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         public int Id { get; set; }
         public string Text { get; set; }
         public int? CorrectAnswerId { get; set; }
-        public bool? TrueFalseAnswer { get; set; }
+        public int? TrueFalseAnswer { get; set; }
         public int? ImageId { get; set; }
         public List<QuizAnswer> Answers { get; set; }
 

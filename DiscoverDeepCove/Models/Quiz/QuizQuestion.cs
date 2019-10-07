@@ -14,7 +14,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         public int QuizId { get; set; } 
 
         [JsonProperty("true_false_answer")]
-        public bool? TrueFalseAnswer { get; set; }
+        public int? TrueFalseAnswer { get; set; }
 
         public string Text { get; set; }
 
