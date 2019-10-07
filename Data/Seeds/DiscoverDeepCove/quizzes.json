@@ -40,8 +40,7 @@
       {
         "Id": 2,
         "Text": "Which of the following is a weka?",
-        "CorrectAnswerId": 6,
-        "ImageId": 2,
+        "CorrectAnswerId": 6,        
         "Answers": [
           {
             "Id": 5,
