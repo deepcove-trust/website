@@ -20,11 +20,12 @@
       {
         "Id": 2,
         "Active": true,
-        "ImageId": 1,
+        "ImageId": 30,
         "ActivityType": 1,
-        "Title": "Count the frogs",
-        "Description": "Description here",
-        "Task": "Task here",
+        "FactFileId": 25,
+        "Title": "Soft Tree Ferns",
+        "Description": "Soft Tree Ferns are common in this area. How many can you see?",
+        "Task": null,
         "QrCode": "075668",
         "CoordX": 167.148249,
         "CoordY": -45.463325
@@ -32,12 +33,12 @@
       {
         "Id": 3,
         "Active": true,
-        "ImageId": 1,
+        "ImageId": 29,
         "ActivityType": 2,
         "FactFileId" :  24,
         "Title": "Big Rimu",
-        "Description": "Description here",
-        "Task": "Task here",
+        "Description": "A very large Rimu stands near where you are standing.",
+        "Task": "Find the Rimu and photograph it!",
         "QrCode": "052631",
         "CoordX": 167.157503,
         "CoordY": -45.462806
