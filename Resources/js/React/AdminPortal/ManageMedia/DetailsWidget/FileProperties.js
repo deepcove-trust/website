@@ -7,20 +7,6 @@ export default class FileProperties extends Component {
 
         var title = this.props.file.mediaType.category + ' Properties';
 
-        let imageProperties;
-        if (this.props.file.mediaType.mime.includes("image/")) {
-            imageProperties = (
-                <Fragment>
-                    <AltText edit={this.props.edit}
-                        file={this.props.file}
-                        cb={this.props.cb.bind(this, 'alt')}
-                    />
-
-                    <Dimensions file={this.props.file} />
-                </Fragment>
-            )
-        }
-
         return (
             <Panel>
                 <h4 className="text-center">{title}</h4>
@@ -33,7 +19,14 @@ export default class FileProperties extends Component {
                                 cb={this.props.cb.bind(this, 'title')}
                             />
 
-                            {imageProperties}
+                            <AltText edit={this.props.edit}
+                                file={this.props.file}
+                                cb={this.props.cb.bind(this, 'alt')}
+                            />
+
+                            <Dimensions file={this.props.file} />
+
+                            <Duration file={this.props.file} />
                         </tbody>
                     </table>
                 </div>
@@ -44,6 +37,8 @@ export default class FileProperties extends Component {
 
 class AltText extends Component {
     render() {
+        if (!this.props.file.mediaType.mime.includes("image/")) return <div />
+
         let field = <Fragment>{this.props.file.alt}</Fragment>
         if (this.props.edit) {
             field = (
@@ -64,7 +59,7 @@ class AltText extends Component {
 }
 
 class Title extends Component {
-    render() {
+    render() {        
         let field = <Fragment>{this.props.file.title}</Fragment>
         if (this.props.edit) {
             field = (
@@ -86,12 +81,27 @@ class Title extends Component {
 
 class Dimensions extends Component {
     render() {
+        if (!this.props.file.mediaType.mime.includes("image/")) return <div />
+
         return (
             <tr>
                 <td>Dimensions:</td>
                 <td>
                     {this.props.file.height || 0}px  x {this.props.file.width || 0}px
                 </td>
+            </tr>
+        )
+    }
+}
+
+class Duration extends Component {
+    render() {
+        if (!this.props.file.mediaType.mime.includes("audio/")) return <div />
+
+        return (
+            <tr>
+                <td>Duration</td>
+                <td>{this.props.file.duration} seconds</td>
             </tr>
         )
     }
