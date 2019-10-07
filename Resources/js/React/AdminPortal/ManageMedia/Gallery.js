@@ -3,6 +3,7 @@ import { Button } from '../../Components/Button';
 import { Input, FormGroup, Select } from '../../Components/FormControl';
 import Delete from './DetailsWidget/Delete';
 import $ from 'jquery';
+import AudioControls from '../../Components/Audio';
 
 export default class Gallery extends Component {
     constructor(props) {
@@ -114,7 +115,7 @@ class Item extends Component {
         return (
             <div className="card border-0 mb-2 transform-on-hover">
                 <img src={imgsrc} alt={this.props.data.alt} className="card-img-top gallery-img" />
-                <AudioControls file={this.props.data}/>
+                <AudioControls file={this.props.data} />
 
                 <div className="card-body text-center">
                     <h6>{this.props.data.name || "untitled"}</h6>
@@ -139,23 +140,6 @@ class Tag extends Component {
     render() {
         return (
             <span className="badge badge-dark p-2">{this.props.text}</span>
-        )
-    }
-}
-
-class AudioControls extends Component {
-    render() {
-        if (!this.props.file.mediaType.mime.includes("audio/")) return <div />;
-
-        return (
-            <audio className="overImg" controls>
-                <source src={`/media?filename=${this.props.file.filename}`}  />
-                Your browser does not support this audio player, please use
-                <a href="https://www.google.com/chrome/">Google Chrome</a>,
-                <a href="https://www.mozilla.org/en-US/firefox/new/">Mozilla Firefox</a>, 
-                <a href="https://www.opera.com/">Oprea</a>, or 
-                <a href="https://www.apple.com/nz/safari/">Safari</a>.
-            </audio>    
         )
     }
 }

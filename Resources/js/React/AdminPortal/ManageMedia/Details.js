@@ -2,9 +2,17 @@
 import Media from '../../CMS-Blocks/Media';
 import { Button } from '../../Components/Button';
 import MetaData from './DetailsWidget/Metadata';
+import AudioControls from '../../Components/Audio';
 
 export default class Details extends Component {
     render() {
+        let imgUrl = "/images/audio.png";
+        if (!this.props.data.mediaType.mime.includes("audio/")) {
+            imgUrl = `/media?filename=${this.props.data.filename}`;
+        }
+            
+        
+
         return (
             <div className="row pb-5">
                 <div className="col-12">
@@ -23,8 +31,9 @@ export default class Details extends Component {
                 </div>
 
                 
-                <div className="col-md-6 col-sm-12">
-                    <Media file={this.props.data} />
+                <div className="col-md-6 col-sm-12 detials-container">
+                    <img src={imgUrl} alt={this.props.data.alt} />
+                    <AudioControls file={this.props.data}/>
                 </div>
 
                 <div className="col-md-6 col-sm-12">
