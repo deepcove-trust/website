@@ -33,7 +33,7 @@ namespace Deepcove_Trust_Website.Models
         {
             // If the request is for the original, return it
             // Also return original if it is so small so as not to have any other versions
-            if (original || Versions.Count == 0) return FilePath;            
+            if (original || Versions == null || Versions.Count == 0) return FilePath;            
 
             // Otherwise, determine the appropriate size to return
             ImageVersion bestVersion;

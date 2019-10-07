@@ -1,15 +1,26 @@
 ﻿
+@using System.Runtime.InteropServices;
 @{
     Layout = "~/Views/Emails/_EmailLayout.cshtml";
 
     DateTime NzTime()
     {
-        TimeZoneInfo nzTimeZone = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
-        return TimeZoneInfo.ConvertTimeFromUtc(Model.SentAt, nzTimeZone);
+        TimeZoneInfo NZST;
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        {
+            NZST = TimeZoneInfo.FindSystemTimeZoneById("New Zealand Standard Time");
+        }
+        else
+        {
+            NZST = TimeZoneInfo.FindSystemTimeZoneById("Pacific/Auckland");
+        }
+
+
+        return TimeZoneInfo.ConvertTimeFromUtc(Model.SentAt, NZST);
     }
 }
 @model Deepcove_Trust_Website.Views.Emails.Models.EmailRecieved
- 
+
 <p style="font-weight: 400;">Email Submission Recieved &#64; @NzTime() NZST</p>
 
 <p style="font-weight: 200;">Senders Information:</p>
@@ -37,7 +48,7 @@
     <p>Sent on behalf of: @Model.SendersOrg</p>
 }
 
-<hr/>
+<hr />
 
 <p style="font-size: 16px; font-weight: 300;">@Model.Subject</p>
 <p>@Model.Message</p>

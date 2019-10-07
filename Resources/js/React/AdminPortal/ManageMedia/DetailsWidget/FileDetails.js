@@ -104,10 +104,15 @@ class Source extends Component {
 }
 class TypeSize extends Component {
     render() {
+        let size; 
+        if (!this.props.file.mediaType.mime.includes("audio/")) {
+            size = `Size: ${convertSize(this.props.file.size)}`;
+        }
+
         return (
             <tr>
-                <td>Type: {this.props.file.mediaType.value}</td>
-                <td className="text-right">Size: {convertSize(this.props.file.size)}</td>
+                <td>Type: {this.props.file.mediaType.value.toLowerCase()}</td>
+                <td>{size}</td>
             </tr>    
         )
     }

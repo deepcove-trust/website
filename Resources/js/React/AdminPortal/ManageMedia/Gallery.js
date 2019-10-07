@@ -3,6 +3,7 @@ import { Button } from '../../Components/Button';
 import { Input, FormGroup, Select } from '../../Components/FormControl';
 import Delete from './DetailsWidget/Delete';
 import $ from 'jquery';
+import AudioControls from '../../Components/Audio';
 
 export default class Gallery extends Component {
     constructor(props) {
@@ -109,9 +110,12 @@ class Item extends Component {
             });
         }
 
+        let imgsrc = !this.props.data.mediaType.mime.includes('audio/') ? `/media?filename=${this.props.data.filename}` : `/images/audio.png`;
+
         return (
             <div className="card border-0 mb-2 transform-on-hover">
-                <img src={`/media?filename=${this.props.data.filename}`} alt={this.props.data.name} className="card-img-top" />
+                <img src={imgsrc} alt={this.props.data.alt} className="card-img-top gallery-img" />
+                <AudioControls file={this.props.data} />
 
                 <div className="card-body text-center">
                     <h6>{this.props.data.name || "untitled"}</h6>
