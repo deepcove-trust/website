@@ -30,6 +30,8 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         }
 
         public List<QuizAnswer> GetAnswers() {
+            if (Answers == null) return null;
+
             foreach (QuizAnswer answer in Answers) answer.QuizQuestionId = Id;
             return Answers;
         }
