@@ -180,7 +180,7 @@ export class ConfirmModal extends Component {
     }
 
     toggleModal(e){
-        $(`#confirmodal`).modal(e ? e : 'toggle');
+        $(`#confirmodal-${this.props.id || ''}`).modal(e ? e : 'toggle');
     }
 
     updateConfirmPhrase(e) {
@@ -207,7 +207,7 @@ export class ConfirmModal extends Component {
                     {this.props.children}
                 </Button>
                 
-                <Modal id={`confirmodal`}>
+                <Modal id={`confirmodal-${this.props.id || ''}`}>
                     <h4 className="text-left">
                         <i className="far fa-exclamation-triangle pr-3"></i>
                         Really {this.props.question.toLowerCase()}?
