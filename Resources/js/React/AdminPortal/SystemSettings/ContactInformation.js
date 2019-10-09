@@ -186,7 +186,7 @@ export class UrlFacebook extends Component {
             <FormGroup label="Facebook Page URL:">
                 <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
                 <small className="text-muted pl-2">
-                    <i class="fab fa-facebook-square"></i> Used in the footer &amp; in emails.
+                    <i className="fab fa-facebook-square"></i> Used in the footer &amp; in emails.
                 </small>
             </FormGroup>
         )

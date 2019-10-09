@@ -14,7 +14,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
     [Authorize]
     [Area("admin-portal,web")]
-    [Route("/admin/web/settings")]
+    [Route("/admin/settings")]
     public class WebSettingsController : Controller
     {
         private readonly WebsiteDataContext _Db;

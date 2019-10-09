@@ -6,7 +6,7 @@ import FooterQuickLinks from './SystemSettings/FooterQuickLinks';
 
 import $ from 'jquery';
 
-const baseUri = `/admin/web/settings`;
+const baseUri = `/admin/settings`;
 
 export default class SystemSettings extends Component {
     constructor(props) {
@@ -88,9 +88,9 @@ export class PageTabs extends Component {
 
         let tabs;
         if (tabsArray) {
-            tabs = tabsArray.map((tab) => {
+            tabs = tabsArray.map((tab, key) => {
                 return (
-                    <li className="nav-item">
+                    <li className="nav-item" key={key}>
                         <a className={`nav-link ${tab.url == this.props.activeTab ? 'active' : ''}`} href={`?tab=${tab.url}`}>{tab.tabName}</a>
                     </li>
                 )
