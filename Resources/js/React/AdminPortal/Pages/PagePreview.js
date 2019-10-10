@@ -6,16 +6,17 @@ import $ from 'jquery';
 
 export default class PagePreview extends Component {
     render() {
-        let visibility = (
-            <span className="text-primary">This page is visible to the public</span>
-        );
-        if (!this.props.page.public)
+        let visibility = <span className="text-primary">This page is visible to the public</span>
+
+        if (!this.props.page.public) {
             visibility = (
                 <span className="text-danger font-weight-bold">This page is private!</span>
             );
+        }
+
 
         return (
-            <PreviewCard title={this.props.page.name}>
+            <PreviewCard className="mb-2" title={this.props.page.name}>
                 <p className="text-center">{this.props.page.description}</p>
 
                 <hr />
@@ -65,9 +66,11 @@ class DeletePage extends Component {
     }
 
     render() {
+        
         return (
-            <ConfirmModal className="btn btn-outline-danger btn-block"
+            <ConfirmModal id={this.props.page.id}
                 question="delete page"
+                className="btn btn-outline-danger btn-block"
                 explanation="This action cannot be undone, all information will be lost"
                 actionText="YES Delete Page!"
                 confirmPhrase={this.props.page.name}
