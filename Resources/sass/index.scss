@@ -222,12 +222,22 @@ button.accept-policy {
 }
 
 /** Website Editor Buttons */
-.editPage {
+.btn-editPage {
     position: absolute;
     right: 20px;
     z-index: 1000;
 }
 
+.btn-pageDashboard {
+    position: absolute;
+    left: 20px;
+    z-index: 1000;
+}
+
 #react_template {
     position: relative;
+}
+
+#editorsdash {
+    margin-bottom: 10px;
 }

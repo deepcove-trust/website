@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { Button } from '../Components/Button';
 import { EditPageSettings, ToggleVisibility, ViewPageDashboard } from './PageControlButtons';
 
@@ -10,13 +10,16 @@ export default class PageControls extends Component {
 
         if (!this.props.allowEdits)
             return (
-                <Button className="btn btn-dark float-right editPage" cb={this.props.editMode.bind(this, true)}>
-                    Edit Page
-                </Button>
+                <Fragment>
+                    <Button className="btn btn-dark btn-editPage mr-2" cb={this.props.editMode.bind(this, true)}>
+                        Edit Page
+                    </Button>
+                    <ViewPageDashboard className="btn btn-dark btn-pageDashboard mr-2" />
+                </Fragment>
             );
 
         return (
-            <div className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem' }}>
+            <div id="editorsdash" className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem' }}>
                 <h4 className="col-lg-4 col-md-12 mb-2 noselect">
                     <i className="fas fa-tachometer-alt-slow fa-x3" /> Editors Dashboard
                 </h4>
