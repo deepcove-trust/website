@@ -21,9 +21,9 @@ export default class Panel extends Component {
                 </div>
             )
         }
-
+        
         return (
-            <div className="card">
+            <div className={`card ${this.props.className || ''}`}>
                 {cardHead}
 
                 <div className="card-body">
