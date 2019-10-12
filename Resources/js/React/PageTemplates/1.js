@@ -34,89 +34,77 @@ export default class ReactTemplate1 extends Component {
                 </div>
 
 
-                <div className="row">
+                <div className="row pt-3">
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
-                        <Panel>
-                            <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                                <Media minHeight="200" />
-                            </div>
+                        <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
+                            <Media minHeight="200" />
+                        </div>
 
-                            <TextBlock allowEdits={this.props.allowEdits}
-                                content={this.props.data.textComponents[2] || null}
-                                pushChanges={this.props.pushChanges.bind(this, 'text')}
-                                settings={this.props.data.enums}
-                            />
-                        </Panel>
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[2] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
+                        />
                     </div>
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
-                        <Panel>
-                            <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                                <Media minHeight="200" />
-                            </div>
+                        <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
+                            <Media minHeight="200" />
+                        </div>
 
-                            <TextBlock allowEdits={this.props.allowEdits}
-                                content={this.props.data.textComponents[3] || null}
-                                pushChanges={this.props.pushChanges.bind(this, 'text')}
-                                settings={this.props.data.enums}
-                            />
-                        </Panel>
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[3] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
+                        />
                     </div>
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
-                        <Panel>
-                            <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                                <Media minHeight="200" />
-                            </div>
+                        <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
+                            <Media minHeight="200" />
+                        </div>
 
-                            <TextBlock allowEdits={this.props.allowEdits}
-                                content={this.props.data.textComponents[4] || null}
-                                pushChanges={this.props.pushChanges.bind(this, 'text')}
-                                settings={this.props.data.enums}
-                            />
-                        </Panel>
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[4] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
+                        />
                     </div>
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
-                        <Panel>
-                            <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                                <Media minHeight="200" />
-                            </div>
+                        <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
+                            <Media minHeight="200" />
+                        </div>
 
-                            <TextBlock allowEdits={this.props.allowEdits}
-                                content={this.props.data.textComponents[5] || null}
-                                pushChanges={this.props.pushChanges.bind(this, 'text')}
-                                settings={this.props.data.enums}
-                            />
-                        </Panel>
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[5] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
+                        />
                     </div>
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
-                        <Panel>
-                            <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                                <Media minHeight="200" />
-                            </div>
+                        <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
+                            <Media minHeight="200" />
+                        </div>
 
-                            <TextBlock allowEdits={this.props.allowEdits}
-                                content={this.props.data.textComponents[6] || null}
-                                pushChanges={this.props.pushChanges.bind(this, 'text')}
-                                settings={this.props.data.enums}
-                            />
-                        </Panel>
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[6] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
+                        />
                     </div>
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
-                        <Panel>
-                            <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
-                                <Media minHeight="200" />
-                            </div>
+                        <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
+                            <Media minHeight="200" />
+                        </div>
 
-                            <TextBlock allowEdits={this.props.allowEdits}
-                                content={this.props.data.textComponents[7] || null}
-                                pushChanges={this.props.pushChanges.bind(this, 'text')}
-                                settings={this.props.data.enums}
-                            />
-                        </Panel>
+                        <TextBlock allowEdits={this.props.allowEdits}
+                            content={this.props.data.textComponents[7] || null}
+                            pushChanges={this.props.pushChanges.bind(this, 'text')}
+                            settings={this.props.data.enums}
+                        />
                     </div>
                 </div>
             </Fragment>

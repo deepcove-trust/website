@@ -224,7 +224,14 @@ button.accept-policy {
 /** Website Editor Buttons */
 .float-right-above {
     position: absolute;
-    right: 20px;
+    right: 10px;
+    z-index: 1000;
+}
+
+.float-right-down {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
     z-index: 1000;
 }
 

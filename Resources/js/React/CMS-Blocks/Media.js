@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { Button } from '../Components/Button';
 
 export default class Media extends Component {
     constructor(props) {
@@ -48,7 +49,11 @@ export default class Media extends Component {
                         'top': '0px',
                         'left': '0px'
                     }}
-                />  
+                />
+                
+                <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }}>
+                    Select Image <i className="far fa-images"/>
+                </Button>
             </div>
         )
     }
