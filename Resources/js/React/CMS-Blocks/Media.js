@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from '../Components/Button';
+import SelectMedia from './SelectMedia';
 
 export default class Media extends Component {
     constructor(props) {
@@ -37,6 +38,13 @@ export default class Media extends Component {
         return this.props.file ? `/media?filename=${this.props.file.filename}&width=${this.state.Width}` : defaultUrl;
     }
 
+    toggleModal(visible) {
+        console.log(visible)
+        this.setState({
+            showModal: visible
+        });
+    }
+
     render() {
         return (
             <div style={{ 'position': 'relative', 'minHeight': this.props.minSize || '250px' }}
@@ -51,9 +59,17 @@ export default class Media extends Component {
                     }}
                 />
                 
-                <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }}>
+                <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
                     Select Image <i className="far fa-images"/>
                 </Button>
+
+                <SelectMedia type="Image"
+                    showModal={this.state.showModal}
+                    cb={(id) => console.log(`selected item id: ${id}`)}
+                    handleHideModal={() => {
+                        this.toggleModal(false)
+                    }}
+                />
             </div>
         )
     }
