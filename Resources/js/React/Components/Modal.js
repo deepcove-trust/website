@@ -8,6 +8,10 @@ export default class Modal extends Component {
         $(ReactDOM.findDOMNode(this)).on('hidden.bs.modal', () => this.props.handleHideModal());
     }
 
+    componentWillUnmount() {
+        $(ReactDOM.findDOMNode(this)).modal('hide');
+    }
+
     size() {
         switch (this.props.size) {
             case "large":
@@ -37,6 +41,12 @@ export default class Modal extends Component {
                 </button>
             </div>
         ) : null
+
+        let footer = this.props.footer ? (
+            <div className="modal-footer">
+                {this.props.footer}
+            </div>
+        ) : null
         
         return (
             <div className="modal fade" role="dialog">
@@ -44,9 +54,11 @@ export default class Modal extends Component {
                     <div className="modal-content">
                         {headder}
                         
-                        <div className="modal-body">
+                        <div className="modal-body" style={this.props.style || null}>
                             {this.props.children}
                         </div>
+
+                        {footer}
                     </div>
                 </div>
             </div>

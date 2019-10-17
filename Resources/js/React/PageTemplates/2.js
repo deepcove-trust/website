@@ -3,9 +3,6 @@ import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import Media from '../CMS-Blocks/Media';
 
-import $ from 'jquery';
-
-
 const baseUri = "/api/page"
 
 export default class ReactTemplate2 extends Component {
@@ -23,7 +20,9 @@ export default class ReactTemplate2 extends Component {
             <React.Fragment>
                 <div className="row">
                     <div className="col-12 px-0 mb-4" style={{ 'marginTop': '-1rem' }}>
-                        <Media />
+                        <Media allowEdits={this.props.allowEdits}
+                            pushChanges={this.props.pushChanges.bind(this, 'media')}
+                        />
                     </div>
 
                     <div className="col-12">

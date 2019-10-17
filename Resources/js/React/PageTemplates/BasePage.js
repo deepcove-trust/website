@@ -81,8 +81,9 @@ export default class BasePage extends Component {
         if (type == 'text') {
             page.textComponents[e.slotNo] = e;
         } else if (type == 'media') {
-
+            page.textComponents[e.slotNo] = e;
         }
+
         this.setState({
             page: page
         });

@@ -10,7 +10,10 @@ export default class ReactTemplate1 extends Component {
             <Fragment>
                 <div className="row">
                     <div className="col-12 px-0">
-                        <Media minHeight="440"/>
+                        <Media minHeight="440"
+                            allowEdits={this.props.allowEdits}
+                            pushChanges={this.props.pushChanges.bind(this, 'media')}
+                        />
                     </div>
 
                     <div className="col-12 pt-3">
@@ -37,7 +40,10 @@ export default class ReactTemplate1 extends Component {
                 <div className="row pt-3">
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
-                            <Media minHeight="200" />
+                            <Media minHeight="200"
+                                allowEdits={this.props.allowEdits}
+                                pushChanges={this.props.pushChanges.bind(this, 'media')}
+                            />
                         </div>
 
                         <TextBlock allowEdits={this.props.allowEdits}
@@ -49,7 +55,10 @@ export default class ReactTemplate1 extends Component {
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
-                            <Media minHeight="200" />
+                            <Media minHeight="200"
+                                allowEdits={this.props.allowEdits}
+                                pushChanges={this.props.pushChanges.bind(this, 'media')}
+                            />
                         </div>
 
                         <TextBlock allowEdits={this.props.allowEdits}
@@ -61,7 +70,10 @@ export default class ReactTemplate1 extends Component {
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
-                            <Media minHeight="200" />
+                            <Media minHeight="200"
+                                allowEdits={this.props.allowEdits}
+                                pushChanges={this.props.pushChanges.bind(this, 'media')}
+                            />
                         </div>
 
                         <TextBlock allowEdits={this.props.allowEdits}
@@ -73,7 +85,10 @@ export default class ReactTemplate1 extends Component {
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
-                            <Media minHeight="200" />
+                            <Media minHeight="200"
+                                allowEdits={this.props.allowEdits}
+                                pushChanges={this.props.pushChanges.bind(this, 'media')}
+                            />
                         </div>
 
                         <TextBlock allowEdits={this.props.allowEdits}
@@ -85,7 +100,10 @@ export default class ReactTemplate1 extends Component {
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
-                            <Media minHeight="200" />
+                            <Media minHeight="200"
+                                allowEdits={this.props.allowEdits}
+                                pushChanges={this.props.pushChanges.bind(this, 'media')}
+                            />
                         </div>
 
                         <TextBlock allowEdits={this.props.allowEdits}
@@ -97,7 +115,10 @@ export default class ReactTemplate1 extends Component {
 
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
-                            <Media minHeight="200" />
+                            <Media minHeight="200"
+                                allowEdits={this.props.allowEdits}
+                                pushChanges={this.props.pushChanges.bind(this, 'media')}
+                            />
                         </div>
 
                         <TextBlock allowEdits={this.props.allowEdits}

@@ -1,15 +1,26 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import { Button } from '../Components/Button';
+import { Button, BtnGroup } from '../Components/Button';
 import SelectMedia from './SelectMedia';
+
+import _ from 'lodash';
 
 export default class Media extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            file: _.cloneDeep(this.props.file) || {
+                filename: "",
+                alt: ""
+            },
+            default: _.cloneDeep(this.props.file) || {
+                filename: "",
+                alt: ""
+            }, 
             Height: 1,
-            Width: 1
+            Width: 1,
+            showModal: false
         }
 
         this.contentRef = React.createRef();
@@ -17,6 +28,15 @@ export default class Media extends Component {
 
     componentDidMount() {
         this.containerSize();
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.file == this.state.default) return;
+
+        this.setState({
+            default: _.cloneDeep(nextProps.file),
+            file: _.cloneDeep(nextProps.file)
+        });
     }
 
     containerSize() {
@@ -32,25 +52,75 @@ export default class Media extends Component {
         }
     }
 
+    handleImageSelect(file) {
+        this.setState({
+            showModal: false,
+            file
+        });
+    }
+
     ImageUrl() {
         let defaultUrl = `https://via.placeholder.com/${this.state.Width}x${this.state.Height}?text=Media%20Component%20Placeholder`;
+        console.log(this.state.file)
+        return this.state.file.filename ? `/media?filename=${this.state.file.filename}&width=${this.state.Width}` : defaultUrl;
+    }
 
-        return this.props.file ? `/media?filename=${this.props.file.filename}&width=${this.state.Width}` : defaultUrl;
+    pushChanges() {
+        this.setState({
+            showModal: false
+        }, () => {
+            this.props.pushChanges(this.state.file);
+        }, () => {
+            this.reset();
+        })        
     }
 
     toggleModal(visible) {
-        console.log(visible)
         this.setState({
             showModal: visible
         });
     }
 
+    reset() {
+        this.setState({
+            file: _.cloneDeep(this.state.default)
+        });
+    }
+
     render() {
+        let selectFile = this.props.allowEdits && JSON.stringify(this.state.file) == JSON.stringify(this.state.default) ? (
+            <Fragment>
+                <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
+                    Select Image <i className="far fa-images" />
+                </Button>
+
+                <SelectMedia type="Image"
+                    showModal={this.state.showModal}
+                    cb={this.handleImageSelect.bind(this)}
+                    handleHideModal={() => {
+                        this.toggleModal(false)
+                    }}
+                />
+            </Fragment>
+        ) : this.props.allowEdits ? (
+                <BtnGroup className="d-block text-right float-right-down">
+                    <Button className="btn btn-dark btn-sm" cb={this.reset.bind(this)}>
+                        Undo <i className="fas fa-undo" />
+                    </Button>
+
+                    <Button className="btn btn-info border-dark btn-sm" cb={this.pushChanges.bind(this)}>
+                        <i className="fas fa-check" />
+                    </Button>
+                </BtnGroup>
+        ) : null
+
+
         return (
             <div style={{ 'position': 'relative', 'minHeight': this.props.minSize || '250px' }}
                 ref={this.contentRef} >
 
                 <img src={this.ImageUrl()}
+                    alt={this.state.file.alt}
                     style={{
                         'position': 'absolute',
                         'width': '100%',
@@ -59,17 +129,7 @@ export default class Media extends Component {
                     }}
                 />
                 
-                <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
-                    Select Image <i className="far fa-images"/>
-                </Button>
-
-                <SelectMedia type="Image"
-                    showModal={this.state.showModal}
-                    cb={(id) => console.log(`selected item id: ${id}`)}
-                    handleHideModal={() => {
-                        this.toggleModal(false)
-                    }}
-                />
+                {selectFile}
             </div>
         )
     }

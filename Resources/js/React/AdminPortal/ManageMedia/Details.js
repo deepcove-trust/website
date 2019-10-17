@@ -1,5 +1,4 @@
 ﻿import React, { Component } from 'react';
-import Media from '../../CMS-Blocks/Media';
 import { Button } from '../../Components/Button';
 import MetaData from './DetailsWidget/Metadata';
 import AudioControls from '../../Components/Audio';
