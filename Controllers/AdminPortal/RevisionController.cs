@@ -74,7 +74,19 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                                     txt.TextComponent.CmsButton.Text
                                 } : null
                             }).ToList(),
-                        mediaComponents = new { },
+                        mediaComponents = s.GetRevision(revisionId).RevisionMediaComponents.OrderBy(o => o.MediaComponent.SlotNo)
+                            .Select(img => new
+                        {
+                                img.MediaComponent.Id,
+                                img.MediaComponent.SlotNo,
+                                img.MediaComponent.ImageMedia.Filename,
+                                img.MediaComponent.ImageMedia.Alt,
+                                copyright = new
+                                {
+                                    source = img.MediaComponent.ImageMedia.Source,
+                                    showSymbol = img.MediaComponent.ImageMedia.ShowCopyright
+                                }
+                        }),
                         s.GetRevision(revisionId).Created,
                         /// <remarks>
                         /// Global settings not tied to a revision, needed for some templates

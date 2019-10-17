@@ -3,14 +3,13 @@ using System;
 using Deepcove_Trust_Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20191004092422_initial")]
+    [Migration("20191017230812_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -18,14 +17,12 @@ namespace Deepcove_Trust_Website.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Activity", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
@@ -82,8 +79,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Config", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("MasterUnlockCode");
 
@@ -95,8 +91,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileCategory", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
@@ -110,8 +105,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
@@ -164,8 +158,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.FactFileNugget", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("FactFileEntryId");
 
@@ -189,8 +182,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Quiz", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
@@ -216,8 +208,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("ImageId");
 
@@ -237,8 +228,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AudioId");
 
@@ -250,15 +240,14 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Text");
 
-                    b.Property<bool?>("TrueFalseAnswer");
+                    b.Property<int?>("TrueFalseAnswer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AudioId");
 
                     b.HasIndex("CorrectAnswerId")
-                        .IsUnique()
-                        .HasFilter("[CorrectAnswerId] IS NOT NULL");
+                        .IsUnique();
 
                     b.HasIndex("ImageId");
 
@@ -270,8 +259,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Track", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
@@ -285,8 +273,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Account", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<bool>("Active");
 
@@ -319,8 +306,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.BaseMedia", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -368,8 +354,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.CmsButton", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int>("Align");
 
@@ -389,12 +374,15 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.MediaComponent", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ImageMediaId");
 
                     b.Property<int>("SlotNo");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageMediaId");
 
                     b.ToTable("MediaComponent");
                 });
@@ -402,8 +390,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.NotificationChannel", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Description");
 
@@ -417,8 +404,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Page", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -448,8 +434,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PageRevision", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedAt");
 
@@ -506,8 +491,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PasswordReset", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("AccountId");
 
@@ -552,8 +536,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.SystemSettings", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("EmailBookings");
 
@@ -581,8 +564,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.Models.TextComponent", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .ValueGeneratedOnAdd();
 
                     b.Property<int?>("CmsButtonId");
 
@@ -757,6 +739,14 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasOne("Deepcove_Trust_Website.Models.NotificationChannel", "NotificationChannel")
                         .WithMany("ChannelMemberships")
                         .HasForeignKey("NotificationChannelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.MediaComponent", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "ImageMedia")
+                        .WithMany()
+                        .HasForeignKey("ImageMediaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
