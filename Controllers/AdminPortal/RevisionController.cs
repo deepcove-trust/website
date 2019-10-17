@@ -222,7 +222,33 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         PageRevisionId = newRevision.Id
                     });
 
-                    // Save all changes in one transaction
+                    // Save changes
+                    await _Db.SaveChangesAsync();
+                }
+
+                // Do the same for media components
+                for(int i = 0; i < newRevision.Template.MediaAreas; i++)
+                {
+                    MediaComponent mediaComponentToSave = null;
+
+                    // Only create new media component if the old one was modified
+                    if (!newRevisionMediaComponents[i].Equals(oldRevision.MediaComponents[i]))
+                    {
+                        mediaComponentToSave = newRevisionMediaComponents[i];
+
+                        // Generate new ID
+                        mediaComponentToSave.Id = 0;
+                        await _Db.AddAsync(mediaComponentToSave);
+                    }
+
+                    // Add association to new revision
+                    await _Db.AddAsync(new RevisionMediaComponent
+                    {
+                        PageRevisionId = newRevision.Id,
+                        MediaComponentId = mediaComponentToSave?.Id ?? oldRevision.MediaComponents[i].Id
+                    });
+
+                    // Save changes
                     await _Db.SaveChangesAsync();
                 }
 

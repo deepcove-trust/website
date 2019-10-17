@@ -16,14 +16,10 @@ namespace Deepcove_Trust_Website.Models
         public ImageMedia ImageMedia { get; set; }
 
         // ---------------------
-
-        // Todo: Complete the rest of the MediaComponent class 
-        // Add reference to the media file model when created
-        // Add image metadata (alt, title, etc)
-
+        
         public bool Equals(MediaComponent other)
         {
-            throw new NotImplementedException(); // Todo: Implement MediaComponent.Equals()
+            return Id == other.Id && SlotNo == other.SlotNo && ImageMediaId == other.ImageMediaId;
         }
     }
 }
