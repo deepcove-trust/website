@@ -374,7 +374,7 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("ImageMediaId");
+                    b.Property<int?>("ImageMediaId");
 
                     b.Property<int>("SlotNo");
 
@@ -744,8 +744,7 @@ namespace Deepcove_Trust_Website.Migrations
                 {
                     b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "ImageMedia")
                         .WithMany()
-                        .HasForeignKey("ImageMediaId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ImageMediaId");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PageRevision", b =>

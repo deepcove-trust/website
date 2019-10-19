@@ -9,7 +9,7 @@ namespace Deepcove_Trust_Website.Models
     {
         public int Id { get; set; }
         public int SlotNo { get; set; }
-        public int ImageMediaId { get; set; }
+        public int? ImageMediaId { get; set; }
 
         // Navigation properties
         public List<RevisionMediaComponent> RevisionMediaComponents { get; set; }

@@ -49,6 +49,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                             .ThenInclude(tc => tc.TextComponent)
                                 .ThenInclude(btn => btn.CmsButton)
                     .Include(i => i.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionMediaComponents)
+                            .ThenInclude(mc => mc.MediaComponent)
+                                .ThenInclude(mc => mc.ImageMedia)
+                    .Include(i => i.PageRevisions)
                         .ThenInclude(revision => revision.Template)
                     .ToList()
                     .Select(s => new
@@ -83,10 +87,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                                 img.MediaComponent.ImageMedia.Alt,
                                 copyright = new
                                 {
-                                    source = img.MediaComponent.ImageMedia.Source,
+                                    img.MediaComponent.ImageMedia.Source,
                                     showSymbol = img.MediaComponent.ImageMedia.ShowCopyright
                                 }
-                        }),
+                            }),
                         s.GetRevision(revisionId).Created,
                         /// <remarks>
                         /// Global settings not tied to a revision, needed for some templates

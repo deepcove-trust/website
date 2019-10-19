@@ -286,7 +286,7 @@ namespace Deepcove_Trust_Website.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     SlotNo = table.Column<int>(nullable: false),
-                    ImageMediaId = table.Column<int>(nullable: false)
+                    ImageMediaId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -296,7 +296,7 @@ namespace Deepcove_Trust_Website.Migrations
                         column: x => x.ImageMediaId,
                         principalTable: "Media",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

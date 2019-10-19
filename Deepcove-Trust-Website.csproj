@@ -108,6 +108,8 @@
     <Compile Remove="Migrations\20191004091805_second.Designer.cs" />
     <Compile Remove="Migrations\20191004092422_initial.cs" />
     <Compile Remove="Migrations\20191004092422_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191017230812_initial.cs" />
+    <Compile Remove="Migrations\20191017230812_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
