@@ -60,7 +60,7 @@ export default class BasePage extends Component {
                 data: {
                     reason: reason,
                     textComponents: JSON.stringify(this.state.page.textComponents),
-                    imageComponents: {}
+                    imageComponents: JSON.stringify(this.state.page.mediaComponents),
                 }
             }).done(() => {
                 this.setState({

@@ -21,6 +21,7 @@ export default class ReactTemplate2 extends Component {
                 <div className="row">
                     <div className="col-12 px-0 mb-4" style={{ 'marginTop': '-1rem' }}>
                         <Media allowEdits={this.props.allowEdits}
+                            content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
                         />
                     </div>
