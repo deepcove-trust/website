@@ -123,7 +123,9 @@ export default class Media extends Component {
                     alt={this.state.file ? this.state.file.alt : ""}
                     style={{
                         'position': 'absolute',
+                        'objectFit': 'cover',
                         'width': '100%',
+                        'height': '100%',
                         'top': '0px',
                         'left': '0px'
                     }}
