@@ -224,10 +224,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         // from previous revision
                         TextComponentId = textComponentToSave?.Id ?? oldRevision.TextComponents[i].Id,
                         PageRevisionId = newRevision.Id
-                    });
-
-                    // Save changes
-                    await _Db.SaveChangesAsync();
+                    });                    
                 }
 
                 // Do the same for media components
@@ -250,11 +247,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     {
                         PageRevisionId = newRevision.Id,
                         MediaComponentId = mediaComponentToSave?.Id ?? oldRevision.MediaComponents[i].Id
-                    });
-
-                    // Save changes
-                    await _Db.SaveChangesAsync();
+                    });                    
                 }
+
+                // Save changes
+                await _Db.SaveChangesAsync();
 
                 _Logger.LogDebug("New page revision created for page {0} ({1}): {2}", pageId, page.Name, newRevision.Reason);
 
