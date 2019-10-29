@@ -9,7 +9,7 @@ export default class Media extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            file: _.cloneDeep(this.props.content) || {
+            content: _.cloneDeep(this.props.content) || {
                 filename: "",
                 alt: ""
             },
@@ -34,7 +34,7 @@ export default class Media extends Component {
 
         this.setState({
             default: _.cloneDeep(nextProps.content),
-            file: _.cloneDeep(nextProps.content)
+            content: _.cloneDeep(nextProps.content)
         });
     }
 
@@ -60,17 +60,17 @@ export default class Media extends Component {
     }
 
     ImageUrl() {
-        if (!this.state.file) return;
+        if (!this.state.content) return;
 
         let defaultUrl = `https://via.placeholder.com/${this.state.Width}x${this.state.Height}?text=Media%20Component%20Placeholder`;
-        return this.state.file && this.state.file.filename ? `/media?filename=${this.state.file.filename}&width=${this.state.Width}` : defaultUrl;
+        return this.state.content && this.state.content.filename ? `/media?filename=${this.state.content.filename}&width=${this.state.Width}` : defaultUrl;
     }
 
     pushChanges() {
         this.setState({
             showModal: false
         }, () => {
-            this.props.pushChanges(this.state.file);
+            this.props.pushChanges(this.state.content);
             this.reset();
         });
     }
@@ -83,12 +83,12 @@ export default class Media extends Component {
 
     reset() {
         this.setState({
-            file: _.cloneDeep(this.state.default)
+            content: _.cloneDeep(this.state.default)
         });
     }
 
     render() {
-        let selectFile = this.props.allowEdits && JSON.stringify(this.state.file) == JSON.stringify(this.state.default) ? (
+        let selectFile = this.props.allowEdits && JSON.stringify(this.state.content) == JSON.stringify(this.state.default) ? (
             <Fragment>
                 <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
                     Select Image <i className="far fa-images" />
@@ -120,7 +120,7 @@ export default class Media extends Component {
                 ref={this.contentRef} >
 
                 <img src={this.ImageUrl()}
-                    alt={this.state.file ? this.state.file.alt : ""}
+                    alt={this.state.content ? this.state.content.alt : ""}
                     style={{
                         'position': 'absolute',
                         'objectFit': 'cover',
