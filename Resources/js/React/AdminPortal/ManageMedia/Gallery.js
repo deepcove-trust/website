@@ -1,9 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import { Input, FormGroup, Select } from '../../Components/FormControl';
+import AudioControls from '../../Components/Audio';
 import Delete from './DetailsWidget/Delete';
 import $ from 'jquery';
-import AudioControls from '../../Components/Audio';
 
 export default class Gallery extends Component {
     constructor(props) {
@@ -49,7 +49,7 @@ export default class Gallery extends Component {
         let media;
         if (this.state.data) {
             media = this.state.data.map((media, key) => {
-                if (!this.Filter(media)) return <div key={key}/>;
+                if (!this.Filter(media)) return null;
 
                 return (
                     <div className="col-md-6 col-lg-4" key={key}>

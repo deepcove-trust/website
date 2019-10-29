@@ -60,7 +60,7 @@ export default class BasePage extends Component {
                 data: {
                     reason: reason,
                     textComponents: JSON.stringify(this.state.page.textComponents),
-                    imageComponents: {}
+                    imageComponents: JSON.stringify(this.state.page.mediaComponents),
                 }
             }).done(() => {
                 this.setState({
@@ -77,12 +77,13 @@ export default class BasePage extends Component {
     // while editing a single component
     receiveChanges(type, e) {
         let page = this.state.page;
-
+        
         if (type == 'text') {
             page.textComponents[e.slotNo] = e;
         } else if (type == 'media') {
-
+            page.mediaComponents[e.slotNo] = e;
         }
+
         this.setState({
             page: page
         });

@@ -222,15 +222,16 @@ button.accept-policy {
 }
 
 /** Website Editor Buttons */
-.btn-editPage {
+.float-right-above {
     position: absolute;
-    right: 20px;
+    right: 10px;
     z-index: 1000;
 }
 
-.btn-pageDashboard {
+.float-right-down {
     position: absolute;
-    left: 20px;
+    right: 10px;
+    bottom: 10px;
     z-index: 1000;
 }
 
@@ -240,4 +241,8 @@ button.accept-policy {
 
 #editorsdash {
     margin-bottom: 10px;
+}
+
+div.selected {
+    box-shadow: 0px 12px 22px 1px #333;
 }

@@ -25,32 +25,27 @@ export default class Heading extends Component {
     }
 }
 
-class EditButtons extends Component {
+export class EditButtons extends Component {
     render() {
         if (!this.props.allowEdits || !this.props.settings)
             return null;
 
-        let btn;
-        if (!this.props.edit) {
-            btn = (
-                <Button className="btn btn-dark btn-sm d-block ml-auto mr-0" cb={this.props.setEditMode.bind(this, true)}>
-                    Edit Section &nbsp; <i className="fa fa-pencil" />
+        let btn = !this.props.edit ? (
+            <Button className="btn btn-dark btn-sm d-block ml-auto mr-0" cb={this.props.setEditMode.bind(this, true)}>
+                Edit Section &nbsp; <i className="fa fa-pencil" />
+            </Button>
+        ) : (
+            <BtnGroup className="d-block text-right">
+                <Button className="btn btn-dark btn-sm" cb={this.props.reset}>
+                    Undo <i className="fas fa-undo" />
                 </Button>
-            )
-        } else {
-            btn = (
-                <BtnGroup className="d-block text-right">
-                    <Button className="btn btn-dark btn-sm" cb={this.props.reset}>    
-                        Undo <i className="fas fa-undo"/>
-                    </Button>
 
-                    <Button className="btn btn-info border-dark btn-sm" cb={this.props.pushChanges}>
-                        <i className="fas fa-check" />
-                    </Button>
-                </BtnGroup>
-            )
-        }
-
+                <Button className="btn btn-info border-dark btn-sm" cb={this.props.pushChanges}>
+                    <i className="fas fa-check" />
+                </Button>
+            </BtnGroup>
+        )
+        
         return (
             <Fragment>
                 {btn}

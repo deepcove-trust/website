@@ -17,13 +17,14 @@ export default class CmsButton extends Component {
 
     render() {
 
-        let btn_edit;
-        if (this.props.edit && this.props.settings)
-            btn_edit = <EditCmsButton id={this.props.id}
+        let btn_edit = this.props.edit && this.props.settings ? (
+            <EditCmsButton id={this.props.id}
                 onSave={this.props.onSave.bind(this, 'button')}
                 onDelete={this.props.onDelete}
                 button={this.props.button}
                 settings={this.props.settings} />
+        ) : null;
+
         
         // NO Button
         if (!this.props.button) {
@@ -46,7 +47,7 @@ export default class CmsButton extends Component {
             );
         }
         return (
-            <BtnGroup className={`d-block ${this.align()} mt-2`}>
+            <BtnGroup className={`d-block ${this.align()} my-2`}>
                 <Link className={`btn btn-sm ${this.props.button.align == 'block' ? 'btn-block mb-1' : ''} ${this.color()}`}
                     href={this.props.button.href}
                     target={target}

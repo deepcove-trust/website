@@ -10,12 +10,12 @@ export default class PageControls extends Component {
 
         if (!this.props.allowEdits)
             return (
-                <Fragment>
-                    <Button className="btn btn-dark btn-editPage mr-2" cb={this.props.editMode.bind(this, true)}>
+                <div className="float-right-above">
+                    <Button className="btn btn-dark mr-2" cb={this.props.editMode.bind(this, true)}>
                         Edit Page
                     </Button>
-                    <ViewPageDashboard className="btn btn-dark btn-pageDashboard mr-2" />
-                </Fragment>
+                    <ViewPageDashboard className="btn btn-dark mr-2" />
+                </div>
             );
 
         return (
