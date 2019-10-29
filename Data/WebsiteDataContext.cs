@@ -49,6 +49,9 @@ namespace Deepcove_Trust_Website.Data
         public DbSet<Activity> Activities { get; set; }
         public DbSet<ActivityImage> ActivityImages { get; set; }
 
+        // Navbar models
+        public DbSet<NavItem> NavItems { get; set; }
+        public DbSet<NavItemPage> NavItemPages { get; set; }
 
         // --------------------------------------------------
 
@@ -143,6 +146,9 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<RevisionMediaComponent>()
                 .HasKey(e => new { e.PageRevisionId, e.MediaComponentId });
 
+            modelBuilder.Entity<NavItemPage>()
+                .HasKey(e => new { e.NavItemId, e.PageId });
+
             // -- Discover Deep Cove
 
             modelBuilder.Entity<ActivityImage>()
@@ -171,7 +177,10 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<Activity>().HasMany(a => a.ActivityImages).WithOne(ai => ai.Activity).HasForeignKey(ai => ai.ActivityId).OnDelete(DeleteBehavior.Restrict);
 
             // -- Configure relationships between fact file entries and media files
-            modelBuilder.Entity<FactFileEntry>().HasMany(ff => ff.FactFileEntryImages).WithOne(ei => ei.FactFileEntry).HasForeignKey(ei => ei.FactFileEntryId).OnDelete(DeleteBehavior.Restrict);            
+            modelBuilder.Entity<FactFileEntry>().HasMany(ff => ff.FactFileEntryImages).WithOne(ei => ei.FactFileEntry).HasForeignKey(ei => ei.FactFileEntryId).OnDelete(DeleteBehavior.Restrict);
+
+            // -- Configure relationships between pages and navitems
+            modelBuilder.Entity<Page>().HasMany(p => p.NavItems).WithOne(ni => ni.Page).HasForeignKey(ni => ni.PageId).OnDelete(DeleteBehavior.Cascade);
         }
 
         /// <summary>

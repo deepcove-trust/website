@@ -349,6 +349,26 @@ namespace Deepcove_Trust_Website.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NavItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Section = table.Column<int>(nullable: false),
+                    PageId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NavItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NavItems_Pages_PageId",
+                        column: x => x.PageId,
+                        principalTable: "Pages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PageRevisions",
                 columns: table => new
                 {
@@ -480,6 +500,30 @@ namespace Deepcove_Trust_Website.Migrations
                         principalTable: "Media",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NavItemPages",
+                columns: table => new
+                {
+                    NavItemId = table.Column<int>(nullable: false),
+                    PageId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NavItemPages", x => new { x.NavItemId, x.PageId });
+                    table.ForeignKey(
+                        name: "FK_NavItemPages_NavItems_NavItemId",
+                        column: x => x.NavItemId,
+                        principalTable: "NavItems",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_NavItemPages_Pages_PageId",
+                        column: x => x.PageId,
+                        principalTable: "Pages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -683,6 +727,16 @@ namespace Deepcove_Trust_Website.Migrations
                 column: "ImageMediaId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_NavItemPages_PageId",
+                table: "NavItemPages",
+                column: "PageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NavItems_PageId",
+                table: "NavItems",
+                column: "PageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PageRevisions_CreatedById",
                 table: "PageRevisions",
                 column: "CreatedById");
@@ -812,6 +866,9 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "FactFileNuggets");
 
             migrationBuilder.DropTable(
+                name: "NavItemPages");
+
+            migrationBuilder.DropTable(
                 name: "PasswordResets");
 
             migrationBuilder.DropTable(
@@ -828,6 +885,9 @@ namespace Deepcove_Trust_Website.Migrations
 
             migrationBuilder.DropTable(
                 name: "NotificationChannels");
+
+            migrationBuilder.DropTable(
+                name: "NavItems");
 
             migrationBuilder.DropTable(
                 name: "MediaComponent");
