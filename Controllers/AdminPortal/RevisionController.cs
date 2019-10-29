@@ -83,12 +83,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         {
                                 img.MediaComponent.Id,
                                 img.MediaComponent.SlotNo,
-                                img.MediaComponent.ImageMedia.Filename,
-                                img.MediaComponent.ImageMedia.Alt,
+                                img.MediaComponent?.ImageMedia?.Filename,
+                                img.MediaComponent?.ImageMedia?.Alt,
                                 copyright = new
                                 {
-                                    img.MediaComponent.ImageMedia.Source,
-                                    showSymbol = img.MediaComponent.ImageMedia.ShowCopyright
+                                    img.MediaComponent?.ImageMedia?.Source,
+                                    showSymbol = img.MediaComponent?.ImageMedia?.ShowCopyright
                                 }
                             }),
                         s.GetRevision(revisionId).Created,
