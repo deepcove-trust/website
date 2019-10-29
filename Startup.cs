@@ -63,6 +63,7 @@ namespace Deepcove_Trust_Website
             services.Configure<RazorViewEngineOptions>(x => x.ViewLocationExpanders.Add(new ViewLocationExpander()));
             services.AddTransient<IViewRenderer, ViewRenderer>();
             services.AddTransient<WebSettingsService>();
+            services.AddTransient<NavbarService>();
 
             // Login services
             services.AddScoped<IPasswordHasher<Models.Account>, PasswordHasher<Models.Account>>();
