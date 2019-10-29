@@ -12,7 +12,7 @@ export default class PageTitle extends Component {
                 Last updated by: {this.props.created.by} on {this.props.created.at}
                 </small>
             )
-
+            console.log("yAY")
             if (!this.props.public) {
                 alert = (
                     <Alert type="danger">This page is hidden! Only authenticated users can see this page.</Alert>

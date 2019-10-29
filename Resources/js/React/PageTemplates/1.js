@@ -1,8 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
-import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import Media from '../CMS-Blocks/Media';
-import Panel from '../Components/Panel';
 
 export default class ReactTemplate1 extends Component {
     render() {
@@ -12,6 +10,7 @@ export default class ReactTemplate1 extends Component {
                     <div className="col-12 px-0">
                         <Media minHeight="440"
                             allowEdits={this.props.allowEdits}
+                            content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
                         />
                     </div>
@@ -42,6 +41,7 @@ export default class ReactTemplate1 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
+                                content={this.props.data.mediaComponents[1] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -57,6 +57,7 @@ export default class ReactTemplate1 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
+                                content={this.props.data.mediaComponents[2] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -72,6 +73,7 @@ export default class ReactTemplate1 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
+                                content={this.props.data.mediaComponents[3] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -87,6 +89,7 @@ export default class ReactTemplate1 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
+                                content={this.props.data.mediaComponents[4] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -102,6 +105,7 @@ export default class ReactTemplate1 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
+                                content={this.props.data.mediaComponents[5] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -117,6 +121,7 @@ export default class ReactTemplate1 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
+                                content={this.props.data.mediaComponents[6] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>

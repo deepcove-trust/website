@@ -8,13 +8,12 @@ import _ from 'lodash';
 export default class Media extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
-            file: _.cloneDeep(this.props.file) || {
+            file: _.cloneDeep(this.props.content) || {
                 filename: "",
                 alt: ""
             },
-            default: _.cloneDeep(this.props.file) || {
+            default: _.cloneDeep(this.props.content) || {
                 filename: "",
                 alt: ""
             }, 
@@ -31,11 +30,11 @@ export default class Media extends Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        if (nextProps.file == this.state.default) return;
+        if (nextProps.content == this.state.default) return;
 
         this.setState({
-            default: _.cloneDeep(nextProps.file),
-            file: _.cloneDeep(nextProps.file)
+            default: _.cloneDeep(nextProps.content),
+            file: _.cloneDeep(nextProps.content)
         });
     }
 
@@ -53,6 +52,7 @@ export default class Media extends Component {
     }
 
     handleImageSelect(file) {
+        file.slotNo = this.state.default.slotNo;
         this.setState({
             showModal: false,
             file
@@ -60,9 +60,10 @@ export default class Media extends Component {
     }
 
     ImageUrl() {
+        if (!this.state.file) return;
+
         let defaultUrl = `https://via.placeholder.com/${this.state.Width}x${this.state.Height}?text=Media%20Component%20Placeholder`;
-        console.log(this.state.file)
-        return this.state.file.filename ? `/media?filename=${this.state.file.filename}&width=${this.state.Width}` : defaultUrl;
+        return this.state.file && this.state.file.filename ? `/media?filename=${this.state.file.filename}&width=${this.state.Width}` : defaultUrl;
     }
 
     pushChanges() {
@@ -70,9 +71,8 @@ export default class Media extends Component {
             showModal: false
         }, () => {
             this.props.pushChanges(this.state.file);
-        }, () => {
             this.reset();
-        })        
+        });
     }
 
     toggleModal(visible) {
@@ -120,7 +120,7 @@ export default class Media extends Component {
                 ref={this.contentRef} >
 
                 <img src={this.ImageUrl()}
-                    alt={this.state.file.alt}
+                    alt={this.state.file ? this.state.file.alt : ""}
                     style={{
                         'position': 'absolute',
                         'width': '100%',

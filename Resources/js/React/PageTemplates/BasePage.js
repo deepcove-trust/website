@@ -77,11 +77,11 @@ export default class BasePage extends Component {
     // while editing a single component
     receiveChanges(type, e) {
         let page = this.state.page;
-
+        
         if (type == 'text') {
             page.textComponents[e.slotNo] = e;
         } else if (type == 'media') {
-            page.textComponents[e.slotNo] = e;
+            page.mediaComponents[e.slotNo] = e;
         }
 
         this.setState({
