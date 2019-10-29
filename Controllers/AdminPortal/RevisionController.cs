@@ -83,6 +83,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         {
                                 img.MediaComponent.Id,
                                 img.MediaComponent.SlotNo,
+                                img.MediaComponent.ImageMediaId,
                                 img.MediaComponent?.ImageMedia?.Filename,
                                 img.MediaComponent?.ImageMedia?.Alt,
                                 copyright = new
@@ -149,7 +150,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     request.Deserialize(typeof(List<TextComponent>), "textComponents");
                 
                 List<MediaComponent> newRevisionMediaComponents = 
-                    request.Deserialize(typeof(List<MediaComponent>), "mediaComponents");
+                    request.Deserialize(typeof(List<MediaComponent>), "imageComponents");
 
                 // Todo: Do this after the view has had template switching enabled
                 // Load template from database 

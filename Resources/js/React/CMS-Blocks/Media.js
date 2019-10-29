@@ -53,9 +53,10 @@ export default class Media extends Component {
 
     handleImageSelect(file) {
         file.slotNo = this.state.default.slotNo;
+        file.imageMediaId = file.id;
         this.setState({
             showModal: false,
-            file
+            content: file
         });
     }
 
