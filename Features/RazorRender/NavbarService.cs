@@ -16,7 +16,9 @@ namespace Deepcove_Trust_Website.Features.RazorRender
         {
             _Db = db;
 
-            navItems = _Db.NavItems.Include(nav => nav.NavItemPages)
+            navItems = _Db.NavItems
+                .Include(nav => nav.Page)
+                .Include(nav => nav.NavItemPages)
                     .ThenInclude(nip => nip.Page).ToList();
         }
 

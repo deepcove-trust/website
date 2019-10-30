@@ -21,15 +21,24 @@
             <ul class="navbar-nav flex-shrink-1">
                 @foreach (var navItem in navItems)
                 {
-                    @if(navItem.NavItemPages.Count > 0)
+                    @if (navItem.NavItemPages.Count > 0)
                     {
-                        @Html.Label("dropdown");
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-dark" aria-expanded="false" data-toggle="dropdown"  href="#">Dropdown</a>
+                            <div class="dropdown-menu" role="menu">
+                                @foreach (var link in navItem.NavItemPages)
+                                {
+                                    <a class="dropdown-item" role="presentation" href="@link.Page.AbsoluteUrl">@link.Page.Name</a>
+                                }
+                            </div>
+                        </li> 
                     }
                     else
                     {
-                        @Html.Label("link")
+                        <li role="presentation" class="nav-item">
+                            <a class="nav-link text-dark" href="@navItem.Page.AbsoluteUrl">@navItem.Page.Name</a>
+                        </li>
                     }
-                    @*<li role="presentation" class="nav-item"><a class="nav-link" href="#">Third Item</a></li>*@
                 }
             </ul>
         </div>
