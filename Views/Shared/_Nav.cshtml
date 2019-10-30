@@ -24,7 +24,7 @@
                     @if (navItem.NavItemPages.Count > 0)
                     {
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle nav-link text-dark" aria-expanded="false" data-toggle="dropdown"  href="#">Dropdown</a>
+                            <a class="dropdown-toggle nav-link text-dark" aria-expanded="false" data-toggle="dropdown"  href="#">@(navItem.Text ?? "Dropdown")</a>
                             <div class="dropdown-menu" role="menu">
                                 @foreach (var link in navItem.NavItemPages)
                                 {
@@ -36,7 +36,7 @@
                     else
                     {
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link text-dark" href="@navItem.Page.AbsoluteUrl">@navItem.Page.Name</a>
+                            <a class="nav-link text-dark" href="@navItem.Page.AbsoluteUrl">@(navItem.Text ?? navItem.Page.Name)</a>
                         </li>
                     }
                 }
