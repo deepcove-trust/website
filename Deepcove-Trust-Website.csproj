@@ -118,6 +118,10 @@
     <Compile Remove="Migrations\20191029100733_initial.Designer.cs" />
     <Compile Remove="Migrations\20191029224906_Initial Migration.cs" />
     <Compile Remove="Migrations\20191029224906_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20191029230212_Initial Migration.cs" />
+    <Compile Remove="Migrations\20191029230212_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20191030004702_Navbar Migration.cs" />
+    <Compile Remove="Migrations\20191030004702_Navbar Migration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -144,6 +148,7 @@
 
 
   <ItemGroup>
+    <Folder Include="Migrations\" />
     <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
     <Folder Include="Storage\" />
     <Folder Include="wwwroot\audio\" />

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20191029230212_Initial Migration")]
+    [Migration("20191030015624_Initial Migration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -412,6 +412,8 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<int?>("PageId");
 
                     b.Property<int>("Section");
+
+                    b.Property<string>("Text");
 
                     b.HasKey("Id");
 
