@@ -28,12 +28,15 @@
                             <div class="dropdown-menu" role="menu">
                                 @foreach (var link in navItem.NavItemPages)
                                 {
-                                    <a class="dropdown-item" role="presentation" href="@link.Page.AbsoluteUrl">@link.Page.Name</a>
+                                    if (link.Page.Public || User.Identity.IsAuthenticated)
+                                    {
+                                        <a class="dropdown-item" role="presentation" href="@link.Page.AbsoluteUrl">@link.Page.Name</a>
+                                    }
                                 }
                             </div>
                         </li> 
                     }
-                    else
+                    else if(navItem.Page.Public || User.Identity.IsAuthenticated)
                     {
                         <li role="presentation" class="nav-item">
                             <a class="nav-link text-dark" href="@navItem.Page.AbsoluteUrl">@(navItem.Text ?? navItem.Page.Name)</a>
