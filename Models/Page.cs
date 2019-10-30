@@ -22,6 +22,8 @@ namespace Deepcove_Trust_Website.Models
 
         // Navigation Properties        
         public List<PageRevision> PageRevisions { get; set; }
+        public List<NavItem> NavItems { get; set; }
+        public List<NavItemPage> NavItemPages { get; set; }
         // End Navigation Properties
 
         /// <summary>
