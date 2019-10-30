@@ -2,8 +2,7 @@
 import ReactDOM from 'react-dom';
 import { setTimeout } from 'timers';
 import { FormGroup, Input } from './FormControl';
-import { Modal } from './Modal';
-import $ from 'jquery';
+import Modal from './Modal';
 
 export class Button extends Component {
     constructor(props) {
@@ -45,6 +44,7 @@ export class Button extends Component {
                 type={this.props.type || "button"}
                 disabled={this.props.disabled || this.props.pending}
                 style={{ minWidth: `${this.state.width}px` }}
+                data-dismiss={this.props.dismiss || null}
                 ref={this.contentRef}
                 onClick={this.handleClick.bind(this)}
             >
@@ -148,6 +148,7 @@ export class ConfirmButton extends Component {
                 type="button"
                 disabled={this.props.disabled || this.props.pending}
                 style={{ minWidth: `${this.state.width}px` }}
+                data-dismiss={this.props.dismiss || null}
                 ref={this.contentRef}
                 onClick={this.handleClick.bind(this)}
             >
@@ -163,7 +164,8 @@ export class ConfirmModal extends Component {
 
         this.state = {
             disabled: (this.props.confirmPhrase) ? true : false,
-            input: ""
+            input: "",
+            showModal: false
         }
 
     }
@@ -172,15 +174,14 @@ export class ConfirmModal extends Component {
         if (this.state.disabled) {
             return;
         }
-        // Hide themodal
-        this.toggleModal('hide');
-        // Callback the action
-        if (this.props.cb)
-            this.props.cb();
-    }
 
-    toggleModal(e){
-        $(`#confirmodal-${this.props.id || ''}`).modal(e ? e : 'toggle');
+        // Hide themodal
+        this.setState({
+            showModal: false
+        }, () => {
+            // Callback the action
+            if (this.props.cb) this.props.cb();
+        })
     }
 
     updateConfirmPhrase(e) {
@@ -191,47 +192,48 @@ export class ConfirmModal extends Component {
     }
 
     render() {
-        let confirmPhrase;
-        if (this.props.confirmPhrase) {
-            confirmPhrase = (
+        let confirmPhrase = this.props.confirmPhrase ? (
+            <FormGroup>
+                <label>Please type "{this.props.confirmPhrase}" to confirm.</label>
+                <Input type="string" cb={this.updateConfirmPhrase.bind(this)} value={this.state.input} />
+            </FormGroup>
+        ) : null
+        
+        let modal = this.state.showModal ? (
+            <Modal handleHideModal={() => { this.setState({showModal: false})}}>
+                <h4 className="text-left">
+                    <i className="far fa-exclamation-triangle pr-3"></i>
+                    Really {this.props.question.toLowerCase()}?
+                    </h4>
+                <hr className="pb-2" />
+                <p className="text-left">{this.props.explanation}</p>
+
+                {confirmPhrase}
+
                 <FormGroup>
-                    <label>Please type "{this.props.confirmPhrase}" to confirm.</label>
-                    <Input type="string" cb={this.updateConfirmPhrase.bind(this)} value={this.state.input} />
+                    <ConfirmButton className="btn btn-danger float-right  btn-sm"
+                        disabled={this.state.disabled}
+                        cb={this.confirmed.bind(this)}
+                    >
+                        {this.props.actionText || this.props.question}
+                    </ConfirmButton>
+
+                    <Button className="btn btn-dark float-right btn-sm mx-1" dismiss="modal">No</Button>
                 </FormGroup>
-            )
-        }
+            </Modal>
+        ) : null
 
         return (
             <Fragment>
-                <Button className={this.props.className || this.props.className || 'btn btn-danger'} cb={this.toggleModal.bind(this)}>
+                <Button className={this.props.className || 'btn btn-danger'} cb={() => {
+                    this.setState({
+                        showModal: true
+                    });
+                }}>
                     {this.props.children}
                 </Button>
-                
-                <Modal id={`confirmodal-${this.props.id || ''}`}>
-                    <h4 className="text-left">
-                        <i className="far fa-exclamation-triangle pr-3"></i>
-                        Really {this.props.question.toLowerCase()}?
-                    </h4>
-                    <hr className="pb-2"/>
-                    <p className="text-left">{this.props.explanation}</p>
 
-                    {confirmPhrase}
-
-                    <FormGroup>
-                        <ConfirmButton className="btn btn-danger float-right"
-                            disabled={this.state.disabled}
-                            cb={this.confirmed.bind(this)}
-                        >
-                            {this.props.actionText || this.props.question}
-                        </ConfirmButton>
-
-                        <Button className="btn btn-dark float-right mx-1"
-                            cb={this.toggleModal.bind(this, 'hide')}
-                        >
-                            No
-                        </Button>
-                    </FormGroup>
-                </Modal>
+                {modal}
             </Fragment>
         )
     }

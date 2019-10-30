@@ -49,6 +49,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                             .ThenInclude(tc => tc.TextComponent)
                                 .ThenInclude(btn => btn.CmsButton)
                     .Include(i => i.PageRevisions)
+                        .ThenInclude(pr => pr.RevisionMediaComponents)
+                            .ThenInclude(mc => mc.MediaComponent)
+                                .ThenInclude(mc => mc.ImageMedia)
+                    .Include(i => i.PageRevisions)
                         .ThenInclude(revision => revision.Template)
                     .ToList()
                     .Select(s => new
@@ -74,7 +78,20 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                                     txt.TextComponent.CmsButton.Text
                                 } : null
                             }).ToList(),
-                        mediaComponents = new { },
+                        mediaComponents = s.GetRevision(revisionId).RevisionMediaComponents.OrderBy(o => o.MediaComponent.SlotNo)
+                            .Select(img => new
+                        {
+                                img.MediaComponent.Id,
+                                img.MediaComponent.SlotNo,
+                                img.MediaComponent.ImageMediaId,
+                                img.MediaComponent?.ImageMedia?.Filename,
+                                img.MediaComponent?.ImageMedia?.Alt,
+                                copyright = new
+                                {
+                                    img.MediaComponent?.ImageMedia?.Source,
+                                    showSymbol = img.MediaComponent?.ImageMedia?.ShowCopyright
+                                }
+                            }),
                         s.GetRevision(revisionId).Created,
                         /// <remarks>
                         /// Global settings not tied to a revision, needed for some templates
@@ -133,7 +150,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     request.Deserialize(typeof(List<TextComponent>), "textComponents");
                 
                 List<MediaComponent> newRevisionMediaComponents = 
-                    request.Deserialize(typeof(List<MediaComponent>), "mediaComponents");
+                    request.Deserialize(typeof(List<MediaComponent>), "imageComponents");
 
                 // Todo: Do this after the view has had template switching enabled
                 // Load template from database 
@@ -208,11 +225,34 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         // from previous revision
                         TextComponentId = textComponentToSave?.Id ?? oldRevision.TextComponents[i].Id,
                         PageRevisionId = newRevision.Id
-                    });
-
-                    // Save all changes in one transaction
-                    await _Db.SaveChangesAsync();
+                    });                    
                 }
+
+                // Do the same for media components
+                for(int i = 0; i < newRevision.Template.MediaAreas; i++)
+                {
+                    MediaComponent mediaComponentToSave = null;
+
+                    // Only create new media component if the old one was modified
+                    if (!newRevisionMediaComponents[i].Equals(oldRevision.MediaComponents[i]))
+                    {
+                        mediaComponentToSave = newRevisionMediaComponents[i];
+
+                        // Generate new ID
+                        mediaComponentToSave.Id = 0;
+                        await _Db.AddAsync(mediaComponentToSave);
+                    }
+
+                    // Add association to new revision
+                    await _Db.AddAsync(new RevisionMediaComponent
+                    {
+                        PageRevisionId = newRevision.Id,
+                        MediaComponentId = mediaComponentToSave?.Id ?? oldRevision.MediaComponents[i].Id
+                    });                    
+                }
+
+                // Save changes
+                await _Db.SaveChangesAsync();
 
                 _Logger.LogDebug("New page revision created for page {0} ({1}): {2}", pageId, page.Name, newRevision.Reason);
 
