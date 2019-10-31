@@ -152,6 +152,7 @@
     <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
     <Folder Include="Storage\" />
     <Folder Include="wwwroot\audio\" />
+    <Folder Include="wwwroot\images\templates\" />
   </ItemGroup>
 
 

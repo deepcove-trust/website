@@ -101,7 +101,7 @@ class Template extends Component {
         }
 
         return (
-            <PreviewCard title={this.props.template.name}>   
+            <PreviewCard title={this.props.template.name} imgurl={`/images/templates/${this.props.template.id}.png`}>   
                 <div className="row text-center">
                     <div className="col-md-6 col-sm-12 py-3">
                         <p className="font-weight-bold">Text Fields</p>
@@ -120,41 +120,6 @@ class Template extends Component {
                     {button}
                 </div>
             </PreviewCard>
-        )
-    }
-}
-
-class ModalMessage extends Component {
-    render() {
-        return (
-            <Fragment>
-                <p className="font-weight-bold">WARNING: Your selected templates may have a different number of media and/or text fields than your current template. Some information may be lost.</p>
-                <div className="table-responsive">
-                    <table className="table table-hover table-sm">
-                        <thead>
-                            <tr>
-                                <th></th>
-                                <th>Current Template</th>
-                                <th>New Template</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Text Fields: </td>
-                                <td>{this.props.active.textAreas}</td>
-                                <td>{this.props.template.textAreas}</td>
-                            </tr>
-                            <tr>
-                                <td>Media Fields:</td>
-                                <td>{this.props.active.mediaAreas}</td>
-                                <td>{this.props.template.mediaAreas}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <span>For more information please refer to your handbook.</span>
-            </Fragment>
         )
     }
 }

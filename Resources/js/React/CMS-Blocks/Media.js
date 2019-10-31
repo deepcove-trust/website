@@ -91,7 +91,7 @@ export default class Media extends Component {
     render() {
         let selectFile = this.props.allowEdits && JSON.stringify(this.state.content) == JSON.stringify(this.state.default) ? (
             <Fragment>
-                <Button className="btn btn-dark btn-sm float-right-down" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
+                <Button className="btn btn-dark btn-sm float-right-above" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
                     Select Image <i className="far fa-images" />
                 </Button>
 
@@ -104,7 +104,7 @@ export default class Media extends Component {
                 />
             </Fragment>
         ) : this.props.allowEdits ? (
-                <BtnGroup className="d-block text-right float-right-down">
+                <BtnGroup className="d-block text-right float-right-above">
                     <Button className="btn btn-dark btn-sm" cb={this.reset.bind(this)}>
                         Undo <i className="fas fa-undo" />
                     </Button>

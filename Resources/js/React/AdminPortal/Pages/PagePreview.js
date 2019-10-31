@@ -14,9 +14,8 @@ export default class PagePreview extends Component {
             );
         }
 
-
         return (
-            <PreviewCard className="mb-2" title={this.props.page.name}>
+            <PreviewCard className="mb-2" title={this.props.page.name} imgurl={`/images/templates/${this.props.page.template.id}.png`}>
                 <p className="text-center">{this.props.page.description}</p>
 
                 <hr />
