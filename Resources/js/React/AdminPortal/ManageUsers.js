@@ -45,7 +45,7 @@ export default class Users extends Component {
 
         return (
             <div className="row">
-                <div className="col-12">
+                <div className="col-12 py-3">
                     <h1 className="text-center">Manage Users</h1>
                     <p className="text-center">
                         Active accounts have access to all functions, <a href="/register">click here</a> to register a new account.

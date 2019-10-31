@@ -26,7 +26,7 @@ export default class Panel extends Component {
             <div className={`card ${this.props.className || ''}`}>
                 {cardHead}
 
-                <div className="card-body">
+                <div className="card-body" style={this.props.style || null}>
                     {this.props.children}
                 </div>
 

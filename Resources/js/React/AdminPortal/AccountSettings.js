@@ -42,7 +42,7 @@ export default class AccountSettings extends Component {
         return (
             <div className="container">
                 <div className="row">
-                    <div className="col-12 pb-3">
+                    <div className="col-12 py-3">
                         <h1 className="text-center">Account Settings</h1>
                     </div>
 

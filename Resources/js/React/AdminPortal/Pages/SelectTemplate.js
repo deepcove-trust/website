@@ -58,7 +58,7 @@ export default class SelectTemplate extends Component {
         return (
             <section className="fade1sec">
                 <div className="row">
-                    <div className="col-12">
+                    <div className="col-12 py-3">
                         <h1 className="text-center pb-3">Select a Template</h1>
                     </div>
 

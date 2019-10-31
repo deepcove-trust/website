@@ -4,7 +4,7 @@ import Panel from '../../Components/Panel';
 export default class PreviewCard extends Component {
     render() {
         return (
-            <Panel className={this.props.className || null}>
+            <Panel className={this.props.className || null} style={{'paddingBottom': '0.5rem'}}>
                 <div style={{ 'margin': '-1rem -1rem 2rem -1rem' }}>
                     <img src="https://via.placeholder.com/150" style={{ 'width': '100%', 'maxHeight': '300px' }} />
                 </div>

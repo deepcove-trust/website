@@ -62,7 +62,7 @@ export default class SystemSettings extends Component {
 
         return (
             <div className="row">
-                <div className="col-12">
+                <div className="col-12 py-3">
                     <h1 className="text-center">System Settings</h1>
                     <PageTabs activeTab={this.state.activeTab} />
 

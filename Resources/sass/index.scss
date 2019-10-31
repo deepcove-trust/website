@@ -36,9 +36,16 @@ body {
     background-color: rgba(254, 254, 254, 0.7);
     padding: 0px;
 }
+
+.container {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
 .alert {
     border-radius: 0px;
 }
+
 
 .alert-cookies {
     margin-bottom: 0;
@@ -85,11 +92,6 @@ a.navbar-brand {
 
 .form-group > label {
     font-weight: bold;
-}
-
-.custom-checkbox > label[title], .custom-checkbox > label[data-tip] {
-    text-decoration: underline;
-    text-decoration-style: dotted;
 }
 
 .__react_component_tooltip.show {

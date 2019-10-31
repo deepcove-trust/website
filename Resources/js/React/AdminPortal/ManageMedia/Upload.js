@@ -50,7 +50,7 @@ export default class Upload extends Component {
 
         return (
             <div className="row">
-                <div className="col-12">
+                <div className="col-12 py-3">
                     <h1 className="text-center">Upload Centre</h1>
 
                     <div className="pb-4">
