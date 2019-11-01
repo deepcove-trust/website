@@ -1,5 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
-import Heading from './TextComponents/Heading';
+import TextControls from './TextComponents/Controls';
 import Content from './TextComponents/Content';
 import CmsButton from './TextComponents/CmsButton';
 
@@ -11,7 +11,6 @@ export default class TextBlock extends Component {
 
         this.state = {
             content: _.cloneDeep(this.props.content) || {
-                heading: "",
                 text: "",
                 button: {}
             },
@@ -46,9 +45,8 @@ export default class TextBlock extends Component {
     render() {
         return (
             <Fragment>
-                <Heading allowEdits={this.props.allowEdits}
+                <TextControls allowEdits={this.props.allowEdits}
                     edit={this.state.edit}
-                    heading={this.state.content.heading}
                     updateVal={this.updateVal.bind(this, 'heading')}
                     settings={!!this.props.settings}
                     setEditMode={(x) => {
