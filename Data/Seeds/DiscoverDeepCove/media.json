@@ -12,6 +12,20 @@
     "FileType": 0,
     "Name": "kea_1",
     "Path": "Storage/Media/Images/eb8de5ee-9d33-479a-b8e4-542097bf7b2d.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      },
+      {
+        "code": "M",
+        "width": 750
+      }
+    ],
     "Source": "Benhi Dixon",
     "ShowCopyright": true
   },
@@ -20,6 +34,16 @@
     "FileType": 0,
     "Name": "kea_2",
     "Path": "Storage/Media/Images/d4d01d53-61cb-41f6-9348-aa653a7f5bc8.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": "Daniel Pietzsch",
     "ShowCopyright": true
   },
@@ -28,6 +52,20 @@
     "FileType": 1,
     "Name": "kea_3",
     "Path": "Storage/Media/Images/99e632e3-11c1-43ad-96a0-b3b3517a4646.png",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      },
+      {
+        "code": "M",
+        "width": 750
+      }
+    ],
     "Source": "Department of Conservation",
     "ShowCopyright": true
   },
@@ -36,6 +74,12 @@
     "FileType": 0,
     "Name": "kiwi",
     "Path": "Storage/Media/Images/a0515b7a-02d4-403a-9bea-3a5906f52871.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      }
+    ],
     "Source": "Department of Conservation",
     "ShowCopyright": true
   },
@@ -68,6 +112,16 @@
     "FileType": 0,
     "Name": "grey warbler",
     "Path": "Storage/Media/Images/9a428ac3-0299-49e8-80d5-e64d8b3c843b.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -92,6 +146,16 @@
     "FileType": 0,
     "Name": "kaka_3",
     "Path": "Storage/Media/Images/0d5b0204-19dd-43ab-b9c7-3db32aee15bb.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -108,6 +172,16 @@
     "FileType": 0,
     "Name": "rifleman",
     "Path": "Storage/Media/Images/69f7eda3-66a6-4f49-b91e-caf80ee63c92.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -116,6 +190,16 @@
     "FileType": 0,
     "Name": "silvereye",
     "Path": "Storage/Media/Images/e4de7e47-63ad-438d-af76-78d65244e4bc.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": "JJ Harrison",
     "ShowCopyright": true
   },
@@ -132,6 +216,16 @@
     "FileType": 0,
     "Name": "weka",
     "Path": "Storage/Media/Images/e137ffa5-8d06-4086-afcd-068df921df27.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -148,6 +242,12 @@
     "FileType": 0,
     "Name": "wood pigeon",
     "Path": "Storage/Media/Images/783c4d1e-6078-4c48-b253-ad0f59b4c7b8.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -156,6 +256,12 @@
     "FileType": 0,
     "Name": "blue cod",
     "Path": "Storage/Media/Images/6b72455d-52d9-4d1b-8ed5-fe3fc3d2a817.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -180,6 +286,12 @@
     "FileType": 0,
     "Name": "sea perch",
     "Path": "Storage/Media/Images/61e06fac-f069-426e-a3cf-82a25b57e62a.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -188,6 +300,16 @@
     "FileType": 0,
     "Name": "seven gilled shark",
     "Path": "Storage/Media/Images/f610039d-57b9-4f20-bbfb-02762db2743f.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -196,6 +318,16 @@
     "FileType": 0,
     "Name": "spotty",
     "Path": "Storage/Media/Images/1182c2eb-8205-4537-b14f-7cf8265d6c7f.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -204,6 +336,16 @@
     "FileType": 0,
     "Name": "black tree fern",
     "Path": "Storage/Media/Images/0e98ef2f-930d-44c1-86f4-eea949387156.jpg",
+    "Version": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -220,6 +362,12 @@
     "FileType": 0,
     "Name": "hard/rough tree fern",
     "Path": "Storage/Media/Images/9ed0f508-8da9-4349-9ef2-830ec3bd8ba6.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -228,6 +376,16 @@
     "FileType": 0,
     "Name": "mountain beech",
     "Path": "Storage/Media/Images/fe86932c-9f78-41a2-93b3-97e14d70ea88.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -236,6 +394,12 @@
     "FileType": 0,
     "Name": "rimu",
     "Path": "Storage/Media/Images/ef1e59f2-ea53-4310-8700-309d231cc50f.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -244,6 +408,24 @@
     "FileType": 0,
     "Name": "soft tree fern",
     "Path": "Storage/Media/Images/fe1ccc2b-0760-4389-b827-7ef9e6b23607.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      },
+      {
+        "code": "M",
+        "width": 750
+      },
+      {
+        "code": "L",
+        "width": 1000
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -252,6 +434,24 @@
     "FileType": 0,
     "Name": "totara",
     "Path": "Storage/Media/Images/26699992-ef59-4d13-87d5-0cd6e85e2cda.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      },
+      {
+        "code": "M",
+        "width": 750
+      },
+      {
+        "code": "L",
+        "width": 1000
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -285,6 +485,16 @@
     "FileType": 1,
     "Name": "brasell point",
     "Path": "Storage/Media/Images/e5bff86f-2ea1-48df-8f86-ff947220d3dc.png",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   },
@@ -293,6 +503,20 @@
     "FileType": 0,
     "Name": "tree stump",
     "Path": "Storage/Media/Images/f0ab335a-ba56-4030-9520-79547fac77d6.jpg",
+    "Versions": [
+      {
+        "code": "XS",
+        "width": 300
+      },
+      {
+        "code": "S",
+        "width": 500
+      },
+      {
+        "code": "M",
+        "width": 750
+      }
+    ],
     "Source": null,
     "ShowCopyright": false
   }

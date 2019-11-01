@@ -16,6 +16,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
         public string Source { get; set; }
         public bool ShowCopyright { get; set; }
         public MediaType MediaType { get => (MediaType)FileType; }
+        public List<ImageVersion> Versions { get; set; }
 
         public BaseMedia ToBaseMedia()
         {
@@ -31,6 +32,7 @@ namespace Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers
                         IsPublic = true,
                         Source = Source,
                         ShowCopyright = ShowCopyright,
+                        Versions = Versions,
                         Title = Name,
                         Alt = Name,
                         Height = 0,
