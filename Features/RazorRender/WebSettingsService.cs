@@ -35,12 +35,12 @@ namespace Deepcove_Trust_Website.Features.RazorRender
             {
                 A = new Section {
                     Title = Settings.LinkTitleA,
-                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.A).ToList()
+                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.A).OrderBy(o => o.Name).ToList()
                 },
                 B = new Section
                 {
                     Title = Settings.LinkTitleB,
-                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.B).ToList()
+                    Pages = QuickLinkPages.Where(c => c.QuickLink == QuickLinkSection.B).OrderBy(o => o.Name).ToList()
                 }
             };
         }

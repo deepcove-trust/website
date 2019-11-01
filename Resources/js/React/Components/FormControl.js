@@ -179,6 +179,7 @@ export class Input extends Component {
                 maxLength={this.props.maxLength || null}
                 onChange={this.handleChange.bind(this)}
                 onPaste={this.handleChange.bind(this)}
+                ref={this.props.inputRef}
             />
         )
     }

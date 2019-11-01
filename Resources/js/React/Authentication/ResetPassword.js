@@ -48,6 +48,8 @@ export default class ResetPassword extends Component {
             this.updateState('email',
                 decodeURIComponent(urlParams.get('email'))
             )
+
+            this.firstPasswd.focus();
         }
     }
 
@@ -55,7 +57,7 @@ export default class ResetPassword extends Component {
         let formData = this.state.formData;
         formData[field] = val || "";
         this.setState({
-            formData: formData
+            formData
         });
     }
 
@@ -95,6 +97,7 @@ export default class ResetPassword extends Component {
                             minLength="6"
                             value={this.state.formData.password}
                             cb={this.updateState.bind(this, 'password')}
+                            inputRef={(el) => this.firstPasswd = el}
                             required
                         />
                     </FormGroup>

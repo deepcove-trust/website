@@ -22,7 +22,7 @@ export default class PageTitle extends Component {
 
         return (
             <div className="row">
-                <div className="col-12 pb-4">
+                <div className="col-12 py-3">
                     <h1 className="mb-1">{this.props.title}</h1>
                     {creatorInfo}
 
