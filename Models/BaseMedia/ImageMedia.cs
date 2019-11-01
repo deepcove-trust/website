@@ -44,6 +44,10 @@ namespace Deepcove_Trust_Website.Models
             else
                 bestVersion = GetBestFit(width);
 
+            // If bestVersion returns null, then none of our reduced versions are big 
+            // enough, so return the original file path
+            if (bestVersion == null) return FilePath;
+
             return Path.Combine(
                 Path.GetDirectoryName(FilePath),
                 Path.GetFileNameWithoutExtension(FilePath),
@@ -75,8 +79,16 @@ namespace Deepcove_Trust_Website.Models
 
             // If the complement is equal to the list count, then the requested value 
             // was higher than what we have available, so return our biggest version
-            if(index == Versions.Count)
+            if (index == Versions.Count)
+            {
+                // If the requested size is more than 10% larger than the largest version,
+                // return the original file
+                if (width > Versions.Last().Width * 1.1)
+                    return null;
+
+                // Otherwise return the largest of the reduced versions
                 return Versions[index - 1];
+            }
 
             // Otherwise get the image version above and the version below
             ImageVersion above, below;            
