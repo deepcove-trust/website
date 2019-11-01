@@ -1,10 +1,11 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
-import MediaBlock from '../CMS-Blocks/Media';
+import Media from '../CMS-Blocks/Media';
 
+const baseUri = "/api/page"
 
-export default class ReactTemplate4 extends Component {
+export default class ReactTemplate2 extends Component {
     constructor(props) {
         super(props);
 
@@ -14,13 +15,12 @@ export default class ReactTemplate4 extends Component {
         }
     }
 
-
     render() {
         return (
-            <Fragment>
+            <React.Fragment>
                 <div className="row">
                     <div className="col-12 px-0 mb-4" style={{ 'marginTop': '-1rem' }}>
-                        <MediaBlock allowEdits={this.props.allowEdits}
+                        <Media allowEdits={this.props.allowEdits}
                             content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
                         />
@@ -34,7 +34,7 @@ export default class ReactTemplate4 extends Component {
                         />
                     </div>
 
-                    <div className="col-12 py-2">
+                    <div className="col-lg-6 col-md-12">
                         <TextBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.textComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'text')}
@@ -42,21 +42,7 @@ export default class ReactTemplate4 extends Component {
                         />
                     </div>
 
-                    <div className="col-md-6 col-sm-12 mb-4">
-                        <MediaBlock allowEdits={this.props.allowEdits}
-                            content={this.props.data.mediaComponents[1] || null}
-                            pushChanges={this.props.pushChanges.bind(this, 'media')}
-                        />
-                    </div>
-
-                    <div className="col-md-6 col-sm-12 mb-4">
-                        <MediaBlock allowEdits={this.props.allowEdits}
-                            content={this.props.data.mediaComponents[2] || null}
-                            pushChanges={this.props.pushChanges.bind(this, 'media')}
-                        />
-                    </div>
-
-                    <div className="col-12 py-2">
+                    <div className="col-lg-6 col-md-12">
                         <TextBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.textComponents[1] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'text')}
@@ -64,7 +50,7 @@ export default class ReactTemplate4 extends Component {
                         />
                     </div>
                 </div>
-            </Fragment>
+            </React.Fragment>
         );
     }
 }

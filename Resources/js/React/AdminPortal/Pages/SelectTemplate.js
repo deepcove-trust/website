@@ -101,22 +101,10 @@ class Template extends Component {
         }
 
         return (
-            <PreviewCard title={this.props.template.name} imgurl={`/images/templates/${this.props.template.id}.png`}>   
-                <div className="row text-center">
-                    <div className="col-md-6 col-sm-12 py-3">
-                        <p className="font-weight-bold">Text Fields</p>
-                        {this.props.template.textAreas}
-                    </div>
-
-                    <div className="col-md-6 col-sm-12 py-3">
-                        <p className="font-weight-bold">Images</p>
-                        {this.props.template.mediaAreas}
-                    </div>
-
-                    <div className="col-12 pb-3" style={{ 'height': '92px' }}>
-                        {this.props.template.description}
-                    </div>
-
+            <PreviewCard imgurl={`/images/templates/${this.props.template.id}.png`}>
+                <div className="text-center">
+                    <h4 className="mt-1 mb-0">{this.props.template.name}</h4>
+                    <p className="text-muted">{`${this.props.template.textAreas} Text Fields | ${this.props.template.mediaAreas} Media Fields`}</p>
                     {button}
                 </div>
             </PreviewCard>

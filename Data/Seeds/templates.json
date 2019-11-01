@@ -1,22 +1,67 @@
 [
   {
     "Id": 1,
-    "Name": "Index/Main Page",
-    "Description": "The main page layout has a beautiful feature image, two large paragraphs and six feature cards, each with an image and a paragraph of text.",
-    "TextAreas": 8,
-    "MediaAreas": 7
-  },
-  {
-    "Id": 2,
-    "Name": "Feature Page",
-    "Description": "A clean two column layout with a feature image.",
+    "Name": "Article 1",
     "TextAreas": 2,
     "MediaAreas": 1
   },
   {
+    "Id": 2,
+    "Name": "Article 2",
+    "TextAreas": 2,
+    "MediaAreas": 3
+  },
+  {
     "Id": 3,
+    "Name": "Article 3",
+    "TextAreas": 2,
+    "MediaAreas": 3
+  },
+  {
+    "Id": 4,
+    "Name": "Duel Column 1",
+    "TextAreas": 2,
+    "MediaAreas": 1
+  },
+  {
+    "Id": 5,
+    "Name": "Duel Column 2",
+    "TextAreas": 3,
+    "MediaAreas": 3
+  },
+  {
+    "Id": 6,
+    "Name": "Duel Column 3",
+    "TextAreas": 3,
+    "MediaAreas": 2
+  },
+  {
+    "Id": 7,
+    "Name": "Image Article Two",
+    "TextAreas": 2,
+    "MediaAreas": 2
+  },
+  {
+    "Id": 8,
+    "Name": "Announcement One",
+    "TextAreas": 1,
+    "MediaAreas": 0
+  },
+  {
+    "Id": 9,
+    "Name": "Announcement Two",
+    "TextAreas": 1,
+    "MediaAreas": 1
+  },
+  {
+    "Id": 10,
+    "Name": "Main Page",
+    "TextAreas": 8,
+    "MediaAreas": 7
+  },
+  {
+    "Id": 11,
     "Name": "Contact Us",
-    "Description": "A contact us layout that features three text areas, an email form and Google Maps integration.",
     "TextAreas": 3,
     "MediaAreas": 0
   }
