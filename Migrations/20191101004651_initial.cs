@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Deepcove_Trust_Website.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -228,7 +228,6 @@ namespace Deepcove_Trust_Website.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     SlotNo = table.Column<int>(nullable: false),
-                    Heading = table.Column<string>(nullable: true),
                     Text = table.Column<string>(nullable: true),
                     CmsButtonId = table.Column<int>(nullable: true)
                 },
@@ -808,8 +807,7 @@ namespace Deepcove_Trust_Website.Migrations
                 name: "IX_QuizQuestions_CorrectAnswerId",
                 table: "QuizQuestions",
                 column: "CorrectAnswerId",
-                unique: true,
-                filter: "[CorrectAnswerId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuizQuestions_ImageId",
