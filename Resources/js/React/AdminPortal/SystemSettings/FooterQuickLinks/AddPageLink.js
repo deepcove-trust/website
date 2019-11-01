@@ -16,7 +16,6 @@ export default class SelectPage extends Component {
     }
 
     render() {
-        let disabled = !this.props.pages || this.props.pages && this.props.pages.length == 0;
         let pageLinks;
         if (this.props.pages && this.props.pages.length > 0) {            
             pageLinks = this.props.pages.map((page) => {
@@ -28,7 +27,7 @@ export default class SelectPage extends Component {
 
         return (
             <div class="dropdown">
-                <button class="btn btn-info btn-sm float-right dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> Add Page </button>
+                <button class="btn btn-dark btn-sm float-right dropdown-toggle" data-toggle="dropdown" aria-expanded="false" type="button"> Add Page </button>
                 <div class="dropdown-menu" role="menu">
                     {pageLinks}
                 </div>

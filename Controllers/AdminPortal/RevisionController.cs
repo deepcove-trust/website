@@ -66,7 +66,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                             .Select(txt => new
                             {
                                 txt.TextComponent.Id,
-                                txt.TextComponent.Heading,
                                 txt.TextComponent.Text,
                                 txt.TextComponent.SlotNo,
                                 button = txt.TextComponent.CmsButton != null ? new

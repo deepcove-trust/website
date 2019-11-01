@@ -56,7 +56,7 @@ export default class Pages extends Component {
 
         return (
             <div className="row">
-                <div className="col-12">
+                <div className="col-12 py-3">
                     <h1 className="text-center">Pages</h1>
                 </div>
 

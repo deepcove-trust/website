@@ -4,14 +4,31 @@ import PageControls from './PageControls';
 import ReactTemplate1 from './1';
 import ReactTemplate2 from './2';
 import ReactTemplate3 from './3';
+import ReactTemplate4 from './4';
+import ReactTemplate5 from './5';
+import ReactTemplate6 from './6';
+import ReactTemplate7 from './7';
+import ReactTemplate8 from './8';
+import ReactTemplate9 from './9';
+import ReactTemplate10 from './10';
+import ReactTemplate11 from './11';
 import $ from 'jQuery';
+
 
 
 const baseUri = `/api/pages`;
 const components = {
     1: ReactTemplate1,
     2: ReactTemplate2,
-    3: ReactTemplate3
+    3: ReactTemplate3,
+    4: ReactTemplate4,
+    5: ReactTemplate5,
+    6: ReactTemplate6,
+    7: ReactTemplate7,
+    8: ReactTemplate8,
+    9: ReactTemplate9,
+    10: ReactTemplate10,
+    11: ReactTemplate11
 }
 
 export default class BasePage extends Component {
