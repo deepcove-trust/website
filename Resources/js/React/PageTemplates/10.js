@@ -2,7 +2,7 @@
 import TextBlock from '../CMS-Blocks/Text';
 import Media from '../CMS-Blocks/Media';
 
-export default class ReactTemplate1 extends Component {
+export default class ReactTemplate10 extends Component {
     render() {
         return (
             <Fragment>

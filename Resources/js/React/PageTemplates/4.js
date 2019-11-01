@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react';
 import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
-import Media from '../CMS-Blocks/Media';
+import MediaBlock from '../CMS-Blocks/Media';
 
 const baseUri = "/api/page"
 
-export default class ReactTemplate2 extends Component {
+export default class ReactTemplate4 extends Component {
     constructor(props) {
         super(props);
 
@@ -20,7 +20,7 @@ export default class ReactTemplate2 extends Component {
             <React.Fragment>
                 <div className="row">
                     <div className="col-12 px-0 mb-4" style={{ 'marginTop': '-1rem' }}>
-                        <Media allowEdits={this.props.allowEdits}
+                        <MediaBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
                         />

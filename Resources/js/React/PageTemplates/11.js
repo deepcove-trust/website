@@ -1,10 +1,10 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import GoogleMap from '../CMS-Blocks/GoogleMap';
 import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import EmailForm from '../CMS-Blocks/EmailForm';
 
-export default class ReactTemplate3 extends Component {
+export default class ReactTemplate11 extends Component {
     constructor(props) {
         super(props);
 
@@ -14,16 +14,14 @@ export default class ReactTemplate3 extends Component {
         }
     }
 
-
     render() {
         return (
-            <React.Fragment>
+            <Fragment>
                 <PageTitle title={this.props.data.name}
                     public={this.props.data.public}
                     created={this.props.data.created}
                     displayAdmin={!!this.props.data.enums}
                 />
-
 
                 <div className="row pb-4">
                     <div className="col-lg-4 col-md-6 col-sm-12">
@@ -61,7 +59,7 @@ export default class ReactTemplate3 extends Component {
                             config={this.props.data.otherComponents.googleMaps || null } />
                     </div>
                 </div>
-            </React.Fragment>
+            </Fragment>
         );
     }
 }

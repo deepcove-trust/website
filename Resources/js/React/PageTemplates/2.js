@@ -3,8 +3,7 @@ import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import MediaBlock from '../CMS-Blocks/Media';
 
-
-export default class ReactTemplate4 extends Component {
+export default class ReactTemplate2 extends Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +12,6 @@ export default class ReactTemplate4 extends Component {
             pageId: null,
         }
     }
-
 
     render() {
         return (

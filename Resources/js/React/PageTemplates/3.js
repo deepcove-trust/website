@@ -4,7 +4,7 @@ import TextBlock from '../CMS-Blocks/Text';
 import MediaBlock from '../CMS-Blocks/Media';
 
 
-export default class ReactTemplate5 extends Component {
+export default class ReactTemplate3 extends Component {
     constructor(props) {
         super(props);
 
