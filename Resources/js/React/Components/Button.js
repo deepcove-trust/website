@@ -40,7 +40,7 @@ export class Button extends Component {
         }
 
         return (
-            <button className={this.props.className || this.props.className || "btn btn-primary"}
+            <button className={this.props.className || "btn btn-primary"}
                 type={this.props.type || "button"}
                 disabled={this.props.disabled || this.props.pending}
                 style={{ minWidth: `${this.state.width}px` }}

@@ -14,7 +14,7 @@ export default class Details extends Component {
 
         return (
             <div className="row pb-5">
-                <div className="col-12">
+                <div className="col-12 py-3">
                     <h1 className="text-center">Media File Details</h1>
 
                     <div className="pb-4">
