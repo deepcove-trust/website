@@ -1,4 +1,4 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import TextControls from './TextComponents/Controls';
 import Content from './TextComponents/Content';
 import CmsButton from './TextComponents/CmsButton';
@@ -44,7 +44,7 @@ export default class TextBlock extends Component {
 
     render() {
         return (
-            <Fragment>
+            <div className="cms-text">
                 <TextControls allowEdits={this.props.allowEdits}
                     edit={this.state.edit}
                     updateVal={this.updateVal.bind(this, 'heading')}
@@ -76,7 +76,7 @@ export default class TextBlock extends Component {
                     onSave={this.updateVal.bind(this)}
                     onDelete={this.updateVal.bind(this, 'button', null)}
                 />
-            </Fragment>
+            </div>
         )
     }
 }

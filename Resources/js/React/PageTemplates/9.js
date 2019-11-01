@@ -3,8 +3,7 @@ import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import MediaBlock from '../CMS-Blocks/Media';
 
-
-export default class ReactTemplate7 extends Component {
+export default class ReactTemplate9 extends Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +12,6 @@ export default class ReactTemplate7 extends Component {
             pageId: null,
         }
     }
-
 
     render() {
         return (
@@ -29,7 +27,7 @@ export default class ReactTemplate7 extends Component {
 
                     <div className="col-md-6 offset-md-3 col-sm-8 offset-sm-2" style={{ 'marginTop': '15vh', 'marginBottom': '30px' }}>
                         <MediaBlock allowEdits={this.props.allowEdits}
-                            content={this.props.data.mediaComponents[2] || null}
+                            content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
                         />
                     </div>

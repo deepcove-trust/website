@@ -3,8 +3,7 @@ import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
 import MediaBlock from '../CMS-Blocks/Media';
 
-
-export default class ReactTemplate6 extends Component {
+export default class ReactTemplate1 extends Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +12,6 @@ export default class ReactTemplate6 extends Component {
             pageId: null,
         }
     }
-
 
     render() {
         return (
@@ -37,7 +35,7 @@ export default class ReactTemplate6 extends Component {
 
                     <div className="col-md-6 col-sm-12 mb-4">
                         <MediaBlock allowEdits={this.props.allowEdits}
-                            content={this.props.data.mediaComponents[1] || null}
+                            content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
                         />
                     </div>

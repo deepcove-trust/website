@@ -253,3 +253,7 @@ button.accept-policy {
 div.selected {
     box-shadow: 0px 12px 22px 1px #333;
 }
+
+.cms-text {
+    transition: width 1s ease-in-out;
+}

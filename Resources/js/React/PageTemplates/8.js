@@ -1,10 +1,8 @@
 ﻿import React, { Component, Fragment } from 'react';
 import PageTitle from '../CMS-Blocks/PageTitle';
 import TextBlock from '../CMS-Blocks/Text';
-import MediaBlock from '../CMS-Blocks/Media';
 
-
-export default class ReactTemplate7 extends Component {
+export default class ReactTemplate8 extends Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +11,6 @@ export default class ReactTemplate7 extends Component {
             pageId: null,
         }
     }
-
 
     render() {
         return (
