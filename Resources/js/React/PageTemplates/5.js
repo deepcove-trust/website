@@ -37,7 +37,7 @@ export default class ReactTemplate5 extends Component {
                         />
                     </div>
 
-                    <div className="col-md-6 col-sm-12">
+                    <div className="col-md-6 col-sm-12 pt-2">
                         <MediaBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.mediaComponents[0] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
@@ -54,7 +54,7 @@ export default class ReactTemplate5 extends Component {
                         />
                     </div>
 
-                    <div className="col-md-6 col-sm-12">
+                    <div className="col-md-6 col-sm-12 pt-2">
                         <MediaBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.mediaComponents[1] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
@@ -71,7 +71,7 @@ export default class ReactTemplate5 extends Component {
                         />
                     </div>
 
-                    <div className="col-md-6 col-sm-12">
+                    <div className="col-md-6 col-sm-12 pt-2">
                         <MediaBlock allowEdits={this.props.allowEdits}
                             content={this.props.data.mediaComponents[2] || null}
                             pushChanges={this.props.pushChanges.bind(this, 'media')}
