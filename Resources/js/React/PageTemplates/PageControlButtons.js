@@ -1,9 +1,8 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { Button, Link } from '../Components/Button';
-import $ from 'jquery';
 import { PageUrl } from '../../helpers';
+import $ from 'jquery';
 
-const apiBaseUri = `/api/pages`;
 const pageBaseUri = `/admin/pages`;
 
 export class EditPageSettings extends Component {

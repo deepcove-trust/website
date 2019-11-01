@@ -25,7 +25,7 @@ export default class PageControls extends Component {
             );
 
         return (
-            <div id="editorsdash" className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem' }}>
+            <div id="editorsdash" className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem', 'marginLeft': '-30px', 'marginRight': '-30px' }}>
                 <h4 className="col-lg-4 col-md-12 mb-2 noselect">
                     <i className="fas fa-tachometer-alt-slow fa-x3" /> Editors Dashboard
                 </h4>
