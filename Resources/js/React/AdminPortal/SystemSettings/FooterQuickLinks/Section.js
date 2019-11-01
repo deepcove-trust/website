@@ -76,7 +76,7 @@ export class Section extends Component {
                 </FormGroup>
 
 
-                <div class="table-responsive">
+                <div>
                     <table class="table table-hover table-sm">
                         <thead>
                             <tr>

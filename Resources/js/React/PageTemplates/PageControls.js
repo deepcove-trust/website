@@ -11,6 +11,12 @@ export default class PageControls extends Component {
         if (!this.props.allowEdits)
             return (
                 <div className="float-right-above">
+                    <ToggleVisibility className="btn btn-dark mr-2"
+                        public={this.props.page.public}
+                        pageId={this.props.page.id}
+                        u={this.props.u}
+                    />
+
                     <Button className="btn btn-dark mr-2" cb={this.props.editMode.bind(this, true)}>
                         Edit Page
                     </Button>
@@ -19,7 +25,7 @@ export default class PageControls extends Component {
             );
 
         return (
-            <div id="editorsdash" className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem' }}>
+            <div id="editorsdash" className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem', 'marginLeft': '-30px', 'marginRight': '-30px' }}>
                 <h4 className="col-lg-4 col-md-12 mb-2 noselect">
                     <i className="fas fa-tachometer-alt-slow fa-x3" /> Editors Dashboard
                 </h4>
@@ -35,11 +41,6 @@ export default class PageControls extends Component {
                 </div>
 
                 <div className="col-lg-2 col-sm-6 text-center">
-                    <ToggleVisibility className="btn btn-dark btn-sm"
-                        public={this.props.page.public}
-                        pageId={this.props.page.id}
-                        u={this.props.u}
-                    />
                 </div>
 
                 <div className="col-lg-2 col-sm-6 text-center">

@@ -1,6 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import { Button, BtnGroup } from '../Components/Button';
+import { Button, BtnGroup, ConfirmButton } from '../Components/Button';
 import SelectMedia from './SelectMedia';
 
 import _ from 'lodash';
@@ -51,6 +51,18 @@ export default class Media extends Component {
         }
     }
 
+    handleClearImage() {
+        let content = {
+            imageMediaId: null,
+            slotNo: this.state.default.slotNo
+        };
+        this.setState({
+            content
+        }, () => {
+            this.pushChanges();
+        });
+    }
+
     handleImageSelect(file) {
         file.slotNo = this.state.default.slotNo;
         file.imageMediaId = file.id;
@@ -91,9 +103,14 @@ export default class Media extends Component {
     render() {
         let selectFile = this.props.allowEdits && JSON.stringify(this.state.content) == JSON.stringify(this.state.default) ? (
             <Fragment>
-                <Button className="btn btn-dark btn-sm float-right-above" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
-                    Select Image <i className="far fa-images" />
-                </Button>
+                <BtnGroup className="d-block text-right float-right-above">
+                    <ConfirmButton className="btn btn-danger btn-sm" cb={this.handleClearImage.bind(this)}>
+                        Clear <i className="far fa-times"/>
+                    </ConfirmButton>
+                    <Button className="btn btn-dark btn-sm" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
+                        Select Image <i className="far fa-images" />
+                    </Button>
+                </BtnGroup>
 
                 <SelectMedia type="Image"
                     showModal={this.state.showModal}
@@ -115,23 +132,24 @@ export default class Media extends Component {
                 </BtnGroup>
         ) : null
 
+        // If we are not in edit mode, and no image exists then hide the image.
+        let image = !this.props.allowEdits && !this.state.content.filename ? null : (
+            <img src={this.ImageUrl()}
+                alt={this.state.content ? this.state.content.alt : ""}
+                style={{
+                    'position': 'absolute',
+                    'objectFit': 'cover',
+                    'width': '100%',
+                    'height': '100%',
+                    'top': '0px',
+                    'left': '0px'
+                }}
+            />
+        )
 
         return (
-            <div style={{ 'position': 'relative', 'minHeight': this.props.minSize || '250px' }}
-                ref={this.contentRef} >
-
-                <img src={this.ImageUrl()}
-                    alt={this.state.content ? this.state.content.alt : ""}
-                    style={{
-                        'position': 'absolute',
-                        'objectFit': 'cover',
-                        'width': '100%',
-                        'height': '100%',
-                        'top': '0px',
-                        'left': '0px'
-                    }}
-                />
-                
+            <div style={{ 'position': 'relative', 'minHeight': this.props.minSize || '250px' }} ref={this.contentRef} >
+                {image}
                 {selectFile}
             </div>
         )
