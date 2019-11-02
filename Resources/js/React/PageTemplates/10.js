@@ -15,7 +15,7 @@ export default class ReactTemplate10 extends Component {
                         />
                     </div>
 
-                    <div className="col-12 pt-3">
+                    <div className="col-12 pt-5 pb-4 text-center">
                         <h3>Experience life in a remote part of the Fiordland National Park</h3>
                     </div>
 
@@ -36,7 +36,7 @@ export default class ReactTemplate10 extends Component {
                 </div>
 
 
-                <div className="row pt-3">
+                <div className="row pt-4">
                     <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
