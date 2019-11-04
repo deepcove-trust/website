@@ -116,8 +116,8 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             {
                 ReturnUrl = Url.Action(
                     "Index",
-                    "AdminDashboard",
-                    new { area = "admin-portal" }
+                    "Page",
+                    new { area = "admin-portal,web" }
                 );
             } else
             {
