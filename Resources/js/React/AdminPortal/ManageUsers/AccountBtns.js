@@ -41,7 +41,7 @@ export class DeleteUser extends Component {
 
     render() {
         return (
-            <ConfirmButton className="btn btn-danger mt-3 mx-1" cb={this.DeleteUser.bind(this)} pending={this.state.requestPending}>
+            <ConfirmButton className="btn btn-danger mt-3" cb={this.DeleteUser.bind(this)} pending={this.state.requestPending}>
                 Delete User <i className="fas fa-user-times"></i>
             </ConfirmButton>
         )
