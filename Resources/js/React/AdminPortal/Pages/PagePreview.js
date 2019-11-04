@@ -2,25 +2,14 @@
 import PreviewCard from './PreviewCard';
 import { ConfirmModal } from '../../Components/Button';
 import { ToggleVisibility, ViewPage, EditPageSettings } from '../../PageTemplates/PageControlButtons';
+import ReactTooltip from 'react-tooltip'
 import $ from 'jquery';
 
 export default class PagePreview extends Component {
     render() {
-        let visibility = <span className="text-primary">This page is visible to the public</span>
-
-        if (!this.props.page.public) {
-            visibility = (
-                <span className="text-danger font-weight-bold">This page is private!</span>
-            );
-        }
-
         return (
-            <PreviewCard className="mb-2" title={this.props.page.name} imgurl={`/images/templates/${this.props.page.template.id}.png`}>
-                <p className="text-center">{this.props.page.description}</p>
-
-                <hr />
-                <p className="text-center">{visibility}</p>
-                <hr />
+            <PreviewCard className="mb-2" title={this.props.page.name || "Home"} imgurl={`/images/templates/${this.props.page.template.id}.png`}>
+                <PageStatus page={this.props.page} />
 
                 <div className="row">
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
@@ -47,6 +36,8 @@ export default class PagePreview extends Component {
                             u={this.props.u} />
                     </div>
                 </div>
+
+                <ReactTooltip />
             </PreviewCard>
         )
     }
@@ -75,8 +66,32 @@ class DeletePage extends Component {
                 confirmPhrase={this.props.page.name}
                 cb={this.deletePage.bind(this)}
             >
-                Delete <i className="fas fa-exclamation-triangle"></i>
+                Delete <i className="fas fa-exclamation-triangle"/>
             </ConfirmModal>
-        )
+        );
+    }
+}
+
+class PageStatus extends Component {
+    render() {
+        let noDescriptionMsg = "To improve your search engine results please provide a page description by clicking on the 'Edit Settings' button."
+        let visibility = !this.props.page.public ? <span className="text-danger">Private Page</span> : <span className="text-success">Public Page</span>
+        let description = !this.props.page.description ? <span className="text-danger" data-tip={noDescriptionMsg}>No Description</span> : <span className="text-success" data-tip={this.props.page.description}>Valid Description</span>;
+
+        return (
+            <React.Fragment>
+                <hr />
+                    <div className="row text-center font-weight-bold">
+                        <div className="col-md-6 col-sm-12">
+                            {visibility}
+                        </div>
+
+                        <div className="col-md-6 col-sm-12">
+                        {description}
+                        </div>
+                    </div>
+                <hr/>
+            </React.Fragment>
+        );
     }
 }

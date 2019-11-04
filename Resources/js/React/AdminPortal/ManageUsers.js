@@ -36,7 +36,7 @@ export default class Users extends Component {
         let accounts;
         if(this.state.accounts) {
             accounts = this.state.accounts.map((account, key) => {
-                return <AccountCard account={account}
+                return <AccountCard account={account} key={key}
                     u={this.getData.bind(this)}
                     baseUri={baseUri}
                 />
