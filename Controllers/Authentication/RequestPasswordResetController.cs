@@ -18,14 +18,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class RequestPasswordResetController : Controller
     {
         private readonly WebsiteDataContext _Db;
-        private readonly IConfiguration _Configuration;
+        private readonly IConfiguration _Config;
         private readonly IEmailService _Smtp;
         private readonly ILogger<RequestPasswordResetController> _Logger;
 
         public RequestPasswordResetController(WebsiteDataContext db, IConfiguration configuration, IEmailService smtp, ILogger<RequestPasswordResetController> logger)
         {
             _Db = db;
-            _Configuration = configuration;
+            _Config = configuration;
             _Smtp = smtp;
             _Logger = logger;
         }
@@ -59,12 +59,10 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                         foreach (PasswordReset resetToken in resetTokens)
                             resetToken.ExpiresAt = DateTime.UtcNow;
 
-                    PasswordReset reset = new PasswordReset
-                    {
-                        Account = account,
-                        Token = Utils.RandomString(20),
-                        ExpiresAt = DateTime.UtcNow.AddMinutes(_Configuration.GetSection("LoginSettings").GetValue<int>("PasswordResetTokenLength"))
-                    };
+                    PasswordReset reset = new PasswordReset(
+                        account, 
+                        DateTime.UtcNow.AddMinutes(_Config["LoginSettings:PasswordResetTokenLength"].ToInt())
+                    );
 
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();

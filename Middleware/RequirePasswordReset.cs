@@ -38,12 +38,9 @@ namespace Deepcove_Trust_Website.Middleware
                     }
 
                     // Get new token
-                    PasswordReset newToken = new PasswordReset
-                    {
-                        Account = account,
-                        Token = Utils.RandomString(20),
-                        ExpiresAt = DateTime.UtcNow.AddMinutes(int.Parse(config["LoginSettings:PasswordResetTokenLength"]))
-                    };
+                    PasswordReset newToken = new PasswordReset(
+                       account, DateTime.UtcNow.AddMinutes(config["LoginSettings:PasswordResetTokenLength"].ToInt())
+                    );
 
                     // send email
                     smtp.SendRazorEmailAsync(null,
