@@ -1,16 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Deepcove_Trust_Website.Data;
-using Deepcove_Trust_Website.Features.Emails;
-using Deepcove_Trust_Website.Helpers;
-using Deepcove_Trust_Website.Models;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Features.Emails;
+using Deepcove_Trust_Website.Helpers;
+using Deepcove_Trust_Website.Models;
+
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -18,14 +19,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class RequestPasswordResetController : Controller
     {
         private readonly WebsiteDataContext _Db;
-        private readonly IConfiguration _Configuration;
+        private readonly IConfiguration _Config;
         private readonly IEmailService _Smtp;
         private readonly ILogger<RequestPasswordResetController> _Logger;
 
         public RequestPasswordResetController(WebsiteDataContext db, IConfiguration configuration, IEmailService smtp, ILogger<RequestPasswordResetController> logger)
         {
             _Db = db;
-            _Configuration = configuration;
+            _Config = configuration;
             _Smtp = smtp;
             _Logger = logger;
         }
@@ -36,13 +37,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             // Redirect authenticated users
             // to the dashboard
             if (User.Identity.IsAuthenticated)
-                return Redirect(
-                    Url.Action(
-                        "Index",
-                        "AdminDashboard",
-                        new { area = "admin-portal" }
-                    )
-                );
+            {
+                return Redirect(Url.Action(
+                    "Index",
+                    "Page",
+                    new { area = "admin-portal,web" }
+                ));
+            }
 
             return View(viewName: "~/Views/Authentication/RequestPasswordReset.cshtml");
         }
@@ -54,34 +55,21 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 Account account = await _Db.Accounts.Where(c => c.Email == request.Str("email")).FirstOrDefaultAsync();
                 if (account != null)
                 {
-                    List<PasswordReset> resetTokens = await _Db.PasswordResets.Include(i => i.Account).Where(c => c.Account.Id == account.Id).ToListAsync();
-                    if (resetTokens != null)
-                        foreach (PasswordReset resetToken in resetTokens)
-                            resetToken.ExpiresAt = DateTime.UtcNow;
-
-                    PasswordReset reset = new PasswordReset
+                    List<PasswordReset> oldTokens = await _Db.PasswordResets.Where(c => c.Account.Id == account.Id).ToListAsync() ?? new List<PasswordReset>();
+                    foreach (PasswordReset resetToken in oldTokens)
                     {
-                        Account = account,
-                        Token = Utils.RandomString(20),
-                        ExpiresAt = DateTime.UtcNow.AddMinutes(_Configuration.GetSection("LoginSettings").GetValue<int>("PasswordResetTokenLength"))
-                    };
+                        resetToken.ExpiresAt = DateTime.UtcNow;
+                    }
+
+                    PasswordReset reset = new PasswordReset(
+                        account, 
+                        DateTime.UtcNow.AddMinutes(_Config["LoginSettings:PasswordResetTokenLength"].ToInt())
+                    );
 
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();
-
-                    await _Smtp.SendRazorEmailAsync(null,
-                        new EmailContact { Name = account.Name, Address = account.Email },
-                        "Password Reset",
-                        "PasswordReset",
-                        new Views.Emails.Models.PasswordReset
-                        {
-                            Name = account.Name,
-                            Token = reset.Token,
-                            Email = account.Email,
-                            BaseUrl = this.Request.BaseUrl()
-                        }
-                    );
-
+                    await _Smtp.SendPasswordResetEmailAsync(reset, this.Request.BaseUrl());
+                    
                     _Logger.LogInformation("Password reset requested for account belonging to {0}", account.Name);
                 }
 

@@ -1,12 +1,9 @@
-﻿using Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers;
-using Deepcove_Trust_Website.Models;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using Deepcove_Trust_Website.Data.Seeds.DiscoverDeepCove.SeederHelpers;
+using Deepcove_Trust_Website.Models;
 
 namespace Deepcove_Trust_Website.Data
 {

@@ -20,7 +20,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     public class RegistrationController : Controller
     {
         private readonly WebsiteDataContext _Db;
-        private readonly IConfiguration _Configuration;
+        private readonly IConfiguration _Config;
         private IPasswordHasher<Account> _Hasher;
         private IEmailService _Smtp;
         private readonly ILogger<RegistrationController> _Logger;
@@ -31,7 +31,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             _Smtp = smtp;
             _Hasher = hasher;
             _Logger = logger;
-            _Configuration = configuration;
+            _Config = configuration;
         }
 
         [HttpGet]
@@ -59,14 +59,12 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 };
 
                 account.Password = _Hasher.HashPassword(account, Utils.RandomString(30));
-                await _Db.AddAsync(account);                
+                await _Db.AddAsync(account);
 
-                PasswordReset reset = new PasswordReset
-                {
-                    Account = account,
-                    Token = Utils.RandomString(42),
-                    ExpiresAt = DateTime.UtcNow.AddHours(_Configuration.GetSection("LoginSettings").GetValue<int>("NewAccountResetTokenLength"))
-                };
+                PasswordReset reset = new PasswordReset(
+                    account, 
+                    DateTime.UtcNow.AddHours(_Config["LoginSettings:NewAccountResetTokenLength"].ToInt())
+                );
 
                 await _Db.AddAsync(reset);
                 await _Db.SaveChangesAsync();
@@ -74,28 +72,15 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 _Logger.LogInformation("New account created - Name: {0}, Email: {1}", account.Name, account.Email);
 
                 EmailContact sendTo = new EmailContact { Name = account.Name, Address = account.Email };
+                await _Smtp.SendNewAccountEmailAsync(reset, User, Request.BaseUrl());
 
-                await _Smtp.SendRazorEmailAsync(null,
-                    sendTo,
-                    "Account Created",
-                    "AccountCreated",
-                    new Views.Emails.Models.AccountCreated {
-                        Name = account.Name,
-                        Recipient = sendTo,
-                        CreatedBy = new EmailContact {
-                            Name = User.AccountName(),
-                            Address = User.AccountEmail()
-                        },
-                        Token = reset.Token,
-                        BaseUrl = this.Request.BaseUrl()
-                    }
-                );
 
-                return Ok(Url.Action(
+                return Ok(
+                    Url.Action(
                         "Index",
                         "Users",
                         new { area = "admin-portal" }
-                    ));
+               ));
             } 
             catch(Exception ex)
             {

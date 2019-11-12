@@ -47,12 +47,12 @@ namespace Deepcove_Trust_Website
             if (Configuration.GetSection("ConnectionStrings").GetValue<string>("Use") == "MsSqlConnection")
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Transient);
+                    options.UseSqlServer(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MsSqlConnection")), ServiceLifetime.Scoped);
             } 
             else
             {
                 services.AddDbContext<Data.WebsiteDataContext>(options =>
-                    options.UseMySql(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MySqlConnection")), ServiceLifetime.Transient);
+                    options.UseMySql(!string.IsNullOrEmpty(dburl) ? dburl : Configuration.GetConnectionString("MySqlConnection")), ServiceLifetime.Scoped);
             }
 
             // Email Config
@@ -95,8 +95,8 @@ namespace Deepcove_Trust_Website
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            //app.UseActiveAccounts();
-            //app.UseForcePasswordReset();
+            app.UseLogoutInactiveAccounts();
+            app.UseRequirePasswordReset();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

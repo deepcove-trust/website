@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Deepcove_Trust_Website.Features.Emails
@@ -19,6 +21,17 @@ namespace Deepcove_Trust_Website.Features.Emails
             string subject,
             string viewName,
             object vars
+        );
+
+        Task SendPasswordResetEmailAsync(
+            PasswordReset token,
+            Uri baseUrl
+        );
+
+        Task SendNewAccountEmailAsync(
+            PasswordReset token,
+            ClaimsPrincipal adminAccount,
+            Uri baseUrl
         );
 
         Task SendGeneralInquiryAsync(
