@@ -49,7 +49,7 @@ namespace Deepcove_Trust_Website.Middleware
                     smtp.SendRazorEmailAsync(null,
                         new EmailContact { Name = account.Name, Address = account.Email },
                         "Password Reset",
-                        "Password Reset",
+                        "PasswordReset",
                         new Views.Emails.Models.PasswordReset
                         {
                             Name = account.Name,
