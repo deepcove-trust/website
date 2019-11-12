@@ -42,6 +42,10 @@ namespace Deepcove_Trust_Website.Middleware
                        account, DateTime.UtcNow.AddMinutes(config["LoginSettings:PasswordResetTokenLength"].ToInt())
                     );
 
+                    // Update database
+                    db.PasswordResets.Add(newToken);
+                    db.SaveChanges();
+
                     // send password reset email 
                     smtp.SendPasswordResetEmailAsync(newToken, httpContext.Request.BaseUrl());
 
