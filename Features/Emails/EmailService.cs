@@ -10,7 +10,9 @@ using Deepcove_Trust_Website.Views.Emails.Models;
 using Microsoft.AspNetCore.Http;
 using MailKit.Net.Smtp;
 using MimeKit;
-
+using Deepcove_Trust_Website.Models;
+using System.Security.Claims;
+using Deepcove_Trust_Website.Helpers;
 
 namespace Deepcove_Trust_Website.Features.Emails
 {
@@ -92,6 +94,47 @@ namespace Deepcove_Trust_Website.Features.Emails
         {
             var message = await _ViewRender.RenderAsync(viewName, vars);
             await SendEmailAsync(sender, recipient, subject, message);
+        }
+
+        public async Task SendPasswordResetEmailAsync(Models.PasswordReset token, Uri baseUrl)
+        {
+            var account = token.Account;
+
+            await SendRazorEmailAsync(null,
+                new EmailContact { Address = account.Email, Name = account.Name },
+                "Password reset",
+                "PasswordReset",
+                new Views.Emails.Models.PasswordReset
+                {
+                    Name = account.Name,
+                    Token = token.Token,
+                    Email = account.Email,
+                    BaseUrl = baseUrl
+                }
+            );
+        }
+
+        public async Task SendNewAccountEmailAsync(Models.PasswordReset token, ClaimsPrincipal adminAccount, Uri baseUrl)
+        {
+            var account = token.Account;
+            var recipient = new EmailContact { Address = account.Email, Name = account.Name };
+            await SendRazorEmailAsync(null,
+                recipient,
+                "Account Created",
+                "AccountCreated",
+                new AccountCreated
+                {
+                    Name = account.Name,
+                    Recipient = recipient,
+                    CreatedBy = new EmailContact
+                    {
+                        Name = adminAccount.AccountName(),
+                        Address = adminAccount.AccountEmail()
+                    },
+                    Token = token.Token,
+                    BaseUrl = baseUrl
+                }
+            );
         }
 
         public async Task SendGeneralInquiryAsync(EmailContact Sender, string subject, object vars)

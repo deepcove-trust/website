@@ -72,28 +72,15 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 _Logger.LogInformation("New account created - Name: {0}, Email: {1}", account.Name, account.Email);
 
                 EmailContact sendTo = new EmailContact { Name = account.Name, Address = account.Email };
+                await _Smtp.SendNewAccountEmailAsync(reset, User, Request.BaseUrl());
 
-                await _Smtp.SendRazorEmailAsync(null,
-                    sendTo,
-                    "Account Created",
-                    "AccountCreated",
-                    new Views.Emails.Models.AccountCreated {
-                        Name = account.Name,
-                        Recipient = sendTo,
-                        CreatedBy = new EmailContact {
-                            Name = User.AccountName(),
-                            Address = User.AccountEmail()
-                        },
-                        Token = reset.Token,
-                        BaseUrl = this.Request.BaseUrl()
-                    }
-                );
 
-                return Ok(Url.Action(
+                return Ok(
+                    Url.Action(
                         "Index",
                         "Users",
                         new { area = "admin-portal" }
-                    ));
+               ));
             } 
             catch(Exception ex)
             {

@@ -42,19 +42,8 @@ namespace Deepcove_Trust_Website.Middleware
                        account, DateTime.UtcNow.AddMinutes(config["LoginSettings:PasswordResetTokenLength"].ToInt())
                     );
 
-                    // send email
-                    smtp.SendRazorEmailAsync(null,
-                        new EmailContact { Name = account.Name, Address = account.Email },
-                        "Password Reset",
-                        "PasswordReset",
-                        new Views.Emails.Models.PasswordReset
-                        {
-                            Name = account.Name,
-                            Token = newToken.Token,
-                            Email = account.Email,
-                            BaseUrl = httpContext.Request.BaseUrl()
-                        }
-                    );
+                    // send password reset email 
+                    smtp.SendPasswordResetEmailAsync(newToken, httpContext.Request.BaseUrl());
 
                     httpContext.SignOutAsync();
                     httpContext.Response.Redirect("/error/password-reset");
