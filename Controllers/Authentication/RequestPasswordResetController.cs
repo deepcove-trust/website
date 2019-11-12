@@ -36,13 +36,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             // Redirect authenticated users
             // to the dashboard
             if (User.Identity.IsAuthenticated)
-                return Redirect(
-                    Url.Action(
-                        "Index",
-                        "AdminDashboard",
-                        new { area = "admin-portal" }
-                    )
-                );
+            {
+                return Redirect(Url.Action(
+                    "Index",
+                    "Page",
+                    new { area = "admin-portal,web" }
+                ));
+            }
 
             return View(viewName: "~/Views/Authentication/RequestPasswordReset.cshtml");
         }

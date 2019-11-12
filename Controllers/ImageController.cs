@@ -51,13 +51,14 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 // Return file if not image
                 if (file.GetCategory() != MediaCategory.Image)
                 {
+                    //return new EmptyResult();
                     return File(await System.IO.File.ReadAllBytesAsync(file.FilePath), file.MediaType.Mime);
                 }
                 else
                 {
                     ImageMedia imageFile = (ImageMedia)file;
                     // Return the appropriate image                     		
-
+                    //return new EmptyResult();
                     return File(await System.IO.File.ReadAllBytesAsync(imageFile.GetImagePath(width, original)), imageFile.MediaType.Mime);
                 }
             }
