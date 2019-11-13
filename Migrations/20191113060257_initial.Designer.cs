@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20191101004651_initial")]
+    [Migration("20191113060257_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -398,6 +398,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Text");
 
+                    b.Property<string>("Url");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PageId");
@@ -407,11 +409,20 @@ namespace Deepcove_Trust_Website.Migrations
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.NavItemPage", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("NavItemId");
 
-                    b.Property<int>("PageId");
+                    b.Property<int?>("PageId");
 
-                    b.HasKey("NavItemId", "PageId");
+                    b.Property<string>("Text");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NavItemId");
 
                     b.HasIndex("PageId");
 
@@ -795,8 +806,7 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasOne("Deepcove_Trust_Website.Models.Page", "Page")
                         .WithMany("NavItemPages")
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PageId");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PageRevision", b =>

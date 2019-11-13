@@ -124,6 +124,10 @@
     <Compile Remove="Migrations\20191030004702_Navbar Migration.Designer.cs" />
     <Compile Remove="Migrations\20191030015624_Initial Migration.cs" />
     <Compile Remove="Migrations\20191030015624_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20191101004651_initial.cs" />
+    <Compile Remove="Migrations\20191101004651_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191113055536_alter-navitem-keys.cs" />
+    <Compile Remove="Migrations\20191113055536_alter-navitem-keys.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
