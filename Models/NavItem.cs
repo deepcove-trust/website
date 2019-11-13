@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Deepcove_Trust_Website.Models
 {
@@ -12,6 +13,7 @@ namespace Deepcove_Trust_Website.Models
 
         // Navigation properties
         public Page Page { get; set; }
+        [JsonProperty("children")]
         public List<NavItemPage> NavItemPages { get; set; }
         // ---------------------
     }
