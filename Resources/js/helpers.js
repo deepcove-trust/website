@@ -42,3 +42,15 @@ export function validateEmail(address) {
     var regex = RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
     return regex.test(address);
 }
+
+// Polyfill to support Internet Explorer
+// (doesn't support Math.trunc by default)
+Math.trunc = Math.trunc || function (x) {
+    if (isNaN(x)) {
+        return NaN;
+    }
+    if (x > 0) {
+        return Math.floor(x);
+    }
+    return Math.ceil(x);
+};
