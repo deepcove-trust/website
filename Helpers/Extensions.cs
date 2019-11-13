@@ -86,6 +86,12 @@ namespace Deepcove_Trust_Website.Helpers
 
         public static bool EqualsIgnoreCase(this string s, string other) => s.ToLower() == other.ToLower();
 
-        public static byte[] DecodeBase64Bytes(this string encoded) => System.Convert.FromBase64String(encoded);
+        public static byte[] DecodeBase64Bytes(this string encoded) => Convert.FromBase64String(encoded);
+
+        /// <summary>
+        /// Parses a string into an int.
+        /// </summary>
+        /// <param name="s">String to parse. Method will through exception if non-int is passed</param>
+        public static int ToInt(this string s) => int.Parse(s.Trim());
     }
 }

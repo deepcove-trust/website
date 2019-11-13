@@ -8,11 +8,11 @@ export default class ReactTemplate10 extends Component {
             <Fragment>
                 <div className="row">
                     <div className="col-12 px-0">
-                        <Media minHeight="440"
-                            allowEdits={this.props.allowEdits}
-                            content={this.props.data.mediaComponents[0] || null}
-                            pushChanges={this.props.pushChanges.bind(this, 'media')}
-                        />
+                        <video width="100%" loop autoPlay={true} muted>
+                            <source src="/images/feature_video.mp4" type="video/mp4" />
+                            <source src="/images/feature_video.ogg" type="video/ogg"/>
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
 
                     <div className="col-12 pt-5 pb-4 text-center">
@@ -41,7 +41,7 @@ export default class ReactTemplate10 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
-                                content={this.props.data.mediaComponents[1] || null}
+                                content={this.props.data.mediaComponents[0] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -57,7 +57,7 @@ export default class ReactTemplate10 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
-                                content={this.props.data.mediaComponents[2] || null}
+                                content={this.props.data.mediaComponents[1] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -73,7 +73,7 @@ export default class ReactTemplate10 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
-                                content={this.props.data.mediaComponents[3] || null}
+                                content={this.props.data.mediaComponents[2] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -89,7 +89,7 @@ export default class ReactTemplate10 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
-                                content={this.props.data.mediaComponents[4] || null}
+                                content={this.props.data.mediaComponents[3] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -105,7 +105,7 @@ export default class ReactTemplate10 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
-                                content={this.props.data.mediaComponents[5] || null}
+                                content={this.props.data.mediaComponents[4] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>
@@ -121,7 +121,7 @@ export default class ReactTemplate10 extends Component {
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
-                                content={this.props.data.mediaComponents[6] || null}
+                                content={this.props.data.mediaComponents[5] || null}
                                 pushChanges={this.props.pushChanges.bind(this, 'media')}
                             />
                         </div>

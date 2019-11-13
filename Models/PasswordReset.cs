@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Deepcove_Trust_Website.Helpers;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
@@ -20,5 +18,14 @@ namespace Deepcove_Trust_Website.Models
         // Navigation Properties
         public Account Account { get; set; }
         // End Navigation Properties
+
+        public PasswordReset(Account account, DateTime expiresAt)
+        {
+            Account = account;
+            Token = Utils.RandomString(20);
+            ExpiresAt = expiresAt;
+        }
+
+        public PasswordReset() { }
     }
 }
