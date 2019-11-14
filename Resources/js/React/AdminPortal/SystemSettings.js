@@ -5,77 +5,56 @@ import ContactInformation from './SystemSettings/ContactInformation';
 import FooterQuickLinks from './SystemSettings/FooterQuickLinks';
 import Navbar from './Systemsettings/Navbar';
 
-import $ from 'jquery';
-
-const baseUri = `/admin/settings`;
+const components = {
+    0: {
+        template: ContactInformation,
+        tab: 'Contact Information'
+    }, 
+    1: {
+        template: FooterQuickLinks,
+        tab: 'Footer Quick-Links'
+    },
+    2: {
+        template: Navbar,
+        tab: 'Navbar Management'
+    }
+}
 
 export default class SystemSettings extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            settings: null,
-            activeTab: null
+            tabIndex: 0,
         }
     }
 
     componentDidMount() {
-
-        this.setState({
-            activeTab: document.getElementById('react_systemSettings').getAttribute("data-tab")
-        }, () => {
-            this.getData();
-        })    
-    }
-
-    getData() {
-        $.ajax({
-            type: 'get',
-            url: `${baseUri}/data`
-        }).done((data) => {
-            this.setState({
-                settings: data
-            });
-        }).fail((err) => {
-            console.error(`[User@getData] Error getting data: `, err.responseText);
+        // Get the active tabname from the URL query string
+        let tabName = document.getElementById('react_systemSettings').getAttribute("data-tab");
+        Object.values(components).map((o, k) => {
+            if (o.tab == tabName.replace('_', ' ')) {
+                this.setState({
+                    tabIndex: k
+                });
+            }
         })
     }
 
     render() {
-        if (!this.state.settings)
-            return null;
-
-        let activePage = (
-            <ContactInformation contact={this.state.settings.contact}
-                u={this.getData.bind(this)}
-                baseUri={baseUri}
-            />
-        )
-
-        if (this.state.activeTab == "footer") {
-            activePage = (
-                <FooterQuickLinks sections={this.state.settings.quickLinks}
-                    u={this.getData.bind(this)}
-                    baseUri={baseUri}
-                />
-            )
-        }
-
-        if (this.state.activeTab == "navbar") {
-            activePage = (
-                <Navbar u={this.getData.bind(this)}
-                    baseUri={baseUri}
-                />
-            )
-        }
+        const SettingsPage = components[this.state.tabIndex].template;
 
         return (
             <div className="row">
                 <div className="col-12 py-3">
-                    <h1 className="text-center">System Settings</h1>
-                    <PageTabs activeTab={this.state.activeTab} />
+                    <h1 className="text-center">Website Settings</h1>
+                    <PageTabs tabIndex={this.state.tabIndex}
+                        pages={components}
+                    />
 
-                    {activePage}
+                    <div className="fade3sec">
+                        <SettingsPage />
+                    </div>
                 </div>
             </div>
         );
@@ -83,41 +62,33 @@ export default class SystemSettings extends Component {
 }
 
 export class PageTabs extends Component {
-    render() {
-        const tabsArray = [
-            {
-                url: "contact",
-                tabName: "Contact Information"
-            },
-            {
-                url: "footer",
-                tabName: "Footer Quick-Links"
-            },
-            {
-                url: "navbar",
-                tabName: "Website Navbar"
-            }
-        ]
+    tabNameToUrl(x) {
+        return x.toLowerCase().replace(' ', '_');
+    }
 
-        let tabs;
-        if (tabsArray) {
-            tabs = tabsArray.map((tab, key) => {
-                return (
-                    <li className="nav-item" key={key}>
-                        <a className={`nav-link ${tab.url == this.props.activeTab ? 'active' : ''}`} href={`?tab=${tab.url}`}>{tab.tabName}</a>
-                    </li>
-                )
-            });
-        }
+    render() {
+        let pages = this.props.pages;
+
+        let tabs = pages ? Object.values(pages).map((page, key) => {
+            return (
+                <li className="nav-item" key={key}>
+                    <a className={`nav-link ${key == this.props.tabIndex ? 'active' : ''}`}
+                        href={`?tab=${this.tabNameToUrl(page.tab)}`}
+                    >
+                        {page.tab}
+                    </a>
+                </li>
+            )           
+        }) : null;
+
 
         return (
-            <ul className="nav nav-tabs mb-3">
+            <ul className="nav nav-pills mb-3 justify-content-center">
                 {tabs}
             </ul>
         )
     }
 }
-
 
 if (document.getElementById('react_systemSettings'))
     render(<SystemSettings />, document.getElementById('react_systemSettings'));    

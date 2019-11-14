@@ -257,3 +257,9 @@ div.selected {
 .cms-text {
     transition: width 1s ease-in-out;
 }
+
+.nav-pills .nav-link.active {
+    color: #fff;
+    background-color: #23272b;
+    border-color: #1d2124;
+}
