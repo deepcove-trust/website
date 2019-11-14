@@ -96,7 +96,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
         /// <summary>
         /// Updates the quick link section title(s)
         /// </summary>
-        [HttpPut("quicklink/{sectionId:int}")]
+        [HttpPut("{sectionId:int}")]
         public async Task<IActionResult> UpdateQuickLinks(IFormCollection request, int sectionId)
         {
             try
