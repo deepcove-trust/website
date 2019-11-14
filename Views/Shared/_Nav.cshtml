@@ -33,18 +33,18 @@
                             <div class="dropdown-menu" role="menu">
                                 @foreach (var link in navItem.NavItemPages)
                                 {
-                                    if (link.Page.Public || User.Identity.IsAuthenticated)
+                                    if (link.Page == null || link.Page.Public || User.Identity.IsAuthenticated)
                                     {
-                                        <a class="dropdown-item" role="presentation" href="@link.Page.AbsoluteUrl">@link.Page.Name</a>
+                                        <a class="dropdown-item" role="presentation" href="@(link.Url ?? link.Page.AbsoluteUrl)">@(link.Text ?? link.Page.Name)</a>
                                     }
                                 }
                             </div>
                         </li> 
                     }
-                    else if(navItem.Page.Public || User.Identity.IsAuthenticated)
+                    else if(navItem.Page == null || navItem.Page.Public || User.Identity.IsAuthenticated)
                     {
                         <li role="presentation" class="nav-item">
-                            <a class="nav-link text-dark" href="@navItem.Page.AbsoluteUrl">@(navItem.Text ?? navItem.Page.Name)</a>
+                            <a class="nav-link text-dark" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
                         </li>
                     }
                 }
