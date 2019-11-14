@@ -5,24 +5,43 @@ import { Button } from '../../Components/Button';
 import $ from 'jquery';
 import _ from 'lodash';
 
-
+const baseUri = "/admin/settings/contact"
 
 export default class ContactInformation extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            contact: this.props.contact,
+            contact: {
+                email: { bookings: "", general: "" },
+                missionStatment: "",
+                phone: "",
+                urls: "",
+                urls: {
+                    facebook: "",
+                    googleMaps: "",
+                    googlePlay: ""
+                }
+            },
             requestPending: false
         }
     }
 
-    componentWillReceiveProps(nextProps) {
-        if (nextProps.contact != this.state.contact) {
+    componentDidMount() {
+        this.getData();
+    }
+
+    getData() {
+        $.ajax({
+            method: 'get',
+            url: baseUri
+        }).done((contact) => {
             this.setState({
-                contact: nextProps.contact
+                contact: contact
             });
-        }
+        }).fail((err) => {
+            console.err(err);
+        });
     }
 
     updateState(field, val) {
@@ -51,7 +70,7 @@ export default class ContactInformation extends Component {
         }
 
         this.setState({
-            contact: contact
+            contact
         });
     }
 
@@ -61,27 +80,25 @@ export default class ContactInformation extends Component {
         this.setState({
             requestPending: true
         }, () => {
-                $.ajax({
-                    type: 'post',
-                    url: `${this.props.baseUri}/contact`,
-                    data: {
-                        emailGeneral: this.state.contact.email.general,
-                        emailBookings: this.state.contact.email.bookings,
-                        phone: this.state.contact.phone,
-                        urlFacebook: this.state.contact.urls.facebook,
-                        urlGooglePlay: this.state.contact.urls.googlePlay,
-                        urlGoogleMaps: this.state.contact.urls.googleMaps,
-                        missionStatement: this.state.contact.missionStatement
-                    }
-                }).done(() => {
-                    this.props.u();
-
-                    this.setState({
-                        requestPending: false
-                    });
-                }).fail((err) => {
-                    console.error(`[ContactInformation@submitForm] Error updating site settings (contact information): `, err.responseText);
-                });
+            $.ajax({
+                type: 'post',
+                url: `${baseUri}`,
+                data: {
+                    emailGeneral: this.state.contact.email.general,
+                    emailBookings: this.state.contact.email.bookings,
+                    phone: this.state.contact.phone,
+                    urlFacebook: this.state.contact.urls.facebook,
+                    urlGooglePlay: this.state.contact.urls.googlePlay,
+                    urlGoogleMaps: this.state.contact.urls.googleMaps,
+                    missionStatement: this.state.contact.missionStatement
+                }
+            }).done(() => {
+                this.setState({
+                    requestPending: false
+                }, () => this.getData());
+            }).fail((err) => {
+                console.error(`[ContactInformation@submitForm] Error updating site settings (contact information): `, err.responseText);
+            });
         })
     }
 
@@ -134,8 +151,8 @@ export default class ContactInformation extends Component {
 export class GeneralEmail extends Component {
     render() {
         return (
-            <FormGroup label="Email: (General Enquiries)" required>
-                <Input type="email" value={this.props.email} cb={this.props.cb.bind(this)}/>
+            <FormGroup htmlFor="email.general" label="Email: (General Enquiries)" required>
+                <Input id="email.general" type="email" value={this.props.email} cb={this.props.cb.bind(this)}/>
                 <small className="text-muted pl-2">
                     <i className="fas fa-envelope"></i> Used by the contact us email form, the footer &amp; in the emails.
                 </small>
@@ -147,8 +164,8 @@ export class GeneralEmail extends Component {
 export class BookingEmail extends Component {
     render() {
         return (
-            <FormGroup label="Email: (Booking Enquiries)" required>
-                <Input type="email" value={this.props.email} cb={this.props.cb.bind(this)}/>
+            <FormGroup htmlFor="email.bookings" label="Email: (Booking Enquiries)" required>
+                <Input id="email.bookings" type="email" value={this.props.email} cb={this.props.cb.bind(this)}/>
                 <small className="text-muted pl-2">
                     Used by the contact us form.
                 </small>
@@ -160,8 +177,8 @@ export class BookingEmail extends Component {
 export class MissionStatment extends Component {
     render() {
         return (
-            <FormGroup label="Mission Statement" required>
-                <TextArea maxLength="200" value={this.props.text} cb={this.props.cb.bind(this)} rows={3} />
+            <FormGroup htmlFor="mission" label="Mission Statement" required>
+                <TextArea id="mission" maxLength="200" value={this.props.text} cb={this.props.cb.bind(this)} rows={3} />
             </FormGroup>
         ) 
     }
@@ -170,8 +187,8 @@ export class MissionStatment extends Component {
 export class Phone extends Component {
     render() {
         return (
-            <FormGroup label="Phone:">
-                <Input type="phone" value={this.props.number} cb={this.props.cb.bind(this)}/>
+            <FormGroup htmlFor="phone" label="Phone:">
+                <Input id="phone" type="phone" value={this.props.number} cb={this.props.cb.bind(this)}/>
                 <small className="text-muted pl-2">
                     <i className="fas fa-phone"></i> Used in the footer &amp; in emails.
                 </small>
@@ -183,8 +200,8 @@ export class Phone extends Component {
 export class UrlFacebook extends Component {
     render() {
         return (
-            <FormGroup label="Facebook Page URL:">
-                <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
+            <FormGroup htmlFor="url.facebook" label="Facebook Page URL:">
+                <Input id="url.facebook" type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
                 <small className="text-muted pl-2">
                     <i className="fab fa-facebook-square"></i> Used in the footer &amp; in emails.
                 </small>
@@ -196,8 +213,8 @@ export class UrlFacebook extends Component {
 export class UrlGooglePlay extends Component {
     render() {
         return (
-            <FormGroup label="Discover Deep Cove - App URL:">
-                <Input type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
+            <FormGroup htmlFor="url.googleplay" label="Discover Deep Cove - App URL:">
+                <Input id="url.googleplay" type="url" value={this.props.url} cb={this.props.cb.bind(this)} placeHolder="e.g. https://example.com"/>
                 <small className="text-muted pl-2">
                     <i className="fab fa-google-play"></i> Used in the footer &amp; in emails.
                 </small>
@@ -213,8 +230,8 @@ export class UrlGoogleMap extends Component {
 
     render() {
         return (
-            <FormGroup label="Google Maps - URL">
-                <Input type="url" value={this.props.url} cb={this.handleInput.bind(this)}/>
+            <FormGroup htmlFor="url.googleMaps" label="Google Maps - URL">
+                <Input id="url.googleMaps" type="url" value={this.props.url} cb={this.handleInput.bind(this)}/>
                 <small className="text-muted pl-2">
                     Used for the map of the contact us page
                 </small>

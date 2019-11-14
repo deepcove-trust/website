@@ -41,8 +41,14 @@ export default class SystemSettings extends Component {
         })
     }
 
+    updateIndex(tabIndex) {
+        this.setState({
+            tabIndex
+        });
+    }
+
     render() {
-        const SettingsPage = components[this.state.tabIndex].template;
+        const SettingsPage = components[this.state.tabIndex || 0].template;
 
         return (
             <div className="row">
@@ -50,6 +56,7 @@ export default class SystemSettings extends Component {
                     <h1 className="text-center">Website Settings</h1>
                     <PageTabs tabIndex={this.state.tabIndex}
                         pages={components}
+                        cb={this.updateIndex.bind(this)}
                     />
 
                     <div className="fade3sec">
@@ -66,6 +73,14 @@ export class PageTabs extends Component {
         return x.toLowerCase().replace(' ', '_');
     }
 
+    handleClick(i, url) {
+        // Change tabs
+        this.props.cb(i);
+        // Change URL without reloading the browser
+        let newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?query=${url}`
+        window.history.pushState({ path: newUrl }, document.title, newUrl);
+    }
+
     render() {
         let pages = this.props.pages;
 
@@ -73,7 +88,7 @@ export class PageTabs extends Component {
             return (
                 <li className="nav-item" key={key}>
                     <a className={`nav-link ${key == this.props.tabIndex ? 'active' : ''}`}
-                        href={`?tab=${this.tabNameToUrl(page.tab)}`}
+                        onClick={this.handleClick.bind(this, key, this.tabNameToUrl(page.tab))}
                     >
                         {page.tab}
                     </a>

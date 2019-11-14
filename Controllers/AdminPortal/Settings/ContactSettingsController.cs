@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,7 +26,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             _Logger = logger;
         }
 
-        [HttpGet("data")]
+        [HttpGet("")]
         public async Task<IActionResult> Data()
         {
             try
@@ -35,22 +34,19 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 return Ok(await _Db.SystemSettings.OrderByDescending(o => o.Id)
                     .Select(s => new
                     {
-                        contact = new
+                        Email = new
                         {
-                            Email = new
-                            {
-                                bookings = s.EmailBookings,
-                                general = s.EmailGeneral
-                            },
-                            Urls = new
-                            {
-                                Facebook = s.UrlFacebook,
-                                GooglePlay = s.UrlGooglePlay,
-                                GoogleMaps = s.UrlGoogleMaps
-                            },
-                            s.Phone,
-                            MissionStatement = s.FooterText
-                        }
+                            bookings = s.EmailBookings,
+                            general = s.EmailGeneral
+                        },
+                        Urls = new
+                        {
+                            Facebook = s.UrlFacebook,
+                            GooglePlay = s.UrlGooglePlay,
+                            GoogleMaps = s.UrlGoogleMaps
+                        },
+                        s.Phone,
+                        MissionStatement = s.FooterText
                     }).FirstOrDefaultAsync());
             }
             catch (Exception ex)
