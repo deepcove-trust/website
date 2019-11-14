@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 
 import ContactInformation from './SystemSettings/ContactInformation';
 import FooterQuickLinks from './SystemSettings/FooterQuickLinks';
+import Navbar from './Systemsettings/Navbar';
 
 import $ from 'jquery';
 
@@ -60,6 +61,14 @@ export default class SystemSettings extends Component {
             )
         }
 
+        if (this.state.activeTab == "navbar") {
+            activePage = (
+                <Navbar u={this.getData.bind(this)}
+                    baseUri={baseUri}
+                />
+            )
+        }
+
         return (
             <div className="row">
                 <div className="col-12 py-3">
@@ -83,6 +92,10 @@ export class PageTabs extends Component {
             {
                 url: "footer",
                 tabName: "Footer Quick-Links"
+            },
+            {
+                url: "navbar",
+                tabName: "Website Navbar"
             }
         ]
 
