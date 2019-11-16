@@ -33,7 +33,7 @@ export default class SystemSettings extends Component {
         // Get the active tabname from the URL query string
         let tabName = document.getElementById('react_systemSettings').getAttribute("data-tab");
         Object.values(components).map((o, k) => {
-            if (o.tab == tabName.replace('_', ' ')) {
+            if (o.tab.toLowerCase() == tabName.replace('_', ' ')) {
                 this.setState({
                     tabIndex: k
                 });
@@ -59,7 +59,7 @@ export default class SystemSettings extends Component {
                         cb={this.updateIndex.bind(this)}
                     />
 
-                    <div className="fade3sec">
+                    <div className="fade1sec">
                         <SettingsPage />
                     </div>
                 </div>
@@ -77,7 +77,7 @@ export class PageTabs extends Component {
         // Change tabs
         this.props.cb(i);
         // Change URL without reloading the browser
-        let newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?query=${url}`
+        let newUrl = `${window.location.protocol}//${window.location.host}${window.location.pathname}?tab=${url}`
         window.history.pushState({ path: newUrl }, document.title, newUrl);
     }
 
@@ -98,7 +98,7 @@ export class PageTabs extends Component {
 
 
         return (
-            <ul className="nav nav-pills mb-3 justify-content-center">
+            <ul className="nav nav-pills mb-5 justify-content-center">
                 {tabs}
             </ul>
         )

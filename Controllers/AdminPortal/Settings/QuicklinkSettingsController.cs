@@ -1,14 +1,14 @@
-﻿using Deepcove_Trust_Website.Data;
-using Deepcove_Trust_Website.Helpers;
-using Deepcove_Trust_Website.Models;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Helpers;
+using Deepcove_Trust_Website.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 {
@@ -37,15 +37,23 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                         a = new
                         {
                             title = s.LinkTitleA,
-                            pages = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.A).Select(s1 => new { s1.Name, s1.Section, s1.Id }).ToList(),
+                            pages = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.A)
+                                .Select(s1 => new { s1.Name, s1.Section, s1.Id })
+                                .OrderBy(o => o.Name)
+                                .ToList(),
                         },
                         b = new
                         {
                             title = s.LinkTitleB,
-                            pages = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.B).Select(s1 => new { s1.Name, s1.Section, s1.Id }).ToList(),
+                            pages = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.B)
+                                .Select(s1 => new { s1.Name, s1.Section, s1.Id })
+                                .OrderBy(o => o.Name)
+                                .ToList(),
                         },
-                        avaliable = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.None).Select(s1 => new { s1.Name, s1.Section, s1.Id }).ToList()
-
+                        avaliable = _Db.Pages.Where(c => c.QuickLink == QuickLinkSection.None)
+                                .Select(s1 => new { s1.Name, s1.Section, s1.Id })
+                                .OrderBy(o => o.Name)
+                                .ToList()
                     }).FirstOrDefaultAsync());
             }
             catch (Exception ex)
