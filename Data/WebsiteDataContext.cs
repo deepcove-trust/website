@@ -146,9 +146,6 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<RevisionMediaComponent>()
                 .HasKey(e => new { e.PageRevisionId, e.MediaComponentId });
 
-            modelBuilder.Entity<NavItemPage>()
-                .HasKey(e => new { e.NavItemId, e.PageId });
-
             // -- Discover Deep Cove
 
             modelBuilder.Entity<ActivityImage>()
@@ -166,12 +163,6 @@ namespace Deepcove_Trust_Website.Data
 
             modelBuilder.Entity<Page>()
                 .HasIndex(e => e.Name).IsUnique();
-
-            // -- Configure relationship between QuizQuestion and correct QuizAnswer
-            //modelBuilder.Entity<QuizQuestion>()
-            //    .HasOne(qq => qq.CorrectAnswer)
-            //    .WithOne(qa => qa.QuizQuestion)
-            //    .HasForeignKey<QuizAnswer>(qq => qq.QuizQuestionId);
 
             // -- Configure relationship between activities and media files
             modelBuilder.Entity<Activity>().HasMany(a => a.ActivityImages).WithOne(ai => ai.Activity).HasForeignKey(ai => ai.ActivityId).OnDelete(DeleteBehavior.Restrict);
