@@ -87,7 +87,7 @@ export class PageTabs extends Component {
         let tabs = pages ? Object.values(pages).map((page, key) => {
             return (
                 <li className="nav-item" key={key}>
-                    <a className={`nav-link ${key == this.props.tabIndex ? 'active' : ''}`}
+                    <a className={`btn nav-link ${key == this.props.tabIndex ? 'active' : ''}`}
                         onClick={this.handleClick.bind(this, key, this.tabNameToUrl(page.tab))}
                     >
                         {page.tab}
