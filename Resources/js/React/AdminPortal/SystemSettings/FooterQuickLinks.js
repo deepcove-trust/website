@@ -38,7 +38,7 @@ export default class FooterQuickLinks extends Component {
                         avaliable={this.state.quickLinks.avaliable || null}
                         u={this.getData.bind(this)}
                         baseUri={baseUri}
-                        sectionEnum={1} // Enum ID = QuickLinks.A
+                        sectionId={1} // Enum ID = QuickLinks.A
                     />
                 </div>
 
@@ -47,7 +47,7 @@ export default class FooterQuickLinks extends Component {
                         avaliable={this.state.quickLinks.avaliable || null}
                         u={this.getData.bind(this)}
                         baseUri={baseUri}
-                        sectionEnum={2} // Enum ID = QuickLinks.B
+                        sectionId={2} // Enum ID = QuickLinks.B
                     />
                 </div>
             </div>
