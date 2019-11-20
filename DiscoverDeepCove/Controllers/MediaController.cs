@@ -35,19 +35,19 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                 List<int?> appMediaIds = new List<int?>();
 
                 // Add all image IDs used within the application
-                appMediaIds.AddRange(await _Db.Activities.Where(w => w.Active && w.Track.Active).Select(s => s.ImageId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.ActivityImages.Where(w => w.Activity.Active && w.Activity.Track.Active).Select(s => (int?)s.ImageId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.FactFileEntries.Where(w => w.Active && w.Category.Active).Select(s => (int?)s.MainImageId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.FactFileEntryImages.Where(w => w.FactFileEntry.Active && w.FactFileEntry.Category.Active).Select(s => (int?)s.MediaFileId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.FactFileNuggets.Where(w => w.FactFileEntry.Active && w.FactFileEntry.Category.Active).Select(s => s.ImageId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.QuizAnswers.Where(w => w.QuizQuestion.Quiz.Active).Select(s => s.ImageId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.QuizQuestions.Where(w => w.Quiz.Active).Select(s => s.ImageId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.Quizzes.Where(w => w.Active).Select(s => (int?)s.ImageId).Distinct().ToListAsync());
+                appMediaIds.AddRange(await _Db.Activities.Where(w => w.Active && w.Track.Active).Select(s => s.ImageId).ToListAsync());
+                appMediaIds.AddRange(await _Db.ActivityImages.Where(w => w.Activity.Active && w.Activity.Track.Active).Select(s => (int?)s.ImageId).ToListAsync());
+                appMediaIds.AddRange(await _Db.FactFileEntries.Where(w => w.Active && w.Category.Active).Select(s => (int?)s.MainImageId).ToListAsync());
+                appMediaIds.AddRange(await _Db.FactFileEntryImages.Where(w => w.FactFileEntry.Active && w.FactFileEntry.Category.Active).Select(s => (int?)s.MediaFileId).ToListAsync());
+                appMediaIds.AddRange(await _Db.FactFileNuggets.Where(w => w.FactFileEntry.Active && w.FactFileEntry.Category.Active).Select(s => s.ImageId).ToListAsync());
+                appMediaIds.AddRange(await _Db.QuizAnswers.Where(w => w.QuizQuestion.Quiz.Active).Select(s => s.ImageId).ToListAsync());
+                appMediaIds.AddRange(await _Db.QuizQuestions.Where(w => w.Quiz.Active).Select(s => s.ImageId).ToListAsync());
+                appMediaIds.AddRange(await _Db.Quizzes.Where(w => w.Active).Select(s => (int?)s.ImageId).ToListAsync());
 
                 // Add all audio IDs used within the application
-                appMediaIds.AddRange(await _Db.FactFileEntries.Where(w => w.Active && w.Category.Active).Select(s => s.ListenAudioId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.FactFileEntries.Where(w => w.Active && w.Category.Active).Select(s => s.PronounceAudioId).Distinct().ToListAsync());
-                appMediaIds.AddRange(await _Db.QuizQuestions.Where(w => w.Quiz.Active).Select(s => s.AudioId).Distinct().ToListAsync());
+                appMediaIds.AddRange(await _Db.FactFileEntries.Where(w => w.Active && w.Category.Active).Select(s => s.ListenAudioId).ToListAsync());
+                appMediaIds.AddRange(await _Db.FactFileEntries.Where(w => w.Active && w.Category.Active).Select(s => s.PronounceAudioId).ToListAsync());
+                appMediaIds.AddRange(await _Db.QuizQuestions.Where(w => w.Quiz.Active).Select(s => s.AudioId).ToListAsync());
 
                 appMediaIds = appMediaIds.Distinct().ToList();
                 
