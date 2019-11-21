@@ -28,7 +28,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
         /// Returns a list of media files used in the mobile application
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int width)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                 return Ok(_Db.Media.Where(c => appMediaIds.Contains(c.Id)).Select(s => new
                     {
                         s.Id,
-                        s.Size,
+                        Size = s.GetFileSize(width),
                         s.Filename,
                         UpdatedAt = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                     }).ToList()
@@ -72,7 +72,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
         /// Gets the meta data about the requested media.
         /// </summary>
         [HttpGet("{id:int}")]
-        public IActionResult Data(int id)
+        public IActionResult Data(int id, int width)
         {
             try
             {
@@ -82,8 +82,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
                         s.MediaType.Category,
                         Name = (s as ImageMedia) != null ? (s as ImageMedia).Title : s.Filename,
                         s.Source,
-                        show_copyright = s.ShowCopyright, 
-                        s.Size,
+                        show_copyright = s.ShowCopyright,
+                        Size = s.GetFileSize(width),
                         s.Filename,
                         updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss")
                 }).FirstOrDefault()
