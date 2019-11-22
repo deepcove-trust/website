@@ -6,6 +6,7 @@ using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -78,6 +79,17 @@ namespace Deepcove_Trust_Website.Models
         }
 
         public MediaCategory GetCategory() => MediaType.Category;
+
+        public long GetFileSize(int imageWidth = 0)
+        {
+            // If not an image, return the uploaded file size
+            if (MediaType.Category != MediaCategory.Image)
+                return Size;
+
+            // Otherwise, return size of appropriate version
+            string bestImagePath = ((ImageMedia)this).GetImagePath(imageWidth);
+            return new FileInfo(bestImagePath).Length;
+        }
 
         public Dictionary<String, HashSet<int>> GetUsages(WebsiteDataContext db)
         {
