@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import NavOverview from './Navbar/NavOverview';
 import $ from 'jquery';
 
 const baseUri = "/admin/settings/navbar";
@@ -8,10 +9,11 @@ export default class Navbar extends Component {
         super(props);
 
         this.state = {
-            navbar: [
-                {},
-                {}
-            ]
+            navbar: {
+                education: { },
+                main: {},
+            },
+            activeId: 0
         }
     }
 
@@ -29,28 +31,35 @@ export default class Navbar extends Component {
         })
     }
 
+    setActive(id) {
+        console.log(id)
+        this.setActive({
+            activeId: id
+        });
+    }
+
     render() {
+        let previews = [];
+        for (let [key, value] of Object.entries(this.state.navbar)) {
+            previews.push(
+                <NavOverview section={key}
+                    links={value}
+                    activeId={this.state.activeId}
+                    setActive={this.setActive}
+                    key={key}
+                />
+            );
+        }
+
         return (
             <div className="row">
-                <div className="col-md-6 col-sm-12">
-                    <NavPreview />
-                    
-                    <NavPreview />
+                <div className="col-lg-3 col-md-6 col-sm-12">
+                    {previews}
                 </div>
 
-                <div className="col-md-6 col-sm-12">
+                <div className="col-lg-9 col-md-6 col-sm-12">
                     //options
                 </div>
-            </div>
-        )
-    }
-}
-
-class NavPreview extends Component {
-    render() {
-        return (
-            <div>
-                <h2>..section.. Navbar</h2>
             </div>
         )
     }

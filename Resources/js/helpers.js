@@ -6,6 +6,13 @@ export function convertSize(bytes) {
     return Math.round(bytes / Math.pow(1024, i), 2).toFixed(2) + ' ' + sizes[i];
 }
 
+// Capitalize the first letter of a word
+export function Capitalize(s){
+    if (typeof s != 'string') return "";
+
+    return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export function isExternalUrl(href) {
     if (!href) {
         return;

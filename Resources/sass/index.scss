@@ -263,3 +263,9 @@ div.selected {
     background-color: #23272b;
     border-color: #1d2124;
 }
+
+
+/***** TEST ******/
+label.btn input[type="radio"]{
+    display: none;
+}
