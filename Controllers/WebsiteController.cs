@@ -107,6 +107,7 @@ namespace Deepcove_Trust_Website.Controllers
 
         [AllowAnonymous]
         [HttpGet("sitemap")]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 60)]
         public async Task<IActionResult> GenerateSitemap()
         {
             try
