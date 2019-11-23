@@ -41,7 +41,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         public async Task<IActionResult> IndexData(string filter = "main")
         {
             if (!Enum.IsDefined(typeof(Section), filter) && filter != "all")
-                return BadRequest($"Invalid filter. Please use one of the following: {string.Join(", ", Enum.GetNames(typeof(Section)))}");
+                return BadRequest($"Invalid filter. Please use one of the following: {string.Join(", ", Enum.GetNames(typeof(Section)), "all")}");
 
             try
             {
