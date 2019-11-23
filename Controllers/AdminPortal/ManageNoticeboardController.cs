@@ -67,7 +67,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             }
         }
 
-        [HttpPut)]
+        [HttpPut]
         public async Task<IActionResult> EditNotice(IFormCollection request)
         {
             try
