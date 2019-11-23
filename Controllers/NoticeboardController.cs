@@ -1,6 +1,8 @@
 ﻿using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -25,13 +27,31 @@ namespace Deepcove_Trust_Website.Controllers
         [HttpGet("app")]
         public async Task<IActionResult> GetAppNotices()
         {
-            return Ok();
+            try
+            {
+                return Ok(await _Db.Notices.Where(n => n.Noticeboard == Noticeboard.app || n.Noticeboard == Noticeboard.all).ToListAsync());
+            }
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error retrieving app notices: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest();
+            }
         }
 
         [HttpGet("web")]
         public async Task<IActionResult> GetWebNotices()
         {
-            return Ok();
+            try
+            {
+                return Ok(await _Db.Notices.Where(n => n.Noticeboard == Noticeboard.web || n.Noticeboard == Noticeboard.all).ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error retrieving web notices: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest();
+            }
         }
         
     }

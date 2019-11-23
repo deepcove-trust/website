@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    [Migration("20191123062940_add-notices")]
+    [Migration("20191123073620_add-notices")]
     partial class addnotices
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -433,6 +433,8 @@ namespace Deepcove_Trust_Website.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
 
                     b.Property<DateTime>("CreatedAt");
 

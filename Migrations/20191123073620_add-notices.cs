@@ -19,6 +19,7 @@ namespace Deepcove_Trust_Website.Migrations
                     UpdatedAt = table.Column<DateTime>(nullable: false),
                     DeletedAt = table.Column<DateTime>(nullable: true),
                     Noticeboard = table.Column<int>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
                     Urgent = table.Column<bool>(nullable: false),
                     ImageId = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
