@@ -41,35 +41,21 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                         .ThenInclude(nip => nip.Page)
                     .ToListAsync();
 
-                return Ok(new
-                {
-                    main = navItems.Where(item => item.Section == Section.main).Select(item => new {
-                        item.Text,
-                        item.Url,
-                        pageId = item.Page?.Id,
-                        pageName = item.Page?.Name,
-                        children = item.NavItemPages.Count > 0 ? item.NavItemPages.Select(nip => new
-                        {
-                            nip.Text,
-                            nip.Url,
-                            pageId = nip.Page?.Id,
-                            pageName = nip.Page?.Name,
-                        }) : null
-                    }),
-                    education = navItems.Where(item => item.Section == Section.education).Select(item => new {
-                        item.Text,
-                        item.Url,
-                        pageId = item.Page?.Id,
-                        pageName = item.Page?.Name,
-                        children = item.NavItemPages.Count > 0 ? item.NavItemPages.Select(nip => new
-                        {
-                            nip.Text,
-                            nip.Url,
-                            pageId = nip.Page?.Id,
-                            pageName = nip.Page?.Name,
-                        }) : null
-                    }),
-                });
+                return Ok(navItems.Select(item => new {
+                    item.Text,
+                    item.Url,
+                    pageId = item.Page?.Id,
+                    pageName = item.Page?.Name,
+                    section = item.Section,
+                    children = item.NavItemPages.Count > 0 ? item.NavItemPages.Select(nip => new
+                    {
+                        nip.Text,
+                        nip.Url,
+                        pageId = nip.Page?.Id,
+                        pageName = nip.Page?.Name,
+                    }) : null
+                }));
+                
             }
             catch (Exception ex)
             {
