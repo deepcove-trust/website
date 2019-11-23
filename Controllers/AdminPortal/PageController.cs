@@ -58,6 +58,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 {
                     s.Id,
                     s.Name,
+                    s.Section,
                     template = new
                     {
                         s.Latest.Template.Id,
