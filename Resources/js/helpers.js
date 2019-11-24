@@ -21,6 +21,10 @@ export function isExternalUrl(href) {
     // If the hyperlink is external, add an icon to the end of the text
     return href.includes("http://") || href.includes("https://") && !href.includes(window.location.hostname);
 }
+// Is an object empty
+export function isEmptyObj(x) {
+    return !x || Object.keys(x).length == 0 
+}
 
 // Takes in a page name and section and returns the URL
 export function PageUrl(pageName, pageSection) {

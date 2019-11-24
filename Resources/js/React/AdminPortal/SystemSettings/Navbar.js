@@ -11,6 +11,7 @@ export default class Navbar extends Component {
 
         this.state = {
             navbar: {},
+            pages: {},
             activeId: 0
         }
     }
@@ -23,9 +24,20 @@ export default class Navbar extends Component {
             method: 'get',
             url: baseUri
         }).done((navbar) => {
-            this.setState({ navbar });
+            this.setState({
+                navbar
+            });
         }).fail((err) => {
             console.err(err);
+        })
+
+        $.ajax({
+            method: 'get',
+            url: `/admin/pages/data?filter=all`
+        }).done((pages) => {
+            this.setState({
+                pages
+            });
         })
     }
 
@@ -48,7 +60,7 @@ export default class Navbar extends Component {
 
                 <div className="col-lg-9 col-md-6 col-sm-12">
                     <NavSettings link={this.state.navbar[this.state.activeId]}
-
+                        pages={this.state.pages}
                     />
                 </div>
             </div>

@@ -1,7 +1,9 @@
 ﻿import React, { Component, Fragment } from 'react';
+import Rselect from 'react-select';// This select needs to be diff to the one below
 import { Input, FormGroup, Select } from '../../../Components/FormControl';
 import { Button, ConfirmButton } from '../../../Components/Button';
 import Panel from '../../../Components/Panel';
+import { isEmptyObj } from '../../../../helpers';
 import _ from 'lodash';
 
 export default class NavSettings extends Component {
@@ -28,7 +30,6 @@ export default class NavSettings extends Component {
     }
 
     updateLink(key, val) {
-        console.log(key, val);
         let link = this.state.link;
         link[key] = val;
         this.setState({
@@ -37,6 +38,12 @@ export default class NavSettings extends Component {
     }
 
     render() {
+        //let OptionsTemplate = !this.state.type ? null :
+        //    this.state.type == 'A Page' ? Page :
+        //        this.state.type == 'A Dropdown' ? Dropdown : CustomUrl;
+
+        //let Options = OptionsTemplate ? <OptionsTemplate /> : null;
+
         return (
             <Fragment>
                 <h4>Settings</h4>
@@ -50,11 +57,15 @@ export default class NavSettings extends Component {
                             <LinkType link={this.state.link} update={this.updateLink.bind(this, 'type')} />
                         </div>
                     </div>
-                    <Options />
+                    
+
+                    {/* <CustomUrl link={this.state.link} update={this.updateLink.bind(this, 'url')} /> */}
+                    <Page link={this.state.link} pages={this.props.pages}
+                        update={this.updateLink.bind(this, 'pageId')}
+                    />
 
                     <div>
                         <hr />
-
                         <ConfirmButton className="btn btn-outline-danger btn-sm" disabled>
                             Delete Link <i className="fas fa-trash"/>
                         </ConfirmButton>
@@ -111,8 +122,51 @@ class LinkType extends Component {
     }
 }
 
-class Options extends Component {
+class CustomUrl extends Component {
     render() {
-        return ("MORE SETTINGS");
+        if (!this.props.link || !'url' in this.props.link) return null;
+
+        return (
+            <FormGroup htmlFor="customurl" label="Enter a custom url:" required>
+                <Input id="customurl" type="url"
+                    value={this.props.link.url || ""}
+                    placeHolder="https://example.com"
+                    required
+                    cb={this.props.update}
+                />
+                <small className="text-muted font-italic">
+                    <span className="font-weight-bold">Help:</span> Custom URLs should link to another website. They will open in a new tab.
+                </small>
+            </FormGroup>
+        );
+    }
+}
+
+class Page extends Component {
+    handleClick(page) {
+        if(page) this.props.update(page.value);
+    }
+
+    render() {
+        if (!this.props.link || !'pageId' in this.props.link || isEmptyObj(this.props.pages)) return null;
+        
+        let options = this.props.pages.map((page) => {
+            return { value: page.id, label: page.name };
+        });
+
+        return (
+            <FormGroup htmlFor="page" label="Select ONE page" required>
+                <Rselect options={options} passive
+                    value={options.filter((x) => x.value == this.props.link.pageId)[0]}
+                    onChange={this.handleClick.bind(this)}
+                />
+            </FormGroup>
+        );
+    }
+}
+
+class Dropdown extends Component {
+    render() {
+        return ("Dropdown SETTINGS");
     }
 }
