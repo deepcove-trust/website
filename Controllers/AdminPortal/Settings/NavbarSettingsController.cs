@@ -36,7 +36,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
         {
             try
             {
-                List<NavItem> navItems = await _Db.NavItems.OrderBy(n => n.OrderIndex).ToListAsync();
+                List<NavItem> navItems = await _Db.NavItems.OrderBy(n => n.Section)
+                    .ThenBy(n => n.OrderIndex).ToListAsync();
 
                 return Ok(navItems.Select(item => new {
                     item.Id,
