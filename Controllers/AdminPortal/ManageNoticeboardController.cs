@@ -95,7 +95,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         }
 
 
-        [HttpPatch("{int:id}")]
+        [HttpPatch("{id:int}")]
         public async Task<IActionResult> ToggleVisibility(int id)
         {
             try
@@ -122,7 +122,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             
         }
 
-        [HttpDelete("{int:id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteNotice(int id)
         {
             try
