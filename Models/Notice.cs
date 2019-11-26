@@ -16,7 +16,7 @@ namespace Deepcove_Trust_Website.Models
         public bool Active { get; set; }
         public bool Urgent { get; set; }
         [JsonProperty("image_id")]
-        public int ImageId { get; set; }
+        public int? ImageId { get; set; }
         public string Title { get; set; }
         [JsonProperty("short_desc")]
         public string ShortDesc { get; set; }
