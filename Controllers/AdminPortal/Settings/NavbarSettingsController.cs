@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 {
-    [AllowAnonymous] // Todo: Authorize
+    [Authorize]
     [Area("admin-portal,web")]
     [Route("/admin/settings/navbar")]
     public class NavbarSettingsController : Controller
