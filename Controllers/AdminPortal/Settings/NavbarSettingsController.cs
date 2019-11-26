@@ -141,9 +141,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 
                 // Mark item as updated
                 _Db.Update(updatedItem);
+                _Db.Entry(updatedItem).Property(i => i.OrderIndex).IsModified = false;
+                _Db.Entry(updatedItem).Property(i => i.Section).IsModified = false;
 
                 // Add new dropdowns, if any
-                if (updatedItem.NavItemPages.Count > 0)
+                if (updatedItem.NavItemPages != null)
                 {
                     await _Db.AddRangeAsync(updatedItem.NavItemPages);
                 }                
@@ -198,7 +200,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 
                 _Db.Remove(itemToDelete);
 
-                if (itemToDelete.NavItemPages.Count > 0)
+                if (itemToDelete.NavItemPages != null)
                     _Db.RemoveRange(itemToDelete.NavItemPages);
 
                 await _Db.SaveChangesAsync();
