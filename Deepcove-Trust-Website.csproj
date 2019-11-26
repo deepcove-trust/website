@@ -130,6 +130,8 @@
     <Compile Remove="Migrations\20191113055536_alter-navitem-keys.Designer.cs" />
     <Compile Remove="Migrations\20191113060257_initial.cs" />
     <Compile Remove="Migrations\20191113060257_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191123062940_add-notices.cs" />
+    <Compile Remove="Migrations\20191123062940_add-notices.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
