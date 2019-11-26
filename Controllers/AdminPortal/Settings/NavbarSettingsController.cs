@@ -59,6 +59,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             try
             {
                 NavItem item = await _Db.NavItems.FindAsync(id);
+
+                if (item == null) return NotFound();
+
                 await _Db.Entry(item).Reference(i => i.Page).LoadAsync();
                 await _Db.Entry(item).Collection(i => i.NavItemPages).LoadAsync();
 
@@ -98,10 +101,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 
                 NavItem newItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));
 
+                // Give an order index that places this at the end of the list, for its section
+                newItem.OrderIndex = await _Db.NavItems.Where(n => n.Section == newItem.Section).MaxAsync(m => m.OrderIndex) + 1;
+
                 await _Db.AddAsync(newItem);
                 
                 // Add new dropdowns, if any
-                if (newItem.NavItemPages.Count > 0)
+                if (newItem.NavItemPages != null)
                 {
                     await _Db.AddRangeAsync(newItem.NavItemPages);
                 }
@@ -126,17 +132,18 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 if (string.IsNullOrEmpty(request.Str("navitem")))
                     return BadRequest("No nav item data was sent");
 
-                NavItem updatedItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));
-
-                // Mark item as updated
-                _Db.Update(updatedItem);
+                NavItem updatedItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));                
 
                 // Delete any old drop down links for the nav item
                 List<NavItemPage> dropdowns = await _Db.NavItemPages.Where(n => n.NavItemId == updatedItem.Id).ToListAsync();
                 _Db.RemoveRange(dropdowns);
+                await _Db.SaveChangesAsync();
+
+                // Mark item as updated
+                _Db.Update(updatedItem);
 
                 // Add new dropdowns, if any
-                if(updatedItem.NavItemPages.Count > 0)
+                if (updatedItem.NavItemPages.Count > 0)
                 {
                     await _Db.AddRangeAsync(updatedItem.NavItemPages);
                 }                
