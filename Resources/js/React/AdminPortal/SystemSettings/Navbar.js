@@ -10,7 +10,7 @@ export default class Navbar extends Component {
         super(props);
 
         this.state = {
-            navbar: {},
+            navbar: [],
             pages: {},
             activeId: 0
         }
@@ -25,7 +25,8 @@ export default class Navbar extends Component {
             url: baseUri
         }).done((navbar) => {
             this.setState({
-                navbar
+                navbar,
+                activeId: navbar[0].id
             });
         }).fail((err) => {
             console.err(err);
@@ -39,6 +40,14 @@ export default class Navbar extends Component {
                 pages
             });
         })
+    }
+
+    getPage() {
+        if (this.state.navbar.length <= 0) return null;
+
+        return this.state.navbar.find(obj => {
+            return obj.id == this.state.activeId
+        });
     }
 
     setActive(id) {
@@ -55,11 +64,10 @@ export default class Navbar extends Component {
                         activeId={this.state.activeId}
                         setActive={this.setActive.bind(this)}
                     />
-                    
                 </div>
 
                 <div className="col-lg-9 col-md-6 col-sm-12">
-                    <NavSettings link={this.state.navbar[this.state.activeId]}
+                    <NavSettings link={this.getPage()}
                         pages={this.state.pages}
                     />
                 </div>

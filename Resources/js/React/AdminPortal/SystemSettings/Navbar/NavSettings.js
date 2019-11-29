@@ -4,32 +4,53 @@ import { Input, FormGroup, Select } from '../../../Components/FormControl';
 import { Button, ConfirmButton } from '../../../Components/Button';
 import Panel from '../../../Components/Panel';
 import { isEmptyObj } from '../../../../helpers';
+import $ from 'jquery';
 import _ from 'lodash';
+
+const baseUri = "/admin/settings/navbar"
 
 export default class NavSettings extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            link: _.cloneDeep(this.props.link)
+            link: {}
         }
     }
 
     componentWillUpdate(nextProps) {
         if (nextProps.link != this.props.link) {
-            this.setState({
-                link: _.cloneDeep(nextProps.link)
-            });
+            this.getData();
         }
     }
 
-    revert() {
-        this.setState({
-            link: _.cloneDeep(this.props.link)
+    componentDidMount() {
+        this.getData();
+    }
+
+    getData() {
+        if (!this.props.link) return;
+
+        $.ajax({
+            method: 'get',
+            url: `${baseUri}/${this.props.link.id}`
+        }).done((link) => {
+            link.type = this.getLinkType(link)
+            this.setState({
+                link
+            });
         });
     }
 
+    getLinkType(obj) {
+        if (!obj) return null;
+        if ('children' in obj) return 'Dropdown';
+        if ('url' in obj) return 'Custom URL';
+        else return 'Page';
+    }
+
     updateLink(key, val) {
+        console.log(key, val);
         let link = this.state.link;
         link[key] = val;
         this.setState({
@@ -38,11 +59,19 @@ export default class NavSettings extends Component {
     }
 
     render() {
-        //let OptionsTemplate = !this.state.type ? null :
-        //    this.state.type == 'A Page' ? Page :
-        //        this.state.type == 'A Dropdown' ? Dropdown : CustomUrl;
+        let options = (
+            <Page link={this.state.link} pages={this.props.pages}
+                update={this.updateLink.bind(this, 'pageId')}
+            />
+        );
 
-        //let Options = OptionsTemplate ? <OptionsTemplate /> : null;
+        options = this.state.link.type == "Dropdown" ? (
+            null
+        ) : this.state.link.type == "Custom URL" ? (
+            <CustomUrl link={this.state.link}
+                update={this.updateLink.bind(this, 'url')}
+            />
+        ) : options;
 
         return (
             <Fragment>
@@ -54,15 +83,16 @@ export default class NavSettings extends Component {
                         </div>
 
                         <div className="col-md-6 col-sm-12">
-                            <LinkType link={this.state.link} update={this.updateLink.bind(this, 'type')} />
+                            <LinkType linkType={this.state.link.type} update={this.updateLink.bind(this, 'type')} />
                         </div>
                     </div>
                     
+                    {/*
 
-                    {/* <CustomUrl link={this.state.link} update={this.updateLink.bind(this, 'url')} /> */}
-                    <Page link={this.state.link} pages={this.props.pages}
-                        update={this.updateLink.bind(this, 'pageId')}
-                    />
+
+                    */}
+
+                    {options}
 
                     <div>
                         <hr />
@@ -72,13 +102,13 @@ export default class NavSettings extends Component {
 
                         {/*TODO: Disable the button if no changes have been made */}
                         <Button className={`btn btn-success btn-sm float-right`} disabled
-                            cb={this.revert.bind(this)}
+                            cb={this.getData.bind(this)}
                         >
                             Save <i className="fas fa-check" />
                         </Button>
 
                         <Button className={`btn btn-danger btn-sm float-right`} disabled
-                            cb={this.revert.bind(this)}
+                            cb={this.getData.bind(this)}
                         >
                             Reset <i className="fas fa-times"/>
                         </Button>
@@ -104,17 +134,11 @@ class LinkName extends Component {
 
 class LinkType extends Component {
     render() {
-        let link = this.props.link;
-        let selected = !link ? "Select...." :
-            'pageId' in link ? 'A Page' :
-                'children' in link ? 'A Dropdown' :
-                    'url' in link ? 'A Custom URL' : null;
-
         return (
             <FormGroup htmlFor="link_type" label="What should the link open?" required>
                 <Select id="link_type"
-                    options={["A Page", "A Dropdown", "A Custom URL"]}
-                    selected={selected}
+                    options={["Page", "Dropdown", "Custom URL"]}
+                    selected={this.props.linkType}
                     cb={this.props.update}
                 />
             </FormGroup>

@@ -31,7 +31,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
         /// <summary>
         /// Returns a JSON representation of the navbar links, for consumption by the CMS
         /// </summary>
-        /// <returns></returns>        
+        /// <returns></returns>
         public async Task<IActionResult> GetSummary()
         {
             try
@@ -70,6 +70,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                     await _Db.Entry(nip).Reference(n => n.Page).LoadAsync();
 
                 return Ok(new {
+                    item.Id,
                     item.Text,
                     item.Url,
                     pageId = item.Page?.Id,
