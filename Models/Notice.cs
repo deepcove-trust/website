@@ -14,7 +14,7 @@ namespace Deepcove_Trust_Website.Models
         public int Id { get; set; }
         public Noticeboard Noticeboard { get; set; }
         public bool Active { get; set; }
-        public bool Urgent { get; set; }
+        public int Urgent { get; set; }
         [JsonProperty("image_id")]
         public int? ImageId { get; set; }
         public string Title { get; set; }
