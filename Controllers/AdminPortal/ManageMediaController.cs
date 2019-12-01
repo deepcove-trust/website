@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NReco.VideoInfo;
 using Microsoft.AspNetCore.Hosting;
-using System.Runtime.InteropServices;
 using Microsoft.Extensions.Configuration;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
