@@ -12,7 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using NAudio.Wave;
+using NReco.VideoInfo;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -23,11 +25,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
     {
         private WebsiteDataContext _Db;
         private ILogger<ManageMediaController> _Logger;
+        private IHostingEnvironment _HostingEnv;
+        private IConfiguration _Config;
 
-        public ManageMediaController(WebsiteDataContext Db, ILogger<ManageMediaController> Logger)
+        public ManageMediaController(WebsiteDataContext Db, ILogger<ManageMediaController> Logger, IHostingEnvironment HostingEnv, IConfiguration Config)
         {
             _Db = Db;
-            _Logger = Logger;            
+            _Logger = Logger;
+            _HostingEnv = HostingEnv;
+            _Config = Config;
         }
 
         [HttpGet]
@@ -152,16 +158,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                     // Save the audio file
                     byte[] bytes = request.Str("file").Split(',')[1].DecodeBase64Bytes();
-                    System.IO.File.WriteAllBytes(filepath, bytes);
+                    await System.IO.File.WriteAllBytesAsync(filepath, bytes);
 
                     // Read the audio file to determine its duration - it will either be mp3(mpeg) or wav
 
-                    WaveStream audioReader;
-
-                    if (fileType == MediaType.Wav.Mime)
-                        audioReader = new WaveFileReader(filepath);                    
-                    else                    
-                        audioReader = new Mp3FileReader(filepath);
+                    FFProbe probe = new FFProbe();
+                    probe.ToolPath = _Config["ffprobePath"];
+                    MediaInfo mediaInfo = probe.GetMediaInfo(Path.Combine(_HostingEnv.ContentRootPath, filepath));
 
                     // Create the media database record
                     AudioMedia audioMedia = new AudioMedia
@@ -170,9 +173,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                         MediaType = MediaType.FromString(fileType),
                         FilePath = filepath,
                         Size = new FileInfo(filepath).Length,
-                        Duration = Math.Round(audioReader.TotalTime.TotalSeconds)
+                        Duration = Math.Round(mediaInfo.Duration.TotalSeconds)
                     };
-
+                    
                     await _Db.AddAsync(audioMedia);
                 }
 
