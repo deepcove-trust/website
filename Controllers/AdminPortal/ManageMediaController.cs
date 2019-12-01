@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using NReco.VideoInfo;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using System.Runtime.InteropServices;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -162,8 +163,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                     // Read the audio file to determine its duration - it will either be mp3(mpeg) or wav
 
+                    // Configure ffprobe path using appsettings values
                     FFProbe probe = new FFProbe();
                     probe.ToolPath = _Config["ffprobePath"];
+
+                    // If running linux, look for ffprobe instaed of ffprobe.exe
+                    if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                        probe.FFProbeExeName = "ffprobe";
+
+                    // Get audio file metadata
                     MediaInfo mediaInfo = probe.GetMediaInfo(Path.Combine(_HostingEnv.ContentRootPath, filepath));
 
                     // Create the media database record
