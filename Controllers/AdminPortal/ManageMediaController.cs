@@ -164,7 +164,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     // Read the audio file to determine its duration - it will either be mp3(mpeg) or wav
 
                     FFProbe probe = new FFProbe();
-                    probe.ToolPath = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? _Config["ffprobePath:Windows"] : _Config["ffprobePath:Linux"];
+                    probe.ToolPath = _Config["ffprobePath"];
                     MediaInfo mediaInfo = probe.GetMediaInfo(Path.Combine(_HostingEnv.ContentRootPath, filepath));
 
                     // Create the media database record
