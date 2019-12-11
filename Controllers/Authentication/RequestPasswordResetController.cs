@@ -11,7 +11,7 @@ using Deepcove_Trust_Website.Data;
 using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Models;
-
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -72,14 +72,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     
                     _Logger.LogInformation("Password reset requested for account belonging to {0}", account.Name);
                 }
-
+                
                 return Ok();
             }
             catch (Exception ex)
             {
                 _Logger.LogError("Error requesting password reset for account belonging to {0}: {1}", request.Str("email"), ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }
         }
     }
