@@ -100,7 +100,7 @@ export class EditButtons extends Component {
             )
         } else {
             buttons = (
-                <div role="group" class="btn-group btn-group-sm">
+                <div role="group" className="btn-group btn-group-sm">
                     <Button className="btn btn-danger" cb={this.props.cancelCb.bind(this)}>
                         Cancel <i className="fas fa-times"></i>
                     </Button>

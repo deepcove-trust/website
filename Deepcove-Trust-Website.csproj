@@ -9,9 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <Compile Remove="Storage\media\**" />
+    <Content Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <Content Remove="Storage\media\**" />
+    <EmbeddedResource Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <EmbeddedResource Remove="Storage\media\**" />
+    <None Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <None Remove="Storage\media\**" />
   </ItemGroup>
 
@@ -158,7 +162,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
     <Folder Include="Storage\" />
     <Folder Include="wwwroot\audio\" />
     <Folder Include="wwwroot\images\templates\" />

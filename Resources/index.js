@@ -1,6 +1,14 @@
 ﻿import _ from 'lodash';
 import $ from 'jquery';
 
+$.ajaxSetup({
+    statusCode: {
+        401: function (xhr, textStatus, errorThrown) {
+            location.reload();
+        }
+    }
+});
+
 /* JavaScript Core */
 import './js/Libraries/popper.min';
 import './js/Libraries/bootstrap.bundle.min.js';
