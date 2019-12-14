@@ -4,7 +4,9 @@ import $ from 'jquery';
 $.ajaxSetup({
     statusCode: {
         401: function (xhr, textStatus, errorThrown) {
-            location.reload();
+            if(this.url != '/login') {
+                location.reload();
+            }
         }
     }
 });
