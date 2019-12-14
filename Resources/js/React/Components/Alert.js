@@ -80,7 +80,7 @@ export default class AlertWrapper extends Component {
         return (
             <Fragment>
                 {this.props.children}
-                <Alert stack={{ limit: 3 }} timeout={1000 * 10} onShow={this.handleOnShow} effect={"slide"}/>
+                <Alert stack={{ limit: 5 }} timeout={1000 * 10} onShow={this.handleOnShow} effect={"slide"}/>
             </Fragment>
         );
     }

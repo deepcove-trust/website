@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Checkbox } from '../../Components/FormControl';
+import AlertWrapper from '../../Components/Alert';
 import $ from 'jquery';
 
 export default class Notifications extends Component {
@@ -7,10 +8,11 @@ export default class Notifications extends Component {
         $.ajax({
             type: method ? 'post' : 'delete',// Callback, is the checkbox checked?
             url: `${this.props.baseUri}/channel/${id}`
-        }).done(() => {
+        }).done((msg) => {
+            this.AlertWrapper.alert('success', msg);
             this.props.u();
         }).fail((err) => {
-            Console.err(`[Notifications@toggleChannel] Error leaving/removing a notification channel: ${err.ResponseText}`);
+            this.AlertWrapper.responseAlert('error', $.parseJSON(err.ResponseText));
         });
     }
 
@@ -28,7 +30,7 @@ export default class Notifications extends Component {
                 }
                 // Render the actual checkmark.
                 return (
-                    <Checkbox id={channel.id}
+                    <Checkbox id={channel.id} key={key}
                         label={channel.name}
                         tooltip={channel.description}
                         checked={checked}
@@ -39,10 +41,10 @@ export default class Notifications extends Component {
         }
 
         return (
-            <Fragment>
+            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
                 <p>Send me emails when...</p>
                 {avaliableChannels}
-            </Fragment>
+            </AlertWrapper>
         )
     }
 }

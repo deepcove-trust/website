@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
+import AlertWrapper from '../../Components/Alert';
 
 import $ from 'jquery';
 
@@ -11,21 +12,16 @@ export default class ChangePassword extends Component {
 
         this.state = {
             requestPending: false,
-            requestFailed: "",
-            passwords: { 1: null, 2: null },
+            inputs: { current: "", new: "", confirm: "" },
         }
     }
 
-    passwordComparer(id, val) {
-        let passwd = this.state.passwords;
-
-        passwd = {
-            1: id == 1 ? val : passwd[1],
-            2: id == 2 ? val : passwd[2]
-        };
-
+    updateVal(id, val) {
+        let inputs = this.state.inputs;
+        inputs[id] = val;
+        
         this.setState({
-            passwords: passwd
+            inputs
         });
     }
 
@@ -33,9 +29,9 @@ export default class ChangePassword extends Component {
         let conditions = { label: "", disabled: true }
 
         // New password must be at least five characters
-        if (this.state.passwords[1] && this.state.passwords[1].length > 5) {
+        if (this.state.inputs['new'] && this.state.inputs['new'].length > 5) {
             // Password and confirmation must match
-            if (this.state.passwords[1] == this.state.passwords[2]) {
+            if (this.state.inputs['new'] == this.state.inputs['confirm']) {
                 conditions.disabled = false;
             } else {
                 conditions.label = "Your new passwords do not match";
@@ -57,65 +53,64 @@ export default class ChangePassword extends Component {
         $.ajax({
             type: 'post',
             url: `${this.props.baseUri}/password`,
-            data: $("#password").serialize()
+            data: this.state.inputs
         }).done(() => {
-            let passwd = { 1: 0, 2: 0 };
-
             this.setState({
                 requestPending: false,
-                requestFailed: "",
-                passwords: passwd
-            });
+                inputs: { current: "", new: "", confirm: "" }
+            }, this.AlertWrapper.alert('success', 'Your password has been updated'));
 
-            $("#password").trigger("reset");
+            this.props.u();
         }).fail((err) => {
             this.setState({
-                requestPending: false,
-                requestFailed: err.responseText
-            });
-
-            console.error(`[ChangePassword@updateAccountPassword] Error updating password: `, err.responseText);
+                requestPending: false                
+            }, this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
         });
     }
 
     render() {
         return (
-            <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
+            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+                <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
                 
-                <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
-                    <Input id="currentPassword"
-                        type="password"
-                        name="currentPassword"
-                        autoComplete="password"
-                        required
-                    />
-                </FormGroup>
+                    <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
+                        <Input id="currentPassword"
+                            type="password"
+                            name="currentPassword"
+                            value={this.state.inputs['current']}
+                            autoComplete="password"
+                            cb={this.updateVal.bind(this, 'current')}
+                            required
+                        />
+                    </FormGroup>
                 
-                <FormGroup label="New Password" htmlFor="newPassword" required>
-                    <Input id="newPassword"
-                        type="password"
-                        name="newPassword"
-                        autoComplete="newpassword"
-                        cb={this.passwordComparer.bind(this, 1)}
-                        required
-                    />
-                </FormGroup>
+                    <FormGroup label="New Password" htmlFor="newPassword" required>
+                        <Input id="newPassword"
+                            type="password"
+                            name="newPassword"
+                            value={this.state.inputs['new']}
+                            autoComplete="newpassword"
+                            cb={this.updateVal.bind(this, 'new')}
+                            required
+                        />
+                    </FormGroup>
             
-                <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
-                    <Input id="confirmPassword"
-                        type="password"
-                        name="confirmPassword"
-                        autoComplete="newpassword"
-                        cb={this.passwordComparer.bind(this, 2)}
-                        required
-                    />
+                    <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
+                        <Input id="confirmPassword"
+                            type="password"
+                            name="confirmPassword"
+                            value={this.state.inputs['confirm']}
+                            autoComplete="newpassword"
+                            cb={this.updateVal.bind(this, 'confirm')}
+                            required
+                        />
 
-                    <small className="text-danger">{this.passwordConditions().label}</small>
-                    <small className="text-danger d-block">{this.state.requestFailed}</small>
-                </FormGroup>   
+                        <small className="text-danger">{this.passwordConditions().label}</small>
+                    </FormGroup>   
 
-                <Button className="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
-            </form>
+                    <Button className="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
+                </form>
+            </AlertWrapper>
         )
     }
 }
