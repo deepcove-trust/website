@@ -11,6 +11,10 @@
 @import './Authentication.scss';
 @import './media.scss';
 
+/* S Alert */
+@import './s-alert-default.scss';
+@import './s-alert-slide.scss';
+
 /* Import Font Awesome 5 Pro */
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import '~@fortawesome/fontawesome-pro/scss/fontawesome';

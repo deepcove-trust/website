@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Deepcove_Trust_Website;
 
 namespace Deepcove_Trust_Website.Helpers
 {
@@ -102,7 +98,23 @@ namespace Deepcove_Trust_Website.Helpers
             {
                 stream.Write(base64file.DecodeBase64Bytes());
             }
+        }
 
+        public class ResponseHelper {
+            /// <summary>
+            /// The message that will be displayed in an alert.
+            /// </summary>
+            public string UI { get; }
+            /// <summary>
+            /// The message logged to the users console.
+            /// </summary>
+            public string Debug { get; }
+
+            public ResponseHelper(string alert, string debug = "")
+            {
+                UI = alert;
+                Debug = !string.IsNullOrEmpty(debug) ? debug : alert;
+            }
         }
     }
 }
