@@ -15,8 +15,8 @@ $.ajaxSetup({
 });
 
 /* JavaScript Core */
-import './js/Libraries/popper.min';
-import './js/Libraries/bootstrap.bundle.min.js';
+import './js/popper.min';
+import './js/bootstrap.bundle.min.js';
 //import './js/Bootstrap/index';
 
 /* React */

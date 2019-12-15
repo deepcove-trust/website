@@ -58,19 +58,19 @@ export default class ChangePassword extends Component {
             this.setState({
                 requestPending: false,
                 inputs: { current: "", new: "", confirm: "" }
-            }, this.AlertWrapper.alert('success', 'Your password has been updated'));
+            }, this.Alert.success('Your password has been updated'));
 
             this.props.u();
         }).fail((err) => {
             this.setState({
                 requestPending: false                
-            }, this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
+            }, this.Alert.error(null, err.responseText));
         });
     }
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
                 
                     <FormGroup label="Your Current Password" htmlFor="currentPassword" required>

@@ -30,7 +30,7 @@ export default class Users extends Component {
                 this.setState({ accounts: data });
             });
         }).fail((err) => {
-            this.AlertWrapper.AlertWrapper('error', $.parseJSON(err.responseText))
+            this.Alert.AlertWrapper('error', $.parseJSON(err.responseText))
         });
     }
 
@@ -48,11 +48,11 @@ export default class Users extends Component {
                     this.getData();
                 });
 
-                this.AlertWrapper.alert('success', `${account.name}\'s account has been deleted`);
+                this.Alert.success(`${account.name}\'s account has been deleted`);
             }).fail((err) => {
                 this.setState({
                     requestPending: false
-                }, this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)))
+                }, this.Alert.error(null, err.responseText))
             });
         });
     }
@@ -60,7 +60,7 @@ export default class Users extends Component {
     saveChanges(account) {
         // Validate email against RFC2822
         if (!validateEmail(account.email)) {
-            this.AlertWrapper('error', {
+            this.Alert('error', {
                 ui: 'Please enter a valid email',
                 debug: 'email is not RFC2822 compliant.'
             });
@@ -71,10 +71,10 @@ export default class Users extends Component {
                 data: account
             }).done(() => {
                 this.setState({
-                }, this.AlertWrapper.alert('success', 'Account settings updated'));
+                }, this.Alert.success('Account settings updated'));
                 this.getData();
             }).fail((err) => {
-                this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText));
+                this.Alert.error(null, err.responseText);
             });
         }
     }
@@ -91,10 +91,10 @@ export default class Users extends Component {
                     requestPending: false
                 }, () => {
                     this.getData();
-                    this.AlertWrapper.alert('success', 'We\'ve sent a password reset email.')
+                    this.Alert.success('We\'ve sent a password reset email.')
                 });
             }).fail((err) => {
-                this.AlertWrapper.parseJSON('error', $.parseJSON(err.responseText));
+                this.Alert.parseJSON('error', $.parseJSON(err.responseText));
             })
         });
     }
@@ -113,7 +113,7 @@ export default class Users extends Component {
         }
 
         return (
-            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 <div className="row">
                     <div className="col-12 py-3">
                         <h1 className="text-center">Manage Users</h1>

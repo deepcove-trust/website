@@ -24,10 +24,10 @@ export default class FooterQuickLinks extends Component {
             type: 'post',
             url: `${baseUri}/${pageId}/${sectionId}`
         }).done(() => {
-            this.Alert.alert('success', 'Quick link added');
+            this.Alert.success('Quick link added');
             this.getData();
         }).fail((err) => {
-            this.Alert.responseAlert('error', $.parseJSON(err.responseText));
+            this.Alert.error(null, err.responseText);
         });
     }
 
@@ -51,11 +51,11 @@ export default class FooterQuickLinks extends Component {
             this.setState({
                 pending: false
             }, () => {
-                this.Alert.alert('success', 'Quick link deleted');
+                this.Alert.success('Quick link deleted');
                 this.getData();
             });
         }).fail((err) => {
-            this.Alert.responseAlert('error', $.parseJSON(err.responseText));
+            this.Alert.error(null, err.responseText)
         });
     }
 
@@ -65,10 +65,10 @@ export default class FooterQuickLinks extends Component {
             url: `${baseUri}/${sectionId}`,
             data: { title: title }
         }).done(() => {
-            this.Alert.alert('success', 'Quick link section updated')
+            this.Alert.success('Quick link section updated')
             this.getData();
         }).fail((err) => {
-            this.Alert.responseAlert('error', $.parseJSON(err.responseText));
+            this.Alert.error(null, err.responseText);
         });
     }
     

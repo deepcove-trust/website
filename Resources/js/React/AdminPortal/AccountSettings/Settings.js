@@ -57,19 +57,19 @@ export default class Settings extends Component {
         }).done(() => {
             this.setState({
                 requestPending: false
-            }, this.AlertWrapper.alert('success', 'Your settings have been updated'));
+            }, this.Alert.success('Your settings have been updated'));
 
             this.props.u();
         }).fail((err) => {
             this.setState({
                 requestPending: false
-            }, this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
+            }, this.Alert.error(null, err.responseText));
         })
     }
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 <form id="settings" onSubmit={this.updateAccount.bind(this)}>
                     <FormGroup label="Account Name" htmlFor="accountName" required>
                         <Input id="accountName"

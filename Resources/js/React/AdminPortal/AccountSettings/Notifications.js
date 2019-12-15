@@ -9,10 +9,10 @@ export default class Notifications extends Component {
             type: method ? 'post' : 'delete',// Callback, is the checkbox checked?
             url: `${this.props.baseUri}/channel/${id}`
         }).done((msg) => {
-            this.AlertWrapper.alert('success', msg);
+            this.Alert.success(msg);
             this.props.u();
         }).fail((err) => {
-            this.AlertWrapper.responseAlert('error', $.parseJSON(err.ResponseText));
+            this.Alert.console.error(err.ResponseText);
         });
     }
 
@@ -41,7 +41,7 @@ export default class Notifications extends Component {
         }
 
         return (
-            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 <p>Send me emails when...</p>
                 {avaliableChannels}
             </AlertWrapper>
