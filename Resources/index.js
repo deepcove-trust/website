@@ -4,7 +4,11 @@ import $ from 'jquery';
 $.ajaxSetup({
     statusCode: {
         401: function (xhr, textStatus, errorThrown) {
-            if(this.url != '/login') {
+            // Any 401 request on any route other than /login
+            // should result in a redirect to the Login page.
+            // The best way to do this is to refresh the page
+            // so we preserve the redirect URL.
+            if(this.url.includes('/login')) {
                 location.reload();
             }
         }
