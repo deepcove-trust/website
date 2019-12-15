@@ -8,6 +8,7 @@
         string SmtpPassword { get; set; }
         string SenderName { get; set; }
         string SenderEmail { get; set; }
+        string ReplyToEmail { get; set; }
     }
 
     public class EmailConfiguration : IEmailConfiguration
@@ -18,5 +19,6 @@
         public string SmtpPassword { get; set; }
         public string SenderName { get; set; }
         public string SenderEmail { get; set; }
+        public string ReplyToEmail { get; set; }
     }
 }

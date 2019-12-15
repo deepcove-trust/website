@@ -8,9 +8,8 @@ $.ajaxSetup({
             // should result in a redirect to the Login page.
             // The best way to do this is to refresh the page
             // so we preserve the redirect URL.
-            if(this.url.includes('/login')) {
-                location.reload();
-            }
+            if (this.url.includes('/login') || this.url == '/login') return;
+            location.reload();
         }
     }
 });

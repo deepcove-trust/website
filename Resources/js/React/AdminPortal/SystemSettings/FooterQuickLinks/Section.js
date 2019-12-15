@@ -8,8 +8,7 @@ export class Section extends Component {
         let pages = this.props.section ? (
             this.props.section.pages.map((page, key) => {
                 return <Page page={page} key={key}
-                    baseUri={this.props.baseUri}
-                    u={this.props.u}
+                    removeLinkCb={this.props.removeLinkCb}
                 />
             })
         ) : null;
@@ -17,15 +16,12 @@ export class Section extends Component {
         return (
             <Fragment>
                 <Title section={this.props.section}
-                    sectionEnum={this.props.sectionEnum}
-                    baseUri={this.props.baseUri}
-                    u={this.props.u}
+                    sectionId={this.props.sectionId}
+                    updateTitleCb={this.props.updateTitleCb}
                 />
 
                 <AvaliablePages pages={this.props.avaliable}
-                    sectionId={this.props.sectionId}
-                    baseUri={this.props.baseUri}
-                    u={this.props.u}
+                    addLinkCb={this.props.addLinkCb}
                 />
 
                 <div className="table-responsive-md">

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 {
@@ -78,7 +79,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error adding quick link: {0}", ex.Message);
                 _Logger.LogTrace(ex.StackTrace);
-                return BadRequest("Error adding quick link, please try again later");
+                return BadRequest(new ResponseHelper("Error adding quick link, please try again later", ex.Message));
             }
         }
 
@@ -96,7 +97,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error removing quick link: {0}", ex.Message);
                 _Logger.LogTrace(ex.StackTrace);
-                return BadRequest("Error removing quick link, please try again later");
+                return BadRequest(new ResponseHelper("Error removing quick link, please try again later", ex.Message));
             }
         }
     
@@ -123,7 +124,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error updating quick link title: {0}", ex.Message);
                 _Logger.LogTrace(ex.StackTrace);
-                return BadRequest("Error updating quick link title, please try again later");
+                return BadRequest(new ResponseHelper("Error updating quick link title, please try again later", ex.Message));
             }
         }
     }

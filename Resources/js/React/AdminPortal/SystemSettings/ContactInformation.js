@@ -1,6 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { FormGroup, Input, TextArea } from '../../Components/FormControl';
 import { PrepareGoogleMapsUrl } from '../../../helpers';
+import AlertWrapper from '../../Components/Alert';
 import { Button } from '../../Components/Button';
 import $ from 'jquery';
 import _ from 'lodash';
@@ -95,55 +96,59 @@ export default class ContactInformation extends Component {
             }).done(() => {
                 this.setState({
                     requestPending: false
-                }, () => this.getData());
+                }, () => this.Alert.alert('success', 'Website settings updated'));
+
+                this.getData();
             }).fail((err) => {
-                console.error(`[ContactInformation@submitForm] Error updating site settings (contact information): `, err.responseText);
+                this.Alert.responseAlert('error', $.parseJSON(err.responseText));
             });
         })
     }
 
     render() {
         return (
-            <form className="row" onSubmit={this.submitForm.bind(this)}>
-                <div className="col-lg-6 col-md-12">
-                    <GeneralEmail email={this.state.contact.email.general}
-                        cb={this.updateState.bind(this, 'email.general')}
-                    />
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+                <form className="row" onSubmit={this.submitForm.bind(this)}>
+                    <div className="col-lg-6 col-md-12">
+                        <GeneralEmail email={this.state.contact.email.general}
+                            cb={this.updateState.bind(this, 'email.general')}
+                        />
 
-                    <BookingEmail email={this.state.contact.email.bookings}
-                        cb={this.updateState.bind(this, 'email.bookings')}
-                    />
+                        <BookingEmail email={this.state.contact.email.bookings}
+                            cb={this.updateState.bind(this, 'email.bookings')}
+                        />
 
-                    <Phone number={this.state.contact.phone}
-                        cb={this.updateState.bind(this, 'phone')}
-                    />
+                        <Phone number={this.state.contact.phone}
+                            cb={this.updateState.bind(this, 'phone')}
+                        />
 
-                    <MissionStatment text={this.state.contact.missionStatement}
-                        cb={this.updateState.bind(this, 'missionStatement')}
-                    />
-                </div>
+                        <MissionStatment text={this.state.contact.missionStatement}
+                            cb={this.updateState.bind(this, 'missionStatement')}
+                        />
+                    </div>
 
-                <div className="col-lg-6 col-md-12">
-                    <UrlFacebook url={this.state.contact.urls.facebook}
-                        cb={this.updateState.bind(this, 'url.facebook')}
-                    />
+                    <div className="col-lg-6 col-md-12">
+                        <UrlFacebook url={this.state.contact.urls.facebook}
+                            cb={this.updateState.bind(this, 'url.facebook')}
+                        />
 
-                    <UrlGooglePlay url={this.state.contact.urls.googlePlay}
-                        cb={this.updateState.bind(this, 'url.googlePlay')}
-                    />
+                        <UrlGooglePlay url={this.state.contact.urls.googlePlay}
+                            cb={this.updateState.bind(this, 'url.googlePlay')}
+                        />
 
-                    <UrlGoogleMap url={this.state.contact.urls.googleMaps}
-                        cb={this.updateState.bind(this, 'url.googleMaps')}
-                    />
+                        <UrlGoogleMap url={this.state.contact.urls.googleMaps}
+                            cb={this.updateState.bind(this, 'url.googleMaps')}
+                        />
 
-                    <FormGroup label="&#8291;">
-                        <Button className="btn btn-dark d-block" type="submit" pending={this.state.requestPending}>
-                            Update Settings <i className="fas fa-check-circle"></i>
-                        </Button>
-                    </FormGroup>
+                        <FormGroup label="&#8291;">
+                            <Button className="btn btn-dark d-block" type="submit" pending={this.state.requestPending}>
+                                Update Settings <i className="fas fa-check-circle"></i>
+                            </Button>
+                        </FormGroup>
 
-                </div>
-            </form>
+                    </div>
+                </form>
+            </AlertWrapper>
         )
     }
 }

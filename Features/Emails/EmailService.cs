@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             try
             {
                 var email = new MimeMessage();
-
+                
                 // IF: A sender is not specified then use the configuration value
                 if (sender == null)
                 {
@@ -46,11 +46,12 @@ namespace Deepcove_Trust_Website.Features.Emails
                 {
                     email.From.Add(new MailboxAddress(sender.Name, sender.Address));
                 }
-
+                
+                // Set recipient, subject and 'Reply To' email address
                 email.To.Add(new MailboxAddress(recipient.Name, recipient.Address));
+                email.ReplyTo.Add(new MailboxAddress(_EmailConfiguration.ReplyToEmail));
                 email.Subject = subject;
-
-
+                
                 var body = new BodyBuilder
                 {
                     HtmlBody = message
