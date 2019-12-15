@@ -32,7 +32,7 @@ export default class AlertWrapper extends Component {
      * @param {[function, function]} cb
      */
     error(message, responseText, cb) {
-        let msg = $.parseJSON(responseText) || defaultMsg;
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
         Alert.error(msg.ui || message, {
             onShow: this._handleOnShow('error', msg.debug, cb)
@@ -46,7 +46,7 @@ export default class AlertWrapper extends Component {
     * @param {[function, function]} cb
     */
     info(message, responseText, cb) {
-        let msg = $.parseJSON(responseText) || defaultMsg;
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
         Alert.info(msg.ui || message, {
             onShow: this._handleOnShow('info', msg.debug, cb)
@@ -60,7 +60,7 @@ export default class AlertWrapper extends Component {
     * @param {[function, function]} cb
     */
     success(message, responseText, cb) {
-        let msg = $.parseJSON(responseText) || defaultMsg;
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
         Alert.success(msg.ui || message, {
             onShow: this._handleOnShow('success', msg.debug, cb)
@@ -74,7 +74,7 @@ export default class AlertWrapper extends Component {
     * @param {[function, function]} cb
     */
     warning(message, responseText, cb) {
-        let msg = $.parseJSON(responseText) || defaultMsg;
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
         Alert.warning(msg.ui || message, {
             onShow: this._handleOnShow('warn', msg.debug, cb)
