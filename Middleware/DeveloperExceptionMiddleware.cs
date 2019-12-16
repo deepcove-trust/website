@@ -16,17 +16,27 @@ namespace Deepcove_Trust_Website.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext, IEmailService _smtp)
+        public async Task Invoke(HttpContext httpContext, IEmailService email)
         {
             try
             {
                 await _next(httpContext);
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
-                await _smtp.SendExceptionEmailAsync(ex, httpContext);
-                httpContext.Response.Redirect("/Home/Error");
+                await email.SendExceptionEmailAsync(ex, httpContext);
+                
+                if (httpContext.Response.HasStarted)
+                {
+                    // Log RahRoh
+                    throw;
+                }
+                
+                httpContext.Response.Clear();
+                httpContext.Response.StatusCode = 500;
+                httpContext.Response.Redirect("/home/error");
             }
+            
         }
     }
 

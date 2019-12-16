@@ -201,7 +201,6 @@ namespace Deepcove_Trust_Website.Features.Emails
             if(Developers != null)
             {
                 foreach (EmailContact dev in Developers)
-                    //SendEmailAsync(null, dev, "Woops, something went wrong!", ex.Message);
                     try
                     {
                         SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context));

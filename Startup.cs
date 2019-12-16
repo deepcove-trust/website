@@ -83,7 +83,8 @@ namespace Deepcove_Trust_Website
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionMails();
+                //app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -91,7 +92,7 @@ namespace Deepcove_Trust_Website
                 app.UseHsts();
             }
 
-            //app.UseDeveloperExceptionMails();
+            
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
