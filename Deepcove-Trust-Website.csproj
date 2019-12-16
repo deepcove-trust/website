@@ -124,6 +124,14 @@
     <Compile Remove="Migrations\20191030004702_Navbar Migration.Designer.cs" />
     <Compile Remove="Migrations\20191030015624_Initial Migration.cs" />
     <Compile Remove="Migrations\20191030015624_Initial Migration.Designer.cs" />
+    <Compile Remove="Migrations\20191101004651_initial.cs" />
+    <Compile Remove="Migrations\20191101004651_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191113055536_alter-navitem-keys.cs" />
+    <Compile Remove="Migrations\20191113055536_alter-navitem-keys.Designer.cs" />
+    <Compile Remove="Migrations\20191113060257_initial.cs" />
+    <Compile Remove="Migrations\20191113060257_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191123062940_add-notices.cs" />
+    <Compile Remove="Migrations\20191123062940_add-notices.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -141,8 +149,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="NAudio" Version="1.9.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="NReco.VideoInfo.LT" Version="1.1.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />

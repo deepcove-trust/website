@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Deepcove_Trust_Website.Data;
 using Microsoft.Extensions.Logging;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -49,7 +50,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             if (string.IsNullOrEmpty(token))
             {
                 _Logger.LogDebug("Password reset attempted ({0}) with no token provided", request.Str("email"));
-                return BadRequest("Invalid reset token");
+                return BadRequest((new ResponseHelper("Invalid reset token")));
             }
 
             try
@@ -61,13 +62,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 if (reset == null)
                 {
                     _Logger.LogDebug("Password reset attempted ({0}) with expired or invalid token", request.Str("email"));
-                    return BadRequest("Reset token invalid or expired");
+                    return BadRequest((new ResponseHelper("Reset token invalid or expired")));
                 }
 
                 if (request.Str("password") != request.Str("passswordConfirm"))
                 {
                     _Logger.LogDebug("Password reset attempted ({0}) with mismatching passwords", request.Str("email"));
-                    return BadRequest("Your password and password confirmation do not match");
+                    return BadRequest(new ResponseHelper("Your password and password confirmation do not match"));
                 }
 
 
@@ -87,7 +88,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             {
                 _Logger.LogError("Error updating password for account belonging to {0}: {1}", request.Str("email"), ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }            
         }
     }

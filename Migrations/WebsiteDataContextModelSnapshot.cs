@@ -396,6 +396,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<string>("Text");
 
+                    b.Property<string>("Url");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PageId");
@@ -405,15 +407,56 @@ namespace Deepcove_Trust_Website.Migrations
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.NavItemPage", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<int>("NavItemId");
 
-                    b.Property<int>("PageId");
+                    b.Property<int?>("PageId");
 
-                    b.HasKey("NavItemId", "PageId");
+                    b.Property<string>("Text");
+
+                    b.Property<string>("Url");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NavItemId");
 
                     b.HasIndex("PageId");
 
                     b.ToTable("NavItemPages");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.Notice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<string>("LongDesc");
+
+                    b.Property<int>("Noticeboard");
+
+                    b.Property<string>("ShortDesc");
+
+                    b.Property<string>("Title");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int>("Urgent");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("Notices");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.NotificationChannel", b =>
@@ -793,8 +836,14 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasOne("Deepcove_Trust_Website.Models.Page", "Page")
                         .WithMany("NavItemPages")
-                        .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PageId");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.Notice", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PageRevision", b =>

@@ -55,6 +55,8 @@ namespace Deepcove_Trust_Website.Data
 
         // --------------------------------------------------
 
+        public DbSet<Notice> Notices { get; set; }
+
         IConfiguration _configuration;
 
         public WebsiteDataContext(IConfiguration configuration, DbContextOptions<WebsiteDataContext> options) : base(options)
@@ -116,8 +118,10 @@ namespace Deepcove_Trust_Website.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // Query filters for soft delete
             modelBuilder.Entity<Account>().HasQueryFilter(f => f.DeletedAt == null);
             modelBuilder.Entity<Page>().HasQueryFilter(f => f.DeletedAt == null);
+            modelBuilder.Entity<Notice>().HasQueryFilter(f => f.DeletedAt == null);
 
             // Enum Conversions
             modelBuilder.Entity<Page>().Property(p => p.Section).HasConversion(c => (int)c, c => (Section)c);
@@ -127,6 +131,9 @@ namespace Deepcove_Trust_Website.Data
 
             // Discover Deep Cove
             modelBuilder.Entity<Activity>().Property(p => p.ActivityType).HasConversion(c => (int)c, c => (ActivityType)c);
+
+            // Noticeboard
+            modelBuilder.Entity<Notice>().Property(p => p.Noticeboard).HasConversion(c => (int)c, c => (Noticeboard)c);
 
             // End Enum Conversions
 
@@ -146,9 +153,6 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<RevisionMediaComponent>()
                 .HasKey(e => new { e.PageRevisionId, e.MediaComponentId });
 
-            modelBuilder.Entity<NavItemPage>()
-                .HasKey(e => new { e.NavItemId, e.PageId });
-
             // -- Discover Deep Cove
 
             modelBuilder.Entity<ActivityImage>()
@@ -166,12 +170,6 @@ namespace Deepcove_Trust_Website.Data
 
             modelBuilder.Entity<Page>()
                 .HasIndex(e => e.Name).IsUnique();
-
-            // -- Configure relationship between QuizQuestion and correct QuizAnswer
-            //modelBuilder.Entity<QuizQuestion>()
-            //    .HasOne(qq => qq.CorrectAnswer)
-            //    .WithOne(qa => qa.QuizQuestion)
-            //    .HasForeignKey<QuizAnswer>(qq => qq.QuizQuestionId);
 
             // -- Configure relationship between activities and media files
             modelBuilder.Entity<Activity>().HasMany(a => a.ActivityImages).WithOne(ai => ai.Activity).HasForeignKey(ai => ai.ActivityId).OnDelete(DeleteBehavior.Restrict);

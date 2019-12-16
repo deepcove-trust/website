@@ -17,11 +17,13 @@ export default class Media extends Component {
                 filename: "",
                 alt: ""
             }, 
+            ImageAspect: null,
             Height: 1,
             Width: 1,
             showModal: false
         }
 
+        this.onImageLoad = this.onImageLoad.bind(this);
         this.contentRef = React.createRef();
     }
 
@@ -35,6 +37,13 @@ export default class Media extends Component {
         this.setState({
             default: _.cloneDeep(nextProps.content),
             content: _.cloneDeep(nextProps.content)
+        });
+    }
+
+    // Determine the dimensions of the original image from the server
+    onImageLoad({target:img}) {
+        this.setState({
+            ImageAspect: img.naturalHeight / img.naturalWidth
         });
     }
 
@@ -134,7 +143,8 @@ export default class Media extends Component {
 
         // If we are not in edit mode, and no image exists then hide the image.
         let image = !this.props.allowEdits && !this.state.content.filename ? null : (
-            <img src={this.ImageUrl()}
+            <img onLoad={this.onImageLoad}
+                src={this.ImageUrl()}
                 alt={this.state.content ? this.state.content.alt : ""}
                 style={{
                     'position': 'absolute',
@@ -147,8 +157,10 @@ export default class Media extends Component {
             />
         )
 
+        let calculatedHeight = this.state.ImageAspect != null ? this.state.ImageAspect * this.state.Width : null;
+
         return (
-            <div style={{ 'position': 'relative', 'minHeight': this.props.minSize || '250px' }} ref={this.contentRef} >
+            <div style={{ 'position': 'relative', 'minHeight': calculatedHeight || this.props.minHeight }} ref={this.contentRef} >
                 {image}
                 {selectFile}
             </div>

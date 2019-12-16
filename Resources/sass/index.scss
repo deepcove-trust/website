@@ -11,6 +11,10 @@
 @import './Authentication.scss';
 @import './media.scss';
 
+/* S Alert */
+@import './s-alert-default.scss';
+@import './s-alert-slide.scss';
+
 /* Import Font Awesome 5 Pro */
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
 @import '~@fortawesome/fontawesome-pro/scss/fontawesome';
@@ -256,4 +260,10 @@ div.selected {
 
 .cms-text {
     transition: width 1s ease-in-out;
+}
+
+.nav-pills .nav-link.active, .nav-pills .nav-link :hover{
+    color: #fff!important;
+    background-color: #23272b;
+    border-color: #1d2124;
 }
