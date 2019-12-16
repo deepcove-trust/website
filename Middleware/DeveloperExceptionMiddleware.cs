@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Deepcove_Trust_Website.Features.Emails;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Deepcove_Trust_Website.Middleware
 {
@@ -16,7 +17,7 @@ namespace Deepcove_Trust_Website.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext, IEmailService email)
+        public async Task Invoke(HttpContext httpContext, IEmailService email, ILogger<DeveloperExceptionMiddleware> logger)
         {
             try
             {
@@ -26,16 +27,23 @@ namespace Deepcove_Trust_Website.Middleware
             {
                 string requestId = System.Diagnostics.Activity.Current?.Id ?? httpContext.TraceIdentifier;
                 await email.SendExceptionEmailAsync(ex, httpContext, requestId);
+                logger.LogError($"EXCEPTION THROWN | EXCEPTION ID: {requestId}\n" +
+                        $"Message: {ex.Message}\n" +
+                        $"{ex.StackTrace}\n\n" +
+                        $"Inner Exception: {ex.InnerException?.Message ?? ""}\n" +
+                        $"{ex.InnerException?.StackTrace ?? ""}\n\n" +
+                        $"END EXCEPTION"
+                    );
                 
                 if (httpContext.Response.HasStarted)
                 {
-                    // Log RahRoh
+                    logger.LogWarning("The response has already started, the exception will not be handled.");
                     throw;
                 }
                 
                 httpContext.Response.Clear();
                 httpContext.Response.StatusCode = 500;
-                httpContext.Response.Redirect("/home/error");
+                httpContext.Response.Redirect($"/error/server-error?requestId={requestId}");
             }
             
         }
