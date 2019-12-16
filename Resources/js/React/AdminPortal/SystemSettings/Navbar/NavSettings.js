@@ -18,14 +18,10 @@ export default class NavSettings extends Component {
         }
     }
 
-    componentWillUpdate(nextProps) {
-        if (nextProps.link != this.props.link) {
+    componentDidUpdate(prevProps) {
+        if (prevProps.link != this.props.link) {
             this.getData();
         }
-    }
-
-    componentDidMount() {
-        this.getData();
     }
 
     getData() {
@@ -37,7 +33,7 @@ export default class NavSettings extends Component {
         }).done((link) => {
             link.type = this.getLinkType(link)
             this.setState({
-                link
+                link: link
             });
         });
     }
