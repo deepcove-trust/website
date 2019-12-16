@@ -83,13 +83,13 @@ namespace Deepcove_Trust_Website
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionMails();
-                //app.UseDeveloperExceptionPage();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseDeveloperExceptionMails();
             }
 
             
