@@ -24,7 +24,8 @@ namespace Deepcove_Trust_Website.Middleware
             }
             catch(Exception ex)
             {
-                await email.SendExceptionEmailAsync(ex, httpContext);
+                string requestId = System.Diagnostics.Activity.Current?.Id ?? httpContext.TraceIdentifier;
+                await email.SendExceptionEmailAsync(ex, httpContext, requestId);
                 
                 if (httpContext.Response.HasStarted)
                 {
