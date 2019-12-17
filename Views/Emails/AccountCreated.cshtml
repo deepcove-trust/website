@@ -1,25 +1,24 @@
-﻿@{
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
     Layout = "~/Views/Emails/_EmailLayout.cshtml";
+
+    string tokenDuration = Configuration.GetValue<string>("LoginSettings:NewAccountResetTokenLength");
 }
+
 @model Deepcove_Trust_Website.Views.Emails.Models.AccountCreated
 
-<p style="font-size: 14px;">
-    You are receiving this email because an administrator has created an account for you. You will need to reset your password using the link below which is valid for 24 hours.
-</p>
-<p style="font-size: 14px; line-height: 21px; margin: 0px;"> Your login details are:</p>
-<p style="font-size: 14px; line-height: 21px; margin: 0px;">Name: @Model.Recipient.Name</p>
-<p style="font-size: 14px; line-height: 21px; margin: 0px;">Email: @Model.Recipient.Address</p>
+<p style="margin-bottom: 20px;">You are receiving this email because an @Model.CreatedBy.Name has created an account for you. You will need to reset your password using the link below which is valid for @tokenDuration hours.</p>
+
+<!-- Reset My Password Button -->
 <p style="text-align: center; margin: 50px;">
-    <a class="btn btn-primary" role="button" style="background-color:#EB7035; border:1px solid #EB7035; border-radius:3px; color:#ffffff; display:inline-block; font-family:sans-serif; font-size:16px; line-height:44px; text-align:center; text-decoration:none; width:150px; -webkit-text-size-adjust:none; mso-hide:all;" href=@($"{Model.BaseUrl}reset-password/{Model.Token}")>Reset My Password</a>
+    <a class="btn-orange" role="button" href="@($"{Model.BaseUrl}reset-password/{Model.Token}?email={Model.Recipient.Address}")">Reset My Password</a>
 </p>
-<p style="font-size: 14px;">
-     An administrator will need to activate your account before you can login, you will receive another email once this has been done.
+<!-- ENd Reset My Password Button -->
+
+<p style="margin-bottom: 20px">An administrator will need to activate your account before you can login, you will receive another email once this has been done. Welcome to the team!</p>
+
+<p style="text-align:center">
+    <a href="@($"{Model.BaseUrl}login")" rel="noopener" style="text-decoration: underline; line-height: inherit;" target="_blank">Admin Login</a> | 
+    For help contact <a href="@($"mailto:{Model.CreatedBy.Address}")" style="text-decoration;">@Model.CreatedBy.Name</a>
 </p>
-<p style="font-size: 14px; padding-bottom: 20px;">
-    The admin login page is <a href=@($"{Model.BaseUrl}login") rel="noopener" style="text-decoration: underline;color: #71777D;line-height: inherit;" target="_blank">here</a>, Welcome to the team.
-</p>
-<p style="font-size: 14px; font-weight: bold; color: #000000;">
-    Account Created By:
-</p>
-<p style="font-size: 14px; line-height: 21px; margin: 0px;">@Model.CreatedBy.Name</p>
-<p style="font-size: 14px; line-height: 21px; margin: 0px;">@Model.CreatedBy.Address</p>

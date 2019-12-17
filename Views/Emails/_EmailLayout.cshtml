@@ -1,50 +1,169 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:v="urn:schemas-microsoft-com:vml"
+      xmlns:o="urn:schemas-microsoft-com:office:office">
 
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml" style="line-height: inherit;">
-<head style="line-height: inherit;">
-    <!--[if gte mso 9]><xml><o:OfficeDocumentSettings><o:AllowPNG/><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml><![endif]-->
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" style="line-height: inherit;">
-    <meta content="width=device-width" name="viewport" style="line-height: inherit;">
-    <meta content="IE=edge" http-equiv="X-UA-Compatible" style="line-height: inherit;">
-    <title style="line-height: inherit;"></title>
+<head>
+    <!--[if gte mso 9]><xml>
+        <o:OfficeDocumentSettings>
+            <o:AllowPNG/>
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+        </o:OfficeDocumentSettings>
+    </xml><![endif]-->
+    <!-- fix outlook zooming on 120 DPI windows devices -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- So that mobile will display zoomed in -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- enable media queries for windows phone 8 -->
+    <meta name="format-detection" content="date=no"> <!-- disable auto date linking in iOS 7-9 -->
+    <meta name="format-detection" content="telephone=no"> <!-- disable auto telephone linking in iOS 7-9 -->
 
-    <!--[if !mso]><!-->
-    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css" style="line-height: inherit;">
-    <!--<![endif]-->
+    <!-- Title and FavIcon for web browsers -->
+    <title>Deep Cove Education Trust Email</title>
+    <link rel="icon" href="@($"{Model.BaseUrl}/favicon.ico")" type="image/x-icon" />
+    
+    <!-- CSS Style Sheet -->
+    <style type="text/css">
+        body {
+              margin: 0;
+              padding: 0;
+              -ms-text-size-adjust: 100%;
+              -webkit-text-size-adjust: 100%;
+        }
+
+        table { border-spacing: 0; }
+
+        table td { border-collapse: collapse; }
+
+        .ExternalClass { width: 100%; }
+
+        .ExternalClass, .ExternalClass p, .ExternalClass span,
+        .ExternalClass font, .ExternalClass td, .ExternalClass div {
+            line-height: 100%;
+        }
+
+        .ReadMsgBody {
+            width: 100%;
+            background-color: #ebebeb;
+        }
+
+        table {
+              mso-table-lspace: 0pt;
+              mso-table-rspace: 0pt;
+        }
+
+        img { -ms-interpolation-mode: bicubic; }
+
+        .yshortcuts a { border-bottom: none !important; }
+
+        @@media screen and (max-width: 599px) {
+            .force-row, .container {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @@media screen and (max-width: 400px) {
+              .container-padding {
+                    padding-left: 12px !important;
+                    padding-right: 12px !important;
+              }
+        }
+        .ios-footer a {
+              color: #aaaaaa !important;
+              text-decoration: underline;
+        }
+        a[href^="x-apple-data-detectors:"], a[x-apple-data-detectors] {
+              color: inherit !important;
+              text-decoration: none !important;
+              font-size: inherit !important;
+              font-family: inherit !important;
+              font-weight: inherit !important;
+              line-height: inherit !important;
+        }
+
+        .btn-orange {
+            background-color:#EB7035;
+            border:1px solid #EB7035;
+            border-radius:3px;
+            color:#ffffff!important;
+            display:inline-block;
+            padding-left: 10px;
+            padding-right: 10px;
+            font-family:sans-serif;
+            font-size:16px;
+            line-height:44px;
+            text-align:center;
+            text-decoration:none;
+            width:150px;
+            -webkit-text-size-adjust:none;
+            mso-hide:all;
+        }
+
+        .btn-orange:hover {
+            background-color:#da6b36;
+            border:1px solid #da6b36;
+        }
+
+        p {
+            line-height: 21px;
+            margin: 0px;
+        }
+
+        .title {
+            margin-bottom: 10px;
+        }
+
+        a:link, a:visited{
+            color: #3a3a3a;
+        }
+    </style>
 </head>
 
-<body style="margin: 0; padding: 0; -webkit-text-size-adjust: 100%; background-color: #FFFFFF; line-height: inherit; font-size: 12px; line-height: 18px; font-family: 'Lato', Tahoma, Verdana, Segoe, sans-serif; color: #71777D;">
-    <!-- Container -->
-    <div style="width: 33vw; margin: 0 auto; padding-top: 50px;">
-        <!-- Logo -->
-        <div style="padding: 2px 0px 30px 0px;">
-            <a href=@Model.BaseUrl>
-                <img src=@($"{Model.BaseUrl}/images/logo.png") alt="Logo" style="height: 130px; margin: 0 auto; display: block;" />
-            </a>
-        </div><!-- End Logo -->
-
-        <p style="font-size: 14px; font-weight: bold; color: #000000;">
-            Hi @Model.Name,
-        </p>
-
-        @RenderBody()
-
-        <!-- Landscape Image -->
-        <div style="padding: 20px 0px 10px 0px;">
-            <img src=@($"{Model.BaseUrl}images/email_banner.jpg") alt="Doubtful Sound" style="max-width: 100%;" />
-        </div><!-- End Landscape Image -->
-
-        <!-- Footer Copyright -->
-        <footer>
-            <p style="margin-bottom: 0px!important;">
-                Copyright &copy; @DateTime.Now.Year Deep Cove Outdoor Education Trust, All rights reserved.
-            </p>
-            <p style="margin-top: 0px!important;">
-                You are subscribed to updates via our website <a href=@Model.BaseUrl style="color: #71777D;">@Model.BaseUrl</a>
-            </p>
-
-            <a href="@($"{Model.BaseUrl}/admin/account")" style="color: #71777D;">Unsubscribe from this list</a>
-        </footer><!-- End Footer Copyright -->
-    </div>
+<body style="margin:0; padding:0;" bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+    <!-- 100% background wrapper (grey background) -->
+    <table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+        <tr>
+            <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+                <br>
+                <!-- 600px container (white background) -->
+                <table border="0" width="600" cellpadding="0" cellspacing="0" class="container" style="width:600px;max-width:600px">
+                    <tr>
+                        <!-- Website Logo -->
+                        <td class="container-padding header" align="left" style="font-family:Helvetica, Arial, sans-serif;font-size:24px;font-weight:bold;padding-bottom:12px;color:#DF4726;padding-left:24px;padding-right:24px">
+                            <a href="@($"{Model.BaseUrl}")">
+                                <img src="@($"{Model.BaseUrl}/images/logo.png")" alt="Deep Cove Outdoor Education Trust logo" style="max-height:90px;" />    
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="container-padding content" align="left" style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff">
+                            <br>
+                            <!-- Greetings -->
+                            <div class="title" style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">Greetings @Model.Name</div>
+                            <!-- End Greetings -->
+                            
+                            <!-- Body -->
+                            <div class="body-text" style="font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;text-align:left;color:#333333">
+                                @RenderBody()
+                            </div>
+                            <!-- End Body -->
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- Footer & Copyright -->
+                        <td class="container-padding footer-text" align="left" style="font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px">
+                            <br>
+                            <br> Website by <a href="https://github.com/ssm-deepcove" style="color:#aaaaaa">SSM Deep Cove</a> | © 2019 Deep Cove Outdoor Education Trust
+                            <br>
+                            <br> You are receiving this email because you have an account on our website. Update your email preferences or <a href="@($"{Model.BaseUrl}admin/account")" style="color:#aaaaaa">unsubscribe here</a>.
+                        </td>
+                        <!-- End Footer and Copyright -->
+                    </tr>
+                </table>
+                <!--/600px container -->
+            </td>
+        </tr>
+    </table>
+    <!--/100% background wrapper-->
 </body>
 </html>

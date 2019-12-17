@@ -45,7 +45,6 @@ namespace Deepcove_Trust_Website.Middleware
                 httpContext.Response.StatusCode = 500;
                 httpContext.Response.Redirect($"/error/server-error?requestId={requestId}");
             }
-            
         }
     }
 

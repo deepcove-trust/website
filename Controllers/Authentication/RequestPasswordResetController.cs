@@ -20,14 +20,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     {
         private readonly WebsiteDataContext _Db;
         private readonly IConfiguration _Config;
-        private readonly IEmailService _Smtp;
+        private readonly IEmailService _EmailService;
         private readonly ILogger<RequestPasswordResetController> _Logger;
 
-        public RequestPasswordResetController(WebsiteDataContext db, IConfiguration configuration, IEmailService smtp, ILogger<RequestPasswordResetController> logger)
+        public RequestPasswordResetController(WebsiteDataContext db, IConfiguration configuration, IEmailService emailService, ILogger<RequestPasswordResetController> logger)
         {
             _Db = db;
             _Config = configuration;
-            _Smtp = smtp;
+            _EmailService = emailService;
             _Logger = logger;
         }
 
@@ -68,7 +68,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();
-                    await _Smtp.SendPasswordResetEmailAsync(reset, this.Request.BaseUrl());
+                    await _EmailService.SendPasswordResetEmailAsync(reset, this.Request.BaseUrl());
                     
                     _Logger.LogInformation("Password reset requested for account belonging to {0}", account.Name);
                 }

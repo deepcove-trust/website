@@ -8,6 +8,7 @@ namespace Deepcove_Trust_Website.Features.Emails
 {
     public interface IEmailService
     {
+        // Required to send all emails
         Task SendEmailAsync(
             EmailContact Sender,
             EmailContact Recipient,
@@ -23,9 +24,11 @@ namespace Deepcove_Trust_Website.Features.Emails
             object vars
         );
 
-        Task SendPasswordResetEmailAsync(
-            PasswordReset token,
-            Uri baseUrl
+        // Account Emails
+        Task SendAccountStatusAsync(
+            bool accountActive,
+            EmailContact Recipient,
+            Uri Url
         );
 
         Task SendNewAccountEmailAsync(
@@ -34,18 +37,27 @@ namespace Deepcove_Trust_Website.Features.Emails
             Uri baseUrl
         );
 
-        Task SendGeneralInquiryAsync(
-            EmailContact Sender,
-            string subject,
-            object vars
+        Task SendPasswordResetEmailAsync(
+            PasswordReset token,
+            Uri baseUrl
         );
+        // End Account Emails
 
+        // Inquiry Emails
         Task SendBookingInquiryAsync(
             EmailContact Sender,
             string subject,
             object vars
         );
 
+        Task SendGeneralInquiryAsync(
+            EmailContact Sender,
+            string subject,
+            object vars
+        );
+        // End Inquiry Emails
+
+        // Developer emails
         Task SendExceptionEmailAsync(
             Exception ex,
             HttpContext context,
