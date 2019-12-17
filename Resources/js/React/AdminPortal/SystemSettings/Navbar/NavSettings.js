@@ -4,6 +4,7 @@ import { Input, FormGroup, Select } from '../../../Components/FormControl';
 import { Button, ConfirmButton } from '../../../Components/Button';
 import Panel from '../../../Components/Panel';
 import { isEmptyObj } from '../../../../helpers';
+import Dropdown from './NavSettings/Dropdown';
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -14,7 +15,8 @@ export default class NavSettings extends Component {
         super(props);
 
         this.state = {
-            link: {}
+            link: {},
+            modified: false
         }
     }
 
@@ -33,7 +35,8 @@ export default class NavSettings extends Component {
         }).done((link) => {
             link.type = this.getLinkType(link)
             this.setState({
-                link: link
+                link: link,
+                modified: false
             });
         });
     }
@@ -46,28 +49,49 @@ export default class NavSettings extends Component {
     }
 
     updateLink(key, val) {
-        console.log(key, val);
         let link = this.state.link;
         link[key] = val;
         this.setState({
-            link: link
+            link: link,
+            modified: true
         });
+    }
+
+    // Updates the pageId and text and page name fields whenever a new page is linked
+    updateLinkedPage(pageId) {
+        this.updateLink('pageId', pageId);        
+        this.updateLink('text', null);
+        var page = this.props.pages.find((page) => page.id == pageId);
+        this.updateLink('pageName', page.name);
     }
 
     render() {
         let options = (
             <Page link={this.state.link} pages={this.props.pages}
-                update={this.updateLink.bind(this, 'pageId')}
+                update={this.updateLinkedPage.bind(this)}
             />
         );
 
         options = this.state.link.type == "Dropdown" ? (
-            <Dropdown />
+            <Dropdown sublinks={this.state.link.children} pages={this.props.pages}
+                update={this.updateLink.bind(this, 'children')}
+            />
         ) : this.state.link.type == "Custom URL" ? (
             <CustomUrl link={this.state.link}
                 update={this.updateLink.bind(this, 'url')}
             />
         ) : options;
+
+        if (!this.props.link) {
+            return (
+                <Fragment>
+                    <h4>Settings</h4>
+                    <Panel>
+                        <h5 className='text-center'>Add a navbar link to begin</h5>
+                    </Panel>
+                </Fragment>
+            )
+        }
 
         return (
             <Fragment>
@@ -75,14 +99,14 @@ export default class NavSettings extends Component {
                 <Panel>
                     <div className="row">
                         <div className="col-md-6 col-sm-12">
-                            <LinkName link={this.state.link} update={this.updateLink.bind(this, 'text')}/>
+                            <LinkName link={this.state.link} update={this.updateLink.bind(this, 'text')} />
                         </div>
 
                         <div className="col-md-6 col-sm-12">
                             <LinkType linkType={this.state.link.type} update={this.updateLink.bind(this, 'type')} />
                         </div>
                     </div>
-                    
+
                     {/*
 
 
@@ -93,20 +117,21 @@ export default class NavSettings extends Component {
                     <div>
                         <hr />
                         <ConfirmButton className="btn btn-outline-danger btn-sm" cb={this.props.onDelete.bind(this)}>
-                            Delete Link <i className="fas fa-trash"/>
+                            Delete Link <i className="fas fa-trash" />
                         </ConfirmButton>
 
-                        {/*TODO: Disable the button if no changes have been made */}
-                        <Button className={`btn btn-success btn-sm float-right`} disabled
-                            cb={this.getData.bind(this)}
+                        <Button className={`btn btn-success btn-sm float-right`}
+                            disabled={!this.state.modified}
+                            cb={this.props.onSave.bind(this, this.state.link)}
                         >
                             Save <i className="fas fa-check" />
                         </Button>
 
-                        <Button className={`btn btn-danger btn-sm float-right`} disabled
+                        <Button className={`btn btn-danger btn-sm float-right`}
+                            disabled={!this.state.modified}
                             cb={this.getData.bind(this)}
                         >
-                            Reset <i className="fas fa-times"/>
+                            Reset <i className="fas fa-times" />
                         </Button>
                     </div>
                 </Panel>
@@ -120,7 +145,8 @@ class LinkName extends Component {
         return (
             <FormGroup htmlFor="link_text" label="Link Text" required>
                 <Input id="link_text" type="text"
-                    value={this.props.link ? this.props.link.text || this.props.link.pageName : ""}
+                    value={this.props.link ? this.props.link.text : ""}
+                    placeHolder={this.props.link ? this.props.link.pageName : ""}
                     cb={this.props.update}
                 />
             </FormGroup>
@@ -164,12 +190,12 @@ class CustomUrl extends Component {
 
 class Page extends Component {
     handleClick(page) {
-        if(page) this.props.update(page.value);
+        if (page) this.props.update(page.value);
     }
 
     render() {
         if (!this.props.link || !'pageId' in this.props.link || isEmptyObj(this.props.pages)) return null;
-        
+
         let options = this.props.pages.map((page) => {
             return { value: page.id, label: page.name };
         });
@@ -182,11 +208,5 @@ class Page extends Component {
                 />
             </FormGroup>
         );
-    }
-}
-
-class Dropdown extends Component {
-    render() {
-        return ("Dropdown SETTINGS");
     }
 }

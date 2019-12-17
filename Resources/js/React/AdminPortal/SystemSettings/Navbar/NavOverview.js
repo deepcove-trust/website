@@ -3,6 +3,7 @@
 export default class NavOverview extends Component {
     render() {
         let links = { main: [], education: [] };
+        console.log(this.props.links);
         if (!!this.props.links) {
             for (let [key, link] of Object.entries(this.props.links)) {
                 let linkObject = <NavItem nav={link} key={key}
@@ -39,8 +40,8 @@ class NavItem extends Component {
         let active = this.props.nav.id == this.props.activeId;
 
         return (
-            <label className={`btn btn-outline-dark btn-block ${active ? 'active' : ''}`}>
-                <input type="radio" name="navitem" onChange={this.props.setActive}/>
+            <label className={`btn btn-outline-dark btn-block ${active ? 'active' : ''}`} draggable='true'>
+                <input type="radio" name="navitem" onChange={this.props.setActive} />
                 {this.props.nav.text}
             </label>    
         )

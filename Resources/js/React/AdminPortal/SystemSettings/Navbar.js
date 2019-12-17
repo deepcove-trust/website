@@ -19,14 +19,15 @@ export default class Navbar extends Component {
 
     componentDidMount() { this.getData() };
 
-    getData() {
+    getData(initialId) {
+        console.log(`Initial ID set to ${initialId}`);
         $.ajax({
             method: 'get',
             url: baseUri
         }).done((navbar) => {
             this.setState({
                 navbar,
-                activeId: navbar[0].id
+                activeId: initialId || (navbar[0] ? navbar[0].id : 0)
             });
         }).fail((err) => {
             console.err(err);
@@ -60,12 +61,53 @@ export default class Navbar extends Component {
         $.ajax({
             method: 'delete',
             url: `${baseUri}/${id}`
-        }).done((result) => {
+        }).done(() => {
             console.log(`Nav link ${id} deleted successfully`);
             this.getData();
         }).fail((err) => {
             console.log(err);
         });
+    }
+
+    cleanLink(linkData) {
+        console.log('Dirty link');
+        console.log(linkData);
+
+        if (linkData.type == 'Page') {            
+            return {
+                'id': linkData.id,
+                'pageId': linkData.pageId,
+                'text': linkData.text ? linkData.text : null
+            };
+        }
+
+        if (linkData.type == 'Custom URL') {
+            return {
+                'id': linkData.id,
+                'url': linkData.url,
+                'text': linkData.text
+            }
+        }
+
+        if (linkData.type == 'DropDown') {
+
+        }
+    }
+
+    updateLink(linkData) {
+        let link = this.cleanLink(linkData);
+        console.log("Cleaned link:");
+        console.log(link);
+        $.ajax({
+            method: 'put',
+            url: baseUri,
+            data: { navitem: JSON.stringify(link) },
+        }).done(() => {
+            console.log(`Nav link ${link.id} edited successfully`);
+            this.getData(link.id);
+        }).fail((err) => {
+            console.log(err);
+        })
     }
 
     render() {
@@ -81,6 +123,7 @@ export default class Navbar extends Component {
                 <div className="col-lg-9 col-md-6 col-sm-12">
                     <NavSettings link={this.getPage()}
                         onDelete={this.deleteLink.bind(this, this.state.activeId)}
+                        onSave={this.updateLink.bind(this)}
                         pages={this.state.pages}
                     />
                 </div>
