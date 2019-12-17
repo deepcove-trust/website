@@ -60,7 +60,8 @@ namespace Deepcove_Trust_Website.Features.Emails
         // Developer emails
         Task SendExceptionEmailAsync(
             Exception ex,
-            HttpContext context
+            HttpContext context,
+            string requestId
         );
     }
 }

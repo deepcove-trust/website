@@ -187,7 +187,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             }
         }
 
-        public async Task SendExceptionEmailAsync(Exception ex, HttpContext context)
+        public async Task SendExceptionEmailAsync(Exception ex, HttpContext context, string requestId)
         {
             List<EmailContact> Developers = await _Db.NotificationChannels.Where(c => c.Name == "Developer Exceptions")
                 .Select(s => s.ChannelMemberships
@@ -202,10 +202,9 @@ namespace Deepcove_Trust_Website.Features.Emails
             {
                 foreach (EmailContact dev in Developers)
                 {
-                    //SendEmailAsync(null, dev, "Woops, something went wrong!", ex.Message);
                     try
                     {
-                        SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context));
+                        SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context, requestId));
                     }
                     catch (Exception ex1)
                     {
