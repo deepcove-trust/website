@@ -1,5 +1,9 @@
 ﻿import React, { Component, Fragment } from 'react';
 import Alert from 'react-s-alert';
+import $ from 'jquery';
+
+const defaultMsg = { ui: null, debug: null };
+
 export default class AlertWrapper extends Component {
     /**
      * Creates the required ref
@@ -7,80 +11,106 @@ export default class AlertWrapper extends Component {
      * and responseAlert() methods
      */
     componentDidMount() {
-        this.props.onRef(this);
+        if (this.props.onRef) {
+            this.props.onRef(this);
+        }
     }
 
     /**
      * Tides up resources after use
      */
     componentWillUnmount() {
-        this.props.onRef(undefined);
-    }
-
-    /**
-     * Fires an alert only using a string for the message
-     * @param {string} type
-     * @param {message} x
-     */
-    alert(type, x) {
-        switch (type) {
-            case "success":
-                Alert.success(x);
-                break;
-
-            case "info":
-                Alert.info(x);
-                break;
-
-            case "warning":
-                Alert.warning(x);
-                break;
-
-            case "error":
-                Alert.error(x);
-                break;
+        if(this.props.onRef) {
+            this.props.onRef(undefined);
         }
     }
 
     /**
-     * Fires an alert using an object for the message. Warnings and Errors also log to console
-     * @param {string} type
-     * @param {object} x
+     * 
+     * @param {string} message
+     * @param {[object, object]} responseText
+     * @param {[function, function]} cb
      */
-    responseAlert(type, x) {
-        switch (type) {
-            case "success":
-                Alert.success(x.ui);
-                break;
+    error(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
-            case "info":
-                Alert.info(x.ui);
-                break;
-
-            case "warning":
-                Alert.warning(x.ui, {
-                    onShow: function () {
-                        console.warn(x.debug);
-                    }
-                });
-                break;
-
-            case "error":
-                Alert.error(x.ui, {
-                    onShow: function () {
-                        console.error(x.debug);
-                    }
-                });
-                break;
-        }
+        Alert.error(msg.ui || message, {
+            onShow: this._handleOnShow('error', msg.debug, cb)
+        });
     }
 
+    /**
+    *
+    * @param {string} message
+    * @param {[object, object]} responseText
+    * @param {[function, function]} cb
+    */
+    info(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
+
+        Alert.info(msg.ui || message, {
+            onShow: this._handleOnShow('info', msg.debug, cb)
+        });
+    }
+
+    /**
+    *
+    * @param {string} message
+    * @param {[object, object]} responseText
+    * @param {[function, function]} cb
+    */
+    success(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
+
+        Alert.success(msg.ui || message, {
+            onShow: this._handleOnShow('success', msg.debug, cb)
+        });
+    }
+
+    /**
+    *
+    * @param {string} message
+    * @param {[object, object]} responseText
+    * @param {[function, function]} cb
+    */
+    warning(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
+
+        Alert.warning(msg.ui || message, {
+            onShow: this._handleOnShow('warn', msg.debug, cb)
+        });
+    }
+
+    /**
+     * PRIVATE METHOD, logs to console
+     * @param {string} level
+     * @param {string} debug
+     * @param {[function, function]} cb
+     */
+    _handleOnShow(level, debug, cb) {
+        if (!!debug) {
+            switch (level) {
+                case 'error':
+                    console.error(debug);
+                    break;
+
+                case 'warn':
+                    console.warn(debug);
+                    break;
+
+                default:
+                    console.log(debug);
+            }
+        }
+        
+        if (cb) cb();
+    }
 
     render() {
         return (
             <Fragment>
                 {this.props.children}
-                <Alert stack={{ limit: 3 }} timeout={1000 * 10} onShow={this.handleOnShow} effect={"slide"}/>
+                <Alert stack={{ limit: 5 }} timeout={1000 * 10} onShow={this.handleOnShow} effect={"slide"}/>
             </Fragment>
         );
     }

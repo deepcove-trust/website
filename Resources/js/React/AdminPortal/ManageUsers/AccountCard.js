@@ -1,16 +1,10 @@
 ﻿import React, { Component } from 'react';
-
-import Email from './Email';
-import Phone from './Phone';
-import Status from './Status';
-import Timestamps from './Timestamps';
-import Panel from '../../Components/Panel';
-import { validateEmail } from '../../../helpers';
+import { Email, Phone, Status } from './Settings';
 import { DeleteUser, ResetPassword, EditButtons } from './AccountBtns';
+import Panel from '../../Components/Panel';
+import Timestamps from './Timestamps';
 
-import $ from 'jquery';
 import _ from 'lodash';
-
 
 const Mode = {
     View: 'view',
@@ -24,7 +18,6 @@ export default class AccountCard extends Component {
         this.state = {
             mode: Mode.View,
             account: _.cloneDeep(this.props.account),
-            error: null
         }
     }
 
@@ -50,47 +43,21 @@ export default class AccountCard extends Component {
         });
     }
 
-    updateAccount() {
-        // Validate
-        if (!validateEmail(this.state.account.email)) {
-            this.setState({
-                error: "Please enter a valid email address."
-            }, () => {
-                console.error(`${this.state.account.email} is not an RFC2822 compliant email address.`)
-            });
-        } else {
-            $.ajax({
-                type: 'put',
-                url: `${this.props.baseUri}/${this.state.account.id}`,
-                data: this.state.account
-            }).done(() => {
-                this.props.u();
-                this.setState({
-                    mode: Mode.View,
-                    error: null
-                });
-            }).fail((err) => {
-                console.error(`[AccountCard@updateAccount] Error updating account data: `, err.responseText);
-            });
-        }
-    }
-
     render() {
         return (
             <div className="col-lg-4 col-md-6 col-sm-12 mb-2">
-                <Panel onSubmit={this.updateAccount.bind(this)}>
-                    <h4 class="text-center">{this.state.account.name || ""}</h4>
+                <Panel onSubmit={this.props.saveChanges.bind(this)}>
+                    <h4 className="text-center">{this.state.account.name || ""}</h4>
                     
                     <EditButtons mode={this.state.mode}
                         setModeCb={this.setMode.bind(this)}
                         cancelCb={this.cancel.bind(this)}
-                        updateCb={this.updateAccount.bind(this)}
+                        updateCb={this.props.saveChanges.bind(this, this.state.account)}
                     />
 
                     <Email mode={this.state.mode}
                         value={this.state.account.email}
                         accountId={this.props.accountId}
-                        error={this.state.error}
                         cb={this.updateVal.bind(this, 'email')}
                     />
 
@@ -108,15 +75,15 @@ export default class AccountCard extends Component {
 
                     <Timestamps timestamps={this.state.account.timestamps}/>
                         
-                    <ResetPassword accountId={this.props.account.id}
-                        baseUri={this.props.baseUri}
-                        u={this.props.u}
+                    <ResetPassword account={this.props.account}
+                        requestPending={this.props.requestPending}
+                        forceReset={this.props.forceReset}
                     />
 
-                    <DeleteUser accountId={this.props.account.id}
-                        baseUri={this.props.baseUri}
-                        u={this.props.u}
-                    />    
+                    <DeleteUser account={this.props.account}
+                        requestPending={this.props.requestPending}
+                        deleteUser={this.props.deleteUser}
+                    />
                 </Panel>
             </div>
         );

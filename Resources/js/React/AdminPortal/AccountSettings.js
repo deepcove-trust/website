@@ -56,7 +56,7 @@ export default class AccountSettings extends Component {
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">
-                                <ChangePassword baseUri={baseUri} />
+                                <ChangePassword baseUri={baseUri} u={this.getData.bind(this)} />
                             </div>
 
                             <div className="col-lg-4 col-md-6 col-sm-12">

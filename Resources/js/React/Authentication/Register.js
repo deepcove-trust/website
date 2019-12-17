@@ -33,13 +33,13 @@ export default class Register extends Component {
             this.setState({
                 requestFailed: err.responseText,
                 requestPending: false
-            }, () => this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
+            }, () => this.Alert.error(null, err.responseText));
         })
     }
 
     render() {
         return (
-            <AlertWrapper onRef={(ref) => (this.AlertWrapper = ref)}>
+            <AlertWrapper onRef={(ref) => (this.Alert = ref)}>
                 <div className="login-clean text-center">
                     <form id="register" onSubmit={this.attemptRegistration.bind(this)}>
                         <h1 className="sr-only">Login Form</h1>

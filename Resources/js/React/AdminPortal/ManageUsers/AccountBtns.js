@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { Button, ConfirmButton } from '../../Components/Button';
-import $ from 'jquery';
 
 const Mode = {
     View: 'view',
@@ -8,40 +7,9 @@ const Mode = {
 }
 
 export class DeleteUser extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            requestPending: false
-        };
-    };
-
-    DeleteUser() {
-        this.setState({
-            requestPending: true
-        }, () => {
-            $.ajax({
-                type: 'delete',
-                url: `${this.props.baseUri}/${this.props.accountId}`
-            }).done(() => {
-                this.props.u();
-
-                this.setState({
-                    requestPending: false
-                });
-            }).fail((err) => {
-                console.error(`[DeleteUser@DeleteUser] Error deleting the account: `, err.responseText);
-
-                this.setState({
-                    requestPending: false
-                });
-            });
-        });
-    }
-
     render() {
         return (
-            <ConfirmButton className="btn btn-danger mt-3" cb={this.DeleteUser.bind(this)} pending={this.state.requestPending}>
+            <ConfirmButton className="btn btn-danger mt-3" cb={this.props.deleteUser.bind(this, this.props.account)} pending={this.props.requestPending}>
                 Delete User <i className="fas fa-user-times"></i>
             </ConfirmButton>
         )
@@ -57,32 +25,9 @@ export class ResetPassword extends Component {
         };
     };
 
-    ResetPassword() {
-        this.setState({
-            "requestPending": true
-        }, () => {
-            $.ajax({
-                type: 'patch',
-                url: `${this.props.baseUri}/${this.props.accountId}`
-            }).done(() => {
-                this.props.u();
-
-                this.setState({
-                    requestPending: false
-                });
-            }).fail((err) => {
-                console.error(`[ResetPassword@ResetPassword] Error flagging account for a password reset: `, err.responseText);
-
-                this.setState({
-                    requestPending: false
-                });
-            });
-        });
-    }
-
     render() {
         return (
-            <ConfirmButton className="btn btn-dark mt-3 mx-1" cb={this.ResetPassword.bind(this)} pending={this.state.requestPending}>
+            <ConfirmButton className="btn btn-dark mt-3 mx-1" cb={this.props.forceReset.bind(this, this.props.account)} pending={this.props.requestPending}>
                 Reset Password <i className="fas fa-user-lock"></i>
             </ConfirmButton>
         )
@@ -100,7 +45,7 @@ export class EditButtons extends Component {
             )
         } else {
             buttons = (
-                <div role="group" class="btn-group btn-group-sm">
+                <div role="group" className="btn-group btn-group-sm">
                     <Button className="btn btn-danger" cb={this.props.cancelCb.bind(this)}>
                         Cancel <i className="fas fa-times"></i>
                     </Button>

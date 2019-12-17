@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
@@ -213,7 +214,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             {
                 _Logger.LogWarning("Error updating page settings: {0}", ex.Message);
                 _Logger.LogWarning(ex.StackTrace);
-                return BadRequest("There was an error updating the page settings. Please try again later.");
+                return BadRequest(new ResponseHelper("There was an error updating the page settings. Please try again later.", ex.Message));
             }
         }
             
@@ -237,7 +238,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             {
                 _Logger.LogWarning("Error updating page settings: {0}", ex.Message);
                 _Logger.LogWarning(ex.StackTrace);
-                return BadRequest("There was an error updating the page settings. Please try again later.");
+                return BadRequest(new ResponseHelper("There was an error updating the page settings. Please try again later.", ex.Message));
             }
         }
 
@@ -284,7 +285,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
             {
                 _Logger.LogError("Error deleting page {0}: {1}", pageId, ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }
         }
     }

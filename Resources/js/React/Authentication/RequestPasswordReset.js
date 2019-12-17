@@ -35,17 +35,17 @@ export default class RequestPasswordReset extends Component {
             this.setState({
                 requestPending: false,
                 emailSent: true,
-            }, () => this.AlertWrapper.alert('success', 'Account recovery email has been sent'));
+            }, () => this.Alert.success('Account recovery email has been sent'));
         }).fail((err) => {
             this.setState({
                 requestPending: false,
-            }, () => this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
+            }, () => this.Alert.error(null, err.responseText));
         });
     }
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 <div className="login-clean text-center">
                     <form onSubmit={this.attemptRequest.bind(this)}>
                         <h1 className="sr-only">Request password reset form</h1>
