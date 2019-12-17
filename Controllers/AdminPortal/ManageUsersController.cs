@@ -19,13 +19,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
     public class UsersController : Controller
     {
         private readonly WebsiteDataContext _Db;
-        private readonly IEmailService _Smtp;
+        private readonly IEmailService _EmailService;
         private readonly ILogger<UsersController> _Logger;
 
-        public UsersController(WebsiteDataContext db, IEmailService smtp, ILogger<UsersController> logger)
+        public UsersController(WebsiteDataContext db, IEmailService emailService, ILogger<UsersController> logger)
         {
             _Db = db;
-            _Smtp = smtp;
+            _EmailService = emailService;
             _Logger = logger;
         }
 
@@ -104,7 +104,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 if (sendStatusEmail)
                 {
                     // Only send the email if their account status has changed.
-                    await _Smtp.SendAccountStatusAsync(request.Bool("active"), account.ToEmailContact(), HttpContext.Request.BaseUrl());
+                    await _EmailService.SendAccountStatusAsync(request.Bool("active"), account.ToEmailContact(), HttpContext.Request.BaseUrl());
                 }
                 
                 return Ok();

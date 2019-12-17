@@ -16,7 +16,7 @@ namespace Deepcove_Trust_Website.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext, IEmailService _smtp)
+        public async Task Invoke(HttpContext httpContext, IEmailService _EmailService)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Deepcove_Trust_Website.Middleware
             }
             catch (Exception ex)
             {
-                await _smtp.SendExceptionEmailAsync(ex, httpContext);
+                await _EmailService.SendExceptionEmailAsync(ex, httpContext);
                 httpContext.Response.Redirect("/Home/Error");
             }
         }
