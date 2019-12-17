@@ -59,7 +59,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     Active = false,
                 };
 
-                account.Password = _Hasher.HashPassword(account, Utils.RandomString(30));
+                account.Password = _Hasher.HashPassword(account, RandomString(30));
                 await _Db.AddAsync(account);
 
                 PasswordReset reset = new PasswordReset(

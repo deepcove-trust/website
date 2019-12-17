@@ -48,11 +48,15 @@ namespace Deepcove_Trust_Website.Controllers
                 };
 
                 if (request.Bool("SendToBookings"))
+                {
                     // Sends a master email to the "BOOKINGS" email address in system settings, then sends a copy to each person on the mailing list.
                     await _SMTP.SendBookingInquiryAsync(Sender, messageArgs.Subject, messageArgs);
+                }
                 else
+                {
                     // Sends a master email to the "GENERAL" email address in system settings, then sends a copy to each person on the mailing list.
                     await _SMTP.SendGeneralInquiryAsync(Sender, messageArgs.Subject, messageArgs);
+                }
 
                 _Logger.LogInformation("Sucsefully sent {0}'s email", messageArgs.SendersName);
                 return Ok();

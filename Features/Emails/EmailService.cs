@@ -201,15 +201,17 @@ namespace Deepcove_Trust_Website.Features.Emails
             if(Developers != null)
             {
                 foreach (EmailContact dev in Developers)
+                {
                     //SendEmailAsync(null, dev, "Woops, something went wrong!", ex.Message);
                     try
                     {
                         SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context));
                     }
-                    catch(Exception exa) {
-                        Console.WriteLine(exa.Message);
+                    catch (Exception ex1)
+                    {
+                        Console.WriteLine(ex1.Message);
                     }
-                    
+                }    
             }
         }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed

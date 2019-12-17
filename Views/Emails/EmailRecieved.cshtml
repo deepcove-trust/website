@@ -21,34 +21,39 @@
 }
 @model Deepcove_Trust_Website.Views.Emails.Models.EmailRecieved
 
-<p style="font-weight: 400;">Email Submission Recieved &#64; @NzTime() NZST</p>
-
-<p style="font-weight: 200;">Senders Information:</p>
-<table>
-    <tbody>
-        <tr>
-            <td>Name:</td>
-            <td>Email:</td>
-            <td>Phone:</td>
-        </tr>
-        <tr>
-            <td>@Model.SendersName</td>
-            <td>
-                <a href="mailto:@Model.SendersEmail">@Model.SendersEmail</a>
-            </td>
-            <td>
-                <a href="tel:@Model.SendersPhone">@Model.SendersPhone</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-@if (!String.IsNullOrEmpty(Model.SendersOrg))
-{
-    <p>Sent on behalf of: @Model.SendersOrg</p>
-}
+<p style="margin-bottom: 20px;">Email Submission Recieved at @NzTime() NZST</p>
 
 <hr />
 
 <p style="font-size: 16px; font-weight: 300;">@Model.Subject</p>
 <p>@Model.Message</p>
+
+<hr />
+
+<p style="font-weight: bold;">
+    Senders Information: &nbsp;
+
+    @if (!String.IsNullOrEmpty(Model.SendersOrg))
+    {
+        <span style="font-weight: normal;">Sent on behalf of: @Model.SendersOrg</span>
+    }
+</p>
+
+<table border="0" width="600px" style="margin-top: 15px; margin-bottom:15px;">
+    <tbody>
+        <tr style="text-align: center;">
+            <td width="33%">
+                <p style="font-weight: bold;">Name:</p>
+                @Model.SendersName
+            </td>
+            <td width="33%">
+                <p style="font-weight: bold;">Email:</p>
+                <a href="@($"mailto:{Model.SendersEmail}")">@Model.SendersEmail</a>
+            </td>
+            <td width="33%">
+                <p style="font-weight: bold;">Phone:</p>
+                <a href="@($"tel:{Model.SendersPhone}")">@Model.SendersPhone</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
