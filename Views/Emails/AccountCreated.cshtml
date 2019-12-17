@@ -22,3 +22,5 @@
     <a href="@($"{Model.BaseUrl}login")" rel="noopener" style="text-decoration: underline; line-height: inherit;" target="_blank">Admin Login</a> | 
     For help contact <a href="@($"mailto:{Model.CreatedBy.Address}")" style="text-decoration;">@Model.CreatedBy.Name</a>
 </p>
+
+<p style="text-align:center; font-size: 11px; line-height: 13px;">This password reset is valid for @tokenDuration hours. If you are having issues with the reset password button copy this link into your browser: @($"{Model.BaseUrl}reset-password/{Model.Token}")</p>
