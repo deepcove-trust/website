@@ -214,6 +214,15 @@ namespace Deepcove_Trust_Website.Features.Emails
                 }    
             }
         }
+
+        public async Task SendAccountStatusAsync(bool accountActive, EmailContact Recipient, Uri BaseUrl)
+        {
+            string razorViewName = accountActive ? "Account Activated" : "Account Suspended";
+
+            await SendRazorEmailAsync(null, Recipient, razorViewName, razorViewName.Replace(" ", ""),
+                new _EmailLayout { Name = Recipient.Name, BaseUrl = BaseUrl });
+
+        }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }
 }

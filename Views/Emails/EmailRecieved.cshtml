@@ -25,7 +25,7 @@
 
 <hr />
 
-<p style="font-size: 16px; font-weight: 300;">@Model.Subject</p>
+<p style="font-size: 16px; font-weight: bold;">@Model.Subject</p>
 <p>@Model.Message</p>
 
 <hr />
@@ -44,15 +44,15 @@
         <tr style="text-align: center;">
             <td width="33%">
                 <p style="font-weight: bold;">Name:</p>
-                @Model.SendersName
+                @(Model.SendersName ?? "")
             </td>
             <td width="33%">
                 <p style="font-weight: bold;">Email:</p>
-                <a href="@($"mailto:{Model.SendersEmail}")">@Model.SendersEmail</a>
+                <a href="@($"mailto:{Model.SendersEmail}")">@(Model.SendersEmail ?? "")</a>
             </td>
             <td width="33%">
                 <p style="font-weight: bold;">Phone:</p>
-                <a href="@($"tel:{Model.SendersPhone}")">@Model.SendersPhone</a>
+                <a href="@($"tel:{Model.SendersPhone}")">@(Model.SendersPhone ?? "")</a>
             </td>
         </tr>
     </tbody>

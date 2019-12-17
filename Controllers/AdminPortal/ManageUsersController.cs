@@ -87,17 +87,26 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         {
             try
             {
-                Account account = await _Db.Accounts.FindAsync(id);
+                bool sendStatusEmail = false;
 
+                Account account = await _Db.Accounts.FindAsync(id);
                 account.Email = request.Str("email");
                 account.PhoneNumber = request.Str("phoneNumber");
-
                 if (account.Id != User.AccountId())
+                {
+                    sendStatusEmail = account.Active != request.Bool("active");
                     account.Active = request.Bool("active");
-                
+                }
+                    
+                await _Db.SaveChangesAsync();
                 _Logger.LogInformation("Information updated for account belonging to {0}", account.Name);
 
-                await _Db.SaveChangesAsync();
+                if (sendStatusEmail)
+                {
+                    // Only send the email if their account status has changed.
+                    await _Smtp.SendAccountStatusAsync(request.Bool("active"), account.ToEmailContact(), HttpContext.Request.BaseUrl());
+                }
+                
                 return Ok();
             }
             catch(Exception ex)

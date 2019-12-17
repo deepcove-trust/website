@@ -71,13 +71,9 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 await _Db.SaveChangesAsync();
 
                 _Logger.LogInformation("New account created - Name: {0}, Email: {1}", account.Name, account.Email);
-
-                EmailContact sendTo = new EmailContact { Name = account.Name, Address = account.Email };
                 await _Smtp.SendNewAccountEmailAsync(reset, User, Request.BaseUrl());
 
-
-                return Ok(Url.Action("Index", "Users",
-                        new { area = "admin-portal" }));
+                return Ok(Url.Action("Index", "Users", new { area = "admin-portal" }));
             } 
             catch(Exception ex)
             {
