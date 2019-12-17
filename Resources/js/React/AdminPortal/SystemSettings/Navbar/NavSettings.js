@@ -62,7 +62,7 @@ export default class NavSettings extends Component {
         );
 
         options = this.state.link.type == "Dropdown" ? (
-            null
+            <Dropdown />
         ) : this.state.link.type == "Custom URL" ? (
             <CustomUrl link={this.state.link}
                 update={this.updateLink.bind(this, 'url')}
@@ -92,7 +92,7 @@ export default class NavSettings extends Component {
 
                     <div>
                         <hr />
-                        <ConfirmButton className="btn btn-outline-danger btn-sm" disabled>
+                        <ConfirmButton className="btn btn-outline-danger btn-sm" cb={this.props.onDelete.bind(this)}>
                             Delete Link <i className="fas fa-trash"/>
                         </ConfirmButton>
 

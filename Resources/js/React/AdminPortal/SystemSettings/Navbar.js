@@ -56,6 +56,18 @@ export default class Navbar extends Component {
         });
     }
 
+    deleteLink(id) {
+        $.ajax({
+            method: 'delete',
+            url: `${baseUri}/${id}`
+        }).done((result) => {
+            console.log(`Nav link ${id} deleted successfully`);
+            this.getData();
+        }).fail((err) => {
+            console.log(err);
+        });
+    }
+
     render() {
         return (
             <div className="row">
@@ -68,6 +80,7 @@ export default class Navbar extends Component {
 
                 <div className="col-lg-9 col-md-6 col-sm-12">
                     <NavSettings link={this.getPage()}
+                        onDelete={this.deleteLink.bind(this, this.state.activeId)}
                         pages={this.state.pages}
                     />
                 </div>
