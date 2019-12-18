@@ -11,7 +11,7 @@ using Deepcove_Trust_Website.Data;
 using Deepcove_Trust_Website.Features.Emails;
 using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Models;
-
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -20,14 +20,14 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
     {
         private readonly WebsiteDataContext _Db;
         private readonly IConfiguration _Config;
-        private readonly IEmailService _Smtp;
+        private readonly IEmailService _EmailService;
         private readonly ILogger<RequestPasswordResetController> _Logger;
 
-        public RequestPasswordResetController(WebsiteDataContext db, IConfiguration configuration, IEmailService smtp, ILogger<RequestPasswordResetController> logger)
+        public RequestPasswordResetController(WebsiteDataContext db, IConfiguration configuration, IEmailService emailService, ILogger<RequestPasswordResetController> logger)
         {
             _Db = db;
             _Config = configuration;
-            _Smtp = smtp;
+            _EmailService = emailService;
             _Logger = logger;
         }
 
@@ -68,18 +68,18 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
 
                     await _Db.AddAsync(reset);
                     await _Db.SaveChangesAsync();
-                    await _Smtp.SendPasswordResetEmailAsync(reset, this.Request.BaseUrl());
+                    await _EmailService.SendPasswordResetEmailAsync(reset, this.Request.BaseUrl());
                     
                     _Logger.LogInformation("Password reset requested for account belonging to {0}", account.Name);
                 }
-
+                
                 return Ok();
             }
             catch (Exception ex)
             {
                 _Logger.LogError("Error requesting password reset for account belonging to {0}: {1}", request.Str("email"), ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }
         }
     }

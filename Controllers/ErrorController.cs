@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Deepcove_Trust_Website.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace Deepcove_Trust_Website.Controllers
 {
@@ -16,6 +18,13 @@ namespace Deepcove_Trust_Website.Controllers
         public IActionResult PasswordExpired()
         {
             return View(viewName: "~/Views/Errors/PasswordExpired.cshtml");
+        }
+
+        [HttpGet("server-error")]
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult InternalServerError(string requestId = "")
+        {
+            return View(viewName: "~/Views/Errors/InternalServerError.cshtml", new ErrorViewModel { RequestId = requestId });
         }
     }
 }

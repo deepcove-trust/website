@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Helpers;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.IO;
+using System.Xml;
+using System.Collections.Generic;
 
 namespace Deepcove_Trust_Website.Controllers
 {
@@ -99,6 +103,74 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["pageId"] = page.Id;
             ViewData["Description"] = page.Description;
             return View(viewName: "~/Views/PageTemplate.cshtml");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("sitemap")]
+        [ResponseCache(VaryByHeader = "User-Agent", Duration = 60)]
+        public async Task<IActionResult> GenerateSitemap()
+        {
+            try
+            {
+                List<Page> pages = await _Db.Pages.Where(p => p.Public).ToListAsync();
+
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.NewLineOnAttributes = true;
+
+                MemoryStream xml = new MemoryStream();
+                XmlWriter writer = XmlWriter.Create(xml, settings);
+
+                // Urlset
+                writer.WriteStartElement(null, "urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
+
+                foreach (Page page in pages)
+                {
+                    // Url
+                    writer.WriteStartElement(null, "url", null);
+
+                    // Location
+                    writer.WriteStartElement(null, "loc", null);
+                    writer.WriteValue(new Uri(Request.BaseUrl(), page.AbsoluteUrl));
+                    writer.WriteEndElement();
+                    // Close location
+
+                    // Lastmod
+                    writer.WriteStartElement(null, "lastmod", null);
+                    writer.WriteValue(page.UpdatedAt.ToString("yyyy-MM-dd"));
+                    writer.WriteEndElement();
+                    // Close lastmod
+
+                    // Priority
+                    double priority = page.Name == "" ? 1.0 : page.Name == "Contact Us" 
+                        ? 0.8 : page.Section == Section.main ? 0.6 : 0.4;
+
+                    writer.WriteStartElement(null, "priority", null);
+                    writer.WriteValue(priority);
+                    writer.WriteEndElement();
+                    // Close priority
+
+                    // Close url
+                    writer.WriteEndElement();
+                }
+
+                // Close urlset
+                writer.WriteEndElement();
+
+                // Flush writer and return stream to beginning
+                writer.Flush();
+                xml.Seek(0, SeekOrigin.Begin);
+
+                // Return stream contents as a file download
+                return new FileStreamResult(xml, "application/xml") { FileDownloadName = "sitemap.xml" };
+
+            }
+            catch (Exception ex)
+            {
+                _Logger.LogError("Error generating sitemap: {0}", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                throw ex;
+            }
         }
     }
 }

@@ -60,7 +60,7 @@ export default class SelectMedia extends Component {
             if (!this.Filter(media)) return null;
 
             return (
-                <div className="col-md-4 col-sm-6" key={key}>
+                <div className="col-lg-4 col-6" key={key}>
                     <Item file={media} selected={media.id == this.state.selectedId} cb={(selectedId) => this.setState({ selectedId })}/>
                 </div>
             )
@@ -95,7 +95,8 @@ class Item extends Component {
         return (
             <div className={this.props.selected ? "selected" : null}>
                 <img src={`/media?filename=${this.props.file.filename}`}
-                    style={{ 'width': '100%' }}
+                    style={{ 'width': '100%', 'objectFit': 'cover' }}
+                    height={'200px'}
                     alt={this.props.file.name}
                     onClick={this.props.cb.bind(this, this.props.file.id)}
                 />

@@ -53,6 +53,7 @@
     "react-recaptcha": "^2.3.10",
     "react-select": "^3.0.8",
     "react-select-v2": "^2.4.2",
+    "react-s-alert": "^1.4.1",
     "react-tooltip": "^3.10.0"
   }
 }

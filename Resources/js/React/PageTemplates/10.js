@@ -37,7 +37,7 @@ export default class ReactTemplate10 extends Component {
 
 
                 <div className="row pt-4">
-                    <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
@@ -53,7 +53,7 @@ export default class ReactTemplate10 extends Component {
                         />
                     </div>
 
-                    <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
@@ -69,7 +69,7 @@ export default class ReactTemplate10 extends Component {
                         />
                     </div>
 
-                    <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
@@ -85,7 +85,7 @@ export default class ReactTemplate10 extends Component {
                         />
                     </div>
 
-                    <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
@@ -101,7 +101,7 @@ export default class ReactTemplate10 extends Component {
                         />
                     </div>
 
-                    <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}
@@ -117,7 +117,7 @@ export default class ReactTemplate10 extends Component {
                         />
                     </div>
 
-                    <div className="col-lg-4 col-md-2 col-sm-12 mb-4">
+                    <div className="col-lg-4 col-md-6 col-sm-12 mb-4">
                         <div style={{ 'margin': '-1rem 0rem 2rem 0rem' }}>
                             <Media minHeight="200"
                                 allowEdits={this.props.allowEdits}

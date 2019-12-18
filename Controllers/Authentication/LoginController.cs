@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Deepcove_Trust_Website.Data;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.Authentication
 {
@@ -61,21 +62,21 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     if (account == null)
                     {
                         _Logger.LogInformation("User attempted logging in with invalid email address");
-                        return Unauthorized("Invalid email or password");
+                        return Unauthorized(new ResponseHelper("Invalid email or password"));
                     }
 
                     // Invalid Password
                     if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("password")) != PasswordVerificationResult.Success)
                     {
                         _Logger.LogInformation("User attempted logging into account belonging to {0} with invalid password", account.Name);
-                        return Unauthorized("Invalid email or password");
+                        return Unauthorized(new ResponseHelper("Invalid email or password"));
                     }
 
                     // Inactive Account
                     if (!account.Active)
                     {
                         _Logger.LogInformation("User attempted logging into account belonging to {0}, but the account needs to be activated", account.Name);
-                        return Unauthorized("Your account requires activation from an administrator before you can login");
+                        return Unauthorized(new ResponseHelper("Your account requires activation from an administrator"));
                     }
 
 
@@ -107,7 +108,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 {
                     _Logger.LogError("Error while logging in: {0}", ex.Message);
                     _Logger.LogError(ex.StackTrace);
-                    return BadRequest("Something went wrong, please try again later");
+                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
                 }
             }
 

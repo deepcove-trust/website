@@ -36,7 +36,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             try
             {
                 var email = new MimeMessage();
-
+                
                 // IF: A sender is not specified then use the configuration value
                 if (sender == null)
                 {
@@ -46,11 +46,12 @@ namespace Deepcove_Trust_Website.Features.Emails
                 {
                     email.From.Add(new MailboxAddress(sender.Name, sender.Address));
                 }
-
+                
+                // Set recipient, subject and 'Reply To' email address
                 email.To.Add(new MailboxAddress(recipient.Name, recipient.Address));
+                email.ReplyTo.Add(new MailboxAddress(_EmailConfiguration.ReplyToEmail));
                 email.Subject = subject;
-
-
+                
                 var body = new BodyBuilder
                 {
                     HtmlBody = message
@@ -187,7 +188,7 @@ namespace Deepcove_Trust_Website.Features.Emails
             }
         }
 
-        public async Task SendExceptionEmailAsync(Exception ex, HttpContext context)
+        public async Task SendExceptionEmailAsync(Exception ex, HttpContext context, string requestId)
         {
             List<EmailContact> Developers = await _Db.NotificationChannels.Where(c => c.Name == "Developer Exceptions")
                 .Select(s => s.ChannelMemberships
@@ -201,16 +202,26 @@ namespace Deepcove_Trust_Website.Features.Emails
             if(Developers != null)
             {
                 foreach (EmailContact dev in Developers)
-                    //SendEmailAsync(null, dev, "Woops, something went wrong!", ex.Message);
+                {
                     try
                     {
-                        SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context));
+                        SendRazorEmailAsync(null, dev, "Woops, something went wrong!", "ErrorOccured", new ErrorOccured(ex, context, requestId));
                     }
-                    catch(Exception exa) {
-                        Console.WriteLine(exa.Message);
+                    catch (Exception ex1)
+                    {
+                        Console.WriteLine(ex1.Message);
                     }
-                    
+                }    
             }
+        }
+
+        public async Task SendAccountStatusAsync(bool accountActive, EmailContact Recipient, Uri BaseUrl)
+        {
+            string razorViewName = accountActive ? "Account Activated" : "Account Suspended";
+
+            await SendRazorEmailAsync(null, Recipient, razorViewName, razorViewName.Replace(" ", ""),
+                new _EmailLayout { Name = Recipient.Name, BaseUrl = BaseUrl });
+
         }
 #pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
     }

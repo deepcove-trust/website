@@ -2,6 +2,7 @@
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
 import { FormGroup, Input } from '../Components/FormControl';
+import AlertWrapper from '../Components/Alert';
 import $ from 'jquery';
 
 const baseUri = "/login";
@@ -11,7 +12,6 @@ export default class Login extends Component {
         super(props);
 
         this.state = {
-            loginFailed: false,
             loginPending: false,
             returnUrl: ""
         }
@@ -33,13 +33,11 @@ export default class Login extends Component {
             window.location.replace(url);
         }).fail((err) => {
             this.setState({
-                loginFailed: err.responseText,
                 loginPending: false
-            });
-
-            console.error(`[Login@attemptLogin] Error logging in: `, err.responseText);
+            }, () => this.Alert.error("Incorrect username or password", err.responseText));
         })
     }
+
     componentDidMount() {
         var urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('ReturnUrl')) {
@@ -50,38 +48,29 @@ export default class Login extends Component {
     }
 
     render() {
-        let loginFailed;
-        if (this.state.loginFailed) {
-            loginFailed = (
-                <FormGroup>
-                    <p className="text-danger">{this.state.loginFailed}</p>
-                </FormGroup>
-            )
-        }
-
         return (
-            <div className="login-clean text-center">
-                <form onSubmit={this.attemptLogin.bind(this)}>
-                    <h1 className="sr-only">Login Form</h1>
-                    <h1 className="display-4 mb-5">Log In</h1>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+                <div className="login-clean text-center">
+                    <form onSubmit={this.attemptLogin.bind(this)}>
+                        <h1 className="sr-only">Login Form</h1>
+                        <h1 className="display-4 mb-5">Log In</h1>
 
-                    <FormGroup>
-                        <Input type="email" name="email" placeHolder="Email" autoComplete="email" autoFocus required/>
-                    </FormGroup>
+                        <FormGroup>
+                            <Input type="email" name="email" placeHolder="Email" autoComplete="email" autoFocus required/>
+                        </FormGroup>
 
-                    <FormGroup>
-                        <Input type="password" name="password" placeHolder="Password" autoComplete="Password" required />
-                    </FormGroup>
+                        <FormGroup>
+                            <Input type="password" name="password" placeHolder="Password" autoComplete="Password" required />
+                        </FormGroup>
 
-                    {loginFailed}
+                        <FormGroup>
+                            <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
+                        </FormGroup>
 
-                    <FormGroup>
-                        <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.loginPending}>Log In</Button>
-                    </FormGroup>
-
-                    <a className="forgot" href="/reset-password">Forgot your email or password?</a>
-                </form>
-            </div>
+                        <a className="forgot" href="/reset-password">Forgot your email or password?</a>
+                    </form>
+                </div>
+            </AlertWrapper>
         );
     }
 }

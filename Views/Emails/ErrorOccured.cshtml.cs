@@ -9,7 +9,7 @@ namespace Deepcove_Trust_Website.Views.Emails.Models
 {
     public class ErrorOccured : _EmailLayout
     {
-        public ErrorOccured(Exception ex, HttpContext context)
+        public ErrorOccured(Exception ex, HttpContext context, string requestId)
         {
             // EXCEPTION INFORMATION
             var trace = new StackTrace(ex, true);
@@ -20,6 +20,7 @@ namespace Deepcove_Trust_Website.Views.Emails.Models
             // REQUESTOR INFORMATION            
             User = context.User.Identity;
             UserIP = context.Request.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+            RequestId = requestId;
 
             // RESOURCE INFORMATION
             Time = DateTime.UtcNow;
@@ -46,6 +47,7 @@ namespace Deepcove_Trust_Website.Views.Emails.Models
         private readonly DateTime Time;
         private readonly string Method;
         public string RequestUrl { get; }
+        public string RequestId { get; }
         public Dictionary<string, string> Headers;
         
         public string UserAgent

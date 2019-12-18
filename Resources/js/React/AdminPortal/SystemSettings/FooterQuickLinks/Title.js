@@ -1,7 +1,7 @@
-﻿import React, { Component, Fragment } from 'React';
+﻿import React, { Component } from 'React';
 import { FormGroup, Input } from '../../../Components/FormControl';
 import { BtnGroup, ConfirmButton, Button } from '../../../Components/Button';
-import $ from 'jquery';
+import AlertWrapper from '../../../Components/Alert';
 
 export default class Title extends Component {
     constructor(props) {
@@ -28,20 +28,6 @@ export default class Title extends Component {
         });
     }
 
-    saveChange() {
-        $.ajax({
-            type: 'put',
-            url: `${this.props.baseUri}/${this.props.sectionEnum}`,
-            data: {
-                title: this.state.value
-            }
-        }).done(() =>
-            this.props.u()
-        ).fail((err) => {
-            console.error(err);
-        });
-    }
-
     render() {
         if (!this.props.section) return null;
 
@@ -51,14 +37,14 @@ export default class Title extends Component {
                     Cancel <i className="fas-fa-times"/>
                 </ConfirmButton>
 
-                <Button className="btn btn-success" pending={this.state.pending} cb={this.saveChange.bind(this)}>
+                <Button className="btn btn-success" pending={this.state.pending} cb={this.props.updateTitleCb.bind(this, this.state.value)}>
                     Save <i className="fas fa-check"/>
                 </Button>
             </BtnGroup>
         ): null;
 
         return (
-            <Fragment>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 {actions}
                 <FormGroup label="Section Title" required>
                     <Input type="text" value={this.state.value}
@@ -67,7 +53,7 @@ export default class Title extends Component {
                         })}
                     />
                 </FormGroup>
-            </Fragment>
+            </AlertWrapper>
         );
     }
 }

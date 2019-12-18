@@ -429,6 +429,38 @@ namespace Deepcove_Trust_Website.Migrations
                     b.ToTable("NavItemPages");
                 });
 
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.Notice", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Active");
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<int?>("ImageId");
+
+                    b.Property<string>("LongDesc");
+
+                    b.Property<int>("Noticeboard");
+
+                    b.Property<string>("ShortDesc");
+
+                    b.Property<string>("Title");
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int>("Urgent");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("Notices");
+                });
+
             modelBuilder.Entity("Deepcove_Trust_Website.Models.NotificationChannel", b =>
                 {
                     b.Property<int>("Id")
@@ -807,6 +839,13 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasOne("Deepcove_Trust_Website.Models.Page", "Page")
                         .WithMany("NavItemPages")
                         .HasForeignKey("PageId");
+                });
+
+            modelBuilder.Entity("Deepcove_Trust_Website.Models.Notice", b =>
+                {
+                    b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.PageRevision", b =>

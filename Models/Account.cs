@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Deepcove_Trust_Website.Features.Emails;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,5 +34,14 @@ namespace Deepcove_Trust_Website.Models
         // Nav properties
         public ICollection<ChannelMembership> ChannelMemberships { get; set; }
         // End of nav properties
+
+        public EmailContact ToEmailContact()
+        {
+            return new EmailContact
+            {
+                Name = Name,
+                Address = Email
+            };
+        }
     }
 }

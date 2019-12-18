@@ -9,9 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <Compile Remove="Storage\media\**" />
+    <Content Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <Content Remove="Storage\media\**" />
+    <EmbeddedResource Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <EmbeddedResource Remove="Storage\media\**" />
+    <None Remove="Resources\js\React\AdminPortal\MediaManagement\**" />
     <None Remove="Storage\media\**" />
   </ItemGroup>
 
@@ -130,6 +134,8 @@
     <Compile Remove="Migrations\20191113055536_alter-navitem-keys.Designer.cs" />
     <Compile Remove="Migrations\20191113060257_initial.cs" />
     <Compile Remove="Migrations\20191113060257_initial.Designer.cs" />
+    <Compile Remove="Migrations\20191123062940_add-notices.cs" />
+    <Compile Remove="Migrations\20191123062940_add-notices.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -142,13 +148,13 @@
 
 
   <ItemGroup>
-    <PackageReference Include="MailKit" Version="2.2.0" />
+    <PackageReference Include="MailKit" Version="2.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.7.9" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
-    <PackageReference Include="NAudio" Version="1.9.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="NReco.VideoInfo.LT" Version="1.1.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
@@ -156,7 +162,6 @@
 
 
   <ItemGroup>
-    <Folder Include="Resources\js\React\AdminPortal\MediaManagement\" />
     <Folder Include="Storage\" />
     <Folder Include="wwwroot\audio\" />
     <Folder Include="wwwroot\images\templates\" />

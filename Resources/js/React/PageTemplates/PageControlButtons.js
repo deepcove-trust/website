@@ -2,6 +2,7 @@
 import { Button, Link } from '../Components/Button';
 import { PageUrl } from '../../helpers';
 import $ from 'jquery';
+import AlertWrapper from '../Components/Alert';
 
 const pageBaseUri = `/admin/pages`;
 
@@ -19,10 +20,10 @@ export class ToggleVisibility extends Component {
             url: `${pageBaseUri}/${this.props.pageId}/visibility`,
             data: {visbility: e}
         }).done(() => {
+            this.Alert.info(`Page is now ${e ? 'visible' : 'hidden'}`);
             if (this.props.u) return this.props.u();
         }).fail((err) => {
-            // redo this
-            console.error(err);
+            this.Alert.error(null, err.responseText);
         })
     }
 
@@ -42,9 +43,11 @@ export class ToggleVisibility extends Component {
         }
 
         return (
-            <Button className={this.props.className || `btn btn-dark btn-sm`} cb={this.toggleVisibility.bind(this, !this.props.public)}>
-                {text}
-            </Button>    
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+                <Button className={this.props.className || `btn btn-dark btn-sm`} cb={this.toggleVisibility.bind(this, !this.props.public)}>
+                    {text}
+                </Button>    
+            </AlertWrapper>
         )
     }
 }

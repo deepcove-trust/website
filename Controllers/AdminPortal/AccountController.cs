@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using Deepcove_Trust_Website.Data;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -78,7 +79,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             {
                 _Logger.LogError("Error updating account belonging to {0}: {1}", User.AccountName(), ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("We could not update your account, please try again later");
+                return BadRequest(new ResponseHelper("We could not update your account, please try again later", ex.Message));
             }
         }
 
@@ -90,15 +91,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 Account account = await _Db.Accounts.FindAsync(User.AccountId());
 
                 // Old passwords do not match
-                if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("currentPassword")) != PasswordVerificationResult.Success)
-                    return BadRequest("Your current password was not correct");
+                if (_Hasher.VerifyHashedPassword(account, account.Password, request.Str("current")) != PasswordVerificationResult.Success)
+                    return BadRequest(new ResponseHelper("Your current password was not correct", "<Hidden for Security>"));
 
                 // New passwords do not match
-                if (request.Str("newPassword") != request.Str("confirmPassword"))
-                    return BadRequest("Your new password and confirmation password do not match");
+                if (request.Str("new") != request.Str("confirm"))
+                    return BadRequest(new ResponseHelper("Your new password and confirmation password do not match", "<Hidden for Security>"));
 
                 // Update Password
-                account.Password = _Hasher.HashPassword(account, request.Str("newPassword"));
+                account.Password = _Hasher.HashPassword(account, request.Str("new"));
                 await _Db.SaveChangesAsync();
 
                 _Logger.LogInformation("Password updated for account belonging to {0}", account.Name);
@@ -108,7 +109,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             {
                 _Logger.LogError("Error updating password for account belonging to {0}: {1}", User.AccountName(), ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }
             
         }
@@ -134,13 +135,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 _Logger.LogDebug("User {0} subscribed to {1} notification channel", User.AccountName(), channel.Name);
 
-                return Ok();
+                return Ok($"Subscribed to: {channel.Name}");
             }
             catch (Exception ex)
             {
                 _Logger.LogError("Error subscribing {0} to notification channel ID {1}", User.AccountName(), channelId);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }
         }
 
@@ -156,14 +157,15 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 });
 
                 _Logger.LogDebug("User {0} unsubscribed from notification channel {1}", User.AccountName(), channelId);
+                await _Db.SaveChangesAsync();
 
-                return Ok(await _Db.SaveChangesAsync());
+                return Ok($"Unsubscribed from {_Db.NotificationChannels.Find(channelId).Name}");
             }
             catch (Exception ex)
             {
                 _Logger.LogError("Error unsubscribing {0} from notification channel ID {1}", User.AccountName(), channelId);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later", ex.Message));
             }
         }
     }

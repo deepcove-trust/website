@@ -1,7 +1,7 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
-
+import AlertWrapper from '../../Components/Alert';
 import $ from 'jquery';
 
 
@@ -55,22 +55,21 @@ export default class Settings extends Component {
             url: `${this.props.baseUri}`,
             data: this.state.account
         }).done(() => {
-            this.props.u();
             this.setState({
                 requestPending: false
-            });
+            }, this.Alert.success('Your settings have been updated'));
+
+            this.props.u();
         }).fail((err) => {
             this.setState({
                 requestPending: false
-            });
-
-            console.error(`[Settings@updateAccount] Error updating account settings: `, err.responseText);
+            }, this.Alert.error(null, err.responseText));
         })
     }
 
     render() {
         return (
-            <Fragment>
+            <AlertWrapper onRef={ref => (this.Alert = ref)}>
                 <form id="settings" onSubmit={this.updateAccount.bind(this)}>
                     <FormGroup label="Account Name" htmlFor="accountName" required>
                         <Input id="accountName"
@@ -103,7 +102,7 @@ export default class Settings extends Component {
 
                     <Button className="btn btn-primary mt-4" pending={this.state.requestPending} type="submit">Update Settings</Button>
                 </form>
-            </Fragment>
+            </AlertWrapper>
         )
     }
 }
