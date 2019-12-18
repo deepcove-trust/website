@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'React';
 import { FormGroup, Input } from '../../../Components/FormControl';
 import { BtnGroup, ConfirmButton, Button } from '../../../Components/Button';
-import AlertWrapper from '../../../Components/Alert';
+import Alert from '../../../Components/Alert';
 
 export default class Title extends Component {
     constructor(props) {
@@ -44,7 +44,7 @@ export default class Title extends Component {
         ): null;
 
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 {actions}
                 <FormGroup label="Section Title" required>
                     <Input type="text" value={this.state.value}
@@ -53,7 +53,7 @@ export default class Title extends Component {
                         })}
                     />
                 </FormGroup>
-            </AlertWrapper>
+            </Alert>
         );
     }
 }

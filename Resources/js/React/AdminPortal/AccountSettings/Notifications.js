@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Checkbox } from '../../Components/FormControl';
-import AlertWrapper from '../../Components/Alert';
+import Alert from '../../Components/Alert';
 import $ from 'jquery';
 
 export default class Notifications extends Component {
@@ -41,10 +41,10 @@ export default class Notifications extends Component {
         }
 
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <p>Send me emails when...</p>
                 {avaliableChannels}
-            </AlertWrapper>
+            </Alert>
         )
     }
 }

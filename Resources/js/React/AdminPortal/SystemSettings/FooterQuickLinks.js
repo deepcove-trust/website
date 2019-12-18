@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Section } from './FooterQuickLinks/Section';
-import AlertWrapper from '../../Components/Alert';
+import Alert from '../../Components/Alert';
 import $ from 'jquery';
 
 const baseUri = "/admin/settings/quicklinks";
@@ -74,7 +74,7 @@ export default class FooterQuickLinks extends Component {
     
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <div className="row">
                     <div className="col-lg-6 col-md-12">
                         <Section section={this.state.quickLinks.a || null}
@@ -94,7 +94,7 @@ export default class FooterQuickLinks extends Component {
                         />
                     </div>
                 </div>
-            </AlertWrapper>
+            </Alert>
         )
     }
 }

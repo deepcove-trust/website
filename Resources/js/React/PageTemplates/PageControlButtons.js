@@ -2,7 +2,7 @@
 import { Button, Link } from '../Components/Button';
 import { PageUrl } from '../../helpers';
 import $ from 'jquery';
-import AlertWrapper from '../Components/Alert';
+import Alert from '../Components/Alert';
 
 const pageBaseUri = `/admin/pages`;
 
@@ -43,11 +43,11 @@ export class ToggleVisibility extends Component {
         }
 
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <Button className={this.props.className || `btn btn-dark btn-sm`} cb={this.toggleVisibility.bind(this, !this.props.public)}>
                     {text}
                 </Button>    
-            </AlertWrapper>
+            </Alert>
         )
     }
 }

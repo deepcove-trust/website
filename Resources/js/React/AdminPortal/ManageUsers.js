@@ -2,7 +2,7 @@
 import { render } from 'react-dom';
 import AccountCard from './ManageUsers/AccountCard';
 import { validateEmail } from '../../helpers';
-import AlertWrapper from '../Components/Alert';
+import Alert from '../Components/Alert';
 import $ from 'jquery';
 
 const baseUri = `/admin/users`;
@@ -30,7 +30,7 @@ export default class Users extends Component {
                 this.setState({ accounts: data });
             });
         }).fail((err) => {
-            this.Alert.AlertWrapper('error', $.parseJSON(err.responseText))
+            this.Alert.Alert('error', $.parseJSON(err.responseText))
         });
     }
 
@@ -113,7 +113,7 @@ export default class Users extends Component {
         }
 
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <div className="row">
                     <div className="col-12 py-3">
                         <h1 className="text-center">Manage Users</h1>
@@ -124,7 +124,7 @@ export default class Users extends Component {
 
                     {accounts}
                 </div>
-            </AlertWrapper>
+            </Alert>
         );
     }
 }

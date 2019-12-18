@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
-import AlertWrapper from '../../Components/Alert';
+import Alert from '../../Components/Alert';
 import $ from 'jquery';
 
 
@@ -69,7 +69,7 @@ export default class Settings extends Component {
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <form id="settings" onSubmit={this.updateAccount.bind(this)}>
                     <FormGroup label="Account Name" htmlFor="accountName" required>
                         <Input id="accountName"
@@ -102,7 +102,7 @@ export default class Settings extends Component {
 
                     <Button className="btn btn-primary mt-4" pending={this.state.requestPending} type="submit">Update Settings</Button>
                 </form>
-            </AlertWrapper>
+            </Alert>
         )
     }
 }

@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
-import AlertWrapper from '../../Components/Alert';
+import Alert from '../../Components/Alert';
 
 import $ from 'jquery';
 
@@ -70,7 +70,7 @@ export default class ChangePassword extends Component {
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
                 
                     <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
@@ -110,7 +110,7 @@ export default class ChangePassword extends Component {
 
                     <Button className="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
                 </form>
-            </AlertWrapper>
+            </Alert>
         )
     }
 }
