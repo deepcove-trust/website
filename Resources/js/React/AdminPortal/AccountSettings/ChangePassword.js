@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
 import { FormGroup, Input } from '../../Components/FormControl';
-import Alert from '../../Components/Alert';
 
 import $ from 'jquery';
 
@@ -58,59 +57,57 @@ export default class ChangePassword extends Component {
             this.setState({
                 requestPending: false,
                 inputs: { current: "", new: "", confirm: "" }
-            }, this.Alert.success('Your password has been updated'));
+            }, this.props.alert.success('Your password has been updated'));
 
             this.props.u();
         }).fail((err) => {
             this.setState({
                 requestPending: false                
-            }, this.Alert.error(null, err.responseText));
+            }, this.props.alert.error(null, err.responseText));
         });
     }
 
     render() {
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
+            <form id="password" onSubmit={this.updateAccountPassword.bind(this)}>
                 
-                    <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
-                        <Input id="currentPassword"
-                            type="password"
-                            name="currentPassword"
-                            value={this.state.inputs['current']}
-                            autoComplete="password"
-                            cb={this.updateVal.bind(this, 'current')}
-                            required
-                        />
-                    </FormGroup>
+                <FormGroup label="Your Current Password" htmlFor="currentPassword" required>
+                    <Input id="currentPassword"
+                        type="password"
+                        name="currentPassword"
+                        value={this.state.inputs['current']}
+                        autoComplete="password"
+                        cb={this.updateVal.bind(this, 'current')}
+                        required
+                    />
+                </FormGroup>
                 
-                    <FormGroup label="New Password" htmlFor="newPassword" required>
-                        <Input id="newPassword"
-                            type="password"
-                            name="newPassword"
-                            value={this.state.inputs['new']}
-                            autoComplete="newpassword"
-                            cb={this.updateVal.bind(this, 'new')}
-                            required
-                        />
-                    </FormGroup>
+                <FormGroup label="New Password" htmlFor="newPassword" required>
+                    <Input id="newPassword"
+                        type="password"
+                        name="newPassword"
+                        value={this.state.inputs['new']}
+                        autoComplete="newpassword"
+                        cb={this.updateVal.bind(this, 'new')}
+                        required
+                    />
+                </FormGroup>
             
-                    <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
-                        <Input id="confirmPassword"
-                            type="password"
-                            name="confirmPassword"
-                            value={this.state.inputs['confirm']}
-                            autoComplete="newpassword"
-                            cb={this.updateVal.bind(this, 'confirm')}
-                            required
-                        />
+                <FormGroup label="Confirm New Password" htmlFor="confirmPassword" required>
+                    <Input id="confirmPassword"
+                        type="password"
+                        name="confirmPassword"
+                        value={this.state.inputs['confirm']}
+                        autoComplete="newpassword"
+                        cb={this.updateVal.bind(this, 'confirm')}
+                        required
+                    />
 
-                        <small className="text-danger">{this.passwordConditions().label}</small>
-                    </FormGroup>   
+                    <small className="text-danger">{this.passwordConditions().label}</small>
+                </FormGroup>   
 
-                    <Button className="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
-                </form>
-            </Alert>
+                <Button className="btn btn-primary d-block" type="submit" disabled={this.passwordConditions().disabled} pending={this.state.requestPending}>Update Password</Button>
+            </form>
         )
     }
 }

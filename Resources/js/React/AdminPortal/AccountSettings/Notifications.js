@@ -1,18 +1,18 @@
 import React, { Component, Fragment } from 'react';
 import { Checkbox } from '../../Components/FormControl';
-import Alert from '../../Components/Alert';
 import $ from 'jquery';
 
 export default class Notifications extends Component {
     toggleChannel(id, method) {
         $.ajax({
-            type: method ? 'post' : 'delete',// Callback, is the checkbox checked?
+            // Callback, is the checkbox checked?
+            type: method ? 'post' : 'delete',
             url: `${this.props.baseUri}/channel/${id}`
         }).done((msg) => {
-            this.Alert.success(msg);
+            this.props.alert.info(msg);
             this.props.u();
         }).fail((err) => {
-            this.Alert.console.error(err.ResponseText);
+            this.props.alert.error(null, err.ResponseText);
         });
     }
 
@@ -41,10 +41,10 @@ export default class Notifications extends Component {
         }
 
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
+            <Fragment>
                 <p>Send me emails when...</p>
                 {avaliableChannels}
-            </Alert>
+            </Fragment>
         )
     }
 }
