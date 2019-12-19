@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import AccountCard from './ManageUsers/AccountCard';
-import { validateEmail } from '../../helpers';
 import Alert from '../Components/Alert';
 import $ from 'jquery';
 

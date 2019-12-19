@@ -3,7 +3,7 @@ import { Email, Phone, Status } from './Settings';
 import { validateEmail } from '../../../helpers'; 
 import ResetPassword from './ResetPassword';
 import Panel from '../../Components/Panel';
-import EditButtons from './AccountBtns';
+import EditButtons from './EditButtons';
 import DeleteUser from './DeleteUser';
 import Timestamps from './Timestamps';
 
