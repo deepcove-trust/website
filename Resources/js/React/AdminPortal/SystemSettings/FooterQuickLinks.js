@@ -1,6 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { Section } from './FooterQuickLinks/Section';
-import Alert from '../../Components/Alert';
 import $ from 'jquery';
 
 const baseUri = "/admin/settings/quicklinks";
@@ -19,18 +18,6 @@ export default class FooterQuickLinks extends Component {
         this.getData();
     }
 
-    addQuickLink(sectionId, pageId) {
-        $.ajax({
-            type: 'post',
-            url: `${baseUri}/${pageId}/${sectionId}`
-        }).done(() => {
-            this.Alert.success('Quick link added');
-            this.getData();
-        }).fail((err) => {
-            this.Alert.error(null, err.responseText);
-        });
-    }
-
     getData() {
         $.ajax({
             method: 'get',
@@ -40,61 +27,32 @@ export default class FooterQuickLinks extends Component {
                 quickLinks: _.cloneDeep(quickLinks),
                 default: _.cloneDeep(quickLinks)
             });
-        }); 
-    }
-
-    removeQuickLink(pageId) {
-        $.ajax({
-            method: 'delete',
-            url: `${baseUri}/${pageId}`
-        }).done(() => {
-            this.setState({
-                pending: false
-            }, () => {
-                this.Alert.success('Quick link deleted');
-                this.getData();
-            });
-        }).fail((err) => {
-            this.Alert.error(null, err.responseText)
         });
     }
 
-    updateTitle(sectionId, title) {
-        $.ajax({
-            type: 'put',
-            url: `${baseUri}/${sectionId}`,
-            data: { title: title }
-        }).done(() => {
-            this.Alert.success('Quick link section updated')
-            this.getData();
-        }).fail((err) => {
-            this.Alert.error(null, err.responseText);
-        });
-    }
-    
     render() {
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <div className="row">
-                    <div className="col-lg-6 col-md-12">
-                        <Section section={this.state.quickLinks.a || null}
-                            avaliable={this.state.quickLinks.avaliable || null}
-                            addLinkCb={this.addQuickLink.bind(this, 1)}//Enum ID = QuickLinks.A
-                            removeLinkCb={this.removeQuickLink.bind(this)}
-                            updateTitleCb={this.updateTitle.bind(this, 1)}//Enum ID = QuickLinks.A
-                        />
-                    </div>
-
-                    <div className="col-lg-6 col-md-12">
-                        <Section section={this.state.quickLinks.b || null}
-                            avaliable={this.state.quickLinks.avaliable || null}
-                            addLinkCb={this.addQuickLink.bind(this, 2)}//Enum ID = QuickLinks.B
-                            removeLinkCb={this.removeQuickLink.bind(this)}
-                            updateTitleCb={this.updateTitle.bind(this, 2)}//Enum ID = QuickLinks.B
-                        />
-                    </div>
+            <div className="row">
+                <div className="col-lg-6 col-md-12">
+                    <Section section={this.state.quickLinks.a || null}
+                        avaliable={this.state.quickLinks.avaliable || null}
+                        u={this.getData.bind(this)}
+                        baseUri={baseUri}
+                        sectionId={1} // Enum ID = QuickLinks.A
+                        alert={this.Alert}
+                    />
                 </div>
-            </Alert>
+
+                <div className="col-lg-6 col-md-12">
+                    <Section section={this.state.quickLinks.b || null}
+                        avaliable={this.state.quickLinks.avaliable || null}
+                        u={this.getData.bind(this)}
+                        baseUri={baseUri}
+                        sectionId={2} // Enum ID = QuickLinks.B
+                        alert={this.Alert}
+                    />
+                </div>
+            </div>
         )
     }
 }
