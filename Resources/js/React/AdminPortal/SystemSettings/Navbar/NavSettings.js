@@ -29,11 +29,31 @@ export default class NavSettings extends Component {
     getData() {
         if (!this.props.link) return;
 
+        // Do not attempt to fetch data from API for a new link
+        if (this.props.link.id == 0) {
+            var link = {
+                text: 'New link',
+                page: 0,
+                type: 'Page',
+                section: this.props.link.section,
+                children: []
+            }
+            this.setState({
+                link: link,
+                modified: false
+            });
+            return;
+        }
+
         $.ajax({
             method: 'get',
             url: `${baseUri}/${this.props.link.id}`
         }).done((link) => {
-            link.type = this.getLinkType(link)
+            link.type = this.getLinkType(link);
+            link.section = this.props.link.section;
+            if (link.children) {
+                link.children.forEach((sublink) => sublink.type = this.getLinkType(sublink));
+            } else link.children = []
             this.setState({
                 link: link,
                 modified: false
@@ -44,7 +64,7 @@ export default class NavSettings extends Component {
     getLinkType(obj) {
         if (!obj) return null;
         if ('children' in obj) return 'Dropdown';
-        if ('url' in obj) return 'Custom URL';
+        if ('url' in obj) return 'URL';
         else return 'Page';
     }
 
@@ -59,7 +79,7 @@ export default class NavSettings extends Component {
 
     // Updates the pageId and text and page name fields whenever a new page is linked
     updateLinkedPage(pageId) {
-        this.updateLink('pageId', pageId);        
+        this.updateLink('pageId', pageId);
         this.updateLink('text', null);
         var page = this.props.pages.find((page) => page.id == pageId);
         this.updateLink('pageName', page.name);
@@ -76,7 +96,7 @@ export default class NavSettings extends Component {
             <Dropdown sublinks={this.state.link.children} pages={this.props.pages}
                 update={this.updateLink.bind(this, 'children')}
             />
-        ) : this.state.link.type == "Custom URL" ? (
+        ) : this.state.link.type == "URL" ? (
             <CustomUrl link={this.state.link}
                 update={this.updateLink.bind(this, 'url')}
             />
@@ -159,7 +179,7 @@ class LinkType extends Component {
         return (
             <FormGroup htmlFor="link_type" label="What should the link open?" required>
                 <Select id="link_type"
-                    options={["Page", "Dropdown", "Custom URL"]}
+                    options={["Page", "Dropdown", "URL"]}
                     selected={this.props.linkType}
                     cb={this.props.update}
                 />

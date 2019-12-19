@@ -69,28 +69,47 @@ export default class Navbar extends Component {
         });
     }
 
+    // Strips away fields that the API doesn't care about
     cleanLink(linkData) {
         console.log('Dirty link');
         console.log(linkData);
 
-        if (linkData.type == 'Page') {            
+        if (linkData.type == 'Page') {
             return {
                 'id': linkData.id,
                 'pageId': linkData.pageId,
-                'text': linkData.text ? linkData.text : null
+                'text': linkData.text ? linkData.text : null,
+                'section': linkData.section == 'main' ? 0 : 1
             };
         }
 
-        if (linkData.type == 'Custom URL') {
+        if (linkData.type == 'URL') {
             return {
                 'id': linkData.id,
                 'url': linkData.url,
-                'text': linkData.text
+                'text': linkData.text,
+                'section': linkData.section == 'main' ? 0 : 1
             }
         }
 
-        if (linkData.type == 'DropDown') {
-
+        if (linkData.type == 'Dropdown') {
+            return {
+                'id': linkData.id,
+                'text': linkData.text,
+                'section': linkData.section == 'main' ? 0 : 1,
+                'children': linkData.children ? linkData.children.map((sublink) => {
+                    if (sublink.type == 'Page') {
+                        return {
+                            'pageId': sublink.pageId,
+                            'text': sublink.text ? sublink.text : null
+                        }
+                    }
+                    else return {
+                        'text': sublink.text,
+                        'url': sublink.url
+                    }
+                }) : []
+            }
         }
     }
 
@@ -102,11 +121,23 @@ export default class Navbar extends Component {
             method: 'put',
             url: baseUri,
             data: { navitem: JSON.stringify(link) },
-        }).done(() => {
-            console.log(`Nav link ${link.id} edited successfully`);
-            this.getData(link.id);
+        }).done((linkId) => {            
+            this.getData(linkId);
         }).fail((err) => {
             console.log(err);
+        })
+    }
+
+    createLink(section) {
+        var navlinks = this.state.navbar;
+        navlinks.push({
+            id: 0,
+            section: section,
+            text: 'New Link'
+        })
+        this.setState({
+            navbar: navlinks,
+            activeId: 0
         })
     }
 
@@ -117,6 +148,7 @@ export default class Navbar extends Component {
                     <NavOverview links={this.state.navbar}
                         activeId={this.state.activeId}
                         setActive={this.setActive.bind(this)}
+                        onAdd={this.createLink.bind(this)}
                     />
                 </div>
 

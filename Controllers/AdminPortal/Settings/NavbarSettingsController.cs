@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 {
@@ -53,7 +54,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error retrieving navbar details", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Error processing the request");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later.", ex.Message));
             }
         }
 
@@ -64,7 +65,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 NavItem item = await _Db.NavItems.FindAsync(id);
 
-                if (item == null) return NotFound();
+                if (item == null) return NotFound(new ResponseHelper("Something went wrong, please try again later"));
 
                 await _Db.Entry(item).Reference(i => i.Page).LoadAsync();
                 await _Db.Entry(item).Collection(i => i.NavItemPages).LoadAsync();
@@ -91,7 +92,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error retrieving navbar item details", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Error processing the request");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later.", ex.Message));
             }
         }
 
@@ -101,8 +102,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
         {
             try
             {
-                if (string.IsNullOrEmpty(request.Str("navitem"))) 
-                    return BadRequest("No nav item data was sent");
+                if (string.IsNullOrEmpty(request.Str("navitem")))
+                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", "No nav-item data was sent"));
 
                 NavItem newItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));
 
@@ -125,7 +126,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error creating new navlink", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Error processing the request");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later.", ex.Message));
             }
         }
 
@@ -135,7 +136,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             try
             {
                 if (string.IsNullOrEmpty(request.Str("navitem")))
-                    return BadRequest("No nav item data was sent");
+                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", "No nav-item data was sent"));
 
                 NavItem updatedItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));                
 
@@ -158,38 +159,48 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 // Write changes to database
                 await _Db.SaveChangesAsync();
 
-                return Ok();
+                return Ok(updatedItem.Id);
             }
             catch(Exception ex)
             {
                 _Logger.LogError("Error updating navlink", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Error processing the request");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later.", ex.Message));
             }
         }
 
         [HttpPatch]
         public async Task<IActionResult> ReorderItems(IFormCollection request, string section)
         {
-            if (string.IsNullOrEmpty(request.Str("navitems")))
-                return BadRequest("No nav item data was sent");
-
-            if (!Enum.TryParse(section, true, out Section navSection)) {
-                return BadRequest("Must define section as 'main' or 'education'");
-            }            
-                        
-            List<int> idOrder = JsonConvert.DeserializeObject<List<int>>(request.Str("navitems"));
-            
-            for (int orderIndex = 0; orderIndex < idOrder.Count; orderIndex++)
+            try
             {
-                NavItem item = await _Db.NavItems.FindAsync(idOrder[orderIndex]);
-                item.OrderIndex = orderIndex;
-                item.Section = navSection;
+                if (string.IsNullOrEmpty(request.Str("navitems")))
+                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", "No nav-item data was sent"));
+
+                if (!Enum.TryParse(section, true, out Section navSection))
+                {
+                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", "Must define section as 'main' or 'education'"));
+                }
+
+                List<int> idOrder = JsonConvert.DeserializeObject<List<int>>(request.Str("navitems"));
+
+                for (int orderIndex = 0; orderIndex < idOrder.Count; orderIndex++)
+                {
+                    NavItem item = await _Db.NavItems.FindAsync(idOrder[orderIndex]);
+                    item.OrderIndex = orderIndex;
+                    item.Section = navSection;
+                }
+
+                await _Db.SaveChangesAsync();
+
+                return Ok();
             }
-
-            await _Db.SaveChangesAsync();
-
-            return Ok();
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error re-ordering navlinks", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later.", ex.Message));
+            }
         }
 
         [HttpDelete("{id:int}")]
@@ -201,7 +212,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 await _Db.Entry(itemToDelete).Collection(c => c.NavItemPages).LoadAsync();
 
                 if (itemToDelete == null)
-                    return NotFound();
+                    return NotFound(new ResponseHelper("Something went wrong, please try again later"));
 
                 _Db.Remove(itemToDelete);
 
@@ -216,7 +227,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error deleting navlink", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Error processing the request");
+                return BadRequest(new ResponseHelper("Something went wrong, please try again later.", ex.Message));
             }
         }
     }

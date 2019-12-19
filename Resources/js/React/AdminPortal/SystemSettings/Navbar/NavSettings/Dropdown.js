@@ -4,25 +4,53 @@ import Rselect from 'react-select';
 import { Select, Input } from '../../../../Components/FormControl';
 
 export default class Dropdown extends Component {
-
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            sublinks: this.props.sublinks
+    updateSublink(index, key, val) {
+        console.log(`Setting ${key} to ${val}`);
+        var sublinks = this.props.sublinks;
+        var sublink = sublinks[index];
+        sublink[key] = val;
+        if (key == 'pageId') {
+            sublink['text'] = null;
+            sublink['pageName'] = this.props.pages.find((page) => page.id == sublink['pageId']).name;
         }
+        
+        this.props.update(sublinks);        
+    }
+
+    deleteSublink(index) {
+        console.log(`Deleting ${index}`)
+        var sublinks = this.props.sublinks;
+        sublinks.splice(index, 1);
+        this.props.update(sublinks);
+    }
+
+    addSublink() {
+        var sublinks = this.props.sublinks;
+        sublinks.push({
+            text: 'New link',
+            type: 'URL',
+            url: ''
+        })
+        this.props.update(sublinks);
     }
 
     render() {
-        var sublinks = this.state.sublinks.map((sublink, index) => {
-            return <SublinkDetails link={sublink} pages={this.props.pages} key={index} />
+        var sublinks = this.props.sublinks.map((sublink, index) => {
+            return (
+                <SublinkDetails sublink={sublink}
+                    pages={this.props.pages}
+                    key={index}
+                    onChange={this.updateSublink.bind(this, index)}
+                    onDelete={this.deleteSublink.bind(this, index)} />
+            )
         });
 
-        console.log(this.state.sublinks);
         return (
             <Fragment>
+                <hr />
                 <h5>Dropdown Links</h5>
-                {sublinks}
+                {sublinks.length > 0 ? sublinks : <p>No links configured</p>}
+                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={this.addSublink.bind(this)}>Add Link &nbsp; <i className="fas fa-plus" /></button>
             </Fragment>
         )
 
@@ -30,55 +58,42 @@ export default class Dropdown extends Component {
 }
 
 class SublinkDetails extends Component {
-    constructor(props) {
-        super(props);
+    render() {        
 
-        this.state = {
-            link: this.props.link,            
-            type: null
-        }
-    }
+        var options =
+            this.props.sublink.type == "Page" ?
+                <Page link={this.props.sublink} pages={this.props.pages} update={this.props.onChange.bind(this, 'pageId')} />
+                : <CustomUrl link={this.props.sublink} update={this.props.onChange.bind(this, 'url')} />
 
-    componentDidMount() {
-        this.setState({
-            type: this.getSublinkType()
-        })
-    }
 
-    getSublinkType() {
-        return this.state.link.url ? 'URL' : 'Page';
-    }
-
-    handleTypeChange(newType) {
-        this.setState({
-            type: newType
-        })
-    }
-
-    render() {
 
         return (
-            <div className="row mb-2">
-                <div className="col-md-5">
-                    <SublinkName link={this.state.link} />
+            <div draggable='true' className="row mb-2">
+                <div className="px-1 mb-1 col-md-4">
+                    <SublinkName sublink={this.props.sublink} update={this.props.onChange.bind(this, 'text')} />
                 </div>
-                <div className="col-md-2">
-                    <SublinkType linkType={this.state.type} update={this.handleTypeChange.bind(this)} />
+                <div className="px-1 mb-1 col-md-2">
+                    <SublinkType linkType={this.props.sublink.type} update={this.props.onChange.bind(this, 'type')} />
                 </div>
-                <div className="col-md-5">
-                    <Page link={this.state.link} pages={this.props.pages} />
+                <div className="px-1 mb-1 col-md-6">
+                    <div className='row'>
+                        <div className='col-10'>{options}</div>
+                        <div className='px-0 col-2'>
+                            <button className='btn btn-danger' onClick={this.props.onDelete}>
+                                <i className='fas fa-trash'></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
-
     }
 }
 
 class SublinkType extends Component {
     render() {
         return (
-            <Select id="sublink_type"
-                options={["Page", "URL"]}
+            <Select options={["Page", "URL"]}
                 selected={this.props.linkType}
                 cb={this.props.update}
             />
@@ -89,9 +104,9 @@ class SublinkType extends Component {
 class SublinkName extends Component {
     render() {
         return (
-            <Input id="link_text" type="text"
-                value={this.props.link ? this.props.link.text : ""}
-                placeHolder={this.props.link ? this.props.link.pageName : ""}
+            <Input type="text"
+                value={this.props.sublink ? this.props.sublink.text : ""}
+                placeHolder={this.props.sublink ? this.props.sublink.pageName : ""}
                 cb={this.props.update}
             />
         );
@@ -114,6 +129,21 @@ class Page extends Component {
             <Rselect options={options} passive
                 value={options.filter((x) => x.value == this.props.link.pageId)[0]}
                 onChange={this.handleClick.bind(this)}
+            />
+        );
+    }
+}
+
+class CustomUrl extends Component {
+    render() {
+        if (!this.props.link || !'url' in this.props.link) return null;
+
+        return (
+            <Input id="customurl" type="url"
+                value={this.props.link.url || ""}
+                placeHolder="https://example.com"
+                required
+                cb={this.props.update}
             />
         );
     }
