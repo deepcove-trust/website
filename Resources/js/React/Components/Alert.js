@@ -118,7 +118,9 @@ export default class Alert extends Component {
             }
         }
 
-        if (cb) cb();
+        setTimeout(() => {
+            if (cb) cb();
+        }, 500);
     }
 
     render() {

@@ -69,7 +69,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 Account account = await _Db.Accounts.FindAsync(id);
                 account.ForcePasswordReset = true;
                 await _Db.SaveChangesAsync();
-
+                
                 _Logger.LogInformation("Account belonging to {0} will be forced to reset password on next login", account.Name);
 
                 return Ok();
@@ -130,6 +130,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 await _Db.SaveChangesAsync();
 
                 _Logger.LogInformation("Account belonging to {0} was deleted", account.Name);
+                _EmailService.SendAccountStatusAsync(false, account.ToEmailContact(), Request.BaseUrl());
 
                 return Ok();
             }
