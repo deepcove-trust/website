@@ -1,10 +1,11 @@
-﻿import React, { Component, Fragment } from 'react';
-import Alert from 'react-s-alert';
+﻿import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+//import 'react-toastify/dist/ReactToastify.min.css';
 import $ from 'jquery';
 
 const defaultMsg = { ui: null, debug: null };
 
-export default class AlertWrapper extends Component {
+export default class Alert extends Component {
     /**
      * Creates the required ref
      * so we can call the alert() 
@@ -20,9 +21,51 @@ export default class AlertWrapper extends Component {
      * Tides up resources after use
      */
     componentWillUnmount() {
-        if(this.props.onRef) {
+        if (this.props.onRef) {
             this.props.onRef(undefined);
         }
+    }
+
+    /**
+     * 
+     * @param {string} message
+     * @param {[object, object]} responseText
+     * @param {[function, function]} cb
+     */
+    info(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
+
+        toast.info(msg.ui || message, {
+            _handleOnShow: this._handleOnShow('info', msg.debug, cb)
+        });
+    }
+
+    /**
+     * 
+     * @param {string} message
+     * @param {[object, object]} responseText
+     * @param {[function, function]} cb
+     */
+    success(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
+
+        toast.success(msg.ui || message, {
+            _handleOnShow: this._handleOnShow('success', msg.debug, cb)
+        });
+    }
+
+    /**
+     * 
+     * @param {string} message
+     * @param {[object, object]} responseText
+     * @param {[function, function]} cb
+     */
+    warning(message, responseText, cb) {
+        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
+
+        toast.warning(msg.ui || message, {
+            _handleOnShow: this._handleOnShow('warning', msg.debug, cb)
+        });
     }
 
     /**
@@ -34,50 +77,22 @@ export default class AlertWrapper extends Component {
     error(message, responseText, cb) {
         let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
-        Alert.error(msg.ui || message, {
-            onShow: this._handleOnShow('error', msg.debug, cb)
+        toast.error(msg.ui || message, {
+            _handleOnShow: this._handleOnShow('error', msg.debug, cb)
         });
     }
 
     /**
-    *
-    * @param {string} message
-    * @param {[object, object]} responseText
-    * @param {[function, function]} cb
-    */
-    info(message, responseText, cb) {
+     * 
+     * @param {string} message
+     * @param {[object, object]} responseText
+     * @param {[function, function]} cb
+     */
+    default(message, responseText, cb) {
         let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
 
-        Alert.info(msg.ui || message, {
-            onShow: this._handleOnShow('info', msg.debug, cb)
-        });
-    }
-
-    /**
-    *
-    * @param {string} message
-    * @param {[object, object]} responseText
-    * @param {[function, function]} cb
-    */
-    success(message, responseText, cb) {
-        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
-
-        Alert.success(msg.ui || message, {
-            onShow: this._handleOnShow('success', msg.debug, cb)
-        });
-    }
-
-    /**
-    *
-    * @param {string} message
-    * @param {[object, object]} responseText
-    * @param {[function, function]} cb
-    */
-    warning(message, responseText, cb) {
-        let msg = !!responseText ? $.parseJSON(responseText) : defaultMsg;
-
-        Alert.warning(msg.ui || message, {
-            onShow: this._handleOnShow('warn', msg.debug, cb)
+        toast(msg.ui || message, {
+            _handleOnShow: this._handleOnShow('default', msg.debug, cb)
         });
     }
 
@@ -102,16 +117,28 @@ export default class AlertWrapper extends Component {
                     console.log(debug);
             }
         }
-        
-        if (cb) cb();
+
+        setTimeout(() => {
+            if (cb) cb();
+        }, 500);
     }
 
     render() {
         return (
-            <Fragment>
+            <div className={this.props.className || null}>
                 {this.props.children}
-                <Alert stack={{ limit: 5 }} timeout={1000 * 10} onShow={this.handleOnShow} effect={"slide"}/>
-            </Fragment>
+
+                <ToastContainer
+                    position="top-right"
+                    autoClose={6 * 1000}
+                    hideProgressBar={false}
+                    closeOnClick={false}
+                    newestOnTop={false}
+                    closeButton={false}
+                    pauseOnHover
+                    rtl={false}
+                />
+            </div>
         );
     }
 }

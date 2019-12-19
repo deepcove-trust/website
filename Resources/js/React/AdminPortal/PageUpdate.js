@@ -3,7 +3,7 @@ import { render } from 'react-dom';
 import PageMeta from './Pages/PageMeta';
 
 import $ from 'jquery';
-import AlertWrapper from '../Components/Alert';
+import Alert from '../Components/Alert';
 
 const baseUri = "/admin/pages";
 
@@ -60,12 +60,12 @@ export default class UpdatePageWrapper extends Component {
         }
 
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <PageMeta title="Page Settings"
                     data={this.state.page}
                     saveChanges={this.updatePage.bind(this)}
                 />
-            </AlertWrapper>
+            </Alert>
         );
     }
 }

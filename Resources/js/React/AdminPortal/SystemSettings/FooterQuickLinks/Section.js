@@ -4,24 +4,29 @@ import Title from './Title';
 import Page from './Page';
 
 export class Section extends Component {
-    render() {  
+    render() {
         let pages = this.props.section ? (
             this.props.section.pages.map((page, key) => {
                 return <Page page={page} key={key}
-                    removeLinkCb={this.props.removeLinkCb}
+                    baseUri={this.props.baseUri}
+                    u={this.props.u}
                 />
             })
         ) : null;
-
+        
         return (
             <Fragment>
                 <Title section={this.props.section}
                     sectionId={this.props.sectionId}
-                    updateTitleCb={this.props.updateTitleCb}
+                    baseUri={this.props.baseUri}
+                    alert={this.props.alert}
+                    u={this.props.u}
                 />
 
                 <AvaliablePages pages={this.props.avaliable}
-                    addLinkCb={this.props.addLinkCb}
+                    sectionId={this.props.sectionId}
+                    baseUri={this.props.baseUri}
+                    u={this.props.u}
                 />
 
                 <div className="table-responsive-md">

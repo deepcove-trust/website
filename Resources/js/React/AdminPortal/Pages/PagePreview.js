@@ -4,7 +4,7 @@ import { ConfirmModal } from '../../Components/Button';
 import { ToggleVisibility, ViewPage, EditPageSettings } from '../../PageTemplates/PageControlButtons';
 import ReactTooltip from 'react-tooltip'
 import $ from 'jquery';
-import AlertWrapper from '../../Components/Alert';
+import Alert from '../../Components/Alert';
 
 export default class PagePreview extends Component {
     render() {
@@ -60,7 +60,7 @@ class DeletePage extends Component {
     render() {
         
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <ConfirmModal id={this.props.page.id}
                     question="delete page"
                     className="btn btn-outline-danger btn-block"
@@ -70,7 +70,7 @@ class DeletePage extends Component {
                     cb={this.deletePage.bind(this)} >
                         Delete <i className="fas fa-exclamation-triangle"/>
                 </ConfirmModal>
-            </AlertWrapper>
+            </Alert>
         );
     }
 }
