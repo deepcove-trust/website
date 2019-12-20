@@ -10,7 +10,7 @@ export default class Navbar extends Component {
         super(props);
 
         this.state = {
-            navbar: [],
+            navbar: null,
             pages: {},
             activeId: 0
         }
@@ -19,7 +19,7 @@ export default class Navbar extends Component {
 
     componentDidMount() { this.getData() };
 
-    getData(initialId) {
+    getData(initialId) {        
         console.log(`Initial ID set to ${initialId}`);
         $.ajax({
             method: 'get',
@@ -30,7 +30,7 @@ export default class Navbar extends Component {
                 activeId: initialId || (navbar[0] ? navbar[0].id : 0)
             });
         }).fail((err) => {
-            console.err(err);
+            console.log(err);
         })
 
         $.ajax({
@@ -44,7 +44,7 @@ export default class Navbar extends Component {
     }
 
     getPage() {
-        if (this.state.navbar.length <= 0) return null;
+        if (!this.state.navbar || this.state.navbar.length <= 0) return null;
 
         return this.state.navbar.find(obj => {
             return obj.id == this.state.activeId
@@ -141,6 +141,21 @@ export default class Navbar extends Component {
         })
     }
 
+    reorderLinks(section, ids, id) {
+        console.log(`Changing order of ${section} links`);
+        console.log(ids);
+
+        $.ajax({
+            method: 'patch',
+            url: `${baseUri}?section=${section}`,
+            data: { navitems: JSON.stringify(ids) }
+        }).done(() => {
+            this.getData(id);
+        }).fail((err) => {
+            console.log(err);
+        });
+    }
+
     render() {
         return (
             <div className="row">
@@ -149,6 +164,7 @@ export default class Navbar extends Component {
                         activeId={this.state.activeId}
                         setActive={this.setActive.bind(this)}
                         onAdd={this.createLink.bind(this)}
+                        onReorder={this.reorderLinks.bind(this)}
                     />
                 </div>
 
