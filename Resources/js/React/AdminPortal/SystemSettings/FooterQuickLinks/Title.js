@@ -1,7 +1,7 @@
-﻿import React, { Component } from 'React';
+﻿import React, { Component, Fragment } from 'React';
 import { FormGroup, Input } from '../../../Components/FormControl';
 import { BtnGroup, ConfirmButton, Button } from '../../../Components/Button';
-import AlertWrapper from '../../../Components/Alert';
+import $ from 'jquery';
 
 export default class Title extends Component {
     constructor(props) {
@@ -14,7 +14,7 @@ export default class Title extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        
+
         if (nextProps.section != this.props.section) {
             this.setState({
                 value: nextProps.section.title || ""
@@ -28,23 +28,37 @@ export default class Title extends Component {
         });
     }
 
+    saveChange() {
+        $.ajax({
+            type: 'put',
+            url: `${this.props.baseUri}/${this.props.sectionId}`,
+            data: {
+                title: this.state.value
+            }
+        }).done(() => {
+            this.props.u()
+        }).fail((err) => {
+            console.error(err);
+        });
+    }
+
     render() {
         if (!this.props.section) return null;
 
         let actions = this.state.value != this.props.section.title ? (
             <BtnGroup size="sm" className="float-right pb-2">
                 <ConfirmButton className="btn btn-danger" cb={this.reset.bind(this)}>
-                    Cancel <i className="fas-fa-times"/>
+                    Cancel <i className="fas-fa-times" />
                 </ConfirmButton>
 
-                <Button className="btn btn-success" pending={this.state.pending} cb={this.props.updateTitleCb.bind(this, this.state.value)}>
-                    Save <i className="fas fa-check"/>
+                <Button className="btn btn-success" pending={this.state.pending} cb={this.saveChange.bind(this)}>
+                    Save <i className="fas fa-check" />
                 </Button>
             </BtnGroup>
-        ): null;
+        ) : null;
 
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Fragment>
                 {actions}
                 <FormGroup label="Section Title" required>
                     <Input type="text" value={this.state.value}
@@ -53,7 +67,7 @@ export default class Title extends Component {
                         })}
                     />
                 </FormGroup>
-            </AlertWrapper>
+            </Fragment>
         );
     }
 }

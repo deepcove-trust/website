@@ -1,8 +1,8 @@
 ﻿import React, { Component } from 'react';
 import { FormGroup, Input, TextArea } from '../../Components/FormControl';
 import { PrepareGoogleMapsUrl } from '../../../helpers';
-import AlertWrapper from '../../Components/Alert';
 import { Button } from '../../Components/Button';
+import Alert from '../../Components/Alert';
 import $ from 'jquery';
 import _ from 'lodash';
 
@@ -76,7 +76,7 @@ export default class ContactInformation extends Component {
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.Alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <form className="row" onSubmit={this.submitForm.bind(this)}>
                     <div className="col-lg-6 col-md-12">
                         <GeneralEmail email={this.state.contact.emailGeneral}
@@ -117,7 +117,7 @@ export default class ContactInformation extends Component {
 
                     </div>
                 </form>
-            </AlertWrapper>
+            </Alert>
         )
     }
 }

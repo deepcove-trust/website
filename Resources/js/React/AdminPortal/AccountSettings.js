@@ -1,8 +1,10 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-import ChangePassword from './AccountSettings/ChangePassword';
 import Settings from './AccountSettings/Settings';
+import ChangePassword from './AccountSettings/ChangePassword';
 import NotificationChannels from './AccountSettings/Notifications';
+import Alert from '../Components/Alert';
+
 import $ from 'jquery';
 
 const baseUri = `/admin/account`;
@@ -40,36 +42,37 @@ export default class AccountSettings extends Component {
 
     render() {
         return (
-            <div className="container">
+            <Alert className="container" onRef={ref => (this.Alert = ref)}>
                 <div className="row">
                     <div className="col-12 py-3">
                         <h1 className="text-center">Account Settings</h1>
                     </div>
 
-                    <div className="col-12">
-                        <div className="row">
-                            <div className="col-lg-4 col-md-6 col-sm-12">
-                                <Settings account={this.state.account}
-                                    u={this.getData.bind(this)}
-                                    baseUri={baseUri}
-                                />
-                            </div>
+                    <div className="col-lg-4 col-md-6 col-sm-12">
+                        <Settings account={this.state.account}
+                            u={this.getData.bind(this)}
+                            alert={this.Alert}
+                            baseUri={baseUri}
+                        />
+                    </div>
 
-                            <div className="col-lg-4 col-md-6 col-sm-12">
-                                <ChangePassword baseUri={baseUri} u={this.getData.bind(this)} />
-                            </div>
+                    <div className="col-lg-4 col-md-6 col-sm-12">
+                        <ChangePassword baseUri={baseUri}
+                            u={this.getData.bind(this)}
+                            alert={this.Alert}
+                        />
+                    </div>
 
-                            <div className="col-lg-4 col-md-6 col-sm-12">
-                                <NotificationChannels baseUri={baseUri}
-                                    channels={this.state.channels}
-                                    channelMemberships={this.getChannelMemberships()}
-                                    u={this.getData.bind(this)}
-                                />
-                            </div>
-                        </div>
+                    <div className="col-lg-4 col-md-6 col-sm-12">
+                        <NotificationChannels baseUri={baseUri}
+                            channelMemberships={this.getChannelMemberships()}
+                            channels={this.state.channels}
+                            u={this.getData.bind(this)}
+                            alert={this.Alert}
+                        />
                     </div>
                 </div>
-            </div>
+            </Alert>
         );
     }
 }
