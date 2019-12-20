@@ -141,7 +141,7 @@ export default class NavSettings extends Component {
                         </ConfirmButton>
 
                         <Button className={`btn btn-success btn-sm float-right ml-1 ${!this.state.modified ? 'btn-invisible' : 'btn-visible'}`}
-                            disabled={this.props.addingNew || !this.state.modified}
+                            disabled={this.props.addingNew && !this.state.modified}
                             cb={this.props.onSave.bind(this, this.state.link)}
                         >
                             Save <i className="fas fa-check" />

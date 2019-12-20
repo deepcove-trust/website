@@ -120,7 +120,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 
                 await _Db.SaveChangesAsync();
 
-                return Ok();
+                return Ok(newItem.Id);
             }
             catch(Exception ex)
             {
@@ -136,9 +136,17 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             try
             {
                 if (string.IsNullOrEmpty(request.Str("navitem")))
-                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", "No nav-item data was sent"));
+                    return BadRequest(new ResponseHelper("Something went wrong, please try again later", "No nav-item data was sent"));                
 
-                NavItem updatedItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));                
+                NavItem updatedItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));
+
+                // If ID is zero, this is a new item, use the AddItem method
+                if (updatedItem.Id == 0) return await AddItem(request);
+
+                // Check whether an existing navitem has that id
+                NavItem originalItem = await _Db.NavItems.FindAsync(updatedItem.Id);
+
+                if (originalItem == null) return NotFound(new ResponseHelper("Something went wrong, please try again later."));
 
                 // Delete any old drop down links for the nav item
                 List<NavItemPage> dropdowns = await _Db.NavItemPages.Where(n => n.NavItemId == updatedItem.Id).ToListAsync();

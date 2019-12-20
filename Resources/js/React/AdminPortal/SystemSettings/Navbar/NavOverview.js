@@ -33,6 +33,7 @@ export default class NavOverview extends Component {
                         <NavItem nav={link} key={index} index={index} section={section}
                             activeId={this.props.activeId}
                             setActive={this.props.setActive.bind(this, link.id)}
+                            addingNew={this.props.addingNew}
                         />
                     );
                     index++;
@@ -49,6 +50,7 @@ export default class NavOverview extends Component {
                         <NavItem nav={link} key={index} index={index} section={section}
                             activeId={this.props.activeId}
                             setActive={this.props.setActive.bind(this, link.id)}
+                            addingNew={this.props.addingNew}
                         />
                     );
                     index++;
@@ -145,9 +147,9 @@ class NavItem extends Component {
         let active = this.props.nav.id == this.props.activeId;
 
         return (
-            <label className={`btn btn-outline-dark btn-block ${active ? 'active' : ''}`} data-index={this.props.index} data-section={this.props.section} data-id={this.props.nav.id} draggable='true'
+            <label className={`btn btn-outline-dark btn-block ${active ? 'active' : ''} ${this.props.addingNew && this.props.nav.id != 0 ? 'btn-invisible' : 'btn-visible'}`} data-index={this.props.index} data-section={this.props.section} data-id={this.props.nav.id} draggable={!this.props.addingNew}
                 onDragStart={this.onDrag.bind(this)} onDragEnd={this.onDragEnd.bind(this)}>
-                <input type="radio" name="navitem" onChange={this.props.setActive} />
+                <input type="radio" name="navitem" onChange={this.props.setActive} disabled={this.props.addingNew}/>
                 {this.props.nav.text}
             </label>
         )
