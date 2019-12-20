@@ -136,19 +136,19 @@ export default class NavSettings extends Component {
 
                     <div>
                         <hr />
-                        <ConfirmButton className="btn btn-outline-danger btn-sm" cb={this.props.onDelete.bind(this)}>
-                            Delete Link <i className="fas fa-trash" />
+                        <ConfirmButton className="btn btn-danger btn-sm" cb={this.props.onDelete.bind(this)}>
+                            {this.props.addingNew ? 'Cancel' : 'Delete Link'} &nbsp; <i className="fas fa-trash" />
                         </ConfirmButton>
 
-                        <Button className={`btn btn-success btn-sm float-right`}
-                            disabled={!this.state.modified}
+                        <Button className={`btn btn-success btn-sm float-right ml-1 ${!this.state.modified ? 'btn-invisible' : 'btn-visible'}`}
+                            disabled={this.props.addingNew || !this.state.modified}
                             cb={this.props.onSave.bind(this, this.state.link)}
                         >
                             Save <i className="fas fa-check" />
                         </Button>
 
-                        <Button className={`btn btn-danger btn-sm float-right`}
-                            disabled={!this.state.modified}
+                        <Button className={`btn btn-danger btn-sm float-right ${this.props.addingNew || !this.state.modified ? 'btn-invisible' : 'btn-visible'} ${this.props.addingNew ? 'd-none' : ''}`}
+                            disabled={this.props.addingNew || !this.state.modified}
                             cb={this.getData.bind(this)}
                         >
                             Reset <i className="fas fa-times" />
@@ -215,9 +215,10 @@ class Page extends Component {
 
     render() {
         if (!this.props.link || !'pageId' in this.props.link || isEmptyObj(this.props.pages)) return null;
-
+        console.log(this.props.pages);
         let options = this.props.pages.map((page) => {
-            return { value: page.id, label: page.name };
+            console.log(page.name);
+            return { value: page.id, label: page.name === '' ? 'Home' : page.name };
         });
 
         return (

@@ -1,0 +1,11 @@
+﻿.btn {
+    transition: opacity 0.3s;
+}
+
+.btn-visible {
+    opacity: 1.0 !important;
+}
+
+.btn-invisible {
+    opacity: 0.3 !important;
+}

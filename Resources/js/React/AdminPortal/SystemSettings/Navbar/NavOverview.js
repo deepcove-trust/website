@@ -112,13 +112,13 @@ export default class NavOverview extends Component {
             <React.Fragment>
                 <h4>Main Navbar</h4>
                 {this.state.links.main}
-                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={() => this.props.onAdd('main')}>Add Link &nbsp; <i className="fas fa-plus" /></button>
+                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={() => this.props.onAdd('main')} disabled={this.props.addingNew}>Add Link &nbsp; <i className="fas fa-plus" /></button>
 
                 <hr />
 
                 <h4>Education Navbar</h4>
                 {this.state.links.education}
-                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={() => this.props.onAdd('education')}>Add Link &nbsp; <i className="fas fa-plus" /></button>
+                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={() => this.props.onAdd('education')} disabled={this.props.addingNew}>Add Link &nbsp; <i className="fas fa-plus" /></button>
             </React.Fragment>
         )
     }

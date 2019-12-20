@@ -12,7 +12,8 @@ export default class Navbar extends Component {
         this.state = {
             navbar: null,
             pages: {},
-            activeId: 0
+            activeId: 0,
+            addingNew: false
         }
     }
 
@@ -27,7 +28,8 @@ export default class Navbar extends Component {
         }).done((navbar) => {
             this.setState({
                 navbar,
-                activeId: initialId || (navbar[0] ? navbar[0].id : 0)
+                activeId: initialId || (navbar[0] ? navbar[0].id : 0),
+                addingNew: false
             });
         }).fail((err) => {
             console.log(err);
@@ -58,6 +60,12 @@ export default class Navbar extends Component {
     }
 
     deleteLink(id) {
+
+        // If link has not been saved yet, just remove from state by refreshing data
+        if (id == 0) {
+            this.getData();
+        }
+        
         $.ajax({
             method: 'delete',
             url: `${baseUri}/${id}`
@@ -137,7 +145,8 @@ export default class Navbar extends Component {
         })
         this.setState({
             navbar: navlinks,
-            activeId: 0
+            activeId: 0,
+            addingNew: true
         })
     }
 
@@ -165,6 +174,7 @@ export default class Navbar extends Component {
                         setActive={this.setActive.bind(this)}
                         onAdd={this.createLink.bind(this)}
                         onReorder={this.reorderLinks.bind(this)}
+                        addingNew={this.state.addingNew}
                     />
                 </div>
 
@@ -173,6 +183,7 @@ export default class Navbar extends Component {
                         onDelete={this.deleteLink.bind(this, this.state.activeId)}
                         onSave={this.updateLink.bind(this)}
                         pages={this.state.pages}
+                        addingNew={this.state.addingNew}
                     />
                 </div>
             </div>
