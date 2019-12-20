@@ -212,12 +212,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
         {
             try
             {
-                NavItem itemToDelete = await _Db.NavItems.FindAsync(id);
-                await _Db.Entry(itemToDelete).Collection(c => c.NavItemPages).LoadAsync();
+                NavItem itemToDelete = await _Db.NavItems.FindAsync(id);                
 
                 if (itemToDelete == null)
                     return NotFound(new ResponseHelper("Something went wrong, please try again later"));
 
+                await _Db.Entry(itemToDelete).Collection(c => c.NavItemPages).LoadAsync();
                 _Db.Remove(itemToDelete);
 
                 if (itemToDelete.NavItemPages != null)
