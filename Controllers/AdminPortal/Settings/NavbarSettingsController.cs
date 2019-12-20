@@ -79,7 +79,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                     item.Url,
                     pageId = item.Page?.Id,
                     pageName = item.Page?.Name,
-                    children = item.NavItemPages.Count > 0 ? item.NavItemPages.Select(nip => new
+                    children = item.NavItemPages.Count > 0 ? item.NavItemPages.OrderBy((nip) => nip.OrderIndex).Select(nip => new
                     {
                         nip.Text,
                         nip.Url,
@@ -153,8 +153,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 // Add new dropdowns, if any
                 if (updatedItem.NavItemPages != null)
                 {
-                    await _Db.AddRangeAsync(updatedItem.NavItemPages);
-                }                
+                    // Add order index to items before saving 
+                    for (int i = 0; i < updatedItem.NavItemPages.Count; i++)
+                        updatedItem.NavItemPages[i].OrderIndex = i;
+
+                    _Db.AddRange(updatedItem.NavItemPages);
+                }
 
                 // Write changes to database
                 await _Db.SaveChangesAsync();
