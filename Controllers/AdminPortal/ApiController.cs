@@ -22,7 +22,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         private readonly WebsiteDataContext _Db;
         private readonly ILogger<ApiController> _Logger;
 
-        private readonly string[] reservedNames = { "", "login", "reset password", "logout", "register", "admin" };
+        private readonly string[] reservedNames = { "", "login", "reset password", "logout", "register", "admin", "home", "android", "android app", "sitemap" };
 
         public ApiController(WebsiteDataContext db, ILogger<ApiController> logger)
         {
