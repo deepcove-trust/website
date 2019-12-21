@@ -39,7 +39,7 @@ export default class FooterQuickLinks extends Component {
                         u={this.getData.bind(this)}
                         baseUri={baseUri}
                         sectionId={1} // Enum ID = QuickLinks.A
-                        alert={this.Alert}
+                        alert={this.props.alert}
                     />
                 </div>
 
@@ -49,7 +49,7 @@ export default class FooterQuickLinks extends Component {
                         u={this.getData.bind(this)}
                         baseUri={baseUri}
                         sectionId={2} // Enum ID = QuickLinks.B
-                        alert={this.Alert}
+                        alert={this.props.alert}
                     />
                 </div>
             </div>

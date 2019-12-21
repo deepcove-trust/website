@@ -26,7 +26,8 @@ namespace Deepcove_Trust_Website.Features.RazorRender
         {
             get
             {
-                return navItems.Where(navItem => navItem.Section == Models.Section.main).ToList();
+                return navItems.Where(navItem => navItem.Section == Models.Section.main)
+                    .OrderBy(o => o.OrderIndex).ToList();
             }
         }
 
@@ -34,13 +35,15 @@ namespace Deepcove_Trust_Website.Features.RazorRender
         {
             get
             {
-                return navItems.Where(navItem => navItem.Section == Models.Section.education).ToList();
+                return navItems.Where(navItem => navItem.Section == Models.Section.education)
+                    .OrderBy(o => o.OrderIndex).ToList();
             }
         }
 
         public List<NavItem> GetNavItemsBySection(Models.Section s)
         {
-            return navItems.Where(navItem => navItem.Section == s).ToList();
+            return navItems.Where(navItem => navItem.Section == s)
+                .OrderBy(o => o.OrderIndex).ToList();
         }
 
         public Models.Section WebsiteSection

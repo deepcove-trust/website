@@ -41,13 +41,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         //GET: /admin/pages/data
         public async Task<IActionResult> IndexData(string filter = "main")
         {
-            if (!Enum.IsDefined(typeof(Section), filter))
-                return BadRequest($"Invalid filter. Please use one of the following: {string.Join(", ", Enum.GetNames(typeof(Section)))}");
+            if (!Enum.IsDefined(typeof(Section), filter) && filter != "all")
+                return BadRequest($"Invalid filter. Please use one of the following: {string.Join(", ", Enum.GetNames(typeof(Section)), "all")}");
 
             try
             {
                 List<Page> pages = await _Db.Pages
-                    .Where(p => p.Section == Enum.Parse<Section>(filter))
+                    .Where(p =>  filter == "all" ||  p.Section == Enum.Parse<Section>(filter))
                     .Include(p => p.PageRevisions)
                         .ThenInclude(pr => pr.Template)
                     .Include(p => p.PageRevisions)
@@ -59,6 +59,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 {
                     s.Id,
                     s.Name,
+                    s.Section,
                     template = new
                     {
                         s.Latest.Template.Id,

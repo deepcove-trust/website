@@ -6,10 +6,11 @@ export default class AvaliablePages extends Component {
         $.ajax({
             type: 'post',
             url: `${this.props.baseUri}/${id}/${this.props.sectionId}`
-        }).done(() =>
-            this.props.u()
-        ).fail((err) => {
-            console.error(err);
+        }).done(() => {
+            this.props.u();
+            this.props.alert.success('Quicklink added!');
+        }).fail((err) => {
+            tihs.props.alert.error(null, err.responseText);
         });
     }
 

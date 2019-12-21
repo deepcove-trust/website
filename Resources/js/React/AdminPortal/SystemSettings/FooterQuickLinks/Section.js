@@ -8,6 +8,7 @@ export class Section extends Component {
         let pages = this.props.section ? (
             this.props.section.pages.map((page, key) => {
                 return <Page page={page} key={key}
+                    alert={this.props.alert}
                     baseUri={this.props.baseUri}
                     u={this.props.u}
                 />
@@ -26,6 +27,7 @@ export class Section extends Component {
                 <AvaliablePages pages={this.props.avaliable}
                     sectionId={this.props.sectionId}
                     baseUri={this.props.baseUri}
+                    alert={this.props.alert}
                     u={this.props.u}
                 />
 

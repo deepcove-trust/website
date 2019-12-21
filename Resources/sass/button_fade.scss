@@ -1,0 +1,31 @@
+﻿.btn {
+    transition: opacity 0.3s;
+}
+
+.btn-visible {
+    opacity: 1.0 !important;
+}
+
+.btn-invisible {
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+}
+
+.navitem.active i {
+    color: white;
+}
+
+.navitem i {
+    transition: font-size 0.1s, margin 0.1s;
+    font-size: 15px;
+    margin-bottom: 0.25rem;
+    margin-top: 0.25rem;
+    color: gray;
+}
+
+.navitem:hover i {
+    font-size: 18px;
+    margin-bottom: 0.15rem;
+    margin-top: 0.15rem;
+    color: white;
+}
