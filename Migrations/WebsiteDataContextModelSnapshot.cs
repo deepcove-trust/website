@@ -390,6 +390,8 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("OrderIndex");
+
                     b.Property<int?>("PageId");
 
                     b.Property<int>("Section");
@@ -411,6 +413,8 @@ namespace Deepcove_Trust_Website.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("NavItemId");
+
+                    b.Property<int>("OrderIndex");
 
                     b.Property<int?>("PageId");
 

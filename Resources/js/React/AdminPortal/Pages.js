@@ -2,6 +2,7 @@
 import { render } from 'react-dom';
 import { Link } from '../Components/Button';
 import PagePreview from './Pages/PagePreview';
+import Alert from '../Components/Alert';
 import $ from 'jquery';
 import { Input, FormGroup } from '../Components/FormControl';
 
@@ -48,32 +49,34 @@ export default class Pages extends Component {
 
                 return (
                     <div className="col-lg-4 col-md-6 col-sm-12" key={key}>
-                        <PagePreview page={page} u={this.getData.bind(this)} />
+                        <PagePreview page={page} u={this.getData.bind(this)} alert={this.alert} />
                     </div>
                 )
             });
         }
 
         return (
-            <div className="row">
-                <div className="col-12 py-3">
-                    <h1 className="text-center">Pages</h1>
-                </div>
+            <Alert onRef={ref => (this.alert = ref)}>
+                <div className="row">
+                    <div className="col-12 py-3">
+                        <h1 className="text-center">Pages</h1>
+                    </div>
 
-                <div className="col-md-4">
-                    <FormGroup label="Search:">
-                        <Input type="text" placeHolder="Page name..." value={this.state.search} cb={(search) => this.setState({ search })}/>
-                    </FormGroup>
-                </div>
+                    <div className="col-md-4">
+                        <FormGroup label="Search:">
+                            <Input type="text" placeHolder="Page name..." value={this.state.search} cb={(search) => this.setState({ search })} />
+                        </FormGroup>
+                    </div>
 
-                <div className="col-md-4 offset-md-4 mb-3">
-                    <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
-                        New Page <i className="fas fa-file-plus"></i>
-                    </Link>
-                </div>
+                    <div className="col-md-4 offset-md-4 mb-3">
+                        <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
+                            New Page <i className="fas fa-file-plus"></i>
+                        </Link>
+                    </div>
 
-                {pages}
-            </div>
+                    {pages}
+                </div>
+            </Alert>
         );
     }
 }

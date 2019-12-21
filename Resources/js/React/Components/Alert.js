@@ -130,7 +130,7 @@ export default class Alert extends Component {
 
                 <ToastContainer
                     position="top-right"
-                    autoClose={6 * 1000}
+                    autoClose={3 * 1000}
                     hideProgressBar={false}
                     closeOnClick={false}
                     newestOnTop={false}
