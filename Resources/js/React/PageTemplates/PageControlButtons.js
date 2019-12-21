@@ -2,14 +2,13 @@
 import { Button, Link } from '../Components/Button';
 import { PageUrl } from '../../helpers';
 import $ from 'jquery';
-import Alert from '../Components/Alert';
 
 const pageBaseUri = `/admin/pages`;
 
 export class EditPageSettings extends Component {
     render() {
-        return  <Link className={this.props.className || `btn btn-outline-dark btn-block`}
-                    href={`${pageBaseUri}/${this.props.pageId}`}> Edit Settings </Link>
+        return <Link className={this.props.className || `btn btn-outline-dark btn-block`}
+            href={`${pageBaseUri}/${this.props.pageId}`}> Edit Settings </Link>
     }
 }
 
@@ -18,12 +17,12 @@ export class ToggleVisibility extends Component {
         $.ajax({
             method: 'put',
             url: `${pageBaseUri}/${this.props.pageId}/visibility`,
-            data: {visbility: e}
+            data: { visbility: e }
         }).done(() => {
-            this.Alert.info(`Page is now ${e ? 'visible' : 'hidden'}`);
+            this.props.alert.info(`Page is now ${e ? 'visible' : 'hidden'}`);
             if (this.props.u) return this.props.u();
         }).fail((err) => {
-            this.Alert.error(null, err.responseText);
+            this.props.alert.error(null, err.responseText);
         })
     }
 
@@ -37,17 +36,15 @@ export class ToggleVisibility extends Component {
         if (this.props.public) {
             text = (
                 <Fragment>
-                    Make Private <i className="fas fa-eye-slash"/>
+                    Make Private <i className="fas fa-eye-slash" />
                 </Fragment>
             )
         }
 
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <Button className={this.props.className || `btn btn-dark btn-sm`} cb={this.toggleVisibility.bind(this, !this.props.public)}>
-                    {text}
-                </Button>    
-            </Alert>
+            <Button className={this.props.className || `btn btn-dark btn-sm`} cb={this.toggleVisibility.bind(this, !this.props.public)}>
+                {text}
+            </Button>
         )
     }
 }

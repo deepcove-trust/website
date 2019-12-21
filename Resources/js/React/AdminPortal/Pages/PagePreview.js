@@ -27,6 +27,7 @@ export default class PagePreview extends Component {
                             className="btn btn-outline-dark btn-block"
                             public={this.props.page.public}
                             pageId={this.props.page.id}
+                            alert={this.props.alert}
                             u={this.props.u}
                         />
                     </div>
