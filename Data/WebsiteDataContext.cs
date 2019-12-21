@@ -178,7 +178,8 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<FactFileEntry>().HasMany(ff => ff.FactFileEntryImages).WithOne(ei => ei.FactFileEntry).HasForeignKey(ei => ei.FactFileEntryId).OnDelete(DeleteBehavior.Restrict);
 
             // -- Configure relationships between pages and navitems
-            modelBuilder.Entity<Page>().HasMany(p => p.NavItems).WithOne(ni => ni.Page).HasForeignKey(ni => ni.PageId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Page>().HasMany(p => p.NavItems).WithOne(ni => ni.Page).HasForeignKey(ni => ni.PageId).OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<Page>().HasMany(p => p.NavItemPages).WithOne(ni => ni.Page).HasForeignKey(ni => ni.PageId).OnDelete(DeleteBehavior.Cascade);
         }
 
         /// <summary>
