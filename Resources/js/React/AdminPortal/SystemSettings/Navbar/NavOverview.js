@@ -111,15 +111,17 @@ export default class NavOverview extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <h4>Main Navbar</h4>
+            <React.Fragment>                
+                <h4>Main Navbar</h4>                   
                 {this.state.links.main}
+                <small class="text-muted font-italic mt-0 mb-2 float-left">Drag to reorder</small>
                 <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={() => this.props.onAdd('main')} disabled={this.props.addingNew}>Add Link &nbsp; <i className="fas fa-plus" /></button>
 
                 <hr />
 
                 <h4>Education Navbar</h4>
                 {this.state.links.education}
+                <small class="text-muted font-italic mt-0 mb-2 float-left">Drag to reorder</small>
                 <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={() => this.props.onAdd('education')} disabled={this.props.addingNew}>Add Link &nbsp; <i className="fas fa-plus" /></button>
             </React.Fragment>
         )
@@ -147,9 +149,10 @@ class NavItem extends Component {
         let active = this.props.nav.id == this.props.activeId;
 
         return (
-            <label className={`btn btn-outline-dark btn-block ${active ? 'active' : ''} ${this.props.addingNew && this.props.nav.id != 0 ? 'btn-invisible' : 'btn-visible'}`} data-index={this.props.index} data-section={this.props.section} data-id={this.props.nav.id} draggable={!this.props.addingNew}
+            <label className={`btn btn-outline-dark btn-block ${active ? 'active' : ''} ${this.props.addingNew && this.props.nav.id != 0 ? 'btn-invisible' : 'btn-visible'} navitem`} data-index={this.props.index} data-section={this.props.section} data-id={this.props.nav.id} draggable={!this.props.addingNew}
                 onDragStart={this.onDrag.bind(this)} onDragEnd={this.onDragEnd.bind(this)}>
-                <input type="radio" name="navitem" onChange={this.props.setActive} disabled={this.props.addingNew}/>
+                <input type="radio" name="navitem" onChange={this.props.setActive} disabled={this.props.addingNew} />
+                <i className="fas fa-ellipsis-v float-left" />
                 {this.props.nav.text}
             </label>
         )
