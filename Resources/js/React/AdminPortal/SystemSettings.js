@@ -1,6 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
-
+import Alert from '../Components/Alert';
 import ContactInformation from './SystemSettings/ContactInformation';
 import FooterQuickLinks from './SystemSettings/FooterQuickLinks';
 import Navbar from './Systemsettings/Navbar';
@@ -9,7 +9,7 @@ const components = {
     0: {
         template: ContactInformation,
         tab: 'Contact Information'
-    }, 
+    },
     1: {
         template: FooterQuickLinks,
         tab: 'Footer Quick-Links'
@@ -51,19 +51,21 @@ export default class SystemSettings extends Component {
         const SettingsPage = components[this.state.tabIndex || 0].template;
 
         return (
-            <div className="row">
-                <div className="col-12 py-3">
-                    <h1 className="text-center">Website Settings</h1>
-                    <PageTabs tabIndex={this.state.tabIndex}
-                        pages={components}
-                        cb={this.updateIndex.bind(this)}
-                    />
+            <Alert onRef={ref => (this.Alert = ref)}>
+                <div className="row">
+                    <div className="col-12 py-3">
+                        <h1 className="text-center">Website Settings</h1>
+                        <PageTabs tabIndex={this.state.tabIndex}
+                            pages={components}
+                            cb={this.updateIndex.bind(this)}
+                        />
 
-                    <div className="fade1sec">
-                        <SettingsPage />
+                        <div className="fade1sec">
+                            <SettingsPage alert={this.Alert}/>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Alert>
         );
     }
 }
@@ -93,7 +95,7 @@ export class PageTabs extends Component {
                         {page.tab}
                     </a>
                 </li>
-            )           
+            )
         }) : null;
 
 

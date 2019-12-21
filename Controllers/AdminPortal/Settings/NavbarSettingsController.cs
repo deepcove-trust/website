@@ -108,7 +108,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 NavItem newItem = JsonConvert.DeserializeObject<NavItem>(request.Str("navitem"));
 
                 // Give an order index that places this at the end of the list, for its section
-                newItem.OrderIndex = await _Db.NavItems.Where(n => n.Section == newItem.Section).MaxAsync(m => m.OrderIndex) + 1;
+                newItem.OrderIndex = await _Db.NavItems.Where(n => n.Section == newItem.Section).DefaultIfEmpty().MaxAsync(m => m.OrderIndex) + 1;
 
                 await _Db.AddAsync(newItem);
                 
@@ -144,7 +144,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 if (updatedItem.Id == 0) return await AddItem(request);
 
                 // Check whether an existing navitem has that id
-                NavItem originalItem = await _Db.NavItems.FindAsync(updatedItem.Id);
+                NavItem originalItem = await _Db.NavItems.AsNoTracking().FirstOrDefaultAsync((item) => item.Id == updatedItem.Id);
 
                 if (originalItem == null) return NotFound(new ResponseHelper("Something went wrong, please try again later."));
 

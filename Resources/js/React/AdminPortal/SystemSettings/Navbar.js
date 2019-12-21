@@ -20,8 +20,7 @@ export default class Navbar extends Component {
 
     componentDidMount() { this.getData() };
 
-    getData(initialId) {        
-        console.log(`Initial ID set to ${initialId}`);
+    getData(initialId) {
         $.ajax({
             method: 'get',
             url: baseUri
@@ -65,7 +64,7 @@ export default class Navbar extends Component {
         if (id == 0) {
             this.getData();
         }
-        
+
         $.ajax({
             method: 'delete',
             url: `${baseUri}/${id}`
@@ -79,8 +78,6 @@ export default class Navbar extends Component {
 
     // Strips away fields that the API doesn't care about
     cleanLink(linkData) {
-        console.log('Dirty link');
-        console.log(linkData);
 
         if (linkData.type == 'Page') {
             return {
@@ -121,16 +118,16 @@ export default class Navbar extends Component {
         }
     }
 
-    updateLink(linkData) {
+    updateLink(linkData) {        
         let link = this.cleanLink(linkData);
-        console.log("Cleaned link:");
-        console.log(link);
         $.ajax({
             method: 'put',
             url: baseUri,
             data: { navitem: JSON.stringify(link) },
-        }).done((linkId) => {            
+        }).done((linkId) => {
             this.getData(linkId);
+            console.log("Navbar successfully updated!");
+            this.props.alert.success("Navbar successfully updated!")
         }).fail((err) => {
             console.log(err);
         })
@@ -141,7 +138,9 @@ export default class Navbar extends Component {
         navlinks.push({
             id: 0,
             section: section,
-            text: 'New Link'
+            text: 'New Link',
+            type: 'Page',
+            pageId: null
         })
         this.setState({
             navbar: navlinks,
@@ -151,17 +150,15 @@ export default class Navbar extends Component {
     }
 
     reorderLinks(section, ids, id) {
-        console.log(`Changing order of ${section} links`);
-        console.log(ids);
-
         $.ajax({
             method: 'patch',
             url: `${baseUri}?section=${section}`,
             data: { navitems: JSON.stringify(ids) }
         }).done(() => {
             this.getData(id);
+            this.props.alert.success("Navbar successfully updated!")
         }).fail((err) => {
-            console.log(err);
+            this.props.alert.error(null, err.responseText);
         });
     }
 

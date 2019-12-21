@@ -85,6 +85,32 @@ export default class NavSettings extends Component {
         this.updateLink('pageName', page.name);
     }
 
+    // Clear link text value if changing type to either dropdown or url
+    updateLinkType(type) {
+        if (type != 'Page') {
+            this.updateLink('text', null);
+        }
+        this.updateLink('type', type);
+    }
+
+    // Stop the form submit from reloading the page
+    onSave(ev, link) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        this.props.onSave(link);
+    }
+
+    canSave() {
+        // Ensure link has page assigned if type 'Page'
+        if (this.state.link.type == 'Page') return this.state.link.pageId;
+
+        if (this.state.link.type == 'Dropdown') {
+            // Ensure link has children array, has more than 0 children, and no children are Page types without assigned pages
+            return this.state.link.children && this.state.link.children.length > 0 && !this.state.link.children.some((sublink) => sublink.type == 'Page' && !sublink.pageId)
+        }
+        return true;
+    }
+
     render() {
         let options = (
             <Page link={this.state.link} pages={this.props.pages}
@@ -111,49 +137,46 @@ export default class NavSettings extends Component {
                     </Panel>
                 </Fragment>
             )
-        }
+        }        
 
         return (
             <Fragment>
                 <h4>Settings</h4>
                 <Panel>
-                    <div className="row">
-                        <div className="col-md-6 col-sm-12">
-                            <LinkName link={this.state.link} update={this.updateLink.bind(this, 'text')} />
+                    <form onSubmit={(e) => { this.onSave(e, this.state.link) }}>
+                        <div className="row">
+                            <div className="col-md-6 col-sm-12">
+                                <LinkName link={this.state.link} update={this.updateLink.bind(this, 'text')} />
+                            </div>
+
+                            <div className="col-md-6 col-sm-12">
+                                <LinkType linkType={this.state.link.type} update={this.updateLinkType.bind(this)} />
+                            </div>
                         </div>
 
-                        <div className="col-md-6 col-sm-12">
-                            <LinkType linkType={this.state.link.type} update={this.updateLink.bind(this, 'type')} />
+                        {options}
+
+                        <div>
+                            <hr />
+                            <ConfirmButton className="btn btn-danger btn-sm" cb={this.props.onDelete.bind(this)}>
+                                {this.props.addingNew ? 'Cancel' : 'Delete Link'} &nbsp; <i className="fas fa-trash" />
+                            </ConfirmButton>
+
+                            <Button className={`btn btn-success btn-sm float-right ml-1 ${(!this.state.modified || !this.canSave()) ? 'btn-invisible' : 'btn-visible'}`}
+                                disabled={!this.state.modified || !this.canSave()}
+                                type="submit"
+                            >
+                                Save <i className="fas fa-check" />
+                            </Button>
+
+                            <Button className={`btn btn-danger btn-sm float-right ${this.props.addingNew || !this.state.modified ? 'btn-invisible' : 'btn-visible'} ${this.props.addingNew ? 'd-none' : ''}`}
+                                disabled={this.props.addingNew || !this.state.modified}
+                                cb={this.getData.bind(this)}
+                            >
+                                Reset <i className="fas fa-times" />
+                            </Button>
                         </div>
-                    </div>
-
-                    {/*
-
-
-                    */}
-
-                    {options}
-
-                    <div>
-                        <hr />
-                        <ConfirmButton className="btn btn-danger btn-sm" cb={this.props.onDelete.bind(this)}>
-                            {this.props.addingNew ? 'Cancel' : 'Delete Link'} &nbsp; <i className="fas fa-trash" />
-                        </ConfirmButton>
-
-                        <Button className={`btn btn-success btn-sm float-right ml-1 ${!this.state.modified ? 'btn-invisible' : 'btn-visible'}`}
-                            disabled={this.props.addingNew && !this.state.modified}
-                            cb={this.props.onSave.bind(this, this.state.link)}
-                        >
-                            Save <i className="fas fa-check" />
-                        </Button>
-
-                        <Button className={`btn btn-danger btn-sm float-right ${this.props.addingNew || !this.state.modified ? 'btn-invisible' : 'btn-visible'} ${this.props.addingNew ? 'd-none' : ''}`}
-                            disabled={this.props.addingNew || !this.state.modified}
-                            cb={this.getData.bind(this)}
-                        >
-                            Reset <i className="fas fa-times" />
-                        </Button>
-                    </div>
+                    </form>
                 </Panel>
             </Fragment>
         );
@@ -166,7 +189,8 @@ class LinkName extends Component {
             <FormGroup htmlFor="link_text" label="Link Text" required>
                 <Input id="link_text" type="text"
                     value={this.props.link ? this.props.link.text : ""}
-                    placeHolder={this.props.link ? this.props.link.pageName : ""}
+                    placeHolder={(this.props.link && this.props.link.type == 'Page') ? this.props.link.pageName : ""}
+                    required={this.props.link.type != 'Page'}
                     cb={this.props.update}
                 />
             </FormGroup>
@@ -197,6 +221,7 @@ class CustomUrl extends Component {
                 <Input id="customurl" type="url"
                     value={this.props.link.url || ""}
                     placeHolder="https://example.com"
+                    type='url'
                     required
                     cb={this.props.update}
                 />
@@ -215,9 +240,7 @@ class Page extends Component {
 
     render() {
         if (!this.props.link || !'pageId' in this.props.link || isEmptyObj(this.props.pages)) return null;
-        console.log(this.props.pages);
         let options = this.props.pages.map((page) => {
-            console.log(page.name);
             return { value: page.id, label: page.name === '' ? 'Home' : page.name };
         });
 
@@ -225,7 +248,7 @@ class Page extends Component {
             <FormGroup htmlFor="page" label="Select ONE page" required>
                 <Rselect options={options} passive
                     value={options.filter((x) => x.value == this.props.link.pageId)[0]}
-                    onChange={this.handleClick.bind(this)}
+                    onChange={this.handleClick.bind(this)}                    
                 />
             </FormGroup>
         );

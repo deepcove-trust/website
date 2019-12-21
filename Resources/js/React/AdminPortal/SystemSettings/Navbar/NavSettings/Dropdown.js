@@ -5,7 +5,6 @@ import { Select, Input } from '../../../../Components/FormControl';
 
 export default class Dropdown extends Component {
     updateSublink(index, key, val) {
-        console.log(`Setting ${key} to ${val}`);
         var sublinks = this.props.sublinks;
         var sublink = sublinks[index];
         sublink[key] = val;
@@ -13,12 +12,14 @@ export default class Dropdown extends Component {
             sublink['text'] = null;
             sublink['pageName'] = this.props.pages.find((page) => page.id == sublink['pageId']).name;
         }
-        
+        if (key == 'type') {
+            sublink['text'] = null;
+            sublink['pageName'] = null;
+        }
         this.props.update(sublinks);        
     }
 
     deleteSublink(index) {
-        console.log(`Deleting ${index}`)
         var sublinks = this.props.sublinks;
         sublinks.splice(index, 1);
         this.props.update(sublinks);
@@ -27,9 +28,7 @@ export default class Dropdown extends Component {
     addSublink() {
         var sublinks = this.props.sublinks;
         sublinks.push({
-            text: 'New link',
-            type: 'URL',
-            url: ''
+            type: 'Page',
         })
         this.props.update(sublinks);
     }
@@ -50,7 +49,7 @@ export default class Dropdown extends Component {
                 <hr />
                 <h5>Dropdown Links</h5>
                 {sublinks.length > 0 ? sublinks : <p>No links configured</p>}
-                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" onClick={this.addSublink.bind(this)}>Add Link &nbsp; <i className="fas fa-plus" /></button>
+                <button className="btn btn-dark btn-sm d-block ml-auto mr-0 my-3" type="button" onClick={this.addSublink.bind(this)}>Add Link &nbsp; <i className="fas fa-plus" /></button>
             </Fragment>
         )
 
@@ -107,6 +106,7 @@ class SublinkName extends Component {
             <Input type="text"
                 value={this.props.sublink ? this.props.sublink.text : ""}
                 placeHolder={this.props.sublink ? this.props.sublink.pageName : ""}
+                required={this.props.sublink.type == 'URL'}
                 cb={this.props.update}
             />
         );
