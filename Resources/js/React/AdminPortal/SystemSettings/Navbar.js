@@ -62,17 +62,17 @@ export default class Navbar extends Component {
 
         // If link has not been saved yet, just remove from state by refreshing data
         if (id == 0) {
-            this.getData();
+            return this.getData();
         }
 
         $.ajax({
             method: 'delete',
             url: `${baseUri}/${id}`
         }).done(() => {
-            console.log(`Nav link ${id} deleted successfully`);
+            this.props.alert.success('Link removed successfully');
             this.getData();
         }).fail((err) => {
-            console.log(err);
+            this.props.alert.error(null, err.responseText);
         });
     }
 
@@ -126,10 +126,9 @@ export default class Navbar extends Component {
             data: { navitem: JSON.stringify(link) },
         }).done((linkId) => {
             this.getData(linkId);
-            console.log("Navbar successfully updated!");
-            this.props.alert.success("Navbar successfully updated!")
+            this.props.alert.success("Changes saved!")
         }).fail((err) => {
-            console.log(err);
+            this.props.alert.error(null, err.responseText);
         })
     }
 
@@ -140,6 +139,7 @@ export default class Navbar extends Component {
             section: section,
             text: 'New Link',
             type: 'Page',
+            pageName: null,
             pageId: null
         })
         this.setState({
@@ -156,7 +156,7 @@ export default class Navbar extends Component {
             data: { navitems: JSON.stringify(ids) }
         }).done(() => {
             this.getData(id);
-            this.props.alert.success("Navbar successfully updated!")
+            this.props.alert.success("Changes saved!")
         }).fail((err) => {
             this.props.alert.error(null, err.responseText);
         });

@@ -247,7 +247,7 @@ class Page extends Component {
         return (
             <FormGroup htmlFor="page" label="Select ONE page" required>
                 <Rselect options={options} passive
-                    value={options.filter((x) => x.value == this.props.link.pageId)[0]}
+                    value={options.filter((x) => x.value == this.props.link.pageId)[0] || null}
                     onChange={this.handleClick.bind(this)}                    
                 />
             </FormGroup>
