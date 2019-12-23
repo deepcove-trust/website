@@ -85,14 +85,6 @@ export default class NavSettings extends Component {
         this.updateLink('pageName', page.name);
     }
 
-    // Clear link text value if changing type to either dropdown or url
-    updateLinkType(type) {
-        if (type != 'Page') {
-            this.updateLink('text', null);
-        }
-        this.updateLink('type', type);
-    }
-
     // Stop the form submit from reloading the page
     onSave(ev, link) {
         ev.preventDefault();
@@ -150,7 +142,7 @@ export default class NavSettings extends Component {
                             </div>
 
                             <div className="col-md-6 col-sm-12">
-                                <LinkType linkType={this.state.link.type} update={this.updateLinkType.bind(this)} />
+                                <LinkType linkType={this.state.link.type} update={this.updateLink.bind(this, 'type')} />
                             </div>
                         </div>
 
