@@ -81,7 +81,7 @@ export default class NavOverview extends Component {
         let navItems = this.state.links.main.concat(this.state.links.education);
 
         // Remove dropzones 
-        navItems = navItems.filter((item) => item.type.name == 'NavItem');
+        navItems = navItems.filter((item) => item.props.activeId);
 
         // Remove the item that has been shifted
         let movedItemIndex = navItems.findIndex((item) => item.props.nav.id == id);
