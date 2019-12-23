@@ -4,7 +4,7 @@
 @using Deepcove_Trust_Website.Features.RazorRender
 @inject NavbarService Nav
 
-@{ 
+@{
     var section = Nav.WebsiteSection;
     List<NavItem> navItems = Nav.GetNavItemsBySection(section);
 }
@@ -21,15 +21,12 @@
             <ul class="navbar-nav flex-shrink-1">
                 <!-- Once the trust is happy with their education portal, remove this link. . . -->
                 <!-- Contact Samuel Grant -->
-                <li role="presentation" class="nav-item">
-                    <a class="nav-link text-dark" href="https://deepcoveeducation.co.nz">Education Resources</a>
-                </li>
                 @foreach (var navItem in navItems)
                 {
                     @if (navItem.NavItemPages.Count > 0)
                     {
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle nav-link text-dark" aria-expanded="false" data-toggle="dropdown"  href="#">@(navItem.Text ?? "Dropdown")</a>
+                            <a class="dropdown-toggle nav-link text-dark" aria-expanded="false" data-toggle="dropdown" href="#">@(navItem.Text ?? "Dropdown")</a>
                             <div class="dropdown-menu" role="menu">
                                 @foreach (var link in navItem.NavItemPages)
                                 {
@@ -39,13 +36,18 @@
                                     }
                                 }
                             </div>
-                        </li> 
-                    }
-                    else if(navItem.Page == null || navItem.Page.Public || User.Identity.IsAuthenticated)
-                    {
-                        <li role="presentation" class="nav-item">
-                            <a class="nav-link text-dark" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
                         </li>
+
+                    }
+                    else if (navItem.Page == null || navItem.Page.Public || User.Identity.IsAuthenticated)
+                    {
+                        if (navItem.Page == null && navItem.Url == null) { }
+                        else
+                        {
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link text-dark" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
+                            </li>
+                        }
                     }
                 }
             </ul>

@@ -27,7 +27,7 @@ export default class FooterQuickLinks extends Component {
                 quickLinks: _.cloneDeep(quickLinks),
                 default: _.cloneDeep(quickLinks)
             });
-        }); 
+        });
     }
 
     render() {
@@ -39,6 +39,7 @@ export default class FooterQuickLinks extends Component {
                         u={this.getData.bind(this)}
                         baseUri={baseUri}
                         sectionId={1} // Enum ID = QuickLinks.A
+                        alert={this.props.alert}
                     />
                 </div>
 
@@ -48,6 +49,7 @@ export default class FooterQuickLinks extends Component {
                         u={this.getData.bind(this)}
                         baseUri={baseUri}
                         sectionId={2} // Enum ID = QuickLinks.B
+                        alert={this.props.alert}
                     />
                 </div>
             </div>

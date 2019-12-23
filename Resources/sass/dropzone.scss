@@ -1,0 +1,19 @@
+﻿/* Nothing is being dragged */
+.dropzone {
+    transition: margin 0.2s, visibility 0.2s, height 0.2s;
+    -webkit-transition: margin 0.2s, visibility 0.2s, height 0.2s;
+    visibility: hidden;
+    height: 0px;
+}
+
+/* Something is being dragged */
+.dropzone-enabled {
+    visibility: visible;
+    height: 10px;
+}
+
+/* Something has been dragged over dropzone */
+.dropzone-hover {
+    height: 25px;
+}
+    

@@ -5,12 +5,14 @@ import $ from 'jquery';
 export default class Notifications extends Component {
     toggleChannel(id, method) {
         $.ajax({
-            type: method ? 'post' : 'delete',// Callback, is the checkbox checked?
+            // Callback, is the checkbox checked?
+            type: method ? 'post' : 'delete',
             url: `${this.props.baseUri}/channel/${id}`
-        }).done(() => {
+        }).done((msg) => {
+            this.props.alert.info(msg);
             this.props.u();
         }).fail((err) => {
-            Console.err(`[Notifications@toggleChannel] Error leaving/removing a notification channel: ${err.ResponseText}`);
+            this.props.alert.error(null, err.ResponseText);
         });
     }
 
@@ -28,7 +30,7 @@ export default class Notifications extends Component {
                 }
                 // Render the actual checkmark.
                 return (
-                    <Checkbox id={channel.id}
+                    <Checkbox id={channel.id} key={key}
                         label={channel.name}
                         tooltip={channel.description}
                         checked={checked}

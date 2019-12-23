@@ -10,10 +10,11 @@
 /* Custom CSS */
 @import './Authentication.scss';
 @import './media.scss';
+@import './dropzone.scss';
+@import './button_fade.scss';
 
-/* S Alert */
-@import './s-alert-default.scss';
-@import './s-alert-slide.scss';
+/* UI Alert */
+@import './ReactToastify.min.scss';
 
 /* Import Font Awesome 5 Pro */
 $fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
@@ -266,4 +267,16 @@ div.selected {
     color: #fff!important;
     background-color: #23272b;
     border-color: #1d2124;
+}
+
+
+/***** TEST ******/
+label.btn input[type="radio"]{
+    display: none;
+}
+
+.rounded-circle.kea{
+    max-height: 250px;
+    max-width: 250px;
+    margin-top: -20px;
 }

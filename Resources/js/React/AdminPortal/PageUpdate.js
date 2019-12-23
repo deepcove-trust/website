@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import PageMeta from './Pages/PageMeta';
 
 import $ from 'jquery';
+import Alert from '../Components/Alert';
 
 const baseUri = "/admin/pages";
 
@@ -45,7 +46,7 @@ export default class UpdatePageWrapper extends Component {
         }).done((url) => {
             window.location.replace(url);
         }).fail((err) => {
-            console.error(`[PageUpdate@updatePage] Error saving changes: `, err.responseText);
+            this.Alert.error(null, err.responseText);
         })
     }
 
@@ -59,12 +60,12 @@ export default class UpdatePageWrapper extends Component {
         }
 
         return (
-            <Fragment>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <PageMeta title="Page Settings"
                     data={this.state.page}
                     saveChanges={this.updatePage.bind(this)}
                 />
-            </Fragment>
+            </Alert>
         );
     }
 }

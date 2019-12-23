@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -81,6 +82,11 @@ namespace Deepcove_Trust_Website
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -89,9 +95,10 @@ namespace Deepcove_Trust_Website
             {
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseDeveloperExceptionMails();
             }
 
-            //app.UseDeveloperExceptionMails();
+            
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
@@ -100,12 +107,8 @@ namespace Deepcove_Trust_Website
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                name: "Home",
-                template: "",
-                defaults: new { controller = "Website", action = "HomePage" });
-                routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Website}/{action=HomePage}/{id?}");
             });
         }
     }

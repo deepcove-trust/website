@@ -2,7 +2,7 @@
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
 import { FormGroup, Input } from '../Components/FormControl';
-import AlertWrapper from '../Components/Alert';
+import Alert from '../Components/Alert';
 import $ from 'jquery';
 
 
@@ -36,7 +36,7 @@ export default class ResetPassword extends Component {
         }).fail((err) => {
             this.setState({
                 requestPending: false,
-            }, () => this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
+            }, () => this.Alert.error(null, err.responseText));
         })
     }
 
@@ -61,7 +61,7 @@ export default class ResetPassword extends Component {
 
     render() {
         return (
-            <AlertWrapper onRef={(ref) => (this.AlertWrapper = ref)}>
+            <Alert onRef={(ref) => (this.Alert = ref)}>
                 <div className="login-clean text-center">
                     <form onSubmit={this.attemptRequest.bind(this)}>
                         <h1 className="sr-only">New email password form</h1>
@@ -110,7 +110,7 @@ export default class ResetPassword extends Component {
                         </FormGroup>
                     </form>
                 </div>
-            </AlertWrapper>
+            </Alert>
         );
     }
 }

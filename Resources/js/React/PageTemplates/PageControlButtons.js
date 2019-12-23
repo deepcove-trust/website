@@ -7,8 +7,8 @@ const pageBaseUri = `/admin/pages`;
 
 export class EditPageSettings extends Component {
     render() {
-        return  <Link className={this.props.className || `btn btn-outline-dark btn-block`}
-                    href={`${pageBaseUri}/${this.props.pageId}`}> Edit Settings </Link>
+        return <Link className={this.props.className || `btn btn-outline-dark btn-block`}
+            href={`${pageBaseUri}/${this.props.pageId}`}> Edit Settings </Link>
     }
 }
 
@@ -17,12 +17,12 @@ export class ToggleVisibility extends Component {
         $.ajax({
             method: 'put',
             url: `${pageBaseUri}/${this.props.pageId}/visibility`,
-            data: {visbility: e}
+            data: { visbility: e }
         }).done(() => {
+            this.props.alert.info(`Page is now ${e ? 'visible' : 'hidden'}`);
             if (this.props.u) return this.props.u();
         }).fail((err) => {
-            // redo this
-            console.error(err);
+            this.props.alert.error(null, err.responseText);
         })
     }
 
@@ -36,7 +36,7 @@ export class ToggleVisibility extends Component {
         if (this.props.public) {
             text = (
                 <Fragment>
-                    Make Private <i className="fas fa-eye-slash"/>
+                    Make Private <i className="fas fa-eye-slash" />
                 </Fragment>
             )
         }
@@ -44,7 +44,7 @@ export class ToggleVisibility extends Component {
         return (
             <Button className={this.props.className || `btn btn-dark btn-sm`} cb={this.toggleVisibility.bind(this, !this.props.public)}>
                 {text}
-            </Button>    
+            </Button>
         )
     }
 }

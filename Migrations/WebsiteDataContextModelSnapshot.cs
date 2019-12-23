@@ -390,6 +390,8 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<int>("OrderIndex");
+
                     b.Property<int?>("PageId");
 
                     b.Property<int>("Section");
@@ -411,6 +413,8 @@ namespace Deepcove_Trust_Website.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("NavItemId");
+
+                    b.Property<int>("OrderIndex");
 
                     b.Property<int?>("PageId");
 
@@ -824,7 +828,7 @@ namespace Deepcove_Trust_Website.Migrations
                     b.HasOne("Deepcove_Trust_Website.Models.Page", "Page")
                         .WithMany("NavItems")
                         .HasForeignKey("PageId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.NavItemPage", b =>
@@ -836,7 +840,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasOne("Deepcove_Trust_Website.Models.Page", "Page")
                         .WithMany("NavItemPages")
-                        .HasForeignKey("PageId");
+                        .HasForeignKey("PageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Deepcove_Trust_Website.Models.Notice", b =>

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
 {
@@ -34,19 +35,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
                 return Ok(await _Db.SystemSettings.OrderByDescending(o => o.Id)
                     .Select(s => new
                     {
-                        Email = new
-                        {
-                            bookings = s.EmailBookings,
-                            general = s.EmailGeneral
-                        },
-                        Urls = new
-                        {
-                            Facebook = s.UrlFacebook,
-                            GooglePlay = s.UrlGooglePlay,
-                            GoogleMaps = s.UrlGoogleMaps
-                        },
+                        s.EmailGeneral,
+                        s.EmailBookings,
+                        MissionStatement = s.FooterText,
                         s.Phone,
-                        MissionStatement = s.FooterText
+                        s.UrlFacebook,
+                        s.UrlGooglePlay,
+                        s.UrlGoogleMaps
                     }).FirstOrDefaultAsync());
             }
             catch (Exception ex)
@@ -83,7 +78,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Settings
             {
                 _Logger.LogError("Error updating system contact settings: {0}", ex.Message);
                 _Logger.LogTrace(ex.StackTrace);
-                return BadRequest("Error updating system contact settings, please try again later");
+                return BadRequest(new ResponseHelper("Error updating system contact settings, please try again later", ex.Message));
             }
         }
     }

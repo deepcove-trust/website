@@ -1,9 +1,22 @@
 ﻿import _ from 'lodash';
 import $ from 'jquery';
 
+$.ajaxSetup({
+    statusCode: {
+        401: function (xhr, textStatus, errorThrown) {
+            // Any 401 request on any route other than /login
+            // should result in a redirect to the Login page.
+            // The best way to do this is to refresh the page
+            // so we preserve the redirect URL.
+            if (this.url.includes('/login') || this.url == '/login') return;
+            location.reload();
+        }
+    }
+});
+
 /* JavaScript Core */
-import './js/Libraries/popper.min';
-import './js/Libraries/bootstrap.bundle.min.js';
+import './js/popper.min';
+import './js/bootstrap.bundle.min.js';
 //import './js/Bootstrap/index';
 
 /* React */
@@ -23,6 +36,7 @@ import './js/React/CMS-Blocks/Text';
 /* React Error Pages */
 import './js/React/Errors/Inactive';
 import './js/React/Errors/PasswordExpired';
+import './js/React/Errors/InternalServerError';
 
 /* React - Page Templates */
 import './js/React/PageTemplates/BasePage';

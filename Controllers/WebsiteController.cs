@@ -88,7 +88,7 @@ namespace Deepcove_Trust_Website.Controllers
             var page = await _Db.Pages.
                 Include(i => i.PageRevisions)
                     .ThenInclude(i => i.Template)
-                .Where(c => c.Name == "")
+                .Where(c => c.Name == "Home")
                 .FirstOrDefaultAsync();
 
             if (page == null || (!page.Public && !User.Identity.IsAuthenticated))
@@ -103,6 +103,15 @@ namespace Deepcove_Trust_Website.Controllers
             ViewData["pageId"] = page.Id;
             ViewData["Description"] = page.Description;
             return View(viewName: "~/Views/PageTemplate.cshtml");
+        }
+
+        [AllowAnonymous]
+        [HttpGet("discover")]
+        public IActionResult AndroidAppRedirect()
+        {
+            string appUrl = _Db.SystemSettings.First().UrlGooglePlay;
+            if (string.IsNullOrEmpty(appUrl)) throw new ArgumentNullException(appUrl, "No application URL was found.");
+            return Redirect(appUrl);
         }
 
         [AllowAnonymous]

@@ -4,6 +4,7 @@ import { ConfirmModal } from '../../Components/Button';
 import { ToggleVisibility, ViewPage, EditPageSettings } from '../../PageTemplates/PageControlButtons';
 import ReactTooltip from 'react-tooltip'
 import $ from 'jquery';
+import Alert from '../../Components/Alert';
 
 export default class PagePreview extends Component {
     render() {
@@ -26,6 +27,7 @@ export default class PagePreview extends Component {
                             className="btn btn-outline-dark btn-block"
                             public={this.props.page.public}
                             pageId={this.props.page.id}
+                            alert={this.props.alert}
                             u={this.props.u}
                         />
                     </div>
@@ -49,25 +51,27 @@ class DeletePage extends Component {
             type: 'delete',
             url: `/admin/pages/${this.props.page.id}`
         }).done(() => {
+            this.Alert.success(`${this.props.page.name} has been deleted`);
             this.props.u();
         }).fail((err) => {
-            console.log(`[PagePreview@deletePage] Error deleting page ${this.props.page.id}: ${err.ResponseText}`);
+            this.Alert.error(null, err.responseText);
         });
     }
 
     render() {
         
         return (
-            <ConfirmModal id={this.props.page.id}
-                question="delete page"
-                className="btn btn-outline-danger btn-block"
-                explanation="This action cannot be undone, all information will be lost"
-                actionText="YES Delete Page!"
-                confirmPhrase={this.props.page.name}
-                cb={this.deletePage.bind(this)}
-            >
-                Delete <i className="fas fa-exclamation-triangle"/>
-            </ConfirmModal>
+            <Alert onRef={ref => (this.Alert = ref)}>
+                <ConfirmModal id={this.props.page.id}
+                    question="delete page"
+                    className="btn btn-outline-danger btn-block"
+                    explanation="This action cannot be undone, all information will be lost"
+                    actionText="YES Delete Page!"
+                    confirmPhrase={this.props.page.name}
+                    cb={this.deletePage.bind(this)} >
+                        Delete <i className="fas fa-exclamation-triangle"/>
+                </ConfirmModal>
+            </Alert>
         );
     }
 }

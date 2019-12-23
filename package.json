@@ -51,7 +51,9 @@
     "react-datetime": "^2.16.3",
     "react-image-crop": "^8.3.0",
     "react-recaptcha": "^2.3.10",
-    "react-s-alert": "^1.4.1",
+    "react-select": "^3.0.8",
+    "react-select-v2": "^2.4.2",
+    "react-toastify": "^5.4.1",
     "react-tooltip": "^3.10.0"
   }
 }

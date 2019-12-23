@@ -4,27 +4,30 @@ import Title from './Title';
 import Page from './Page';
 
 export class Section extends Component {
-    render() {  
+    render() {
         let pages = this.props.section ? (
             this.props.section.pages.map((page, key) => {
                 return <Page page={page} key={key}
+                    alert={this.props.alert}
                     baseUri={this.props.baseUri}
                     u={this.props.u}
                 />
             })
         ) : null;
-
+        
         return (
             <Fragment>
                 <Title section={this.props.section}
-                    sectionEnum={this.props.sectionEnum}
+                    sectionId={this.props.sectionId}
                     baseUri={this.props.baseUri}
+                    alert={this.props.alert}
                     u={this.props.u}
                 />
 
                 <AvaliablePages pages={this.props.avaliable}
                     sectionId={this.props.sectionId}
                     baseUri={this.props.baseUri}
+                    alert={this.props.alert}
                     u={this.props.u}
                 />
 

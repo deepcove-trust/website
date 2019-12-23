@@ -9,6 +9,7 @@ export default class Page extends Component {
             <tr>
                 <Link page={this.props.page} />
                 <Delete page={this.props.page}
+                    alert={this.props.alert}
                     baseUri={this.props.baseUri}
                     u={this.props.u}
                 />
@@ -22,7 +23,7 @@ class Link extends Component {
         return (
             <td>
                 <a href={PageUrl(this.props.page.name, this.props.page.section)}>
-                    {this.props.page.name}
+                    {this.props.page.name || "Home"}
                 </a>
             </td>
         )
@@ -44,13 +45,14 @@ class Delete extends Component {
                 method: 'delete',
                 url: `${this.props.baseUri}/${id}`
             }).done(() => {
+                this.props.alert.success('Quicklink removed!')
                 this.setState({
                     pending: false
                 }, () => this.props.u());
             }).fail((err) => {
-                console.error(err);
-            })
-        })
+                this.props.alert.error(null, err.responseText)
+            });
+        });
     }
 
     render() {

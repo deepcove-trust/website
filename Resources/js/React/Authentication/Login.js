@@ -2,7 +2,7 @@
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
 import { FormGroup, Input } from '../Components/FormControl';
-import AlertWrapper from '../Components/Alert';
+import Alert from '../Components/Alert';
 import $ from 'jquery';
 
 const baseUri = "/login";
@@ -34,7 +34,7 @@ export default class Login extends Component {
         }).fail((err) => {
             this.setState({
                 loginPending: false
-            }, () => this.AlertWrapper.responseAlert('error', $.parseJSON(err.responseText)));
+            }, () => this.Alert.error("Incorrect username or password", err.responseText));
         })
     }
 
@@ -49,7 +49,7 @@ export default class Login extends Component {
 
     render() {
         return (
-            <AlertWrapper onRef={ref => (this.AlertWrapper = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <div className="login-clean text-center">
                     <form onSubmit={this.attemptLogin.bind(this)}>
                         <h1 className="sr-only">Login Form</h1>
@@ -70,7 +70,7 @@ export default class Login extends Component {
                         <a className="forgot" href="/reset-password">Forgot your email or password?</a>
                     </form>
                 </div>
-            </AlertWrapper>
+            </Alert>
         );
     }
 }

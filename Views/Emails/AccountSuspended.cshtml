@@ -1,0 +1,8 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration Configuration
+@{
+    Layout = "~/Views/Emails/_EmailLayout.cshtml";
+    string email = Configuration.GetValue<string>("EmailConfiguration:ReplyToEmail");
+}
+
+<p>Your account has been suspended you can no longer login. If you have any questions you can email us at <a href="@($"mailto:{email}")">@email</a>.</p>

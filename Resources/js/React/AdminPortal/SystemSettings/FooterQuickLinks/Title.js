@@ -14,7 +14,7 @@ export default class Title extends Component {
     }
 
     componentWillUpdate(nextProps) {
-        
+
         if (nextProps.section != this.props.section) {
             this.setState({
                 value: nextProps.section.title || ""
@@ -31,13 +31,13 @@ export default class Title extends Component {
     saveChange() {
         $.ajax({
             type: 'put',
-            url: `${this.props.baseUri}/${this.props.sectionEnum}`,
+            url: `${this.props.baseUri}/${this.props.sectionId}`,
             data: {
                 title: this.state.value
             }
-        }).done(() =>
+        }).done(() => {
             this.props.u()
-        ).fail((err) => {
+        }).fail((err) => {
             console.error(err);
         });
     }
@@ -48,14 +48,14 @@ export default class Title extends Component {
         let actions = this.state.value != this.props.section.title ? (
             <BtnGroup size="sm" className="float-right pb-2">
                 <ConfirmButton className="btn btn-danger" cb={this.reset.bind(this)}>
-                    Cancel <i className="fas-fa-times"/>
+                    Cancel <i className="fas-fa-times" />
                 </ConfirmButton>
 
                 <Button className="btn btn-success" pending={this.state.pending} cb={this.saveChange.bind(this)}>
-                    Save <i className="fas fa-check"/>
+                    Save <i className="fas fa-check" />
                 </Button>
             </BtnGroup>
-        ): null;
+        ) : null;
 
         return (
             <Fragment>

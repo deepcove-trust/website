@@ -23,13 +23,13 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
         private readonly WebsiteDataContext _Db;
         private readonly IConfiguration _Config;
         private IPasswordHasher<Account> _Hasher;
-        private IEmailService _Smtp;
+        private IEmailService _EmailService;
         private readonly ILogger<RegistrationController> _Logger;
 
-        public RegistrationController(WebsiteDataContext db, IConfiguration configuration, IEmailService smtp, IPasswordHasher<Account> hasher, ILogger<RegistrationController> logger)
+        public RegistrationController(WebsiteDataContext db, IConfiguration configuration, IEmailService emailService, IPasswordHasher<Account> hasher, ILogger<RegistrationController> logger)
         {
             _Db = db;
-            _Smtp = smtp;
+            _EmailService = emailService;
             _Hasher = hasher;
             _Logger = logger;
             _Config = configuration;
@@ -59,7 +59,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                     Active = false,
                 };
 
-                account.Password = _Hasher.HashPassword(account, Utils.RandomString(30));
+                account.Password = _Hasher.HashPassword(account, RandomString(30));
                 await _Db.AddAsync(account);
 
                 PasswordReset reset = new PasswordReset(
@@ -71,13 +71,9 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 await _Db.SaveChangesAsync();
 
                 _Logger.LogInformation("New account created - Name: {0}, Email: {1}", account.Name, account.Email);
+                await _EmailService.SendNewAccountEmailAsync(reset, User, Request.BaseUrl());
 
-                EmailContact sendTo = new EmailContact { Name = account.Name, Address = account.Email };
-                await _Smtp.SendNewAccountEmailAsync(reset, User, Request.BaseUrl());
-
-
-                return Ok(Url.Action("Index", "Users",
-                        new { area = "admin-portal" }));
+                return Ok(Url.Action("Index", "Users", new { area = "admin-portal" }));
             } 
             catch(Exception ex)
             {

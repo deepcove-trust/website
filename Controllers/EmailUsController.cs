@@ -15,14 +15,14 @@ namespace Deepcove_Trust_Website.Controllers
     public class EmailUsController : Controller
     {
         private readonly ILogger<EmailUsController> _Logger;
-        private readonly IEmailService _SMTP;
+        private readonly IEmailService _EmailService;
         private WebsiteDataContext _Db;
         private IRecaptchaService _Recaptcha;
 
-        public EmailUsController(ILogger<EmailUsController> logger, IEmailService smtp, WebsiteDataContext db, IRecaptchaService reCAPTCHA)
+        public EmailUsController(ILogger<EmailUsController> logger, IEmailService emailService, WebsiteDataContext db, IRecaptchaService reCAPTCHA)
         {
             _Logger = logger;
-            _SMTP = smtp;
+            _EmailService = emailService;
             _Db = db;
             _Recaptcha = reCAPTCHA;
         }
@@ -48,11 +48,15 @@ namespace Deepcove_Trust_Website.Controllers
                 };
 
                 if (request.Bool("SendToBookings"))
+                {
                     // Sends a master email to the "BOOKINGS" email address in system settings, then sends a copy to each person on the mailing list.
-                    await _SMTP.SendBookingInquiryAsync(Sender, messageArgs.Subject, messageArgs);
+                    await _EmailService.SendBookingInquiryAsync(Sender, messageArgs.Subject, messageArgs);
+                }
                 else
+                {
                     // Sends a master email to the "GENERAL" email address in system settings, then sends a copy to each person on the mailing list.
-                    await _SMTP.SendGeneralInquiryAsync(Sender, messageArgs.Subject, messageArgs);
+                    await _EmailService.SendGeneralInquiryAsync(Sender, messageArgs.Subject, messageArgs);
+                }
 
                 _Logger.LogInformation("Sucsefully sent {0}'s email", messageArgs.SendersName);
                 return Ok();
