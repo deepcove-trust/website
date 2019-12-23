@@ -9,13 +9,16 @@ export default class Dropdown extends Component {
         var sublink = sublinks[index];
         sublink[key] = val;
         if (key == 'pageId') {
-            sublink['text'] = null;
-            sublink['pageName'] = this.props.pages.find((page) => page.id == sublink['pageId']).name;
-        }
-        if (key == 'type') {
-            sublink['text'] = null;
-            sublink['pageName'] = null;
-        }
+            sublink['text'] = null;            
+        }       
+
+        // Set placeholder text appropriately
+        sublink['pageName'] = sublink['type'] == 'Page'
+            ? ( this.props.pages.some((page) => page.id == sublink['pageId'])
+                ? this.props.pages.find((page) => page.id == sublink['pageId']).name
+                : null )
+            : null;            
+
         this.props.update(sublinks);        
     }
 
