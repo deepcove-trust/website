@@ -32,6 +32,11 @@ import './js/React/AdminPortal/PageUpdate';
 import './js/React/AdminPortal/SystemSettings';
 import './js/React/AdminPortal/ManageMedia';
 import './js/React/CMS-Blocks/Text';
+import './js/React/AdminPortal/App/FactFiles';
+import './js/React/AdminPortal/App/Overview';
+import './js/React/AdminPortal/App/Quizzes';
+import './js/React/AdminPortal/App/Tracks';
+import './js/React/AdminPortal/App/Settings';
 
 /* React Error Pages */
 import './js/React/Errors/Inactive';
