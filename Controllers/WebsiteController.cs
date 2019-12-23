@@ -106,6 +106,15 @@ namespace Deepcove_Trust_Website.Controllers
         }
 
         [AllowAnonymous]
+        [HttpGet("discover")]
+        public IActionResult AndroidAppRedirect()
+        {
+            string appUrl = _Db.SystemSettings.First().UrlGooglePlay;
+            if (string.IsNullOrEmpty(appUrl)) throw new ArgumentNullException(appUrl, "No application URL was found.");
+            return Redirect(appUrl);
+        }
+
+        [AllowAnonymous]
         [HttpGet("sitemap")]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 60)]
         public async Task<IActionResult> GenerateSitemap()
