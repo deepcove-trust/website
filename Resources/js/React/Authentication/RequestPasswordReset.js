@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+﻿import React, { Component, Fragment } from 'react';
 import { render } from 'react-dom';
 import { Button } from '../Components/Button';
 import { FormGroup, Input } from '../Components/FormControl';
@@ -44,6 +44,21 @@ export default class RequestPasswordReset extends Component {
     }
 
     render() {
+        let button = !this.state.emailSent ? (
+            <Fragment>
+                <Button className={`btn btn-primary btn-block`} type="submit" pending={this.state.requestPending}>
+                    Reset My Password
+                </Button>
+
+                <a className="forgot" href="/login">Know your details? Login Here</a>
+            </Fragment>
+        ) : (
+            <div className="fade2sec">
+                <span className="text-success">We've sent you a password reset email. Once you've reset your password click the button below</span>
+                <a className={`btn btn-primary btn-block`} href="/login">Login</a>
+            </div>
+        );
+
         return (
             <Alert onRef={ref => (this.Alert = ref)}>
                 <div className="login-clean text-center">
@@ -56,14 +71,8 @@ export default class RequestPasswordReset extends Component {
                         </FormGroup>
 
                         <FormGroup>
-                            <Button className={`btn btn-primary btn-block`} type="submit"
-                                pending={this.state.requestPending}
-                            >
-                                Reset My Password
-                            </Button>
+                            {button}
                         </FormGroup>
-
-                        <a className="forgot" href="/login">Know your details? Login Here</a>
                     </form>
                 </div>
             </Alert>
