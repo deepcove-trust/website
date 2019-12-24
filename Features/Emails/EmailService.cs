@@ -1,57 +1,105 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Helpers;
 using Deepcove_Trust_Website.Features.RazorRender;
 using Deepcove_Trust_Website.Views.Emails.Models;
 using Microsoft.AspNetCore.Http;
-using MailKit.Net.Smtp;
 using MimeKit;
-using Deepcove_Trust_Website.Models;
-using System.Security.Claims;
-using Deepcove_Trust_Website.Helpers;
+using MailKit.Net.Smtp;
+using Mailgun.Service;
+using Mailgun.Messages;
 
 namespace Deepcove_Trust_Website.Features.Emails
 {
     public class EmailService : IEmailService
     {
         private readonly IViewRenderer _ViewRender;
-        private readonly IEmailConfiguration _EmailConfiguration;
+        private readonly IEmailConfiguration _EmailConfig;
+        private readonly IHostingEnvironment _env;
         private readonly ILogger<EmailService> _Logger;
         private readonly WebsiteDataContext _Db;
 
-        public EmailService(IViewRenderer viewRenderer, IEmailConfiguration emailConfiguration, ILogger<EmailService> logger, WebsiteDataContext db)
+        public EmailService(IViewRenderer viewRenderer, IEmailConfiguration emailConfig, IHostingEnvironment env, ILogger<EmailService> logger, WebsiteDataContext db)
         {
             _ViewRender = viewRenderer;
-            _EmailConfiguration = emailConfiguration;
+            _EmailConfig = emailConfig;
             _Logger = logger;
             _Db = db;
+            _env = env;
         }
 #pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
         public async Task SendEmailAsync(EmailContact sender, EmailContact recipient, string subject, string message)
         {
+            // IF: A sender is not specified then use the configuration value
+            sender = sender ?? _EmailConfig.Sender.ToEmailContact();
+
+            if (_env.IsDevelopment())
+            {
+                await SendViaSmtp(sender.ToMailboxAddress(), recipient.ToMailboxAddress(), subject, message);
+            } 
+            else
+            {
+                await SendViaApi(sender, recipient, subject, message);
+            }
+        }
+
+        private async Task SendViaApi(EmailContact sender, EmailContact recipient, string subject, string message)
+        {
             try
             {
-                var email = new MimeMessage();
-                
-                // IF: A sender is not specified then use the configuration value
-                if (sender == null)
+                MessageService MailGun = new MessageService(_EmailConfig.Mailgun.ApiKey);
+                var Email = new MessageBuilder()
+                    .AddToRecipient(new Recipient
+                    {
+                        Email = recipient.Address,
+                        DisplayName = recipient.Name
+                    })
+                    .SetFromAddress(new Recipient
+                    {
+                        Email = sender.Address,
+                        DisplayName = sender.Name
+                    })
+                    .SetReplyToAddress(new Recipient
+                    {
+                        Email = _EmailConfig.Sender.ReplyTo ?? _EmailConfig.Sender.Address
+                    })
+                    .SetSubject(subject)
+                    .SetHtmlBody(message);
+
+                var MailResult = await MailGun.SendMessageAsync(_EmailConfig.Mailgun.YourDomain, Email.GetMessage());
+                _Logger.LogDebug("Email sent - Subject: {0} | Recipient: {1}<{2}>", subject, recipient.Name, recipient.Address);
+
+                if (!MailResult.IsSuccessStatusCode)
                 {
-                    email.From.Add(new MailboxAddress(_EmailConfiguration.SenderName, _EmailConfiguration.SenderEmail));
+                    throw new Exception(MailResult.ReasonPhrase);
                 }
-                else
-                {
-                    email.From.Add(new MailboxAddress(sender.Name, sender.Address));
-                }
-                
-                // Set recipient, subject and 'Reply To' email address
-                email.To.Add(new MailboxAddress(recipient.Name, recipient.Address));
-                email.ReplyTo.Add(new MailboxAddress(_EmailConfiguration.ReplyToEmail));
-                email.Subject = subject;
-                
+            }
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error sending email - Subject: {0} | Recipient: {1}<{2}>: {3}", subject, recipient.Name, recipient.Address, ex.Message);
+                throw ex;
+            }
+        }
+
+        private async Task SendViaSmtp(MailboxAddress sender, MailboxAddress recipient, string subject, string message)
+        {
+            try
+            {
+                var email = new MimeMessage() {
+                    Subject = subject
+                };
+
+                email.From.Add(sender);
+                email.To.Add(recipient);
+                email.ReplyTo.Add(_EmailConfig.Sender.ToMailboxAddress());
+
                 var body = new BodyBuilder
                 {
                     HtmlBody = message
@@ -66,14 +114,14 @@ namespace Deepcove_Trust_Website.Features.Emails
 
                     // Connect
                     await client.ConnectAsync(
-                        _EmailConfiguration.SmtpServer,
-                        _EmailConfiguration.SmtpPort,
+                        _EmailConfig.MailTrap.Server,
+                        _EmailConfig.MailTrap.ServerPort,
                         false
                     );
 
                     await client.AuthenticateAsync(
-                        _EmailConfiguration.SmtpUsername,
-                        _EmailConfiguration.SmtpPassword
+                        _EmailConfig.MailTrap.Username,
+                        _EmailConfig.MailTrap.Password
                     );
 
                     await client.SendAsync(email);
