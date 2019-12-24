@@ -162,7 +162,6 @@
     <PackageReference Include="NReco.VideoInfo.LT" Version="1.1.0" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.2.0" />
     <PackageReference Include="reCAPTCHA.AspNetCore" Version="2.2.3" />
-    <PackageReference Include="RestSharp" Version="106.6.10" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
   </ItemGroup>
 
