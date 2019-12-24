@@ -1,0 +1,13 @@
+﻿@model EmailButtonModel
+@using Deepcove_Trust_Website.Views
+
+    <div style="text-align: center; margin-bottom: 50px;">
+        <!--[if mso]>
+    <v:roundrect href="@Model.Href" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" style="height:40px;v-text-anchor:middle;width:200px;" arcsize="10%" strokecolor="#1d232b" fillcolor="#EB7035">
+        <w:anchorlock />
+        <center style="color:#ffffff;font-family:sans-serif;font-size:13px;font-weight:bold;">@Model.LinkText</center>
+    </v:roundrect>
+    <![endif]-->
+
+        <a class="btn-orange" href="@Model.Href" style="margin-top:50px;">@Model.LinkText</a>
+    </div>

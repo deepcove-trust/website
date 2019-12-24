@@ -57,7 +57,6 @@ export default class RequestPasswordReset extends Component {
 
                         <FormGroup>
                             <Button className={`btn btn-primary btn-block`} type="submit"
-                                disabled={this.state.emailSent}
                                 pending={this.state.requestPending}
                             >
                                 Reset My Password

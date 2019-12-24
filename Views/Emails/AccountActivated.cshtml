@@ -5,6 +5,11 @@
 <p>You are receiving this email because an administrator has activated your account.</p>
 <p> Click the button below to login. From there you will be able to change your account details and make use of administrator functions.</p>
 
-<p style="text-align: center; margin: 50px;">
-    <a class="btn-orange" role="button" href=@($"{Model.BaseUrl}login")>Admin Login</a>
-</p>
+<!-- Reset My Password Button -->
+@using Deepcove_Trust_Website.Views
+@await Component.InvokeAsync("EmailButton", new EmailButtonModel
+{
+    Href = $"{Model.BaseUrl}login",
+    LinkText = "Admin Login"
+})
+<!-- End Reset My Password Button -->
