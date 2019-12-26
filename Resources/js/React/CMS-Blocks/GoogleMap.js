@@ -1,5 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
-import Alert from '../Components/Alert';
+import { StaticAlert } from '../Components/Alert';
 
 export default class GoogleMap extends Component {
     getSrc() {
@@ -9,7 +9,7 @@ export default class GoogleMap extends Component {
     render() {
         if (!this.getSrc())
             return (
-                <Alert type="danger">Google Maps Error: Invalid map URL provided, please update the system settings.</Alert>
+                <StaticAlert type="danger">Google Maps Error: Invalid map URL provided, please update the system settings.</StaticAlert>
             );
 
         return (

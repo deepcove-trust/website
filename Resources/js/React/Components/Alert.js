@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import $ from 'jquery';
 
 const defaultMsg = { ui: null, debug: null };
+const colours = ["success", "info", "warning", "danger", "primary", "secondary", "light", "dark"];
 
 export default class Alert extends Component {
     /**
@@ -138,6 +139,31 @@ export default class Alert extends Component {
                     pauseOnHover
                     rtl={false}
                 />
+            </div>
+        );
+    }
+}
+
+
+
+export class StaticAlert extends Component {
+    bgColor() {
+        return colours.includes(this.props.type) ? `alert-${this.props.type}` : `alert-primary`;
+    }
+
+    className() {
+        return this.props.className || `alert ${this.bgColor()}`;
+    }
+
+    render() {
+        let btn_dismiss = this.props.dismissible || this.props.dismiss ? (
+            <button type="button" className="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        ) : null;
+
+        return (
+            <div role="alert" className={this.className()}>
+                {btn_dismiss}
+                <span>{this.props.children}</span>
             </div>
         );
     }
