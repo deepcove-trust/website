@@ -11,15 +11,18 @@
 <p style="margin-bottom: 20px;">You are receiving this email because an @Model.CreatedBy.Name has created an account for you. You will need to reset your password using the link below which is valid for @tokenDuration hours.</p>
 
 <!-- Reset My Password Button -->
-<p style="text-align: center; margin: 50px;">
-    <a class="btn-orange" role="button" href="@($"{Model.BaseUrl}reset-password/{Model.Token}?email={Model.Recipient.Address}")">Reset My Password</a>
-</p>
-<!-- ENd Reset My Password Button -->
+@using Deepcove_Trust_Website.Views
+@await Component.InvokeAsync("EmailButton", new EmailButtonModel
+{
+    Href = $"{Model.BaseUrl}reset-password/{Model.Token}?email={Model.Recipient.Address}",
+    LinkText = "Create My Password"
+})
+<!-- End Reset My Password Button -->
 
 <p style="margin-bottom: 20px">An administrator will need to activate your account before you can login, you will receive another email once this has been done. Welcome to the team!</p>
 
 <p style="text-align:center">
-    <a href="@($"{Model.BaseUrl}login")" rel="noopener" style="text-decoration: underline; line-height: inherit;" target="_blank">Admin Login</a> | 
+    <a href="@($"{Model.BaseUrl}login")" rel="noopener" style="text-decoration: underline; line-height: inherit;" target="_blank">Admin Login</a> |
     For help contact <a href="@($"mailto:{Model.CreatedBy.Address}")" style="text-decoration;">@Model.CreatedBy.Name</a>
 </p>
 
