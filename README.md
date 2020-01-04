@@ -70,7 +70,8 @@ The steps outlined below assume that you store the website in the directory `/op
     "SiteKey": "",
     "SecretKey": "",
     "Version": "v2"
-  }
+  },
+  "ffprobePath": "/usr/bin"
 }
 ```
 
