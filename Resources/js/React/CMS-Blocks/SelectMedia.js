@@ -1,8 +1,9 @@
 ﻿import React, { Component, Fragment } from 'react';
 import Modal from '../Components/Modal';
 import { Input } from '../Components/FormControl';
-import $ from 'jquery';
 import { Button } from '../Components/Button';
+import $ from 'jquery';
+import InfiniteScroll from '../Components/InfiniteScroll';
 
 export default class SelectMedia extends Component {
     constructor(props) {
@@ -59,11 +60,12 @@ export default class SelectMedia extends Component {
         let items = this.state.data.map((media, key) => {
             if (!this.Filter(media)) return null;
 
-            return (
-                <div className="col-lg-4 col-6" key={key}>
-                    <Item file={media} selected={media.id == this.state.selectedId} cb={(selectedId) => this.setState({ selectedId })}/>
-                </div>
-            )
+            return media;
+            //return (
+            //    <div className="col-lg-4 col-6" key={key}>
+            //        <Item file={media} selected={media.id == this.state.selectedId} cb={(selectedId) => this.setState({ selectedId })}/>
+            //    </div>
+            //)
         });
 
         let footer = (
@@ -82,9 +84,13 @@ export default class SelectMedia extends Component {
             >
                 <Input type="text" value={this.state.search} placeHolder="Search by name..." cb={(search) => this.setState({ search })} />
 
-                <div className="row pt-3">
+                {/*                <div className="row pt-3">
                     {items}
-                </div>
+                </div>*/}
+
+                <InfiniteScroll items={items}>
+
+                </InfiniteScroll>
             </Modal>
         );
     }
