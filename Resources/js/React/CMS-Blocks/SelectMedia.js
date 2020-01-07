@@ -1,8 +1,8 @@
 ﻿import React, { Component, Fragment } from 'react';
 import Modal from '../Components/Modal';
 import { Input } from '../Components/FormControl';
-import $ from 'jquery';
 import { Button } from '../Components/Button';
+import $ from 'jquery';
 
 export default class SelectMedia extends Component {
     constructor(props) {
