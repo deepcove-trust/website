@@ -126,3 +126,11 @@ audio.overImg {
     right: 0;
     height: 30px;
 }
+
+/* Select Media
+-----------------------------------------------*/
+div.selected img {
+    border: green;
+    border-style: solid;
+    border-width: thick;
+}

@@ -14,21 +14,11 @@ export default class Modal extends Component {
 
     size() {
         switch (this.props.size) {
-            case "large":
-            case "lg":
-                {
-                    return "modal-lg";
-                    break;
-                }
-            case "small":
-            case "sm":
-                {
-                    return "modal-sm";
-                    break;
-                }
-
-            default:
-                return "";
+            case "large": return "modal-lg";
+            case "lg": return "modal-lg";
+            case "small": return "modal-sm";
+            case "sm": return "modal-sm";
+            default: return "";
         }
     }
 
