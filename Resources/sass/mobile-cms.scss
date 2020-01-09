@@ -1,0 +1,38 @@
+﻿// Primary theme colour
+$color-primary: #628893;
+$color-primary-faded: #628893;
+
+.bground-primary {
+    background-color: $color-primary;
+}
+
+.category-card {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    height: 60px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.category-card:hover {
+    color: white;
+    background-color: $color-primary-faded;
+    transition: background-color ease-in 0.1s, color ease-in 0.1s;
+    -webkit-transition: background-color ease-in 0.1s, color ease-in 0.1s;
+}
+
+// Vertically center text within the card
+.category-card h5, .category-card p { 
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.left-border {
+    border-left: 50px solid $color-primary !important;
+}
+
+.min-width-300 {
+    min-width: 300px;
+}
