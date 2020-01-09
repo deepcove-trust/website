@@ -258,9 +258,6 @@ button.accept-policy {
     margin-bottom: 10px;
 }
 
-div.selected {
-    box-shadow: 0px 12px 22px 1px #333;
-}
 
 .cms-text {
     transition: width 1s ease-in-out;
@@ -282,4 +279,13 @@ label.btn input[type="radio"]{
     max-height: 250px;
     max-width: 250px;
     margin-top: -20px;
+}
+
+.media_select{
+    max-height: 700px;
+}
+
+.infinite_scroll {
+    overflow-y: auto;
+    max-height: 500px;
 }
