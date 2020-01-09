@@ -16,8 +16,6 @@ export default class CategoryIndex extends Component {
 
         this.state = {
             categories: null,
-            addingCategory: false,
-            actionPending: false
         }
     }
 
@@ -37,42 +35,7 @@ export default class CategoryIndex extends Component {
         }).fail((err) => {
             console.log(err);
         });
-    }
-
-    onAddCategory() {        
-        this.setState({
-            addingCategory: true
-        });
-    }
-
-    onSaveCategory(ev, categoryName) {
-        ev.preventDefault();
-
-        this.setState({
-            actionPending: true
-        });
-
-        $.ajax({
-            method: 'post',
-            url: url,
-            data: {
-                categoryName
-            }
-        }).done(() => {
-            this.Alert.success("New category added!");
-            this.setState({
-                addingCategory: false,
-                actionPending: false
-            });
-            this.getData();
-        }).fail((err) => {
-            this.Alert.error(null, err.responseText);
-            this.setState({
-                actionPending: false
-            })
-        });
-        
-    }
+    }    
 
     render() {
 
@@ -83,7 +46,7 @@ export default class CategoryIndex extends Component {
         });
 
         // Append the button to add a new category
-        categoryCards.push(<NewCategoryCard key="0" addingCategory={this.state.addingCategory} pending={this.state.actionPending} cb={this.onAddCategory.bind(this)} onSave={this.onSaveCategory.bind(this)}/>)
+        categoryCards.push(<NewCategoryCard key="0" onSave={this.getData.bind(this)} alert={this.Alert}/>)
 
         return (
             <Alert onRef={ref => (this.Alert = ref)}>
@@ -113,14 +76,56 @@ class CategoryCard extends Component {
     }
 }
 
-// Will either display as an 'add' button if not yet clicked, or as a new category 'form' if clicked.
 class NewCategoryCard extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            categoryName: null
+            categoryName: null,
+            actionPending: false,
+            addingCategory: false
         }
+    }
+
+    onSaveCategory(ev, categoryName) {
+        ev.preventDefault();
+
+        this.setState({
+            actionPending: true
+        });
+
+        $.ajax({
+            method: 'post',
+            url: url,
+            data: {
+                categoryName
+            }
+        }).done(() => {
+            this.props.alert.success("New category added!");
+            this.setState({
+                actionPending: false,
+                categoryName: null
+            });
+            this.getData();
+        }).fail((err) => {
+            this.props.alert.error(null, err.responseText);
+            this.setState({
+                actionPending: false
+            })
+        });
+    }
+
+    onAddCategory() {
+        this.setState({
+            addingCategory: true
+        });
+    }
+
+    onCancel() {
+        this.setState({
+            addingCategory: false,
+            categoryName: null
+        });
     }
 
     updateField(categoryName) {
@@ -131,23 +136,22 @@ class NewCategoryCard extends Component {
 
     render() {
 
-        if (this.props.addingCategory) {
+        if (this.state.addingCategory) {
             return (
-                <form className="m-2 py-4 form-inline" onSubmit={(e) => { this.props.onSave(e, this.state.categoryName) }}>                    
-                    <div>
+                <form className="m-2 py-4 form-inline add-category-card" onSubmit={(e) => { this.onSaveCategory(e, this.state.categoryName) }}>                    
+                    <div className="mx-auto">                        
                         <Input type="text" value={this.state.categoryName} placeHolder="Enter category name" cb={this.updateField.bind(this)} required />
-                    </div>
-                    <div className="ml-auto">
-                        <Button type="submit" pending={this.props.pending} className="btn btn-success">Save</Button>
+                        <Button type="button" pending={this.state.actionPending} cb={this.onCancel.bind(this)} className="btn btn-danger"><i className="fas fa-times"></i></Button>
+                        <Button type="submit" pending={this.state.actionPending} className="btn btn-success"><i className="fas fa-check"></i></Button>
                     </div>
                 </form>
                 )
         }
 
         return (
-            <div className="text-center m-3" onClick={this.props.cb.bind(this)}>
+            <div className="text-center m-3" onClick={this.onAddCategory.bind(this)} style={{ color: "#AEAEAE" }}>
                 <div className="inline-block category-card py-2" style={{ height: "80px"}}>
-                    <i className="fas fa-plus-circle fa-3x"></i>
+                    <i className="far fa-plus-circle fa-3x"></i>
                     <small className="d-block">Add new</small>
                 </div>
             </div>

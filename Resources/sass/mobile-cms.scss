@@ -2,6 +2,12 @@
 $color-primary: #628893;
 $color-primary-faded: #628893;
 
+.add-category-card {
+    border: none;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    border-radius: 0px;
+}
+
 .bground-primary {
     background-color: $color-primary;
 }
@@ -13,6 +19,14 @@ $color-primary-faded: #628893;
     margin-top: 20px;
     margin-bottom: 20px;
     cursor: pointer;
+}
+
+.category-card p {
+    color: #AEAEAE;
+}
+
+.category-card:hover p {
+    color: #fff;
 }
 
 .category-card:hover {
@@ -30,7 +44,7 @@ $color-primary-faded: #628893;
 }
 
 .left-border {
-    border-left: 50px solid $color-primary !important;
+    border-left: 30px solid $color-primary !important;
 }
 
 .min-width-300 {
