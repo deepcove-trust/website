@@ -50,3 +50,42 @@ $color-primary-faded: #628893;
 .min-width-300 {
     min-width: 300px;
 }
+
+
+/* Noticeboard
+-------------------------------------------------*/
+//Title card
+h4.noticeboardSection {
+    text-align: center;
+    background-color: #262626;
+    color: rgb(254, 254, 254);
+    padding: 20px 0px 20px 0px;
+    margin-bottom: 0px;
+}
+
+// Styles for the notice on the notice board
+.notice {
+    background-color: #363636;
+    color: #999999;
+    padding: 12px 8px 12px 8px;
+    border-bottom: solid thin #928f8f;
+}
+
+.notice > h4 {
+    margin-bottom: 0px;
+    margin-right: 40px;
+    color: white;
+}
+
+.notice > small {
+    font-size: medium;
+    margin-bottom: 7px;
+}
+
+.notice > p {
+    margin: 6px 0px 6px 0px;
+}
+
+.notice.important {
+    border-left: solid red thick;
+}

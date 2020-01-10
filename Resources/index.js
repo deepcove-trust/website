@@ -37,6 +37,7 @@ import './js/React/AdminPortal/App/Overview';
 import './js/React/AdminPortal/App/Quizzes';
 import './js/React/AdminPortal/App/Tracks';
 import './js/React/AdminPortal/App/Settings';
+import './js/React/AdminPortal/Noticeboard';
 
 /* React Error Pages */
 import './js/React/Errors/Inactive';
