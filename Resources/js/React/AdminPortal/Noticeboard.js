@@ -1,10 +1,16 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Alert from '../Components/Alert';
-import PhonePreview from '../Components/PhonePreview';
-import Notice from './Noticeboard/Notice';
-import NoticeboardSection from './Noticeboard/NoticeboardSection';
+import NoticesOverview from './Noticeboard/NoticesOverview';
+import Editor from './Noticeboard/Editor';
+
+const components = {
+    0: NoticesOverview,
+    1: Editor
+}
+
 import $ from 'jquery';
+
 
 const baseUri = `/admin/noticeboard`;
 
@@ -15,7 +21,8 @@ class Noticeboard extends Component {
         this.state = {
             important: [],
             normal: [],
-            disabled: []
+            disabled: [],
+            viewIndex: 1
         }
     }
 
@@ -36,14 +43,8 @@ class Noticeboard extends Component {
         });
     }
 
-    render() {
-        let important = this.state.important.map((notice, key) => {
-            return <Notice notice={notice} key={key} important />
-        });
-
-        let normal = this.state.normal.map((notice, key) => {
-            return <Notice notice={notice} key={key} />
-        });
+    render() {       
+        const TemplateName = components[this.state.viewIndex];
 
         return (
             <Alert className="row" onRef={ref => (this.Alert = ref)}>
@@ -51,23 +52,13 @@ class Noticeboard extends Component {
                     <h1 className="text-center">Noticeboard</h1>
                 </div>
 
-                <div className="col-md-8 col-sm-12">
-                    //content
-                </div>
-
-                <div className="col-md-4 col-sm-12">
-                    <PhonePreview>
-                        <NoticeboardSection title="Important Notices">
-                            {important}
-                        </NoticeboardSection>
-
-                        <NoticeboardSection title="Other Notices">
-                            {normal}
-                        </NoticeboardSection>
-
-                        <NoticeboardSection title="Back" />
-                    </PhonePreview>
-                </div>
+                <TemplateName 
+                    important={this.state.important}
+                    normal={this.state.normal}
+                    disabled={this.state.disabled}
+                    selected={this.state.important[0]}
+                    alert={this.Alert}
+                />
             </Alert>
         )
     }

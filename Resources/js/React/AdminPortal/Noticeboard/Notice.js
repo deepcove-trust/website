@@ -6,15 +6,12 @@ export default class Notice extends Component {
     }
 
     getReadableDate(d) {
-        d = new Date(d)
-        return d.toDateString();
+        return new Date(d).toDateString();
     }
 
     render() {
         const { notice, important } = this.props;
-        
 
-        console.log(notice, important)
         return (
             <div className={this.getClassNames(important)}>
                 <h4>{notice.title}</h4>

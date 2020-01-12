@@ -2,6 +2,24 @@
 $color-primary: #628893;
 $color-primary-faded: #628893;
 
+// The default colour of the screen
+.screen{
+    background-color: #363636!important;
+    color: #999999;
+}
+
+.screen > h4 {
+    text-align: center;
+    color: rgb(254, 254, 254);
+    padding: 20px 0px 5px 0px;
+    margin-bottom: 0px;
+}
+
+.screen > hr {
+    color: #999999;
+    background-color: #999999;
+}
+
 .add-category-card {
     border: none;
     box-shadow: 1px 1px 5px rgba(0,0,0,.1);
@@ -88,4 +106,8 @@ h4.noticeboardSection {
 
 .notice.important {
     border-left: solid red thick;
+}
+
+.notice-editor {
+    border-bottom: solid thin #928f8f;
 }

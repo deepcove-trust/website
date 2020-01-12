@@ -36,11 +36,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             try
             {
                 List<Notice> notices = await _Database.Notices.Where(c => c.DeletedAt == null).OrderBy(o => o.CreatedAt).ToListAsync();
-                return Ok(new {
+                var x = new
+                {
                     important = notices.Where(c => c.Urgent == 1 && c.Active).ToList(),
                     normal = notices.Where(c => c.Urgent == 0 && c.Active).ToList(),
                     disabled = notices.Where(c => !c.Active).ToList()
-                });
+                };
+                return Ok(x);
             }
             catch(Exception ex)
             {
