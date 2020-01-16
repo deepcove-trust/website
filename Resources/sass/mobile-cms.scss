@@ -1,25 +1,79 @@
-﻿// Primary theme colour
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+// Primary theme colour
 $color-primary: #628893;
 $color-primary-faded: #628893;
 
-// The default colour of the screen
-.screen{
-    background-color: #363636!important;
-    color: #999999;
+$primaryColor: #8BC34A; //Green
+$primaryColorDark: #262626; //Charcoal
+$accentColor: #FF5026; //Orange
+$backgroundColor: #363636; //Dark Gray
+$indicatorColor: #F44336; //Urgent notice color
+$primaryColorLight: #999999; //Grey text color
+
+
+/* Mobile Phone Preview - Base Styles
+----------------------------------------------------------*/
+.screen {
+    background-color: $backgroundColor !important;
+    color: $primaryColorLight;
+    font-family: 'Roboto', sans-serif;
 }
 
-.screen > h4 {
+.screen h4 {
     text-align: center;
-    color: rgb(254, 254, 254);
+    color: #ffffff;
     padding: 20px 0px 5px 0px;
     margin-bottom: 0px;
 }
 
 .screen > hr {
-    color: #999999;
-    background-color: #999999;
+    color: $primaryColorDark;
+    background-color: $primaryColorDark;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
+/* Mobile Phone Preview - Noticeboard Styles
+----------------------------------------------------------*/
+h4.noticeboardSection {
+    text-align: center;
+    background-color: #262626;
+    color: rgb(254, 254, 254);
+    padding: 20px 0px 20px 0px;
+    margin-bottom: 0px;
+}
+
+// Styles for the notice on the notice board
+.notice {
+    padding: 12px 8px 12px 8px;
+}
+
+.notice > h4 {
+    color: white;
+    padding: 0px 40px 0px 0px !important;
+    text-align: left !important;
+}
+
+.notice > small {
+    font-size: medium;
+    margin-bottom: 7px;
+}
+
+.notice > p {
+    margin: 6px 0px 6px 0px;
+}
+
+.notice.important {
+    border-left: solid $indicatorColor thick;
+}
+
+
+/* Mobile Phone Preview - Fact File Styles
+* @jacksos101 - Please talk to me about these styles.
+* Are these mobile phone preview only or editor styles as well?
+* Can your two color vars use mine or are they both needed?
+----------------------------------------------------------*/
 .add-category-card {
     border: none;
     box-shadow: 1px 1px 5px rgba(0,0,0,.1);
@@ -67,47 +121,4 @@ $color-primary-faded: #628893;
 
 .min-width-300 {
     min-width: 300px;
-}
-
-
-/* Noticeboard
--------------------------------------------------*/
-//Title card
-h4.noticeboardSection {
-    text-align: center;
-    background-color: #262626;
-    color: rgb(254, 254, 254);
-    padding: 20px 0px 20px 0px;
-    margin-bottom: 0px;
-}
-
-// Styles for the notice on the notice board
-.notice {
-    background-color: #363636;
-    color: #999999;
-    padding: 12px 8px 12px 8px;
-    border-bottom: solid thin #928f8f;
-}
-
-.notice > h4 {
-    margin-bottom: 0px;
-    margin-right: 40px;
-    color: white;
-}
-
-.notice > small {
-    font-size: medium;
-    margin-bottom: 7px;
-}
-
-.notice > p {
-    margin: 6px 0px 6px 0px;
-}
-
-.notice.important {
-    border-left: solid red thick;
-}
-
-.notice-editor {
-    border-bottom: solid thin #928f8f;
 }

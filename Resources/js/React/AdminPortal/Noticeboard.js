@@ -22,7 +22,8 @@ class Noticeboard extends Component {
             important: [],
             normal: [],
             disabled: [],
-            viewIndex: 1
+            viewIndex: 0,
+            selected: {}
         }
     }
 

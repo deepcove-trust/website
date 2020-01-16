@@ -297,7 +297,7 @@ export class TextArea extends Component {
                     value={this.state.value || ""}
                     placeholder={this.props.placeHolder || null}
                     autoComplete={this.getAutoComplete()}
-                    rows={this.props.rows || false}
+                    rows={this.props.rows || undefined}
                     disabled={!!this.props.disabled}
                     readOnly={!!this.props.readOnly}
                     required={!!this.props.required}
