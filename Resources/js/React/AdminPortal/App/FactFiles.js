@@ -2,6 +2,7 @@
 import { render } from 'react-dom';
 import Alert from '../../Components/Alert';
 import CategoryIndex from './FactFiles/CategoryIndex';
+import CategoryDetails from './FactFiles/CategoryDetails';
 
 /**
  * Root component for the fact file management UI
@@ -21,7 +22,7 @@ export default class FactFiles extends Component {
         this.setState({
             selectedCategory: categoryId
         });
-    }   
+    }
 
     // User saves or updates new category. ID is 0 for new category
     onCategorySave(category) {
@@ -31,14 +32,19 @@ export default class FactFiles extends Component {
     }
 
     render() {
+        let content;
+
+        if (this.state.selectedCategory) {
+            content = <CategoryDetails categoryId={this.state.selectedCategory} />
+        } else {
+            content = <CategoryIndex onSelection={this.onCategorySelect.bind(this)} onSave={this.onCategorySave.bind(this)} />
+        }
+
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-
+            <div>
                 <h1 className="text-center my-5">Fact File Management</h1>
-
-                <CategoryIndex alert={this.Alert} onSelection={this.onCategorySelect.bind(this)} onSave={this.onCategorySave.bind(this)} />
-
-            </Alert>
+                {content}
+            </div>
         );
     }
 }
