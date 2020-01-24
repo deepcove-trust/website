@@ -30,19 +30,25 @@ export class NoticeSummary extends Component {
 
     render() {
         const { id, noticeboard, active, urgent, title, short_desc, updated_at } = this.props.notice;
+
+        // Notice Status
+        let important = urgent ? <span className="text-danger">URGENT</span> : null;
+        let disabled = !active ? <span className="text-danger">DISABLED</span> : null;
+        let status = !!important || !!disabled ? <p className="font-weight-bold">Status: {important}{disabled}</p> : null;
+
+        //Platforms
+        let app = !noticeboard.includes("app") ? <i className="fad fa-browser fa-2x mr-2" key='web' /> : null;
+        let web = !noticeboard.includes("web") ? <i className="fab fa-android fa-2x mr-2" key='app' /> : null;
         
-        let icons = [];
-        urgent ? icons.push(<i className="fas fa-exclamation-circle fa-2x mr-2 text-danger" key='urgent' />) : null;
-        !active ? icons.push(<i className="fas fa-do-not-enter fa-2x mr-2 text-danger" key='inactive' />) : null;
-        !noticeboard.includes("app") ? icons.push(<i className="fad fa-browser fa-2x mr-2" key='web' />) : null;
-        !noticeboard.includes("web") ? icons.push(<i className="fab fa-android fa-2x mr-2" key='app' />) : null;
 
         return (
             <div>
                 <small className="float-right">{this.getReadableDate(updated_at)}</small>
                 <h4>{title}</h4>
                 <p>{short_desc}</p>
-                {icons}
+                {status}
+                <p className="font-weight-bold">Platforms:</p> {app} {web}
+                
                 <Button className="btn btn-dark float-right" cb={this.props.cb_edit.bind(this, 1, this.props.notice)}>
                     Edit <i className="fa fa-pencil" />
                 </Button>
