@@ -10,9 +10,11 @@ export default class Editor extends Component {
         super(props);
 
         this.state = this.props.selected || {
+            id: 0,
             title: "",
             updated_at: "",
             long_desc: "",
+            noticeboard: [],
             urgent: false,
             active: true
         };
@@ -30,6 +32,28 @@ export default class Editor extends Component {
         return (!!d ? new Date(d) : new Date()).toDateString();
     }
 
+    handleSubmit(e) {
+        e.preventDefault();
+
+        let { id, title, updated_at, long_desc, noticeboard, urgent, active } = this.state;
+
+        let notice = {
+            id, title, updated_at, long_desc, urgent, active
+        };
+
+        // No board selected
+        if (noticeboard.length <= 0) {
+            this.props.alert.error("You must select one or more noticeboards");
+            return;
+        }
+
+        // Get the enum for noticeboard
+        // { all = 0, app = 1, web = 2}
+        notice.noticeboard = noticeboard.length == 2 ? "all" : noticeboard[0].value.toLowerCase();
+
+        this.props.cb_submit(id, notice);
+    }
+
     updateVal(key, val) {
         this.setState({
             [key]: val
@@ -45,7 +69,7 @@ export default class Editor extends Component {
 
         return (
             <Fragment>
-                <div className="col-md-8 col-sm-12">
+                <form className="col-md-8 col-sm-12" onSubmit={this.handleSubmit.bind(this)}>
                     <FormGroup label="Title:" htmlFor="notice:title" required>
                         <Input id="notice:title" type="text" value={this.state.title} cb={this.updateVal.bind(this, 'title')} required/>
                     </FormGroup>
@@ -77,11 +101,11 @@ export default class Editor extends Component {
                             Back <i className="fas fa-undo" />
                         </Button>
 
-                        <Button className="btn btn-success border-dark" cb={this.props.cb_edit.bind(this, 0, {})}>
+                        <Button className="btn btn-success border-dark" type="submit">
                             Save <i className="fas fa-check" />
                         </Button>
                     </div>
-                </div>
+                </form>
 
                 <div className="col-md-4 col-sm-12">
                     <PhonePreview>

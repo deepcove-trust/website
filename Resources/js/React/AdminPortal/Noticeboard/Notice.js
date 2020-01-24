@@ -42,10 +42,10 @@ export class NoticeSummary extends Component {
                 <small className="float-right">{this.getReadableDate(updated_at)}</small>
                 <h4>{title}</h4>
                 <p>{short_desc}</p>
-                <Button className="btn btn-dark" cb={this.props.cb_edit.bind(this, 1, this.props.notice)}>
+                {icons}
+                <Button className="btn btn-dark float-right" cb={this.props.cb_edit.bind(this, 1, this.props.notice)}>
                     Edit <i className="fa fa-pencil" />
                 </Button>
-                {icons}
                 <hr />
             </div>
         );

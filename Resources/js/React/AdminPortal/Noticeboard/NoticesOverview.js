@@ -31,7 +31,7 @@ export default class NoticesOverview extends Component {
         return (
             <Fragment>
                 <div className="col-md-8 col-sm-12">
-                    <Button className="btn btn-dark float-right" cb={this.props.cb_edit.bind(this, 1, {})}>
+                    <Button className="btn btn-dark ml-auto mr-0 d-block mb-3" cb={this.props.cb_edit.bind(this, 1, null)}>
                         New Notice <i className="fas fa-plus" />
                     </Button>
 

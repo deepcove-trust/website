@@ -73,7 +73,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 await _Database.AddAsync(n);
                 await _Database.SaveChangesAsync();
-                return Ok();
+                return Ok($"Notice \"{n.Title}\" has been issued.");
             } 
             catch(Exception ex)
             {

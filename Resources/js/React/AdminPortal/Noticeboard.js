@@ -50,6 +50,24 @@ class Noticeboard extends Component {
         });
     }
 
+    handleSubmit(id, notice) {
+        $.ajax({
+            url: `${baseUri}${id > 0 ? '/' + id : ''}`,
+            method: `${id > 0 ? 'PUT' : 'POST'}`,
+            data: notice
+        }).done((msg) => {
+            this.setState({
+                viewIndex: 0,
+                selected: {}
+            }, () => {
+                this.Alert.success(msg);
+                this.getData();
+            });
+        }).fail((err) => {
+            this.Alert.error(err);
+        })
+    }
+
     handleDelete(id) {
         $.ajax({
             url: `${baseUri}/${id}`,
@@ -83,8 +101,9 @@ class Noticeboard extends Component {
                     selected={this.state.selected}
                     alert={this.Alert}
 
-                    cb_edit={this.changeView.bind(this)}
                     cb_delete={this.handleDelete.bind(this)}
+                    cb_edit={this.changeView.bind(this)}
+                    cb_submit={this.handleSubmit.bind(this)}
                 />
             </Alert>
         )
