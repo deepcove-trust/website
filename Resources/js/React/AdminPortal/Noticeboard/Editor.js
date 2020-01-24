@@ -24,7 +24,6 @@ export default class Editor extends Component {
 
     componentWillReceiveProps(prevProps) {
         if (prevProps.selected.id != this.state.id) return;
-
         this.setState(this.props.selected);
     }
    
@@ -49,7 +48,7 @@ export default class Editor extends Component {
 
         // Get the enum for noticeboard
         // { all = 0, app = 1, web = 2}
-        notice.noticeboard = noticeboard.length == 2 ? "all" : noticeboard[0].value.toLowerCase();
+        notice.noticeboard = noticeboard.length == 2 ? "all" : this.getOptionVal(noticeboard[0]).value.toLowerCase();
 
         this.props.cb_submit(id, notice);
     }
@@ -58,6 +57,15 @@ export default class Editor extends Component {
         this.setState({
             [key]: val
         });
+    }
+
+    // TODO: Find a cleaner way around this 
+    getOptionVal(x) {
+        if (Array.isArray(x)) return x;
+
+        if (x == "all") return this.options;
+
+        return x == "app" ? this.options[0] : this.options[1]; 
     }
 
     render() {
@@ -79,7 +87,7 @@ export default class Editor extends Component {
                     </FormGroup>
 
                     <FormGroup label="Noticeboard:" htmlFor="notice:board" required>
-                        <Rselect options={this.options} value={this.state.noticeboard} onChange={this.updateVal.bind(this, 'noticeboard')} isMulti required />
+                        <Rselect options={this.options} value={this.getOptionVal(this.state.noticeboard)} onChange={this.updateVal.bind(this, 'noticeboard')} isMulti required />
                     </FormGroup>
 
                     <FormGroup label="Urgent:" htmlFor="notice:urgent">

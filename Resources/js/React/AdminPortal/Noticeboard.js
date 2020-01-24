@@ -32,7 +32,7 @@ class Noticeboard extends Component {
         this.setState({
             viewIndex,
             selected
-        }, console.log(this.state.viewIndex, this.state.selected));
+        });
     }
 
     getData() {

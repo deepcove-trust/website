@@ -67,7 +67,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     Title = request.Str("title"),
                     Noticeboard =  noticeboard,
                     LongDesc = request.Str("long_desc"),
-                    Urgent = request.Int("urgent"),
+                    Urgent = request.Bool("urgent") ? 1 : 0,
                     Active = request.Bool("active"),
                 };
 
@@ -95,12 +95,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 n.Title = request.Str("title");
                 n.Noticeboard = noticeboard;
                 n.LongDesc = request.Str("long_desc");
-                n.Urgent = request.Int("urgent");
+                n.Urgent = request.Bool("urgent") ? 1 : 0;
                 n.Active = request.Bool("active");
 
                 _Database.Update(n);
                 await _Database.SaveChangesAsync();
-                return Ok();
+                return Ok($"Notice \"{n.Title}\" updated.");
             }
             catch(Exception ex)
             {
