@@ -11,7 +11,6 @@ const components = {
 
 import $ from 'jquery';
 
-
 const baseUri = `/admin/noticeboard`;
 
 class Noticeboard extends Component {
@@ -29,6 +28,13 @@ class Noticeboard extends Component {
 
     componentDidMount() { this.getData(); }
 
+    changeView(viewIndex, selected) {
+        this.setState({
+            viewIndex,
+            selected
+        }, console.log(this.state.viewIndex, this.state.selected));
+    }
+
     getData() {
         $.ajax({
             method: 'get',
@@ -44,6 +50,23 @@ class Noticeboard extends Component {
         });
     }
 
+    handleDelete(id) {
+        $.ajax({
+            url: `${baseUri}/${id}`,
+            method: 'delete'
+        }).done((msg) => {
+            this.setState({
+                viewIndex: 0,
+                selected: {}
+            }, () => {
+                this.Alert.success(msg);
+                this.getData();
+            });
+        }).fail((err) => {
+            this.Alert.error(err);
+        })
+    }
+
     render() {       
         const TemplateName = components[this.state.viewIndex];
 
@@ -57,8 +80,11 @@ class Noticeboard extends Component {
                     important={this.state.important}
                     normal={this.state.normal}
                     disabled={this.state.disabled}
-                    selected={this.state.important[0]}
+                    selected={this.state.selected}
                     alert={this.Alert}
+
+                    cb_edit={this.changeView.bind(this)}
+                    cb_delete={this.handleDelete.bind(this)}
                 />
             </Alert>
         )

@@ -1,39 +1,43 @@
 ﻿import React, { Component, Fragment } from 'react';
 import PhonePreview from '../../Components/PhonePreview';
 import NoticeboardSection from './NoticeboardSection';
-import Notice from './Notice';
+import { NoticeCard, NoticeSummary } from './Notice';
+import { Button } from '../../Components/Button';
 
 export default class NoticesOverview extends Component {
     render() {
         const { important, normal, disabled } = this.props;
 
         let important_notices = important.map((notice, key) => {
-            return <Notice notice={notice} key={key} important />
+            return <NoticeCard notice={notice} key={key} important />
         });
 
         let normal_notices = normal.map((notice, key) => {
-            return <Notice notice={notice} key={key} />
+            return <NoticeCard notice={notice} key={key} />
         });
 
-        let notice_list = important.map((notice, key) => {
-            return notice.title;
+        let list_important = important.map((notice, key) => {
+            return <NoticeSummary notice={notice} key={`imp_${key}`} cb_edit={this.props.cb_edit} />
         });
 
-        notice_list += normal.map((notice, key) => {
-            return notice.title;
+        let list_normal = normal.map((notice, key) => {
+            return <NoticeSummary notice={notice} key={`norm_${key}`} cb_edit={this.props.cb_edit} />
         });
 
-        notice_list += disabled.map((notice, key) => {
-            return notice.title;
+        let list_disabled = disabled.map((notice, key) => {
+            return <NoticeSummary notice={notice} key={`dis_${key}`} cb_edit={this.props.cb_edit} />;
         });
-
 
         return (
             <Fragment>
                 <div className="col-md-8 col-sm-12">
-                    <div className="row">
-                        {notice_list}
-                    </div>
+                    <Button className="btn btn-dark float-right" cb={this.props.cb_edit.bind(this, 1, {})}>
+                        New Notice <i className="fas fa-plus" />
+                    </Button>
+
+                    {list_important}
+                    {list_normal}
+                    {list_disabled}
                 </div>
 
                 <div className="col-md-4 col-sm-12">

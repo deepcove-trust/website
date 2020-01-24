@@ -20,21 +20,10 @@
 /* UI Alert */
 @import './ReactToastify.min.scss';
 
-/* Import Font Awesome 5 Pro */
-$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
-@import '~@fortawesome/fontawesome-pro/scss/fontawesome';
-@import '~@fortawesome/fontawesome-pro/scss/regular';
-@import '~@fortawesome/fontawesome-pro/scss/solid';
-@import '~@fortawesome/fontawesome-pro/scss/brands';
 
-@import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
-
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: 'Gayathri', sans-serif;
-}
 
 body {
-    background: url(/images/background.jpg);
+    background: url('/images/background.jpg');
     background-repeat: none;
     background-attachment: fixed;
     background-size: cover;
@@ -294,4 +283,8 @@ label.btn input[type="radio"]{
 .indented { 
     margin-left: 5px;
     margin-right: 5px; 
+}
+
+.pointer {
+    cursor: pointer;
 }
