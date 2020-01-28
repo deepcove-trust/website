@@ -56,26 +56,24 @@ export default class Pages extends Component {
         }
 
         return (
-            <Alert onRef={ref => (this.alert = ref)}>
-                <div className="row">
-                    <div className="col-12 py-3">
-                        <h1 className="text-center">Pages</h1>
-                    </div>
-
-                    <div className="col-md-4">
-                        <FormGroup label="Search:">
-                            <Input type="text" placeHolder="Page name..." value={this.state.search} cb={(search) => this.setState({ search })} />
-                        </FormGroup>
-                    </div>
-
-                    <div className="col-md-4 offset-md-4 mb-3">
-                        <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
-                            New Page <i className="fas fa-file-plus"></i>
-                        </Link>
-                    </div>
-
-                    {pages}
+            <Alert className="row" onRef={ref => (this.alert = ref)}>
+                <div className="col-12 py-3">
+                    <h1 className="text-center">Pages</h1>
                 </div>
+
+                <div className="col-md-4">
+                    <FormGroup label="Search:">
+                        <Input type="text" placeHolder="Page name..." value={this.state.search} cb={(search) => this.setState({ search })} />
+                    </FormGroup>
+                </div>
+
+                <div className="col-md-4 offset-md-4 mb-3">
+                    <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
+                        New Page <i className="fas fa-file-plus"></i>
+                    </Link>
+                </div>
+
+                {pages}
             </Alert>
         );
     }

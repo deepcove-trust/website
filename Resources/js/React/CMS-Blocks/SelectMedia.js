@@ -69,7 +69,6 @@ export default class SelectMedia extends Component {
             return element !== undefined;
         });
 
-        
 
         let footer = (
             <div className="text-right">

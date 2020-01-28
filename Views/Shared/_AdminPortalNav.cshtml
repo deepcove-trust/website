@@ -27,13 +27,14 @@
                     <a class="nav-link text-dark" asp-area="admin-portal" asp-controller="ManageMedia" asp-action="Index">Media</a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="admin-portal,app" asp-controller="Page" asp-action="Index">Mobile Application</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="admin-portal,web" asp-controller="Page" asp-action="Index" asp-route-filter="main">Website</a>
-                </li>
+                <li class="dropdown nav-item">
+                    <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Manage....</a>
+                    <div class="dropdown-menu dropdown-menu-right" role="menu">
+                        <a class="dropdown-item" role="presentation" asp-area="admin-portal,app" asp-controller="Page" asp-action="Index">Mobile App</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Noticeboard" asp-action="Index">Noticeboard</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin-portal,web" asp-controller="Page" asp-action="Index" asp-route-filter="main">Website</a>
+                    </div>
+                </li> 
 
                 <li class="dropdown nav-item">
                     <a class="dropdown-toggle nav-link text-dark" data-toggle="dropdown" aria-expanded="false" href="#">Hi @User.AccountNameFirst()</a>
