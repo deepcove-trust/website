@@ -1,6 +1,7 @@
 ﻿// Primary theme colour
 $color-primary: #628893;
-$color-primary-faded: #628893;
+$color-primary-faded: #ECF2F0;
+$color-grey: #AEAEAE;
 
 $primaryColor: #8BC34A; //Green
 $primaryColorDark: #262626; //Charcoal
@@ -72,7 +73,7 @@ h4.noticeboardSection {
 * Are these mobile phone preview only or editor styles as well?
 * Can your two color vars use mine or are they both needed?
 ----------------------------------------------------------*/
-.add-category-card {
+.add-list-card {
     border: none;
     box-shadow: 1px 1px 5px rgba(0,0,0,.1);
     border-radius: 0px;
@@ -82,32 +83,156 @@ h4.noticeboardSection {
     background-color: $color-primary;
 }
 
-.category-card {
-    background-color: #fff;
-    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
-    height: 60px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+#bodyText{
+    resize: none;
+    min-height: 300px;
+}
+
+.center-text{
+    text-align: center;
+    position: absolute;
+    top: 50%;    
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+}
+
+.control-buttons {
+    transition: max-height ease-in 0.5s, padding linear 0.5s;
+    -webkit-transition: max-height ease-in 0.5s, padding linear 0.5s;
+    max-height: 0px;
+    z-index: 9999;
+    background-color: $color-primary;
+    width: 100vw;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+
+    &-show {
+        max-height: 100px;
+        padding: 5px;
+    }
+}
+
+#entry-dropdown {
+    background-color: $color-primary-faded;
+
+    & select {
+        width: 90% !important;
+        height: 50px !important;
+        margin: 5% !important;
+    }
+}
+
+.image-card{
     cursor: pointer;
+    background-color: $color-primary;
+
+    & img {
+        object-fit: contain;
+    }
+    
+    &:hover:not(.selected-image-card){
+        border: 4px solid $color-primary-faded !important;
+    }
 }
 
-.category-card p {
-    color: #AEAEAE;
+.main-image-card {
+    border: 4px solid $color-primary !important;
 }
 
-.category-card:hover p {
+.selected-image-card{
+    border: 4px solid yellow !important;
+}
+
+.new-image-card {
+    height: 100%;
+    color: $color-grey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+
+    &:hover{
+        color: white;
+        background-color: $color-primary;
+    }
+    
+    /* Center the 'add new' icon */
+    & > div {
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+
+        & > div {
+            color: $color-primary;
+            &:hover{
+                color: white;
+            }
+        }
+    }
+}
+
+.image-card-label{
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    text-align: center;
+    margin-bottom: 0px;
+    background-color: $color-primary;
     color: #fff;
 }
 
-.category-card:hover {
-    color: white;
-    background-color: $color-primary-faded;
-    transition: background-color ease-in 0.1s, color ease-in 0.1s;
-    -webkit-transition: background-color ease-in 0.1s, color ease-in 0.1s;
+@media only screen and (min-width: 992px){
+    #entries{
+        height: 60vh;
+        overflow-y: auto;
+    }
+}
+
+label.list-card input[type="radio"]{
+    display:none;
+}
+
+label.list-card h5, label.list-card p {
+    position: relative !important;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.list-card {
+    background-color: #fff;
+    box-shadow: 1px 1px 5px rgba(0,0,0,.1);
+    height: 60px;
+    cursor: pointer;
+
+    &:hover {
+        color: white;
+        background-color: $color-primary;
+        transition: background-color ease-in 0.1s, color ease-in 0.1s;
+        -webkit-transition: background-color ease-in 0.1s, color ease-in 0.1s;
+    }
+
+    & p {
+        color: #AEAEAE;
+        @extend .vertically-center;
+    }
+
+    &:hover p {
+        color: #fff;
+    }
+
+    & h5 {
+        @extend .vertically-center;
+    }
+
+    &.active {
+        @extend .list-card:hover;
+    }
 }
 
 // Vertically center text within the card
-.category-card h5, .category-card p { 
+.vertically-center { 
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -117,6 +242,60 @@ h4.noticeboardSection {
     border-left: 30px solid $color-primary !important;
 }
 
-.min-width-300 {
-    min-width: 300px;
+.p-link{
+    display: inline-block;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.show-large{
+    display: none;
+}
+
+@media only screen and (min-width: 992px){
+    .show-small{
+        display: none;
+    }
+    .show-large{
+        display: initial;
+    }
+}
+
+.nugget-text{
+    & textarea{
+        resize: none;
+        min-height: 40px;
+    }
+}
+
+.nugget-image {
+    @extend .center-text;
+    max-width: 75px;
+    text-align: center;
+    cursor: pointer;
+
+    & p {
+        text-decoration: underline;
+    }
+}
+
+.btn-gray {
+    border: none !important;
+    background-color: white;
+    color: $color-grey;
+
+    &:hover {
+        color: #666666;
+    }
+
+    &:focus{
+        border: none;
+        box-shadow: none;
+    }
+}
+
+.nugget-controls{
+    position: absolute;
+    top: 0px;
+    right: 5px;
 }

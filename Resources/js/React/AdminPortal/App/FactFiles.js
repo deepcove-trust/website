@@ -2,6 +2,7 @@
 import { render } from 'react-dom';
 import Alert from '../../Components/Alert';
 import CategoryIndex from './FactFiles/CategoryIndex';
+import CategoryDetails from './FactFiles/CategoryDetails';
 
 /**
  * Root component for the fact file management UI
@@ -12,16 +13,16 @@ export default class FactFiles extends Component {
         super(props);
 
         this.state = {
-            selectedCategory: null
+            selectedCategoryId: null
         };
     }
 
     // User selects a category from the category list
-    onCategorySelect(categoryId) {
+    onCategorySelect(selectedCategoryId) {
         this.setState({
-            selectedCategory: categoryId
+            selectedCategoryId
         });
-    }   
+    }
 
     // User saves or updates new category. ID is 0 for new category
     onCategorySave(category) {
@@ -30,15 +31,27 @@ export default class FactFiles extends Component {
 
     }
 
+    // User clicks 'back' to return to index view
+    onBack() {
+        this.setState({
+            selectedCategoryId: null
+        })
+    }
+
     render() {
+        let content;
+
+        if (this.state.selectedCategoryId) {
+            content = <CategoryDetails categoryId={this.state.selectedCategoryId} onBack={this.onBack.bind(this)} />
+        } else {
+            content = <CategoryIndex onSelection={this.onCategorySelect.bind(this)} onSave={this.onCategorySave.bind(this)} />
+        }
+
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-
+            <div>
                 <h1 className="text-center my-5">Fact File Management</h1>
-
-                <CategoryIndex alert={this.Alert} onSelection={this.onCategorySelect.bind(this)} onSave={this.onCategorySave.bind(this)} />
-
-            </Alert>
+                {content}
+            </div>
         );
     }
 }
