@@ -48,7 +48,7 @@ export class Checkbox extends Component {
                     htmlFor={id}
                     data-tip={this.props.tooltip || null}
                 >
-                    {this.props.label}
+                    {this.props.label || this.props.children}
                 </label>
             </div>
         )

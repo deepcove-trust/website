@@ -7,7 +7,7 @@ export default class PhonePreview extends Component {
      * Both devices are portrait unless you specify 'landscape'
      * */
     render() {
-        return !this.props.tablet ? (
+        return this.props.tablet ? (
             <div className={`marvel-device ipad ${this.props.silver ? 'silver' : 'black'} ${this.props.landscape ? 'landscape' : ''}`}>
                 <div className="camera"/>
                 <div className="screen">
