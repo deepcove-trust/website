@@ -50,7 +50,7 @@ export default class CategoryIndex extends Component {
 
         return (
             <Alert onRef={ref => (this.Alert = ref)}>
-                <div className="left-border min-width-300 card px-0 col-4 mx-auto my-5">
+                <div className="left-border card px-0 col-lg-4 col-md-6 mx-auto my-5">
                     <h3 className="text-center pt-3 pb-2 bground-primary text-white">Select Category</h3>
                     <div>
                         {categoryCards}
@@ -64,7 +64,7 @@ export default class CategoryIndex extends Component {
 class CategoryCard extends Component {
     render() {
         return (
-            <div className="m-2 row category-card" onClick={this.props.cb.bind(this, this.props.categoryId)}>
+            <div className="m-2 row list-card" onClick={this.props.cb.bind(this, this.props.categoryId)}>
                 <div className="col-7">
                     <h5>{this.props.categoryName}</h5>
                 </div>
@@ -106,7 +106,7 @@ class NewCategoryCard extends Component {
                 actionPending: false,
                 categoryName: null
             });
-            this.getData();
+            this.props.onSave();
         }).fail((err) => {
             this.props.alert.error(null, err.responseText);
             this.setState({
@@ -138,7 +138,7 @@ class NewCategoryCard extends Component {
 
         if (this.state.addingCategory) {
             return (
-                <form className="m-2 py-4 form-inline add-category-card" onSubmit={(e) => { this.onSaveCategory(e, this.state.categoryName) }}>                    
+                <form className="m-2 py-4 form-inline add-list-card" onSubmit={(e) => { this.onSaveCategory(e, this.state.categoryName) }}>                    
                     <div className="mx-auto">                        
                         <Input type="text" value={this.state.categoryName} placeHolder="Enter category name" cb={this.updateField.bind(this)} required />
                         <Button type="button" pending={this.state.actionPending} cb={this.onCancel.bind(this)} className="btn btn-danger"><i className="fas fa-times"></i></Button>
@@ -150,7 +150,7 @@ class NewCategoryCard extends Component {
 
         return (
             <div className="text-center m-3" onClick={this.onAddCategory.bind(this)} style={{ color: "#AEAEAE" }}>
-                <div className="inline-block category-card py-2" style={{ height: "80px"}}>
+                <div className="inline-block list-card py-2" style={{ height: "80px"}}>
                     <i className="far fa-plus-circle fa-3x"></i>
                     <small className="d-block">Add new</small>
                 </div>

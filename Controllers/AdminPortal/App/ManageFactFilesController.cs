@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
@@ -117,55 +118,121 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         [HttpGet("entries/{id:int}")]
         public async Task<IActionResult> GetEntryDetails(int id)
         {
-            FactFileEntry entry = await _Db.FactFileEntries
-                .Include(e => e.ListenAudio)
-                .Include(e => e.PronounceAudio)
-                .Include(e => e.FactFileEntryImages)
-                    .ThenInclude(ei => ei.MediaFile)
-                .Include(e => e.FactFileNuggets)
-                    .ThenInclude(n => n.Image)
-                .Where(e => e.Id == id).FirstOrDefaultAsync();
-
-            if(entry == null) return NotFound(new ResponseHelper("Something went wrong, please contact the developers"));
-
-            return Ok(new
+            try
             {
-                entry.PrimaryName,
-                entry.AltName,
-                entry.MainImageId,
-                Images = entry.FactFileEntryImages.Select(image => new
+                FactFileEntry entry = await _Db.FactFileEntries
+                    .Include(e => e.ListenAudio)
+                    .Include(e => e.PronounceAudio)
+                    .Include(e => e.FactFileEntryImages)
+                        .ThenInclude(ei => ei.MediaFile)
+                    .Include(e => e.FactFileNuggets)
+                        .ThenInclude(n => n.Image)
+                    .Where(e => e.Id == id).FirstOrDefaultAsync();
+
+                if (entry == null) return NotFound(new ResponseHelper("Something went wrong, please contact the developers if the problem persists."));
+
+                return Ok(new
                 {
-                    image.MediaFile.Id,
-                    image.MediaFile.Filename,
-                    image.MediaFile.Name,
-                    isSquare = image.MediaFile.Height == image.MediaFile.Width,
-                }),
-                ListenAudio = new
-                {
-                    entry.ListenAudio?.Id,
-                    entry.ListenAudio?.Name
-                },
-                PronounceAudio = new
-                {
-                    entry.PronounceAudio?.Id,
-                    entry.PronounceAudio?.Name
-                },
-                Nuggets = entry.FactFileNuggets.Select(nugget => new
-                {
-                    nugget.Id,
-                    nugget.OrderIndex,
-                    nugget.Name,
-                    nugget.Text,
-                    Image = new
+                    entry.PrimaryName,
+                    entry.AltName,
+                    entry.MainImageId,
+                    Images = entry.FactFileEntryImages.Select(image => new
                     {
-                        nugget.Image?.Id,
-                        nugget.Image?.Filename,
-                        nugget.Image?.Name,
-                        isSquare = nugget.Image?.Height == nugget.Image?.Width
-                    }
-                }),
-                entry.BodyText
-            });
+                        image.MediaFile.Id,
+                        image.MediaFile.Filename,
+                        image.MediaFile.Name,
+                        isSquare = image.MediaFile.Height == image.MediaFile.Width,
+                    }),
+                    ListenAudio = new
+                    {
+                        entry.ListenAudio?.Id,
+                        entry.ListenAudio?.Name
+                    },
+                    PronounceAudio = new
+                    {
+                        entry.PronounceAudio?.Id,
+                        entry.PronounceAudio?.Name
+                    },
+                    Nuggets = entry.FactFileNuggets.OrderBy(nugget => nugget.OrderIndex).Select(nugget => new
+                    {
+                        nugget.Id,
+                        nugget.OrderIndex,
+                        nugget.Name,
+                        nugget.Text,
+                        Image = new
+                        {
+                            nugget.Image?.Id,
+                            nugget.Image?.Filename,
+                            nugget.Image?.Name,
+                            isSquare = nugget.Image?.Height == nugget.Image?.Width
+                        }
+                    }),
+                    entry.BodyText
+                });
+            }
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error retrieving entry details", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest(new ResponseHelper("Something went wrong, please try again in a few minutes.", ex.Message));
+            }
+        }
+
+        // PUT: /admin/app/factfiles/entries/{id:int}
+        [HttpPut("entries/{id:int}")]
+        public async Task<IActionResult> UpdateEntry(int id, IFormCollection form)
+        {
+            try
+            {
+                FactFileEntry entryToUpdate = await _Db.FactFileEntries
+                    .Include(entry => entry.FactFileEntryImages)
+                    .Include(entry => entry.FactFileNuggets)
+                    .Where(entry => entry.Id == id)
+                    .FirstOrDefaultAsync();
+
+                if (entryToUpdate == null)
+                    return NotFound(new ResponseHelper("Something went wrong, please contact the developers if the problem persists."));
+
+                // Validate inputs first
+
+                // Update text fields
+                entryToUpdate.PrimaryName = form.Str("primaryName");
+                entryToUpdate.AltName = form.Str("altName");
+                entryToUpdate.BodyText = form.Str("bodyText");
+
+                // Update media fields
+                if (form.Int("pronounceAudioId") != 0) entryToUpdate.ListenAudioId = form.Int("listenAudioId");
+                if (form.Int("pronounceAudioId") != 0) entryToUpdate.PronounceAudioId = form.Int("pronouceAudioId");
+                entryToUpdate.MainImageId = form.Int("mainImageId");
+
+                // Remove and rebuild fact file entry image records
+                int[] imageArray = JsonConvert.DeserializeObject<int[]>(form.Str("images"));
+                _Db.RemoveRange(entryToUpdate.FactFileEntryImages);
+                foreach (int imageId in imageArray)
+                {
+                    entryToUpdate.FactFileEntryImages.Add(new FactFileEntryImage
+                    {
+                        FactFileEntryId = entryToUpdate.Id,
+                        MediaFileId = imageId
+                    });
+
+                }
+
+                // Remove and rebuild fact file nugget records
+                FactFileNugget[] updatedNuggets = JsonConvert.DeserializeObject<FactFileNugget[]>(form.Str("nuggets"));
+                _Db.RemoveRange(entryToUpdate.FactFileNuggets);
+                foreach (FactFileNugget nugget in updatedNuggets) entryToUpdate.FactFileNuggets.Add(nugget);                
+
+                await _Db.SaveChangesAsync();
+
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                _Logger.LogError("Error updating entry", ex.Message);
+                _Logger.LogError(ex.StackTrace);
+                return BadRequest(new ResponseHelper("Something went wrong, please try again in a few minutes.", ex.Message));
+            }
         }
     }
 }

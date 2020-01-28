@@ -13,14 +13,14 @@ export default class FactFiles extends Component {
         super(props);
 
         this.state = {
-            selectedCategory: null
+            selectedCategoryId: null
         };
     }
 
     // User selects a category from the category list
-    onCategorySelect(categoryId) {
+    onCategorySelect(selectedCategoryId) {
         this.setState({
-            selectedCategory: categoryId
+            selectedCategoryId
         });
     }
 
@@ -31,11 +31,18 @@ export default class FactFiles extends Component {
 
     }
 
+    // User clicks 'back' to return to index view
+    onBack() {
+        this.setState({
+            selectedCategoryId: null
+        })
+    }
+
     render() {
         let content;
 
-        if (this.state.selectedCategory) {
-            content = <CategoryDetails categoryId={this.state.selectedCategory} />
+        if (this.state.selectedCategoryId) {
+            content = <CategoryDetails categoryId={this.state.selectedCategoryId} onBack={this.onBack.bind(this)} />
         } else {
             content = <CategoryIndex onSelection={this.onCategorySelect.bind(this)} onSave={this.onCategorySave.bind(this)} />
         }
