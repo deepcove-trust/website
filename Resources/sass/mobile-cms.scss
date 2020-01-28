@@ -74,7 +74,7 @@ $color-grey: #AEAEAE;
     border: 4px solid yellow !important;
 }
 
-.new-image-card {
+.new-image-card, .new-nugget-card {
     height: 100%;
     color: $color-grey;
     padding-top: 20px;
@@ -207,6 +207,10 @@ label.list-card h5, label.list-card p {
     & p {
         text-decoration: underline;
     }
+}
+
+.bg-trans{
+    background-color: rgba(254, 254, 254, 0.7);
 }
 
 .btn-gray {

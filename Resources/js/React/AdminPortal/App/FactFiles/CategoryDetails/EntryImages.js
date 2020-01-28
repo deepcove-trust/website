@@ -13,6 +13,11 @@ export default class EntryImages extends Component {
         }
     }
 
+    componentDidMount() {
+        let el = $(".new-image-card");
+        el.css("minHeight", el[0].offsetWidth);
+    }
+
     componentWillReceiveProps(nextProps) {
         if (this.props != nextProps) {
             this.setState({
@@ -90,7 +95,7 @@ class NewImageCard extends Component {
     render() {
         return (
             <div className="col-lg-4 col-6 my-1">
-                <div className="new-image-card card" onClick={this.props.onClick}>
+                <div id="new-image-card" className="new-image-card card" onClick={this.props.onClick}>
                     <div>
                         <i className="far fa-plus-square fa-5x" />
                     </div>

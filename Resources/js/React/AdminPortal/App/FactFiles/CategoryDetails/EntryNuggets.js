@@ -51,7 +51,8 @@ export default class EntryNuggets extends Component {
     render() {
 
         let nuggets = this.props.nuggets.map((nugget, index) =>
-            <NuggetCard key={nugget.id}
+            <NuggetCard key={index}
+                i={index}
                 nugget={nugget}
                 onUpdate={this.props.onUpdate.bind(this, index)}
                 onDelete={this.props.onDelete.bind(this, index)}
@@ -59,7 +60,7 @@ export default class EntryNuggets extends Component {
             />);
 
         // Add 'new' button
-        nuggets.push(<NewNuggetCard key="0"
+        nuggets.push(<NewNuggetCard key="999"
             addPending={this.state.addPending}
             onUpdate={this.updateNewNugget.bind(this)}
             onAddPending={() => this.setState({ addPending: true })}
@@ -91,7 +92,7 @@ class NuggetCard extends Component {
         }
 
         return (
-            <div className="card p-2 mt-2">
+            <div id={`nugget-${this.props.i}-card`} className="card p-2 mt-2 position-relative">
                 <div className="row">                    
                     <div className="col-4">
                         <div className="nugget-image">
@@ -119,7 +120,7 @@ class NewNuggetCard extends Component {
 
         let addButton = (
             <div>
-                <div className="w-100 mt-2 new-image-card card text-center" onClick={this.props.onAddPending}>
+                <div className="w-100 mt-2 new-nugget-card card text-center" onClick={this.props.onAddPending}>
                     <i className="far fa-plus-square fa-5x"></i>
                 </div>
             </div>

@@ -50,7 +50,7 @@ export default class CategoryIndex extends Component {
 
         return (
             <Alert onRef={ref => (this.Alert = ref)}>
-                <div className="left-border card px-0 col-lg-4 col-md-6 mx-auto my-5">
+                <div className="card px-0 col-lg-4 col-md-6 mx-auto my-5">
                     <h3 className="text-center pt-3 pb-2 bground-primary text-white">Select Category</h3>
                     <div>
                         {categoryCards}

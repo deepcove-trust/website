@@ -1,6 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
 import $ from 'jquery';
-
+import _ from 'lodash';
 
 import Alert from '../../../Components/Alert';
 import { FormGroup, Input, TextArea, Select } from '../../../Components/FormControl';
@@ -40,7 +40,7 @@ export default class CategoryDetails extends Component {
                 category: data
             });
         }).fail((err) => {
-            console.log(err);
+            this.Alert.error(null, err.responseText);
         });
     }
 
@@ -60,7 +60,7 @@ export default class CategoryDetails extends Component {
                     {
                         // Left hand side of display - list of entries
                     }
-                    <div className="px-0 col-lg-3">
+                    <div className="px-0 col-lg-8">
                         <EntryList
                             categoryName={this.state.category ? this.state.category.name : "Loading"}
                             selectedEntryId={this.state.selectedEntryId}
@@ -68,24 +68,17 @@ export default class CategoryDetails extends Component {
                             onSelect={this.onEntrySelect.bind(this)}
                         />
 
+                        <div className="bg-trans">
+                            <EntryDetails entryId={this.state.selectedEntryId || 0} />
+                        </div>
+
                     </div>
 
                     {
                         // Right hand side of display - entry details
                     }
-                    <div className="col-lg-6 bg-light py-1">
-
-                        <EntryDetails entryId={this.state.selectedEntryId || 0} />
-
-                    </div>
-
-                    {
-                        // Preview window
-                    }
-                    <div className="col-lg-3 bg-dark">
-
+                    <div className="col-lg-4 py-1 bg-dark">
                         <h5 className="center-text text-white">Preview</h5>
-
                     </div>
 
                 </div>
@@ -141,11 +134,11 @@ class EntryDetails extends Component {
                 .done((data) => {
                     this.setState({
                         hasChanged: false,
-                        entry: data
-                    });
+                        entry: data,
+                    })
                 })
                 .fail((err) => {
-                    console.log(err);
+                    this.Alert.error(null, err.responseText);
                 });
         }
     }
@@ -172,26 +165,18 @@ class EntryDetails extends Component {
     }
 
     shiftNugget(index, direction) {
-
-        console.log(`Shifting nugget ${index} ${direction}`);
-
         let nuggets = this.state.entry.nuggets;
 
-        if (index = 0 && direction == 'down' || index == nuggets.length - 1 && direction == 'up' || nuggets.length == 1) return console.log('Criteria failed');
-
-        console.log('Criteria passed');
-
+        if (index == 0 && direction == 'down' || index == nuggets.length - 1 && direction == 'up' || nuggets.length == 1) return;
         let swapIndex = direction == 'up' ? index + 1 : index - 1;
 
-        console.log(`Swapping ${index} and ${swapIndex}`);
+        // The array connundrum. Why do the two console logs below not reflect the swapping of the array elements, even though the swap does work?
 
         console.log(nuggets);
 
-        let temp = nuggets[index];
-        nuggets[index] = nuggets[swapIndex];
-        nuggets[swapIndex] = temp;
+        [nuggets[index], nuggets[swapIndex]] = [nuggets[swapIndex], nuggets[index]];
 
-        console.log(nuggets);
+        console.log(nuggets)
 
         this.updateField("nuggets", nuggets);
     }
@@ -205,9 +190,8 @@ class EntryDetails extends Component {
         });
     }
 
-    onSave() {
+    onSave() {        
         let entry = this.state.entry;
-        let nuggets = 
         $.ajax({
             type: 'put',
             url: `${url}/entries/${this.props.entryId}`,
@@ -241,7 +225,7 @@ class EntryDetails extends Component {
 
     render() {
 
-        if (!this.props.entryId) return <h1 className="center-text show-large">Select an entry to begin</h1>
+        if (!this.props.entryId) return <div></div>
 
         return (
             <Alert onRef={ref => (this.Alert = ref)}>

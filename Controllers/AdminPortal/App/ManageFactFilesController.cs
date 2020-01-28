@@ -221,7 +221,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                 // Remove and rebuild fact file nugget records
                 FactFileNugget[] updatedNuggets = JsonConvert.DeserializeObject<FactFileNugget[]>(form.Str("nuggets"));
                 _Db.RemoveRange(entryToUpdate.FactFileNuggets);
-                foreach (FactFileNugget nugget in updatedNuggets) entryToUpdate.FactFileNuggets.Add(nugget);                
+                for (int i = 0; i < updatedNuggets.Length; i++)
+                {
+                    updatedNuggets[i].OrderIndex = i;
+                    entryToUpdate.FactFileNuggets.Add(updatedNuggets[i]);
+                }
 
                 await _Db.SaveChangesAsync();
 

@@ -32,18 +32,20 @@ export default class EntryList extends Component {
         return (
             <div className="card">
                 <h3 className="text-center pt-3 pb-2 mb-0 bground-primary text-white">{this.props.categoryName}</h3>
-                <div className="show-small" id="entry-dropdown">
+                <div id="entry-dropdown">
                     <Select
                         formattedOptions={entryOptions}
                         selected={this.props.selectedEntryId}
                         cb={this.props.onSelect.bind(this)}
                     />
                 </div>
-                <div className="show-large">
-                    <div id="entries">
-                        {entryCards}
-                    </div>
-                </div>
+                {
+                    //<div className="show-large">
+                    //    <div id="entries">
+                    //        {entryCards}
+                    //    </div>
+                    //</div>
+                }
             </div>
         )
     }
