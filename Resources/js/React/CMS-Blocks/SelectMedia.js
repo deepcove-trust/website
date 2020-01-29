@@ -96,9 +96,19 @@ export default class SelectMedia extends Component {
 
 class Item extends Component {
     render() {
+
+        let mediaType = this.props.file.mediaType.category;
+        let imgSrc;
+
+        if (mediaType != 'Image') {
+            if (mediaType == 'Audio') imgSrc = "/images/audio.png";
+            if (mediaType == 'General') imgSrc = "/images/document.png";
+        }
+        else imgSrc = `/media?filename=${this.props.file.filename}`;
+
         return (
             <div className={this.props.selected ? "selected" : ''}>
-                <img src={`/media?filename=${this.props.file.filename}`}
+                <img src={imgSrc}
                     height={'200px'}
                     style={{ 'width': '100%', 'objectFit': 'cover' }}
                     alt={this.props.file.name}
