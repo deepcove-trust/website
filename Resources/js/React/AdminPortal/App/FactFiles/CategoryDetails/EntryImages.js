@@ -2,17 +2,20 @@
 import $ from 'jquery';
 
 import { Button } from '../../../../Components/Button';
-
+import SelectMedia from '../../../../CMS-Blocks/SelectMedia';
+ 
 export default class EntryImages extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
+            showModal: false,
             selectedImageId: 0            
         }
     }
 
+    // Make new image button square
     componentDidMount() {
         let el = $(".new-image-card");
         el.css("minHeight", el[0].offsetWidth);
@@ -32,17 +35,17 @@ export default class EntryImages extends Component {
         });
     }
 
-    onSetMain() {
-
-    }
-
-    onRemove() {
-
+    setModalVisibility(showModal) {
+        this.setState({
+            showModal
+        });
     }
 
     render() {
 
         let imageCards = [];
+
+        let nonSquareWarning = this.props.showWarning ? <small className="text-danger text-center mb-2 font-weight-bold">Some images are not square. This may cause unpredictable display on certain devices.</small>  : null;
 
         if (this.props.images) {
             imageCards = this.props.images.map(image =>
@@ -54,7 +57,7 @@ export default class EntryImages extends Component {
             );
         }
 
-        imageCards.push(<NewImageCard key="0" />)
+        imageCards.push(<NewImageCard key="0" onClick={this.setModalVisibility.bind(this, true)} />)
 
         return (
             <div className="card mt-3">
@@ -65,7 +68,17 @@ export default class EntryImages extends Component {
 
                 <hr />
 
-                <ImageControls disabled={this.state.selectedImageId == 0} onSetMain={this.onSetMain.bind(this)} onRemove={this.onRemove.bind(this)} />
+                {nonSquareWarning}
+
+                <ImageControls disabled={this.state.selectedImageId == 0} onSetMain={this.props.onSetMain.bind(this, this.state.selectedImageId)} onRemove={this.props.onRemove.bind(this, this.state.selectedImageId)} />
+
+                <SelectMedia type="Image"
+                    showModal={this.state.showModal}
+                    cb={(imageData) => this.props.onAdd(imageData)}
+                    handleHideModal={() => {
+                        this.setModalVisibility(false)
+                    }}
+                />
 
             </div>
         )

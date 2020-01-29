@@ -223,9 +223,34 @@ class EntryDetails extends Component {
             });
     }
 
+    onRemoveImage(imageId) {
+        if (imageId == this.state.entry.mainImageId)
+            return this.Alert.error("Unable to delete main image. Set a different image as main and try again.");
+
+        let images = this.state.entry.images;
+        let imageToRemove = images.find(image => image.id == imageId);
+        images.splice(images.indexOf(imageToRemove), 1);
+
+        this.updateField("images", images);
+    }
+
+    onAddImage(data) {
+        let newImage = {
+            id: data.id,
+            filename: data.filename,
+            name: data.name,
+            isSquare: data.dimensions.height == data.dimensions.width
+        }
+
+        let images = this.state.entry.images;
+        images.push(newImage);
+
+        this.updateField("images", images);
+    }
+
     render() {
 
-        if (!this.props.entryId) return <div></div>
+        if (!this.props.entryId) return <div></div>        
 
         return (
             <Alert onRef={ref => (this.Alert = ref)}>
@@ -242,12 +267,18 @@ class EntryDetails extends Component {
                         <TextArea id="bodyText" name="bodyText" value={this.state.entry.bodyText} placeHolder="Enter text here..." cb={this.updateField.bind(this, 'bodyText')} required />
                     </FormGroup>
 
-                    <EntryImages images={this.state.entry.images} mainImageId={this.state.entry.mainImageId} />
+                    <EntryImages images={this.state.entry.images}
+                        showWarning={this.state.entry.images.some(image => !image.isSquare)}
+                        mainImageId={this.state.entry.mainImageId}
+                        onSetMain={(mainImageId) => this.updateField("mainImageId", mainImageId)}
+                        onRemove={this.onRemoveImage.bind(this)}
+                        onAdd={this.onAddImage.bind(this)}
+                    />
 
                     <EntryAudio audioFile={this.state.entry.listenAudio} pronounceFile={this.state.entry.pronounceAudio} />
 
                     <EntryNuggets nuggets={this.state.entry.nuggets} onUpdate={this.updateNugget.bind(this)}
-                        onAdd={this.addNewNugget.bind(this)} onDelete={this.deleteNugget.bind(this)} onShift={this.shiftNugget.bind(this)} />                    
+                        onAdd={this.addNewNugget.bind(this)} onDelete={this.deleteNugget.bind(this)} onShift={this.shiftNugget.bind(this)} />                                        
 
                     <ControlButtons onSave={this.onSave.bind(this)} onDiscard={this.getData.bind(this)} show={this.state.hasChanged} />
                 </form>

@@ -55,6 +55,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.MediaType,
                 media.Name,
                 media.Filename,
+                Dimensions = (!(media is ImageMedia)) ? null : new { 
+                    height = ((ImageMedia)media).Height,
+                    width = ((ImageMedia)media).Width
+                },
                 Alt = media is ImageMedia ? ((ImageMedia)media).Alt : null
              }).ToListAsync());
         }
