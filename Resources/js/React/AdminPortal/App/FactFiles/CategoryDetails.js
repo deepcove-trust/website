@@ -100,14 +100,8 @@ class EntryDetails extends Component {
                 altName: "",
                 images: [],
                 mainImageId: 0,
-                listenAudio: {
-                    id: 0,
-                    name: ""
-                },
-                pronounceAudio: {
-                    id: 0,
-                    name: ""
-                },
+                listenAudio: null,
+                pronounceAudio: null,
                 bodyText: "",
                 nuggets: []
             }
@@ -200,8 +194,8 @@ class EntryDetails extends Component {
                 altName: entry.altName,
                 bodyText: entry.bodyText,
                 mainImageId: entry.mainImageId,
-                listenAudioId: entry.listenAudio.id,
-                pronounceAudioId: entry.pronounceAudio.id,
+                listenAudioId: entry.listenAudio ? entry.listenAudio.id : null,
+                pronounceAudioId: entry.pronounceAudio ? entry.pronounceAudio.id : null,
                 images: JSON.stringify(entry.images.map(image => image.id)),
                 nuggets: JSON.stringify(entry.nuggets.map((nugget, index) => ({
                     id: 0,
@@ -248,6 +242,21 @@ class EntryDetails extends Component {
         this.updateField("images", images);
     }
 
+    onAddAudio(audioData, audioSlot) {
+        let newAudio = {
+            id: audioData.id,
+            name: audioData.name,
+            filename: audioData.filename,
+            mediaType: audioData.mediaType
+        };
+
+        this.updateField(audioSlot, newAudio);
+    }
+
+    onRemoveAudio(audioSlot) {
+        this.updateField(audioSlot, null);
+    }
+
     render() {
 
         if (!this.props.entryId) return <div></div>        
@@ -275,7 +284,12 @@ class EntryDetails extends Component {
                         onAdd={this.onAddImage.bind(this)}
                     />
 
-                    <EntryAudio audioFile={this.state.entry.listenAudio} pronounceFile={this.state.entry.pronounceAudio} />
+                    <EntryAudio onRemove={this.onRemoveAudio.bind(this)}
+                        onAdd={this.onAddAudio.bind(this)}
+                        onRemove={this.onRemoveAudio.bind(this)}
+                        listenFile={this.state.entry.listenAudio}
+                        pronounceFile={this.state.entry.pronounceAudio}
+                    />
 
                     <EntryNuggets nuggets={this.state.entry.nuggets} onUpdate={this.updateNugget.bind(this)}
                         onAdd={this.addNewNugget.bind(this)} onDelete={this.deleteNugget.bind(this)} onShift={this.shiftNugget.bind(this)} />                                        

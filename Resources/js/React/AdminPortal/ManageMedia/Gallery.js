@@ -115,7 +115,7 @@ class Item extends Component {
         return (
             <div className="card border-0 mb-2 transform-on-hover">
                 <img src={imgsrc} alt={this.props.data.alt} className="card-img-top gallery-img" />
-                <AudioControls file={this.props.data} />
+                <AudioControls file={this.props.data} className="overImg" />
 
                 <div className="card-body text-center">
                     <h6>{this.props.data.name || "untitled"}</h6>

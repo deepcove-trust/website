@@ -140,19 +140,23 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                     {
                         image.MediaFile.Id,
                         image.MediaFile.Filename,
-                        image.MediaFile.Name,
+                        image.MediaFile.Name,                        
                         isSquare = image.MediaFile.Height == image.MediaFile.Width,
                     }),
-                    ListenAudio = new
+                    ListenAudio = entry.ListenAudio != null ? new
                     {
-                        entry.ListenAudio?.Id,
-                        entry.ListenAudio?.Name
-                    },
-                    PronounceAudio = new
+                        entry.ListenAudio.Id,
+                        entry.ListenAudio.Name,
+                        entry.ListenAudio.Filename,
+                        entry.ListenAudio.MediaType
+                    } : null,
+                    PronounceAudio = entry.PronounceAudio != null ? new
                     {
                         entry.PronounceAudio?.Id,
-                        entry.PronounceAudio?.Name
-                    },
+                        entry.PronounceAudio?.Name,
+                        entry.PronounceAudio.Filename,
+                        entry.PronounceAudio.MediaType
+                    } : null,
                     Nuggets = entry.FactFileNuggets.OrderBy(nugget => nugget.OrderIndex).Select(nugget => new
                     {
                         nugget.Id,
@@ -201,8 +205,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                 entryToUpdate.BodyText = form.Str("bodyText");
 
                 // Update media fields
-                if (form.Int("pronounceAudioId") != 0) entryToUpdate.ListenAudioId = form.Int("listenAudioId");
-                if (form.Int("pronounceAudioId") != 0) entryToUpdate.PronounceAudioId = form.Int("pronouceAudioId");
+                entryToUpdate.ListenAudioId = form.Int("listenAudioId");
+                entryToUpdate.PronounceAudioId = form.Int("pronounceAudioId");
+
+                if (entryToUpdate.ListenAudioId == 0) entryToUpdate.ListenAudioId = null;
+                if (entryToUpdate.PronounceAudioId == 0) entryToUpdate.PronounceAudioId = null;
+
                 entryToUpdate.MainImageId = form.Int("mainImageId");
 
                 // Remove and rebuild fact file entry image records
