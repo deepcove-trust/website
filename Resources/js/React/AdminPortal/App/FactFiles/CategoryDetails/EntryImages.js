@@ -15,10 +15,13 @@ export default class EntryImages extends Component {
         }
     }
 
-    // Make new image button square
+    // Make image buttons square
     componentDidMount() {
-        let el = $(".new-image-card");
-        el.css("minHeight", el[0].offsetWidth);
+        let el1 = $('.tile');
+        el1.css("minHeight", el1[0].offsetWidth);
+
+        let el2 = $('.object-fit-cover');
+        el2.css("minHeight", el1[0].offsetWidth);
     }
 
     componentWillReceiveProps(nextProps) {
@@ -86,6 +89,15 @@ export default class EntryImages extends Component {
 }
 
 class ImageCard extends Component {
+
+    componentDidMount() {
+        let el1 = $('.tile');
+        el1.css("minHeight", el1[0].offsetWidth);
+
+        let el2 = $('.object-fit-cover');
+        el2.css("minHeight", el1[0].offsetWidth);
+    }
+
     render() {
 
         let isMainImage = this.props.image.id == this.props.mainImageId;
@@ -94,9 +106,9 @@ class ImageCard extends Component {
         if(isMainImage) label = <p className="image-card-label">MAIN</p>
 
         return (
-            <div className="col-lg-4 col-6 my-1">
-                <div className={`${isMainImage ? "main-image-card" : ""} ${this.props.selected ? "selected-image-card" : ""} image-card card`} onClick={this.props.onClick}>
-                    <img className="img-fluid" src={`/media?filename=${this.props.image.filename}`} />
+            <div className="col-lg-4 col-6">
+                <div className={`${isMainImage ? "main-image-card" : ""} ${this.props.selected ? "selected-image-card" : ""} image-card tile card`} onClick={this.props.onClick}>
+                    <img className="img-fluid object-fit-cover" src={`/media?filename=${this.props.image.filename}`} />
                     {label}
                 </div>                
             </div>
@@ -108,7 +120,7 @@ class NewImageCard extends Component {
     render() {
         return (
             <div className="col-lg-4 col-6 my-1">
-                <div id="new-image-card" className="new-image-card card" onClick={this.props.onClick}>
+                <div id="new-image-card" className="new-image-card tile card" onClick={this.props.onClick}>
                     <div>
                         <i className="far fa-plus-square fa-5x" />
                     </div>

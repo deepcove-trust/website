@@ -45,7 +45,7 @@ export default class EntryList extends Component {
     }
 
     render() {
-        let entries = this.props.entries || [];
+        let entries = this.props.entries || [];               
 
         let entryOptions = entries.map(entry => {
             return (
@@ -54,20 +54,6 @@ export default class EntryList extends Component {
         });
 
         entryOptions.unshift(<option key="0" value="0">-- Select an entry --</option>)
-
-        let entryCards = entries.map(entry => {
-            return (
-                <EntryCard key={entry.id}
-                    entryId={entry.id}
-                    entryName={entry.primaryName}
-                    selectedEntryId={this.props.selectedEntryId}
-                    setActive={this.props.onSelect.bind(this, entry.id)}
-                />
-            )
-        });
-
-        // Append the button to add a new category
-        //entryCards.push(<NewEntryCard key="0" onSave={this.getData.bind(this)} alert={this.Alert} />)
 
         let categoryName = !this.state.editMode ? (
             <Fragment>
@@ -95,7 +81,8 @@ export default class EntryList extends Component {
                 <div className="card">
                     <div className="text-center bground-primary">
                         {categoryName}
-                    </div>
+                    </div>                    
+
                     <div id="entry-dropdown" className={this.props.addEntryMode ? "d-none" : ""}>
 
                         {emptyCatWarning}

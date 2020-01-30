@@ -96,6 +96,13 @@ export default class CategoryDetails extends Component {
         });
     }
 
+    clearPreviewEntry() {
+        this.setState({
+            previewEntry: null,
+            selectedEntryId: 0
+        })
+    }
+
     render() {
 
         return (
@@ -125,6 +132,7 @@ export default class CategoryDetails extends Component {
                                 categoryId={this.state.category.id}
                                 entryId={this.state.selectedEntryId}
                                 addEntryMode={this.state.addEntryMode}
+                                previewEntry={this.state.previewEntry}
                             />
                         </div>
 
@@ -136,7 +144,7 @@ export default class CategoryDetails extends Component {
                     <div className="col-lg-5 py-1">
                         <div className="m-3 sticky-preview">
                             <PhonePreview>
-                                <FactFilePreview previewEntry={this.state.previewEntry} entries={this.state.category.entries} onEntrySelect={this.onEntrySelect.bind(this)} />
+                                <FactFilePreview previewEntry={this.state.previewEntry} entries={this.state.category.entries} onEntrySelect={this.onEntrySelect.bind(this)} onBack={this.clearPreviewEntry.bind(this)}/>
                             </PhonePreview>
                         </div>
                     </div>
@@ -164,10 +172,10 @@ class EntryDetails extends Component {
 
     constructor(props) {
         super(props);
-
+        console.log('constructor')
         this.state = {
             hasChanged: this.props.addEntryMode,
-            entry: this.emptyEntry()
+            entry: this.props.previewEntry || this.emptyEntry()
         }
     }
 
@@ -175,15 +183,15 @@ class EntryDetails extends Component {
         this.getData(this.props.entryId);
     }
 
-    componentDidUpdate(prevProps) {
-        if (prevProps != this.props) {
+    componentDidUpdate(prevProps) {        
+        if (prevProps != this.props && this.props.previewEntry == null) {
             this.getData();
             if (this.props.addEntryMode) {
                 this.setState({
                     hasChanged: true
                 })
             }
-            if (this.props.addEntryMode != prevProps.addEntryMode) {
+            if (this.props.addEntryMode != prevProps.addEntryMode) {                
                 this.setState({
                     entry: this.emptyEntry()
                 })

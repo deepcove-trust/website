@@ -131,10 +131,6 @@ h4.noticeboardSection {
 .image-card{
     cursor: pointer;
     background-color: $color-primary;
-
-    & img {
-        object-fit: contain;
-    }
     
     &:hover:not(.selected-image-card){
         border: 4px solid $color-primary-faded !important;
@@ -150,16 +146,16 @@ h4.noticeboardSection {
 }
 
 .new-image-card, .new-nugget-card, .new-audio-card {
+    cursor: pointer;
     height: 100%;
     color: $color-grey;
     padding-top: 20px;
     padding-bottom: 20px;
 
-    &:hover{
+    &:hover {
         color: white;
         background-color: $color-primary;
     }
-    
     /* Center the 'add new' icon */
     & > div {
         margin-left: auto;
@@ -171,7 +167,8 @@ h4.noticeboardSection {
 
         & > div {
             color: $color-primary;
-            &:hover{
+
+            &:hover {
                 color: white;
             }
         }

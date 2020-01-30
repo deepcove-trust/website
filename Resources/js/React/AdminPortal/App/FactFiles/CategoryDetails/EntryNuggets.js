@@ -1,6 +1,7 @@
 ﻿import React, { Component, Fragment } from 'react';
 
 import { FormGroup, Input, TextArea } from '../../../../Components/FormControl';
+import SelectMedia from '../../../../CMS-Blocks/SelectMedia';
 import { Button } from '../../../../Components/Button';
 
 export default class EntryNuggets extends Component {
@@ -79,8 +80,31 @@ export default class EntryNuggets extends Component {
     }
 }
 
-class NuggetCard extends Component {
-    render() {
+class NuggetCard extends Component {    
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            showModal: false
+        }
+    }
+
+    setModalVisibility(showModal) {
+        this.setState({
+            showModal
+        });
+    }
+
+    onImageSelect(imageData) {
+        let image = {
+            id: imageData.id,
+            filename: imageData.filename
+        }
+        this.props.onUpdate("image", image);
+    }
+
+    render() {        
 
         let nuggetImage = this.props.nugget.image.filename
             ? <img className="img-fluid bg-dark p-2" alt="No Image" src={`/media?filename=${this.props.nugget.image.filename}`} />
@@ -95,7 +119,7 @@ class NuggetCard extends Component {
             <div id={`nugget-${this.props.i}-card`} className="card p-2 mt-2 position-relative">
                 <div className="row">                    
                     <div className="col-4">
-                        <div className="nugget-image">
+                        <div className="nugget-image" onClick={this.setModalVisibility.bind(this, true)}>
                             {nuggetImage}
                             <p>Edit</p>
                         </div>
@@ -109,6 +133,14 @@ class NuggetCard extends Component {
                         </FormGroup>
                     </div>
                     {nuggetControls}
+
+                    <SelectMedia type="Image"
+                        showModal={this.state.showModal}
+                        cb={(imageData) => this.onImageSelect(imageData)}
+                        handleHideModal={() => {
+                            this.setModalVisibility(false)
+                        }}
+                    />
                 </div>
             </div>
             )
