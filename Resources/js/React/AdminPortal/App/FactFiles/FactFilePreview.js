@@ -44,7 +44,7 @@ class EntryCard extends Component {
     render() {
 
         let disabledFlag = !this.props.active ? (
-            <div className="warning-stripes">
+            <div className="warning-stripes mt-2">
                 <p>Disabled</p>
             </div>
         ) : null;
@@ -70,7 +70,7 @@ class FactFileEntryPreview extends Component {
 
         let bodyParagraphs = this.props.entry.bodyText.split('\n').map((p, index) => { return <p key={index} className="text-left mx-2">{p}</p> });
 
-        let disabledFlag = !this.props.active ? (
+        let disabledFlag = !this.props.entry.active ? (
             <div className="warning-stripes">
                 <p>Disabled</p>
             </div>

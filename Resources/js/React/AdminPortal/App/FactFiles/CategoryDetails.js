@@ -184,7 +184,7 @@ class EntryDetails extends Component {
     }
 
     componentDidUpdate(prevProps) {        
-        if (prevProps != this.props && this.props.previewEntry == null) {
+        if (prevProps != this.props && (this.props.previewEntry == null || this.props.entryId != prevProps.entryId)) {
             this.getData();
             if (this.props.addEntryMode) {
                 this.setState({
