@@ -19,9 +19,9 @@ export default class Editor extends Component {
             active: true
         };
 
-        this.options = [{ label: 'Discover Deep Cove', value: 'App' }, { label: 'Website', value: 'Web' }];
+        this.options = [{ label: 'Discover Deep Cove', value: 'app' }, { label: 'Website', value: 'web' }];
     }
-
+    
     componentWillReceiveProps(prevProps) {
         if (prevProps.selected.id != this.state.id) return;
         this.setState(this.props.selected);
@@ -41,14 +41,14 @@ export default class Editor extends Component {
         };
 
         // No board selected
-        if (noticeboard.length <= 0) {
+        if (noticeboard == null || noticeboard.length <= 0) {
             this.props.alert.error("You must select one or more noticeboards");
             return;
         }
 
         // Get the enum for noticeboard
         // { all = 0, app = 1, web = 2}
-        notice.noticeboard = noticeboard.length == 2 ? "all" : this.getOptionVal(noticeboard[0]).value.toLowerCase();
+        notice.noticeboard = noticeboard.length == 2 ? "all" : this.getOptionVal(noticeboard[0]).value;
 
         this.props.cb_submit(id, notice);
     }
@@ -61,7 +61,7 @@ export default class Editor extends Component {
 
     // TODO: Find a cleaner way around this 
     getOptionVal(x) {
-        if (Array.isArray(x)) return x;
+        if (typeof x != "string") return x;
 
         if (x == "all") return this.options;
 
