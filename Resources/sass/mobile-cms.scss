@@ -101,7 +101,7 @@ h4.noticeboardSection {
     -webkit-transition: max-height ease-in 0.5s, padding linear 0.5s;
     max-height: 0px;
     z-index: 9999;
-    background-color: $color-primary;
+    background: linear-gradient(#1F4863, $color-primary 20px, #1F4863 40px);
     width: 100vw;
     position: fixed;
     left: 0px;
