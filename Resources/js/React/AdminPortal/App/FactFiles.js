@@ -17,6 +17,12 @@ export default class FactFiles extends Component {
         };
     }
 
+    // This is required for the component to pass down its this.Alert object
+    // correctly (this.Alert is undefined until the component has mounted).
+    componentDidMount() {
+        this.setState({})
+    }
+
     // User selects a category from the category list
     onCategorySelect(selectedCategoryId) {
         this.setState({
@@ -24,15 +30,8 @@ export default class FactFiles extends Component {
         });
     }
 
-    // User saves or updates new category. ID is 0 for new category
-    onCategorySave(category) {
-
-        // Make http request to save / update
-
-    }
-
     // User clicks 'back' to return to index view
-    onBack() {
+    clearSelection() {
         this.setState({
             selectedCategoryId: null
         })
@@ -42,16 +41,18 @@ export default class FactFiles extends Component {
         let content;
 
         if (this.state.selectedCategoryId) {
-            content = <CategoryDetails categoryId={this.state.selectedCategoryId} onBack={this.onBack.bind(this)} />
+            content = <CategoryDetails categoryId={this.state.selectedCategoryId} clearSelection={this.clearSelection.bind(this)} alert={this.Alert} />
         } else {
-            content = <CategoryIndex onSelection={this.onCategorySelect.bind(this)} onSave={this.onCategorySave.bind(this)} />
+            content = <CategoryIndex onSelection={this.onCategorySelect.bind(this)} alert={this.Alert} />
         }
 
         return (
-            <div>
-                <h1 className="text-center my-5">Fact File Management</h1>
-                {content}
-            </div>
+            <Alert onRef={ref => this.Alert = ref}>
+                <div>
+                    <h1 className="text-center my-5">Fact File Management</h1>
+                    {content}
+                </div>
+            </Alert>
         );
     }
 }

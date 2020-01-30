@@ -33,7 +33,7 @@ export default class CategoryIndex extends Component {
                 categories: data
             });
         }).fail((err) => {
-            console.log(err);
+            this.props.alert.err(null, err.responseText);
         });
     }    
 
@@ -42,21 +42,19 @@ export default class CategoryIndex extends Component {
         let categories = this.state.categories || [];
 
         let categoryCards = categories.map(cat => {
-            return <CategoryCard key={cat.id} categoryId={cat.id} categoryName={cat.name} entryCount={cat.entryCount} cb={this.props.onSelection.bind(this)} />
+            return <CategoryCard key={cat.id} categoryId={cat.id} categoryName={cat.name} entryCount={cat.entryCount} activeCount={cat.activeCount} cb={this.props.onSelection.bind(this)} />
         });
 
         // Append the button to add a new category
-        categoryCards.push(<NewCategoryCard key="0" onSave={this.getData.bind(this)} alert={this.Alert}/>)
+        categoryCards.push(<NewCategoryCard key="0" onSave={this.getData.bind(this)} alert={this.props.alert} />)
 
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <div className="card px-0 col-lg-4 col-md-6 mx-auto my-5">
-                    <h3 className="text-center pt-3 pb-2 bground-primary text-white">Select Category</h3>
-                    <div>
-                        {categoryCards}
-                    </div>
+            <div className="card px-0 col-lg-4 col-md-6 mx-auto my-5">
+                <h3 className="text-center pt-3 pb-2 bground-primary text-white">Select Category</h3>
+                <div>
+                    {categoryCards}
                 </div>
-            </Alert>
+            </div>
         )
     }
 }
@@ -69,7 +67,10 @@ class CategoryCard extends Component {
                     <h5>{this.props.categoryName}</h5>
                 </div>
                 <div className="col-5">
-                    <p className="d-inline">{this.props.entryCount} entries</p>
+                    <div className="vertically-center">
+                        <span className="d-block">{this.props.entryCount} entries</span>
+                        <small>{`(${this.props.activeCount} active)`}</small>
+                    </div>
                 </div>
             </div>
         )

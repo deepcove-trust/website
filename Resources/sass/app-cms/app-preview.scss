@@ -1,0 +1,93 @@
+﻿/*
+    This file contains styling rules for the mobile app preview component
+*/
+
+$color-dark: #2A292A;
+
+// General styling
+
+.tile-title-dark {
+    position: absolute;
+    bottom: 0px;
+    color: white;
+    width: calc(100% - 1.0rem);
+    background-color: rgba(0,0,0,0.7);
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.tile-shadow{
+    box-shadow: rgba(0,0,0,0.4) 3px 3px 3px !important;
+}
+
+.nav-bar{
+    height: 60px;
+    width: 100%;
+    background-color: $color-dark;
+    position: absolute;
+    bottom: 0px;
+}
+
+.back-button-bar{
+
+}
+
+.preview-body{
+    margin: 0px;
+    max-height: calc(100% - 100px);
+    overflow-y: auto;
+    
+    & .col-6 {
+        padding: 0px;
+    }
+
+    // Hide scrollbar 
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+
+    -ms-overflow-style: none;
+}
+
+.object-fit-cover{
+    object-fit: cover;
+}
+
+// Fact File Index
+
+.tab-bar {
+    width: 100%;
+    height: 40px;
+    background-color: $color-dark;
+}
+
+#galleryCarousel img{
+    object-fit: cover;
+}
+
+.custom-carousel-indicators {
+    width: 100%;
+    margin: 0px;
+    height: 50px;
+    background-color: rgba(0,0,0,0.7);
+    padding-top: 9px;
+
+    & li {
+        position: relative;
+        transition: height ease-in 0.3s, width ease-in 0.3s, top ease-in 0.3s;
+        margin-left: 5px;
+        margin-right: 5px;
+        top: 3px;
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+
+        &.active {
+            top: 0px;
+            height: 15px;
+            width: 15px;
+        }
+    }
+}

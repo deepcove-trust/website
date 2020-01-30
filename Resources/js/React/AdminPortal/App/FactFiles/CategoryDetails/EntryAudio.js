@@ -68,7 +68,7 @@ class AudioCard extends Component {
                     <span>{this.props.file.name}</span>
                     <Button className="btn btn-gray d-inline-block" cb={this.props.onRemove.bind(this)}><i className="fas fa-times"></i></Button>
                 </div>
-                <AudioControls className="mx-auto" file={this.props.file} />
+                <AudioControls className="mx-auto w-100" file={this.props.file} />
             </Fragment>
         )
 

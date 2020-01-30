@@ -117,9 +117,14 @@ h4.noticeboardSection {
     background-color: $color-primary-faded;
 
     & select {
-        width: 90% !important;
+        display: inline-block !important;
+        width: calc(100% - 125px);
         height: 50px !important;
-        margin: 5% !important;
+        margin: 15px !important;
+    }    
+
+    & button {
+        height: 50px !important;
     }
 }
 
@@ -213,12 +218,11 @@ label.list-card h5, label.list-card p {
         -webkit-transition: background-color ease-in 0.1s, color ease-in 0.1s;
     }
 
-    & p {
+    & small, span {
         color: #AEAEAE;
-        @extend .vertically-center;
     }
 
-    &:hover p {
+    &:hover small, &:hover span {
         color: #fff;
     }
 
@@ -302,4 +306,9 @@ label.list-card h5, label.list-card p {
     position: absolute;
     top: 0px;
     right: 5px;
+}
+
+.sticky-preview{
+    position: sticky;
+    top: calc(50vh - 340px);
 }

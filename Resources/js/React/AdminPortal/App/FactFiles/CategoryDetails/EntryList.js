@@ -2,14 +2,54 @@
 import $ from 'jquery';
 
 import { FormGroup, Input, TextArea, Select } from '../../../../Components/FormControl';
+import { Button, ConfirmModal } from '../../../../Components/Button';
 
 export default class EntryList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            editMode: false,
+            categoryName: this.props.categoryName
+        }
+    }
+
+    componentWillReceiveProps(newProps) {
+        if (newProps != this.props) {
+            this.setState({
+                categoryName: newProps.categoryName
+            })
+        }
+    }
+
+    updateName(categoryName) {
+        this.setState({
+            categoryName,
+            editMode: true
+        })
+    }
+
+    saveName() {
+        this.props.onNameEdit(this.state.categoryName);
+        this.setState({
+            editMode: false
+        });
+    }
+
+    resetName() {
+        this.setState({
+            editMode: false,
+            categoryName: this.props.categoryName
+        });
+    }
+
     render() {
         let entries = this.props.entries || [];
 
         let entryOptions = entries.map(entry => {
             return (
-                <option key={entry.id} value={entry.id}>{entry.primaryName}</option>
+                <option key={entry.id} value={entry.id}>{entry.primaryName} {entry.active ? "" : "(disabled)"}</option>
             );
         });
 
@@ -29,24 +69,48 @@ export default class EntryList extends Component {
         // Append the button to add a new category
         //entryCards.push(<NewEntryCard key="0" onSave={this.getData.bind(this)} alert={this.Alert} />)
 
+        let categoryName = !this.state.editMode ? (
+            <Fragment>
+                <h3 className="pt-3 pb-2 mb-0 d-inline-block text-white">{this.state.categoryName}</h3>
+                <Button className="btn text-white" cb={() => this.setState({ editMode: true })}><i className="fas fa-edit"></i></Button>
+                <ConfirmModal className="btn btn-dark float-right m-2" cb={this.props.onDeleteCategory.bind(this)} confirmPhrase={this.state.categoryName} question="Delete this category and all associated entries">
+                    <i className="fas fa-trash"></i>&nbsp; Delete Category
+                </ConfirmModal>
+            </Fragment>
+        )
+            : (
+                <Fragment>
+                    <Input inputClass="form-control d-inline-block m-2 w-50" type="text" value={this.state.categoryName} cb={this.updateName.bind(this)} />
+                    <Button className="btn btn-danger" cb={this.resetName.bind(this)}><i className="fas fa-times"></i></Button>
+                    <Button className="btn btn-success" cb={this.saveName.bind(this)}><i className="fas fa-check"></i></Button>
+                </Fragment>
+            )
+
+
+        let hasNoActiveEntries =  !this.props.entries.some(entry => entry.active);
+        let emptyCatWarning = this.state.categoryName != 'Loading' && hasNoActiveEntries ? <p className="text-danger text-center mt-3 mx-2">There are no active entries associated with this category. The category will not appear in the app.</p> : null;
+
         return (
-            <div className="card">
-                <h3 className="text-center pt-3 pb-2 mb-0 bground-primary text-white">{this.props.categoryName}</h3>
-                <div id="entry-dropdown">
-                    <Select
-                        formattedOptions={entryOptions}
-                        selected={this.props.selectedEntryId}
-                        cb={this.props.onSelect.bind(this)}
-                    />
+            <Fragment>
+                <div className="card">
+                    <div className="text-center bground-primary">
+                        {categoryName}
+                    </div>
+                    <div id="entry-dropdown" className={this.props.addEntryMode ? "d-none" : ""}>
+
+                        {emptyCatWarning}
+
+                        <Select
+                            formattedOptions={entryOptions}
+                            selected={this.props.selectedEntryId}
+                            cb={this.props.onSelect.bind(this)}
+                        />
+
+                        <Button className="btn btn-success" cb={this.props.onAddEntry.bind(this)}>Add &nbsp; <i className="fas fa-plus"></i></Button>
+                    </div>
                 </div>
-                {
-                    //<div className="show-large">
-                    //    <div id="entries">
-                    //        {entryCards}
-                    //    </div>
-                    //</div>
-                }
-            </div>
+                <h2 className={`text-center my-4 ${this.props.addEntryMode ? "" : "d-none"}`}>Add New Entry</h2>
+            </Fragment>
         )
     }
 }
@@ -64,13 +128,4 @@ class EntryCard extends Component {
             </label>
         )
     }
-
-}
-
-class NewEntryCard extends Component {
-
-    render() {
-        <div>New entry card</div>
-    }
-
 }

@@ -31,6 +31,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         public AudioMedia PronounceAudio { get; set; }
         public List<FactFileEntryImage> FactFileEntryImages { get; set; }
         public List<FactFileNugget> FactFileNuggets { get; set; }
+        public List<Activity> Activities { get; set; }
         // End Navigation Properties
     }
 }
