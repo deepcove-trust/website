@@ -3,17 +3,18 @@ import PhonePreview from '../../Components/PhonePreview';
 import NoticeboardSection from './NoticeboardSection';
 import { NoticeCard, NoticeSummary } from './Notice';
 import { Button } from '../../Components/Button';
+import Card, { CardBody, CardHighlight } from '../../Components/Card';
 
 export default class NoticesOverview extends Component {
     render() {
         const { important, normal, disabled } = this.props;
 
         let important_notices = important.map((notice, key) => {
-            return <NoticeCard notice={notice} key={key} important />
+            return <NoticeCard notice={notice} key={key} cb_edit={this.props.cb_edit} important />
         });
 
         let normal_notices = normal.map((notice, key) => {
-            return <NoticeCard notice={notice} key={key} />
+            return <NoticeCard notice={notice} key={key} cb_edit={this.props.cb_edit} />
         });
 
         let list_important = important.map((notice, key) => {
@@ -31,13 +32,21 @@ export default class NoticesOverview extends Component {
         return (
             <Fragment>
                 <div className="col-md-8 col-sm-12">
-                    <Button className="btn btn-dark ml-auto mr-0 d-block mb-3" cb={this.props.cb_edit.bind(this, 1, null)}>
-                        New Notice <i className="fas fa-plus" />
-                    </Button>
+                    <Card>
+                        <CardHighlight>
+                            <h3 className="pt-3 pb-2 mb-0 d-inline-block">Current Notices</h3>
 
-                    {list_important}
-                    {list_normal}
-                    {list_disabled}
+                            <Button className="btn btn-dark float-right m-2" cb={this.props.cb_edit.bind(this, 1, null)}>
+                                New Notice <i className="fas fa-plus" />
+                            </Button>
+                        </CardHighlight>
+
+                        <CardBody>
+                            {list_important}
+                            {list_normal}
+                            {list_disabled}
+                        </CardBody>
+                    </Card>
                 </div>
 
                 <div className="col-md-4 col-sm-12">
@@ -46,7 +55,7 @@ export default class NoticesOverview extends Component {
                             {important_notices}
                         </NoticeboardSection>
 
-                        <NoticeboardSection title="Other Notices">
+                        <NoticeboardSection title="General Notices">
                             {normal_notices}
                         </NoticeboardSection>
 

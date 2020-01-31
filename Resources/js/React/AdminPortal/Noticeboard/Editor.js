@@ -3,7 +3,9 @@ import PhonePreview from '../../Components/PhonePreview';
 import NoticeboardSection from './NoticeboardSection';
 import { Button, ConfirmButton } from '../../Components/Button';
 import { FormGroup, Input, TextArea, Checkbox } from '../../Components/FormControl';
+import Card, { CardHighlight, CardBody } from '../../Components/Card';
 import Rselect from 'react-select';
+
 
 export default class Editor extends Component {
     constructor(props) {
@@ -70,43 +72,53 @@ export default class Editor extends Component {
 
         return (
             <Fragment>
-                <form className="col-md-8 col-sm-12" onSubmit={this.handleSubmit.bind(this)}>
-                    <FormGroup label="Title:" htmlFor="notice:title" required>
-                        <Input id="notice:title" type="text" value={this.state.title} cb={this.updateVal.bind(this, 'title')} required/>
-                    </FormGroup>
+                <div className="col-md-8 col-sm-12">
+                    <Card>
+                        <CardHighlight>
+                            <h3 className="pt-3 pb-2 mb-0">Notice Editor</h3>
+                        </CardHighlight>
 
-                    <FormGroup label="Message:" htmlFor="notice:message" required>
-                        <TextArea id="notice:message" value={this.state.long_desc} cb={this.updateVal.bind(this, 'long_desc')} maxLength="1000" rows="7" required/>
-                    </FormGroup>
+                        <CardBody>
+                            <form onSubmit={this.handleSubmit.bind(this)}>
+                                <FormGroup label="Title:" htmlFor="notice:title" required>
+                                    <Input id="notice:title" type="text" value={this.state.title} cb={this.updateVal.bind(this, 'title')} required/>
+                                </FormGroup>
 
-                    <FormGroup label="Noticeboard:" htmlFor="notice:board" required>
-                        <Rselect options={this.options} value={this.getRSelectValue(this.state.noticeboard)} onChange={this.updateNoticeboard.bind(this)} isMulti required />
-                    </FormGroup>
+                                <FormGroup label="Message:" htmlFor="notice:message" required>
+                                    <TextArea id="notice:message" value={this.state.long_desc} cb={this.updateVal.bind(this, 'long_desc')} maxLength="1000" rows="7" required/>
+                                </FormGroup>
 
-                    <FormGroup label="Urgent:" htmlFor="notice:urgent">
-                        <Checkbox id="notice:urgent" checked={this.state.urgent == 1} cb={this.updateVal.bind(this, 'urgent')}>
-                            <small className="text-danger font-weight-bold">Warning: This option may send an alert to app users phone</small>
-                        </Checkbox>
-                    </FormGroup>
+                                <FormGroup label="Noticeboard:" htmlFor="notice:board" required>
+                                    <Rselect options={this.options} value={this.getRSelectValue(this.state.noticeboard)} onChange={this.updateNoticeboard.bind(this)} isMulti required />
+                                </FormGroup>
 
-                    <FormGroup label="Active:" htmlFor="notice:active">
-                        <Checkbox id="notice:active" checked={this.state.active == 1} cb={this.updateVal.bind(this, 'active')}>
-                            <small className="font-weight-bold">Inactive notices will be hidden from users</small>
-                        </Checkbox>
-                    </FormGroup>
+                                <FormGroup label="Urgent:" htmlFor="notice:urgent">
+                                    <Checkbox id="notice:urgent" checked={this.state.urgent == 1} cb={this.updateVal.bind(this, 'urgent')}>
+                                        <small className="text-danger font-weight-bold">Warning: This option may send an alert to app users phone</small>
+                                    </Checkbox>
+                                </FormGroup>
 
-                    {delete_btn}
+                                <FormGroup label="Active:" htmlFor="notice:active">
+                                    <Checkbox id="notice:active" checked={this.state.active == 1} cb={this.updateVal.bind(this, 'active')}>
+                                        <small className="font-weight-bold">Inactive notices will be hidden from users</small>
+                                    </Checkbox>
+                                </FormGroup>
 
-                    <div className="float-right">
-                        <Button className="btn btn-dark" cb={this.props.cb_edit.bind(this, 0, {})}>
-                            Back <i className="fas fa-undo" />
-                        </Button>
+                                {delete_btn}
 
-                        <Button className="btn btn-success border-dark" type="submit">
-                            Save <i className="fas fa-check" />
-                        </Button>
-                    </div>
-                </form>
+                                <div className="float-right">
+                                    <Button className="btn btn-dark" cb={this.props.cb_edit.bind(this, 0, {})}>
+                                        Back <i className="fas fa-undo" />
+                                    </Button>
+
+                                    <Button className="btn btn-success border-dark" type="submit">
+                                        Save <i className="fas fa-check" />
+                                    </Button>
+                                </div>
+                            </form>
+                        </CardBody>
+                    </Card>
+                </div>
 
                 <div className="col-md-4 col-sm-12">
                     <PhonePreview>
