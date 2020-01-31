@@ -121,8 +121,12 @@ namespace Deepcove_Trust_Website.Models
 
             // End Mobile App Checks -----------------------------------------------
 
-            // Media components
-            // Todo : Bit trickier with revisions...
+            // Media components - we only care about the latest revisions
+            List<PageRevision> currentRevisions = db.Pages.Include(p => p.PageRevisions).ThenInclude(r => r.RevisionMediaComponents)
+                .ThenInclude(rmc => rmc.MediaComponent).ThenInclude(mc => mc.ImageMedia).Select(p => p.GetRevision(null)).ToList();
+            HashSet<string> pages = currentRevisions.Where(r => r.RevisionMediaComponents.Any(mc => mc.MediaComponent.ImageMediaId == Id)).Select(r => r.Page.Name).ToHashSet();
+            if (pages.Count > 0)
+                usages.Add("Pages", pages);
 
             // Button links
             // Todo: Also a bit tricky since these aren't linked in the database, only via HREF properties
