@@ -31,7 +31,7 @@ export default class NoticesOverview extends Component {
 
         return (
             <Fragment>
-                <div className="col-md-8 col-sm-12">
+                <div className="col-md-7 col-sm-12">
                     <Card>
                         <CardHighlight>
                             <h3 className="pt-3 pb-2 mb-0 d-inline-block">Current Notices</h3>
@@ -49,17 +49,22 @@ export default class NoticesOverview extends Component {
                     </Card>
                 </div>
 
-                <div className="col-md-4 col-sm-12">
-                    <PhonePreview>
-                        <NoticeboardSection title="Important Notices">
-                            {important_notices}
-                        </NoticeboardSection>
+                <div className="col-md-5 col-sm-12">
+                    <PhonePreview sticky>
+                        <div className="h-100">
+                            <div className="preview-body with-back-button">
+                                <div>
+                                    <NoticeboardSection title="Important Notices">
+                                        {important_notices}
+                                    </NoticeboardSection>
 
-                        <NoticeboardSection title="General Notices">
-                            {normal_notices}
-                        </NoticeboardSection>
-
-                        <NoticeboardSection title="Back" />
+                                    <NoticeboardSection title="General Notices">
+                                        {normal_notices}
+                                    </NoticeboardSection>
+                                </div>
+                            </div>
+                            <div className="back-button-bar">Back</div>
+                        </div>
                     </PhonePreview>
                 </div>
             </Fragment>

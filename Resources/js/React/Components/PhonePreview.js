@@ -7,25 +7,31 @@ export default class PhonePreview extends Component {
      * Both devices are portrait unless you specify 'landscape'
      * */
     render() {
-        return this.props.tablet ? (
+        let device = this.props.tablet ? (
             <div className={`marvel-device ipad ${this.props.silver ? 'silver' : 'black'} ${this.props.landscape ? 'landscape' : ''}`}>
-                <div className="camera"/>
+                <div className="camera" />
                 <div className="screen">
                     {this.props.children}
                 </div>
             </div>
         ) : (
             <div className={`marvel-device s5 ${this.props.white ? 'white' : 'black'} ${this.props.landscape ? 'landscape' : ''}`}>
-                <div className="top-bar"/>
-                <div className="sleep"/>
-                <div className="camera"/>
-                <div className="sensor"/>
-                <div className="speaker"/>
+                <div className="top-bar" />
+                <div className="sleep" />
+                <div className="camera" />
+                <div className="sensor" />
+                <div className="speaker" />
                 <div className="screen">
                     {this.props.children}
                 </div>
-                <div className="home"/>
+                <div className="home" />
             </div>
-        );           
+        );
+
+        return (
+            <div className={!!this.props.sticky ? 'm-3 sticky-preview' : null}>
+                {device}
+            </div>
+        )
     }
 }

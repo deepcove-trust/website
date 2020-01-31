@@ -14,7 +14,7 @@ export class NoticeCard extends Component {
         const { notice, important } = this.props;
 
         return (
-            <div className={`${this.getClassNames(important)} pointer`} onClick={this.props.cb_edit.bind(this, 1, this.props.notice)}>
+            <div className={`text-left ${this.getClassNames(important)} pointer`} onClick={this.props.cb_edit.bind(this, 1, this.props.notice)}>
                 <h4>{notice.title}</h4>
                 <small>{this.getReadableDate(notice.updated_at)}</small>
                 <p>{notice.short_desc}</p>
