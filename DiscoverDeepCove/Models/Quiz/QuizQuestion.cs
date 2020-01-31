@@ -8,6 +8,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
     public class QuizQuestion
     {
         public int Id { get; set; }
+        public int OrderIndex { get; set; }
         public int? CorrectAnswerId { get; set; }
         public int? ImageId { get; set; }
         public int? AudioId { get; set; }
