@@ -21,7 +21,7 @@ export default class Editor extends Component {
 
         this.options = [{ label: 'Discover Deep Cove', value: 'app' }, { label: 'Website', value: 'web' }];
     }
-    
+
     componentWillReceiveProps(prevProps) {
         if (prevProps.selected.id != this.state.id) return;
         this.setState(this.props.selected);
@@ -46,10 +46,11 @@ export default class Editor extends Component {
             return;
         }
 
-        // Get the enum for noticeboard
-        // { all = 0, app = 1, web = 2}
-        notice.noticeboard = noticeboard.length == 2 ? "all" : this.getOptionVal(noticeboard[0]).value;
-
+        // Get the enum (string) for noticeboard
+        // 'noticeboard' can be either a string (if user hasn't modified)
+        // or an array with 1 or 2 elements(if user has modified)
+        notice.noticeboard = this.getNoticeboardString(noticeboard);
+        
         this.props.cb_submit(id, notice);
     }
 
@@ -57,15 +58,18 @@ export default class Editor extends Component {
         this.setState({
             [key]: val
         });
+    }    
+
+    getNoticeboardString(x) {
+        if (typeof x == "string") return x;
+        if (x.length == 2) return "all";
+        return x[0].value;
     }
 
-    // TODO: Find a cleaner way around this 
-    getOptionVal(x) {
+    getRSelectValue(x) {
         if (typeof x != "string") return x;
-
         if (x == "all") return this.options;
-
-        return x == "app" ? this.options[0] : this.options[1]; 
+        return x == "app" ? this.options[0] : this.options[1]
     }
 
     render() {
@@ -87,7 +91,7 @@ export default class Editor extends Component {
                     </FormGroup>
 
                     <FormGroup label="Noticeboard:" htmlFor="notice:board" required>
-                        <Rselect options={this.options} value={this.getOptionVal(this.state.noticeboard)} onChange={this.updateVal.bind(this, 'noticeboard')} isMulti required />
+                        <Rselect options={this.options} value={this.getRSelectValue(this.state.noticeboard)} onChange={this.updateVal.bind(this, 'noticeboard')} isMulti required />
                     </FormGroup>
 
                     <FormGroup label="Urgent:" htmlFor="notice:urgent">
