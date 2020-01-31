@@ -16,6 +16,7 @@ using NReco.VideoInfo;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using System.Runtime.InteropServices;
+using static Deepcove_Trust_Website.Helpers.Utils;
 
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
@@ -55,6 +56,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 media.MediaType,
                 media.Name,
                 media.Filename,
+                Dimensions = (!(media is ImageMedia)) ? null : new { 
+                    height = ((ImageMedia)media).Height,
+                    width = ((ImageMedia)media).Width
+                },
                 Alt = media is ImageMedia ? ((ImageMedia)media).Alt : null
              }).ToListAsync());
         }
@@ -86,7 +91,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     title = imageFile?.Title,
                     alt = imageFile?.Alt,
                     duration = audioFile?.Duration,
-                    tags = mediaFile.Tags()
+                    tags = mediaFile.Tags(),
+                    usages = mediaFile.GetUsages(_Db)
                 });
 
             }
@@ -220,7 +226,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
             {
                 _Logger.LogError("Error uploading file: {0}", ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("Something went wrong, please try again later.");                
+                return BadRequest(new ResponseHelper("Something went wrong, please contact the devloper if the problem persists", ex.Message));                
             }
         }
 
@@ -282,12 +288,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
                 // Todo: Check whether the media file is being used in the website or app
                 // and prevent deletion if so.
-                Dictionary<string, HashSet<int>> usages = media.GetUsages(_Db);
+                Dictionary<string, HashSet<string>> usages = media.GetUsages(_Db);
 
                 // If the usages dictionary has keys, file is used
                 if(usages.Count > 0)
                 {
-                    return new StatusCodeResult(406);   // Not Acceptable Status Code                 
+                    return BadRequest(new ResponseHelper("This file cannot be deleted as it is in use. Remove usages and try again."));
                 }
 
                 // Otherwise, we can go ahead and delete

@@ -48,7 +48,7 @@ export class Checkbox extends Component {
                     htmlFor={id}
                     data-tip={this.props.tooltip || null}
                 >
-                    {this.props.label}
+                    {this.props.label || this.props.children}
                 </label>
             </div>
         )
@@ -219,6 +219,10 @@ export class Select extends Component {
             });
         }
 
+        if (this.props.formattedOptions) {
+            selectOptions = this.props.formattedOptions;
+        }
+
         return (
             <select id={this.props.id || null}
                 className={this.props.inputClass || "form-control"}
@@ -297,7 +301,7 @@ export class TextArea extends Component {
                     value={this.state.value || ""}
                     placeholder={this.props.placeHolder || null}
                     autoComplete={this.getAutoComplete()}
-                    rows={this.props.rows || false}
+                    rows={this.props.rows || undefined}
                     disabled={!!this.props.disabled}
                     readOnly={!!this.props.readOnly}
                     required={!!this.props.required}

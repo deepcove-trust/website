@@ -16,9 +16,9 @@
   "author": "Samuel Grant",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ssm-deepcove/deepcove-website/issues"
+    "url": "https://github.com/ssm-deepcove/website/issues"
   },
-  "homepage": "https://github.com/ssm-deepcove/deepcove-website#readme",
+  "homepage": "https://github.com/ssm-deepcove/website#readme",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -54,6 +54,8 @@
     "react-select": "^3.0.8",
     "react-select-v2": "^2.4.2",
     "react-toastify": "^5.4.1",
-    "react-tooltip": "^3.10.0"
-  }
+    "react-tooltip": "^3.10.0",
+    "superagent": "^5.2.1"
+  },
+  "keywords": []
 }

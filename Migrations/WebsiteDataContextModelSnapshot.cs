@@ -448,8 +448,6 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<int>("Noticeboard");
 
-                    b.Property<string>("ShortDesc");
-
                     b.Property<string>("Title");
 
                     b.Property<DateTime>("UpdatedAt");

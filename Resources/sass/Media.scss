@@ -36,8 +36,42 @@
 }
 
 .gallery-img {
-    height: 280px;
-    object-fit: cover;
+    object-fit: contain;
+}
+
+.gallery-delete-container{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.file-type-container{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: white;
+}
+
+.media-gallery-card {
+    cursor: pointer;
+
+    background-color: #262626;
+    
+    & .card-body {
+        background-color: #628893;
+        color: white;
+    }
+
+    &:hover {
+        & .card-body {
+            background-color: white;
+            color: black;
+        }
+    }
+
+    & audio {
+        max-width: 80%;
+    }
 }
 
 audio.overImg {
@@ -45,7 +79,8 @@ audio.overImg {
     height: 25px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -25px;
+    margin-top: -35px;
+    margin-bottom: 10px;
 }
 
 .gallery-block .heading {
@@ -101,23 +136,20 @@ audio.overImg {
     }
 }
 
-/* Detials Page
+/* Details Page
 -------------------------------------------------- */
-.detials-container {
+.details-container {
     position: relative;
+    text-align: center;
 }
 
-.detials-container > img {
-    position: absolute;
-    height: 100%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+.details-container > img {
+    height: auto;
+    width: 100%;
+    background-color: #262626;
 }
 
-.detials-container > audio {
+.details-container > audio {
     position: absolute;
     bottom: 0;
     margin-left: auto;
@@ -125,4 +157,12 @@ audio.overImg {
     left: 0;
     right: 0;
     height: 30px;
+}
+
+/* Select Media
+-----------------------------------------------*/
+div.selected img {
+    border: green;
+    border-style: solid;
+    border-width: thick;
 }

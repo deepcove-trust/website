@@ -2,6 +2,7 @@
 import FileProperties from './FileProperties';
 import MetaButtons from './MetaButtons';
 import FileDetails from './FileDetails';
+import FileUsages from './FileUsages';
 
 import $ from 'jquery';
 import _ from 'lodash';
@@ -57,9 +58,10 @@ export default class MetaData extends Component {
                     alt: file.alt
                 }
             }).done(() => {
+                this.props.alert.success("Changes saved!")
                 this.getData();
             }).fail((err) => {
-                console.error(`[Metadata@submitChanges] Error saving changes to the file: `, err.responseText);
+                this.props.alert.error(null, err.responseText)
             })
         })
     }
@@ -91,7 +93,12 @@ export default class MetaData extends Component {
                     />
                 </div>
 
+                <div className="py-3">
+                    <FileUsages usages={this.state.file.usages} />
+                </div>
+
                 <MetaButtons edit={this.state.edit}
+                    alert={this.props.alert}
                     fileId={this.state.file.id}
                     pending={this.state.pending}
                     setEdit={(edit) => this.setState({ edit })}

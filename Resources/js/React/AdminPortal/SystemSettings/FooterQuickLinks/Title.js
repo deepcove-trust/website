@@ -36,9 +36,10 @@ export default class Title extends Component {
                 title: this.state.value
             }
         }).done(() => {
+            this.props.alert.success("Section title updated!")
             this.props.u()
         }).fail((err) => {
-            console.error(err);
+            this.props.alert.erorr(null, err.responseText)
         });
     }
 

@@ -2,6 +2,7 @@
 import Modal from '../Components/Modal';
 import { Input } from '../Components/FormControl';
 import { Button } from '../Components/Button';
+import InfiniteScroll from '../Components/InfiniteScroll';
 import $ from 'jquery';
 
 export default class SelectMedia extends Component {
@@ -57,14 +58,17 @@ export default class SelectMedia extends Component {
         if (!this.props.showModal) return <div />
 
         let items = this.state.data.map((media, key) => {
-            if (!this.Filter(media)) return null;
-
-            return (
-                <div className="col-lg-4 col-6" key={key}>
-                    <Item file={media} selected={media.id == this.state.selectedId} cb={(selectedId) => this.setState({ selectedId })}/>
-                </div>
-            )
+            if (this.Filter(media)) {
+                return (
+                    <div className="col-lg-4 col-6" key={key}>
+                        <Item file={media} selected={media.id == this.state.selectedId} cb={(selectedId) => this.setState({ selectedId })} />
+                    </div>
+                )
+            }
+        }).filter(function (element) {
+            return element !== undefined;
         });
+
 
         let footer = (
             <div className="text-right">
@@ -75,16 +79,16 @@ export default class SelectMedia extends Component {
         )
 
         return (
-            <Modal size="lg" style={{'overflowY': 'auto', 'maxHeight': '700px'}}
+            <Modal size="lg" className="media_select"
                 title={`Select an ${this.props.type}`}
                 footer={footer}
                 handleHideModal={this.props.handleHideModal}
             >
                 <Input type="text" value={this.state.search} placeHolder="Search by name..." cb={(search) => this.setState({ search })} />
 
-                <div className="row pt-3">
+                <InfiniteScroll>
                     {items}
-                </div>
+                </InfiniteScroll>
             </Modal>
         );
     }
@@ -92,11 +96,21 @@ export default class SelectMedia extends Component {
 
 class Item extends Component {
     render() {
+
+        let mediaType = this.props.file.mediaType.category;
+        let imgSrc;
+
+        if (mediaType != 'Image') {
+            if (mediaType == 'Audio') imgSrc = "/images/audio.png";
+            if (mediaType == 'General') imgSrc = "/images/document.png";
+        }
+        else imgSrc = `/media?filename=${this.props.file.filename}`;
+
         return (
-            <div className={this.props.selected ? "selected" : null}>
-                <img src={`/media?filename=${this.props.file.filename}`}
-                    style={{ 'width': '100%', 'objectFit': 'cover' }}
+            <div className={this.props.selected ? "selected" : ''}>
+                <img src={imgSrc}
                     height={'200px'}
+                    style={{ 'width': '100%', 'objectFit': 'cover' }}
                     alt={this.props.file.name}
                     onClick={this.props.cb.bind(this, this.props.file.id)}
                 />

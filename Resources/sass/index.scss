@@ -12,25 +12,19 @@
 @import './media.scss';
 @import './dropzone.scss';
 @import './button_fade.scss';
+@import './mobile-cms.scss';
+@import './app-cms/app-preview';
+
+/* Devices */
+@import './devices.min.scss';
 
 /* UI Alert */
 @import './ReactToastify.min.scss';
 
-/* Import Font Awesome 5 Pro */
-$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
-@import '~@fortawesome/fontawesome-pro/scss/fontawesome';
-@import '~@fortawesome/fontawesome-pro/scss/regular';
-@import '~@fortawesome/fontawesome-pro/scss/solid';
-@import '~@fortawesome/fontawesome-pro/scss/brands';
 
-@import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
-
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    font-family: 'Gayathri', sans-serif;
-}
 
 body {
-    background: url(/images/background.jpg);
+    background: url('/images/background.jpg');
     background-repeat: none;
     background-attachment: fixed;
     background-size: cover;
@@ -255,9 +249,6 @@ button.accept-policy {
     margin-bottom: 10px;
 }
 
-div.selected {
-    box-shadow: 0px 12px 22px 1px #333;
-}
 
 .cms-text {
     transition: width 1s ease-in-out;
@@ -279,4 +270,22 @@ label.btn input[type="radio"]{
     max-height: 250px;
     max-width: 250px;
     margin-top: -20px;
+}
+
+.media_select{
+    max-height: 700px;
+}
+
+.infinite_scroll {
+    overflow-y: auto;
+    max-height: 500px;
+}
+
+.indented { 
+    margin-left: 5px;
+    margin-right: 5px; 
+}
+
+.pointer {
+    cursor: pointer;
 }

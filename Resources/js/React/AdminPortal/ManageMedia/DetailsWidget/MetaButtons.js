@@ -20,7 +20,8 @@ export default class MetaButtons extends Component {
                     </div>
 
                     <div className="col-md-4 col-sm-12">
-                        <Delete id={this.props.fileId || this.props.file.id || null}
+                        <Delete text="Delete" id={this.props.fileId || this.props.file.id || null}
+                            alert={this.props.alert}
                             cb={this.props.deleteCb}
                         />
                     </div>

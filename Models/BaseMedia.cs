@@ -1,5 +1,7 @@
 ﻿using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.DiscoverDeepCove;
 using Deepcove_Trust_Website.Helpers;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -91,36 +93,40 @@ namespace Deepcove_Trust_Website.Models
             return new FileInfo(bestImagePath).Length;
         }
 
-        public Dictionary<String, HashSet<int>> GetUsages(WebsiteDataContext db)
+        public Dictionary<String, HashSet<string>> GetUsages(WebsiteDataContext db)
         {
-            Dictionary<String, HashSet<int>> usages = new Dictionary<string, HashSet<int>>();
+            Dictionary<String, HashSet<string>> usages = new Dictionary<string, HashSet<string>>();
 
             // Mobile App Checks ---------------------------------------------------
 
             // Activities
-            HashSet<int> activities = db.Activities.Where(a => a.ImageId == Id).Select(a => a.Id).ToHashSet();
-            activities.Concat(db.ActivityImages.Where(ai => ai.ImageId == Id).Select(ai => ai.ActivityId).ToHashSet());
+            HashSet<string> activities = db.Activities.Where(a => a.ImageId == Id).Select(a => a.Title).ToHashSet();
+            activities = activities.Concat(db.ActivityImages.Include(ai => ai.Activity).Where(ai => ai.ImageId == Id).Select(ai => ai.Activity.Title)).ToHashSet();
             if(activities.Count > 0)
                 usages.Add("Activities", activities);
 
             // Fact Files
-            HashSet<int> factfiles = db.FactFileEntries.Where(e => e.MainImageId == Id || e.PronounceAudioId == Id || e.ListenAudioId == Id).Select(e => e.Id).ToHashSet();
-            factfiles.Concat(db.FactFileEntryImages.Where(ei => ei.MediaFileId == Id).Select(ei => ei.FactFileEntryId).ToHashSet());
-            factfiles.Concat(db.FactFileNuggets.Where(n => n.ImageId == Id).Select(n => n.FactFileEntryId)).ToHashSet();
+            HashSet<string> factfiles = db.FactFileEntries.Where(e => e.MainImageId == Id || e.PronounceAudioId == Id || e.ListenAudioId == Id).Select(e => e.PrimaryName).ToHashSet();
+            factfiles = factfiles.Concat(db.FactFileEntryImages.Include(ei => ei.FactFileEntry).Where(ei => ei.MediaFileId == Id).Select(ei => ei.FactFileEntry.PrimaryName)).ToHashSet();
+            factfiles = factfiles.Concat(db.FactFileNuggets.Include(n => n.FactFileEntry).Where(n => n.ImageId == Id).Select(n => n.FactFileEntry.PrimaryName)).ToHashSet();
             if (factfiles.Count > 0)
                 usages.Add("FactFileEntries", factfiles);
 
             // Quizzes
-            HashSet<int> quizzes = db.Quizzes.Where(q => q.ImageId == Id).Select(q => q.Id).ToHashSet();
-            quizzes.Concat(db.QuizQuestions.Where(qq => qq.ImageId == Id || qq.AudioId == Id).Select(qq => qq.QuizId).ToHashSet());
-            quizzes.Concat(db.QuizAnswers.Where(qa => qa.ImageId == Id).Select(qa => qa.QuizQuestion.QuizId).ToHashSet());
+            HashSet<string> quizzes = db.Quizzes.Where(q => q.ImageId == Id).Select(q => q.Title).ToHashSet();
+            quizzes = quizzes.Concat(db.QuizQuestions.Include(qq => qq.Quiz).Where(qq => qq.ImageId == Id || qq.AudioId == Id).Select(qq => qq.Quiz.Title)).ToHashSet();
+            quizzes = quizzes.Concat(db.QuizAnswers.Include(qa => qa.QuizQuestion).ThenInclude(qq => qq.Quiz).Where(qa => qa.ImageId == Id).Select(qa => qa.QuizQuestion.Quiz.Title)).ToHashSet();
             if (quizzes.Count > 0)
                 usages.Add("Quizzes", quizzes);
 
             // End Mobile App Checks -----------------------------------------------
 
-            // Media components
-            // Todo : Bit trickier with revisions...
+            // Media components - we only care about the latest revisions
+            List<PageRevision> currentRevisions = db.Pages.Include(p => p.PageRevisions).ThenInclude(r => r.RevisionMediaComponents)
+                .ThenInclude(rmc => rmc.MediaComponent).ThenInclude(mc => mc.ImageMedia).Select(p => p.GetRevision(null)).ToList();
+            HashSet<string> pages = currentRevisions.Where(r => r.RevisionMediaComponents.Any(mc => mc.MediaComponent.ImageMediaId == Id)).Select(r => r.Page.Name).ToHashSet();
+            if (pages.Count > 0)
+                usages.Add("Pages", pages);
 
             // Button links
             // Todo: Also a bit tricky since these aren't linked in the database, only via HREF properties

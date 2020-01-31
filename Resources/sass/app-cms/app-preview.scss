@@ -1,0 +1,190 @@
+﻿/*
+    This file contains styling rules for the mobile app preview component
+*/
+
+// Roboto font for android
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+$color-dark: #2A292A;
+
+// General styling
+
+.w-80 {
+    max-width: 80%;
+}
+
+.warning-stripes {
+    background: repeating-linear-gradient( 45deg, #4a4900, #4a4900 10px, #fffc30 10px, #fffc30 20px );
+    width: 100%;
+    padding-top: 3px;
+    padding-bottom: 3px;    
+    opacity: 0.7;
+    position: absolute;
+    top: 0px;
+    z-index: 999;
+
+    & p {
+        margin-left: 3px;
+        margin-right: 3px;        
+        display: inline-block;
+        color: black;
+        background-color: white;
+        text-align: center;
+        margin-bottom: 0px;
+    }
+}
+
+.tile {
+    cursor: pointer;
+    margin: 0.5rem;
+
+    & .warning-stripes {
+        width: calc(100% - 1rem);
+    }
+}
+
+.tile-title-dark {
+    position: absolute;
+    bottom: 0px;
+    color: white;
+    width: calc(100% - 1.0rem);
+    background-color: rgba(0,0,0,0.7);
+    text-align: center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.tile-shadow{
+    box-shadow: rgba(0,0,0,0.4) 3px 3px 3px !important;
+}
+
+.nav-bar{
+    height: 60px;
+    width: 100%;
+    background-color: $color-dark;
+    position: absolute;
+    bottom: 0px;
+}
+
+.back-button-bar{
+    cursor: pointer;
+    padding-top: 10px;
+    height: 40px;
+    background-color: $color-dark;
+    text-align: center;
+    color: white;
+}
+
+.preview-body{
+    margin: 0px;
+    max-height: calc(100% - 100px);
+    overflow-y: auto;
+    text-align: center;
+    color: white;
+    
+    &.with-back-button{
+        max-height: calc(100% - 40px);
+    }
+
+    & hr {
+        border-top: 1px solid white !important;
+        margin-left: 5px;
+        margin-right: 5px;
+
+        &.green {
+            border-top: 1px solid olivedrab !important;
+        }
+    }
+
+    & p {
+        font-size: 0.95rem;
+    }
+
+    & h3, h5, p {
+        font-family: 'Roboto', sans-serif !important;
+    }
+    
+    & .col-6 {
+        padding: 0px;
+    }
+
+    // Hide scrollbar 
+
+    &::-webkit-scrollbar{
+        display: none;
+    }
+    -ms-overflow-style: none;
+
+
+}
+
+.object-fit-cover{
+    object-fit: cover;
+}
+
+// Fact File Index
+
+.tab-bar {
+    width: 100%;
+    height: 40px;
+    background-color: $color-dark;
+}
+
+#galleryCarousel img{
+    object-fit: cover;
+}
+
+.custom-carousel-indicators {
+    width: 100%;
+    margin: 0px;
+    height: 50px;
+    background-color: rgba(0,0,0,0.7);
+    padding-top: 9px;
+
+    & li {
+        position: relative;
+        transition: height ease-in 0.3s, width ease-in 0.3s, top ease-in 0.3s;
+        margin-left: 5px;
+        margin-right: 5px;
+        top: 3px;
+        height: 8px;
+        width: 8px;
+        border-radius: 50%;
+
+        &.active {
+            top: 0px;
+            height: 15px;
+            width: 15px;
+        }
+    }
+}
+
+.audio-btn{
+    display: flex;
+    flex-direction: column;
+    margin: 5px;
+    padding: 7px;
+    min-width: 40%;
+    border: 2px solid white;
+}
+
+.preview-nugget-card{
+
+    & p {
+        margin-bottom: 5px;
+    }
+
+    & h5 {        
+        margin-bottom: 5px;
+        font-size: 1.1rem;
+        max-width: 90%
+    }
+
+    & img {
+        max-width: 80%;
+    }
+
+    & > div {
+        min-height: 60px;
+    }
+}
