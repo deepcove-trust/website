@@ -35,7 +35,8 @@ export default class UploadFile extends Component {
         }).done(() =>
             this.setState({ completed: true })
         ).fail((err) => {
-            console.log(err);
+            this.props.alert.error(null, err.responseText);
+            this.props.onFail();
         })
     }
 

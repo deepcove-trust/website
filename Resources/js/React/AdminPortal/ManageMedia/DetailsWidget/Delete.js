@@ -14,18 +14,19 @@ export default class Delete extends Component {
             method: 'delete',
             url: `${baseUri}/${id}`
         }).done(() => {
+            this.props.alert.success("File deleted!")
             if (this.props.cb) {
                 this.props.cb();
             }
         }).fail((err) => {
-            console.error(`[DetailsWidget/Delete@delete] Error deleting media: `, err.responseText);
+            this.props.alert.error(null, err.responseText)
         })
     }
 
     render() {
         return ( 
-            <ConfirmButton className="btn btn-danger btn-sm" cb={this.delete.bind(this, this.props.id)}>
-                Delete <i className="fas fa-trash"/>
+            <ConfirmButton className={this.props.className || "btn btn-danger btn-sm"} cb={this.delete.bind(this, this.props.id)}>
+                {this.props.text} <i className="fas fa-trash"/>
             </ConfirmButton>
         )
     }

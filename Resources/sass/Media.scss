@@ -36,8 +36,27 @@
 }
 
 .gallery-img {
-    height: 280px;
     object-fit: cover;
+}
+
+.gallery-delete-container{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.file-type-container{
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: white;
+}
+
+.media-gallery-card{
+    cursor: pointer;
+    &:hover{
+        
+    }
 }
 
 audio.overImg {
@@ -101,23 +120,19 @@ audio.overImg {
     }
 }
 
-/* Detials Page
+/* Details Page
 -------------------------------------------------- */
-.detials-container {
+.details-container {
     position: relative;
+    text-align: center;
 }
 
-.detials-container > img {
-    position: absolute;
-    height: 100%;
-    max-width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    left: 0;
-    right: 0;
+.details-container > img {
+    height: auto;
+    width: 100%;
 }
 
-.detials-container > audio {
+.details-container > audio {
     position: absolute;
     bottom: 0;
     margin-left: auto;
