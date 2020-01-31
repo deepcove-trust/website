@@ -19,7 +19,7 @@ export default class Gallery extends Component {
     componentDidMount() {
         this.getData();
     }
-
+    
     Filter(x) {
         var result = true;
 
@@ -43,6 +43,14 @@ export default class Gallery extends Component {
         }).fail((err) => {
             console.error(`[Gallery@getData] Error getting data: `, err.responseText);
         })
+    }
+
+    componentDidUpdate() {
+        // Make all tiles square
+        let images = $('.media-gallery-card img');
+
+        if (images.length > 0)
+            images.css("height", images[0].offsetWidth);
     }
 
     render() {

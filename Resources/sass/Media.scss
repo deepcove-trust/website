@@ -36,7 +36,7 @@
 }
 
 .gallery-img {
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .gallery-delete-container{
@@ -52,10 +52,25 @@
     background-color: white;
 }
 
-.media-gallery-card{
+.media-gallery-card {
     cursor: pointer;
-    &:hover{
-        
+
+    background-color: #262626;
+    
+    & .card-body {
+        background-color: #628893;
+        color: white;
+    }
+
+    &:hover {
+        & .card-body {
+            background-color: white;
+            color: black;
+        }
+    }
+
+    & audio {
+        max-width: 80%;
     }
 }
 
@@ -64,7 +79,8 @@ audio.overImg {
     height: 25px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: -25px;
+    margin-top: -35px;
+    margin-bottom: 10px;
 }
 
 .gallery-block .heading {
