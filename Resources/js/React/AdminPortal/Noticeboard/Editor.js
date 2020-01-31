@@ -32,26 +32,15 @@ export default class Editor extends Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
-
-        let { id, title, updated_at, long_desc, noticeboard, urgent, active } = this.state;
-
-        let notice = {
-            id, title, updated_at, long_desc, urgent, active
-        };
+        e.preventDefault();       
 
         // No board selected
-        if (noticeboard == null || noticeboard.length <= 0) {
+        if (this.state.noticeboard == null || this.state.noticeboard.length <= 0) {
             this.props.alert.error("You must select one or more noticeboards");
             return;
-        }
-
-        // Get the enum (string) for noticeboard
-        // 'noticeboard' can be either a string (if user hasn't modified)
-        // or an array with 1 or 2 elements(if user has modified)
-        notice.noticeboard = this.getNoticeboardString(noticeboard);
+        }        
         
-        this.props.cb_submit(id, notice);
+        this.props.cb_submit(this.state);
     }
 
     updateVal(key, val) {
@@ -60,10 +49,10 @@ export default class Editor extends Component {
         });
     }    
 
-    getNoticeboardString(x) {
-        if (typeof x == "string") return x;
-        if (x.length == 2) return "all";
-        return x[0].value;
+    updateNoticeboard(x) {
+        let val;
+        if(x) val = x.length == 2 ? "all" : x[0].value;
+        this.updateVal('noticeboard', val);
     }
 
     getRSelectValue(x) {
@@ -91,7 +80,7 @@ export default class Editor extends Component {
                     </FormGroup>
 
                     <FormGroup label="Noticeboard:" htmlFor="notice:board" required>
-                        <Rselect options={this.options} value={this.getRSelectValue(this.state.noticeboard)} onChange={this.updateVal.bind(this, 'noticeboard')} isMulti required />
+                        <Rselect options={this.options} value={this.getRSelectValue(this.state.noticeboard)} onChange={this.updateNoticeboard.bind(this)} isMulti required />
                     </FormGroup>
 
                     <FormGroup label="Urgent:" htmlFor="notice:urgent">

@@ -50,7 +50,8 @@ class Noticeboard extends Component {
         });
     }
 
-    handleSubmit(id, notice) {
+    handleSubmit(notice) {
+        let id = notice.id;
         $.ajax({
             url: `${baseUri}${id > 0 ? '/' + id : ''}`,
             method: `${id > 0 ? 'PUT' : 'POST'}`,
@@ -64,7 +65,7 @@ class Noticeboard extends Component {
                 this.getData();
             });
         }).fail((err) => {
-            this.Alert.error(err);
+            this.Alert.error(null, err.responseText);
         })
     }
 
