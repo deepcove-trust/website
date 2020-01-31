@@ -122,6 +122,7 @@ namespace Deepcove_Trust_Website.Data
             modelBuilder.Entity<Account>().HasQueryFilter(f => f.DeletedAt == null);
             modelBuilder.Entity<Page>().HasQueryFilter(f => f.DeletedAt == null);
             modelBuilder.Entity<Notice>().HasQueryFilter(f => f.DeletedAt == null);
+            modelBuilder.Entity<Quiz>().HasQueryFilter(f => f.DeletedAt == null);
 
             // Enum Conversions
             modelBuilder.Entity<Page>().Property(p => p.Section).HasConversion(c => (int)c, c => (Section)c);
