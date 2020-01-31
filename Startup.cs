@@ -71,7 +71,7 @@ namespace Deepcove_Trust_Website
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
                     options.LoginPath = "/login";
-                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(60);
                     options.AccessDeniedPath = "/"; 
                 });
 

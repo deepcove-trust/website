@@ -1,4 +1,4 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import { Button } from '../Components/Button';
 import Alert from '../Components/Alert';
 import { EditPageSettings, ToggleVisibility, ViewPageDashboard } from './PageControlButtons';
@@ -11,12 +11,12 @@ export default class PageControls extends Component {
 
         if (!this.props.allowEdits)
             return (
-                <Alert onRef={ref => (this.alert = ref)}>
+                <Alert onRef={ref => (this.Alert = ref)}>
                     <div className="float-right-above">
                         <ToggleVisibility className="btn btn-dark mr-2"
                             public={this.props.page.public}
                             pageId={this.props.page.id}
-                            alert={this.alert}
+                            alert={this.Alert}
                             u={this.props.u}
                         />
 
@@ -29,7 +29,7 @@ export default class PageControls extends Component {
             );
 
         return (
-            <Alert onRef={ref => (this.alert = ref)}>
+            <Alert onRef={ref => (this.Alert = ref)}>
                 <div id="editorsdash" className="row sticky-top text-white bg-dark fade1sec py-3" style={{ 'marginTop': '-1rem', 'marginLeft': '-30px', 'marginRight': '-30px' }}>
                     <h4 className="col-lg-4 col-md-12 mb-2 noselect">
                         <i className="fas fa-tachometer-alt-slow fa-x3" /> Editors Dashboard

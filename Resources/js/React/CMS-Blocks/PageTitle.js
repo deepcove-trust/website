@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import Alert from '../Components/Alert';
+import { StaticAlert } from '../Components/Alert';
 
 export default class PageTitle extends Component {
 
@@ -15,7 +15,7 @@ export default class PageTitle extends Component {
             
             if (!this.props.public) {
                 alert = (
-                    <Alert type="danger">This page is hidden! Only authenticated users can see this page.</Alert>
+                    <StaticAlert type="danger">This page is hidden! Only authenticated users can see this page.</StaticAlert>
                 )
             }
         }
