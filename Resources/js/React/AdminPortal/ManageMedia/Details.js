@@ -13,7 +13,7 @@ export default class Details extends Component {
     }
 
     render() {
-        let imgUrl = `/media?filename=${this.props.data.filename}`;
+        let imgUrl = `/media?filename=${this.props.data.filename}&original=true`;
         if (this.props.data.mediaType.mime.includes("audio/")) {
             imgUrl = "/images/audio.png";
         }
