@@ -38,7 +38,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
         {
             try
             {
-                List<Notice> notices = await _Database.Notices.Where(c => c.DeletedAt == null).OrderBy(o => o.CreatedAt).ToListAsync();
+                List<Notice> notices = await _Database.Notices.OrderBy(o => o.CreatedAt).ToListAsync();
                 var x = new
                 {
                     important = notices.Where(c => c.Urgent == 1 && c.Active).ToList(),
@@ -98,7 +98,6 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                 n.Urgent = request.Bool("urgent") ? 1 : 0;
                 n.Active = request.Bool("active");
 
-                _Database.Update(n);
                 await _Database.SaveChangesAsync();
                 return Ok($"Notice \"{n.Title}\" updated.");
             }
