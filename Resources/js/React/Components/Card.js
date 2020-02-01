@@ -13,7 +13,7 @@ export default class Card extends Component {
 export class CardHead extends Component {
     render() {
         return (
-            <div id={this.props.id || null} className={this.props.className || "card-headder"} style={this.props.style || null}>
+            <div id={this.props.id || null} className={this.props.className || "card-header"} style={this.props.style || null}>
                 {this.props.children}
             </div>
         );
