@@ -161,7 +161,7 @@ class AudioButtons extends Component {
 
         if (this.props.listen) listenButton = (
             <div className="audio-btn">
-                <i className="fas fa-music"></i>
+                <i className="fas fa-music mb-2"></i>
                 Listen
             </div>
         )

@@ -1,8 +1,9 @@
 ﻿import React, { Fragment, Component } from 'react';
-import Alert from '../../../Components/Alert';
 import { Input } from '../../../Components/FormControl';
 import { Button } from '../../../Components/Button';
+import Card, { CardHighlight } from '../../../Components/Card';
 import $ from 'jquery';
+
 
 const url = '/admin/app/factfiles/categories'
 
@@ -49,12 +50,14 @@ export default class CategoryIndex extends Component {
         categoryCards.push(<NewCategoryCard key="0" onSave={this.getData.bind(this)} alert={this.props.alert} />)
 
         return (
-            <div className="card px-0 col-lg-4 col-md-6 mx-auto my-5">
-                <h3 className="text-center pt-3 pb-2 bground-primary text-white">Select Category</h3>
+            <Card className="card px-0 col-lg-4 col-md-6 mx-auto my-5">
+                <CardHighlight>
+                    <h3 className="pt-3 pb-2 ">Select Category</h3>
+                </CardHighlight>
                 <div>
                     {categoryCards}
                 </div>
-            </div>
+            </Card>
         )
     }
 }

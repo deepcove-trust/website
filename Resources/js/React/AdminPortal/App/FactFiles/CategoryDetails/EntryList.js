@@ -1,8 +1,7 @@
 ﻿import React, { Component, Fragment } from 'react';
-import $ from 'jquery';
-
-import { FormGroup, Input, TextArea, Select } from '../../../../Components/FormControl';
+import { Input, Select } from '../../../../Components/FormControl';
 import { Button, ConfirmModal } from '../../../../Components/Button';
+import Card, { CardHighlight } from '../../../../Components/Card';
 
 export default class EntryList extends Component {
 
@@ -78,10 +77,10 @@ export default class EntryList extends Component {
 
         return (
             <Fragment>
-                <div className="card">
-                    <div className="text-center bground-primary">
+                <Card>
+                    <CardHighlight>
                         {categoryName}
-                    </div>                    
+                    </CardHighlight>                    
 
                     <div id="entry-dropdown" className={this.props.addEntryMode ? "d-none" : ""}>
 
@@ -95,7 +94,7 @@ export default class EntryList extends Component {
 
                         <Button className="btn btn-success" cb={this.props.onAddEntry.bind(this)}>Add &nbsp; <i className="fas fa-plus"></i></Button>
                     </div>
-                </div>
+                </Card>
                 <h2 className={`text-center my-4 ${this.props.addEntryMode ? "" : "d-none"}`}>Add New Entry</h2>
             </Fragment>
         )

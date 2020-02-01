@@ -111,7 +111,7 @@ namespace Deepcove_Trust_Website.Features.Emails
                 {
                     // Removes oauth as a protocole.
                     client.AuthenticationMechanisms.Remove("XOAUTH2");
-
+                    client.CheckCertificateRevocation = false;
                     // Connect
                     await client.ConnectAsync(
                         _EmailConfig.MailTrap.Server,
