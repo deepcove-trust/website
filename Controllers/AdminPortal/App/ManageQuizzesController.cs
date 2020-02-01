@@ -83,7 +83,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         // GET: /api/admin/app/quizzes
         public async Task<IActionResult> GetQuizzes()
         {
-            return Ok(await _Db.Quizzes.Include(q => q.Questions).Include(q => q.Image).Select(q => new
+            return Ok(await _Db.Quizzes.OrderBy(q => q.Title).Include(q => q.Questions).Include(q => q.Image).Select(q => new
             {
                 q.Id,
                 q.Title,
@@ -202,7 +202,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             return Ok();
         }
 
-        // POST: /api/admin/app/quizzes/questions
+        // POST: /api/admin/app/quizzes/{id:int}/questions
         [HttpPost("{quizId:int}/questions")]
         public async Task<IActionResult> UpdateQuizQuestions(int quizId, [FromBody]List<QuestionArgs> data)
         {
@@ -237,6 +237,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         }
 
         // DELETE: /api/admin/app/quizzes/{id:int}
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteQuiz(int id)
         {
             Quiz quiz = await _Db.Quizzes.FindAsync(id);
