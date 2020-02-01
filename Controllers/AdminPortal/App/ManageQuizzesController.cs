@@ -40,7 +40,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         [Required]
         public string Text { get; set; }
         [Required]
-        public int? OrderIndex { get; set; }
+        public int OrderIndex { get; set; }
         public List<AnswerArgs> Answers { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -78,18 +78,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         {
             _Db = db;
             _Logger = logger;
-        }
-
-        // Get quiz list
-        // Get quiz details
-
-        // Add new quiz
-        // Update quiz (active, unlock, title)
-        // Delete quiz
-
-        // Add new question
-        // Update question
-        // Delete question        
+        }        
 
         // GET: /api/admin/app/quizzes
         public async Task<IActionResult> GetQuizzes()
@@ -224,10 +213,41 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
             List<QuizQuestion> questions = data.Select(d => new QuizQuestion
             {
-                CorrectAnswerId = d.CorectAnswerId != null)
+                QuizId = quizId,
+                CorrectAnswerId = d.CorrectAnswerId,
+                TrueFalseAnswer = d.TrueOrFalse != null ? (bool)d.TrueOrFalse ? (int?)1 : 0 : null,
+                ImageId = d.ImageId,
+                AudioId = d.AudioId,
+                Text = d.Text,
+                OrderIndex = d.OrderIndex,
+                Answers = d.Answers.Select(a => new QuizAnswer
+                {
+                    Text = a.Text,
+                    ImageId = a.ImageId
+                }).ToList()
             }).ToList();
 
-            
+            _Db.RemoveRange(quiz.Questions); // not sure if we need this line of if EFC takes card of it
+
+            quiz.Questions = questions;
+
+            await _Db.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // DELETE: /api/admin/app/quizzes/{id:int}
+        public async Task<IActionResult> DeleteQuiz(int id)
+        {
+            Quiz quiz = await _Db.Quizzes.FindAsync(id);
+
+            if (quiz == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find quiz in database"));
+
+            _Db.Remove(quiz);
+
+            await _Db.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
