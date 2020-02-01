@@ -1,17 +1,4 @@
-﻿// Primary theme colour
-$color-primary: #628893;
-$color-primary-faded: #ECF2F0;
-$color-grey: #AEAEAE;
-
-$primaryColor: #8BC34A; //Green
-$primaryColorDark: #262626; //Charcoal
-$accentColor: #FF5026; //Orange
-$backgroundColor: #363636; //Dark Gray
-$indicatorColor: #F44336; //Urgent notice color
-$primaryColorLight: #999999; //Grey text color
-
-
-/* Mobile Phone Preview - Base Styles
+﻿/* Mobile Phone Preview - Base Styles
 ----------------------------------------------------------*/
 .screen {
     background-color: $backgroundColor !important;
@@ -221,10 +208,6 @@ label.list-card h5, label.list-card p {
 
     &:hover small, &:hover span {
         color: #fff;
-    }
-
-    & h5 {
-        @extend .vertically-center;
     }
 
     &.active {
