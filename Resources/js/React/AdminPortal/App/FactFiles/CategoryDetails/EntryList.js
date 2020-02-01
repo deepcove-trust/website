@@ -58,7 +58,7 @@ export default class EntryList extends Component {
             <Fragment>
                 <h3 className="pt-3 pb-2 mb-0 d-inline-block text-white">{this.state.categoryName}</h3>
                 <Button className="btn text-white" cb={() => this.setState({ editMode: true })}><i className="fas fa-edit"></i></Button>
-                <ConfirmModal modalClass="text-black" className="btn btn-dark float-right m-2" cb={this.props.onDeleteCategory.bind(this)} confirmPhrase={this.state.categoryName} question="Delete this category and all associated entries">
+                <ConfirmModal className="btn btn-dark float-right m-2" cb={this.props.onDeleteCategory.bind(this)} confirmPhrase={this.state.categoryName} question="Delete this category and all associated entries">
                     <i className="fas fa-trash"></i>&nbsp; Delete Category
                 </ConfirmModal>
             </Fragment>

@@ -294,3 +294,13 @@ label.btn input[type="radio"]{
 .pointer {
     cursor: pointer;
 }
+
+.modal {
+    color: black;
+}
+
+.modal-content {
+    -webkit-border-radius: 0px !important;
+    -moz-border-radius: 0px !important;
+    border-radius: 0px !important;
+}
