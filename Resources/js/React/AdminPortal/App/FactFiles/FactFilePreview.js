@@ -209,9 +209,9 @@ class NuggetCard extends Component {
         )
 
         if (this.props.nugget.text || this.props.nugget.name) text = (
-            <div className="col-7 mx-auto">
-                <div className={`vertically-center ${this.props.nugget.image.filename ? "w-80" : ""}`}>
-                    <h5 className="mx-auto">{this.props.nugget.name}</h5>
+            <div className={`${this.props.nugget.image.filename ? "col-7" : "col-12"}`}>
+                <div className={`${this.props.nugget.image.filename ? "w-80 vertically-center" : ""}`} style={{marginRight: "-15px", marginLeft: "-15px"}}>
+                    <h5>{this.props.nugget.name}</h5>
                     <p>{this.props.nugget.text}</p>
                 </div>
             </div>
