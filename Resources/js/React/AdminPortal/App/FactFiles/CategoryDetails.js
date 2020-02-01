@@ -2,14 +2,14 @@
 import $ from 'jquery';
 import _ from 'lodash';
 
-import { FormGroup, Input, TextArea, Checkbox } from '../../../Components/FormControl';
+import { FormGroup, Input, TextArea } from '../../../Components/FormControl';
 import EntryImages from './CategoryDetails/EntryImages';
 import EntryList from './CategoryDetails/EntryList';
 import EntryAudio from './CategoryDetails/EntryAudio';
 import EntryNuggets from './CategoryDetails/EntryNuggets';
 import ControlButtons from './CategoryDetails/ControlButtons';
 import { ConfirmButton, ConfirmModal } from '../../../Components/Button';
-import PhonePreview from '../../../Components/PhonePreview';
+import DevicePreview from '../../../Components/DevicePreview';
 import FactFilePreview from './FactFilePreview';
 
 const url = '/admin/app/factfiles';
@@ -143,9 +143,13 @@ export default class CategoryDetails extends Component {
                     }
                     <div className="col-lg-5 py-1">
                         <div className="m-3 sticky-preview">
-                            <PhonePreview>
-                                <FactFilePreview previewEntry={this.state.previewEntry} entries={this.state.category.entries} onEntrySelect={this.onEntrySelect.bind(this)} onBack={this.clearPreviewEntry.bind(this)}/>
-                            </PhonePreview>
+                            <DevicePreview sticky>
+                                <FactFilePreview previewEntry={this.state.previewEntry}
+                                    entries={this.state.category.entries}
+                                    onEntrySelect={this.onEntrySelect.bind(this)}
+                                    onBack={this.clearPreviewEntry.bind(this)}
+                                />
+                            </DevicePreview>
                         </div>
                     </div>
 
@@ -172,7 +176,7 @@ class EntryDetails extends Component {
 
     constructor(props) {
         super(props);
-        console.log('constructor')
+        
         this.state = {
             hasChanged: this.props.addEntryMode,
             entry: this.props.previewEntry || this.emptyEntry()
@@ -281,7 +285,7 @@ class EntryDetails extends Component {
 
         // Crude validation - should replace this with proper validation, ideally
         if (!entry.primaryName || !entry.bodyText || entry.images.length == 0) {
-            return this.Alert.error("Please ensure that you have added a primary name, body text and at least one image before saving");
+            return this.props.alert.error("Please ensure that you have added a primary name, body text and at least one image before saving");
         }
 
         $.ajax({
@@ -366,6 +370,7 @@ class EntryDetails extends Component {
         }).done(() => {
             this.props.alert.success("Entry updated!");
             this.props.onSave();
+            this.getData();
         }).fail((err) => {
             this.props.alert.error(null, err.responseText);
         })
@@ -388,15 +393,21 @@ class EntryDetails extends Component {
 
         if (!this.props.entryId && !this.props.addEntryMode) return <div></div>
 
-        return (
-            <form className="p-3">
-
+        let disableControls = this.state.entry.id == 0 ? null : (
+            <Fragment>
                 <p className={`text-center font-weight-bold d-block ${this.state.entry.active ? "text-success" : "text-danger"}`}>{`This entry is ${this.state.entry.active ? "enabled. It will appear in the app." : "disabled. It will not appear in the app."}`}</p>
 
                 <div className="text-center mb-3">
                     <ConfirmButton className="btn btn-dark" cb={this.toggleEntry.bind(this)}>{this.state.entry.active ? "Disable" : "Enable"}</ConfirmButton>
                     <ConfirmModal question="Delete this entry permanently" confirmPhrase={this.state.entry.primaryName} className="btn btn-danger ml-2" cb={this.deleteEntry.bind(this)}>Delete</ConfirmModal>
                 </div>
+            </Fragment>
+            )
+
+        return (
+            <form className="p-3">
+
+                {disableControls}
 
                 <FormGroup label="Primary Name" htmlFor="primaryName" required>
                     <Input type="text" id="primaryName" name="primaryName" value={this.state.entry.primaryName} cb={this.updateField.bind(this, 'primaryName')} placeHolder="Enter primary name here..." required />

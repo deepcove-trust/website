@@ -67,6 +67,8 @@ namespace Deepcove_Trust_Website.Helpers
         /// <returns></returns>
         public static bool Bool(this IFormCollection request, string key)
         {
+            if (request[key].ToString() == "1") return true;
+
             bool.TryParse(request[key].ToString(), out bool x);
 
             return x;

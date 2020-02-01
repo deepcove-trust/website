@@ -39,7 +39,7 @@ export default class Modal extends Component {
         ) : null
         
         return (
-            <div className="modal fade" role="dialog">
+            <div className={`modal fade ${this.props.className}`} role="dialog">
                 <div className={`modal-dialog ${this.size()}`} role="document">
                     <div className="modal-content">
                         {headder}

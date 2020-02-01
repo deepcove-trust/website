@@ -200,7 +200,7 @@ export class ConfirmModal extends Component {
         ) : null
         
         let modal = this.state.showModal ? (
-            <Modal handleHideModal={() => { this.setState({showModal: false})}}>
+            <Modal className={this.props.modalClass} handleHideModal={() => { this.setState({showModal: false})}}>
                 <h4 className="text-left">
                     <i className="far fa-exclamation-triangle pr-3"></i>
                     Really {this.props.question.toLowerCase()}?

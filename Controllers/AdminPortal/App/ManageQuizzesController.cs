@@ -1,4 +1,4 @@
-﻿using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Data;
 using Deepcove_Trust_Website.DiscoverDeepCove;
 using Deepcove_Trust_Website.Helpers;
 using Microsoft.AspNetCore.Authorization;

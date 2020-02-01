@@ -70,7 +70,7 @@ class FactFileEntryPreview extends Component {
 
         let bodyParagraphs = this.props.entry.bodyText.split('\n').map((p, index) => { return <p key={index} className="text-left mx-2">{p}</p> });
 
-        let disabledFlag = !this.props.entry.active ? (
+        let disabledFlag = !this.props.entry.active && this.props.entry.id != 0 ? (
             <div className="warning-stripes">
                 <p>Disabled</p>
             </div>
@@ -112,7 +112,7 @@ class GalleryCarousel extends Component {
 
         // Make carousel images square
         let el =$('.carousel-inner img');
-        el.css("minHeight", el[0].offsetWidth);
+        if(el.length > 0) el.css("minHeight", el[0].offsetWidth);
     }
 
     componentDidUpdate(prevProps) {
@@ -161,7 +161,7 @@ class AudioButtons extends Component {
 
         if (this.props.listen) listenButton = (
             <div className="audio-btn">
-                <i className="fas fa-music"></i>
+                <i className="fas fa-music mb-2"></i>
                 Listen
             </div>
         )
