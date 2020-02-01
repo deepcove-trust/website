@@ -34,7 +34,7 @@ export class Checkbox extends Component {
         let id = this.props.id ? `chq-${this.props.id}` : null;
 
         return (
-            <div className="custom-control custom-checkbox">
+            <div className={`custom-control custom-checkbox ${this.props.className}`}>
                 <ReactTooltip />
                 <input id={id}
                     type="checkbox"
