@@ -83,6 +83,11 @@ a.navbar-brand {
     border-radius: 0px;
 }
 
+.card-highlight {
+    text-align: center;
+    color: white;
+}
+
 .form-group > label.required:after{
     content: ' *';
     color: red;
