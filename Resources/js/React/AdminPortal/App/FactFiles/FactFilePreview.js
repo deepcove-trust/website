@@ -112,7 +112,7 @@ class GalleryCarousel extends Component {
 
         // Make carousel images square
         let el =$('.carousel-inner img');
-        el.css("minHeight", el[0].offsetWidth);
+        if(el.length > 0) el.css("minHeight", el[0].offsetWidth);
     }
 
     componentDidUpdate(prevProps) {

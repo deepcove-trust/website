@@ -18,10 +18,11 @@ export default class EntryImages extends Component {
     // Make image buttons square
     componentDidMount() {
         let el1 = $('.tile');
-        el1.css("minHeight", el1[0].offsetWidth);
-
         let el2 = $('.object-fit-cover');
-        el2.css("minHeight", el1[0].offsetWidth);
+        if (el1.length > 0 && el2.length > 0) {
+            el1.css("minHeight", el1[0].offsetWidth);
+            el2.css("minHeight", el1[0].offsetWidth);            
+        }      
     }
 
     componentWillReceiveProps(nextProps) {
