@@ -142,7 +142,7 @@ export default class CategoryDetails extends Component {
                         // Right hand side of display - entry details
                     }
                     <div className="col-lg-5 py-1">
-                        <div className="m-3 sticky-preview">
+                        <div className="m-3 sticky-preview show-large">
                             <DevicePreview sticky>
                                 <FactFilePreview previewEntry={this.state.previewEntry}
                                     entries={this.state.category.entries}
@@ -203,7 +203,12 @@ class EntryDetails extends Component {
         }
     }
 
-    getData() {
+    onCancelNew() {
+        this.props.onUpdatePreview(null);
+        this.props.onSave(0);
+    }
+
+    getData() {        
         if (this.props.entryId != 0) {
             $.ajax({
                 type: 'get',
@@ -221,16 +226,14 @@ class EntryDetails extends Component {
                     //this.props.alert.error(null, err.responseText);
                 });
         }
-        else {
-            this.setState({
+        else {            
+            this.setState({                
                 hasChanged: false
             })
         }
     }
 
     updateField(key, val) {
-        console.log(key);
-        console.log(val);
         let entry = this.state.entry;
         entry[key] = val;
         this.setState({
@@ -277,7 +280,10 @@ class EntryDetails extends Component {
         this.setState({
             hasChanged: true,
             nuggets
+        }, () => {
+            this.props.onUpdatePreview(this.state.entry)
         });
+        
     }
 
     onSave() {
@@ -439,7 +445,7 @@ class EntryDetails extends Component {
                 <EntryNuggets nuggets={this.state.entry.nuggets} onUpdate={this.updateNugget.bind(this)}
                     onAdd={this.addNewNugget.bind(this)} onDelete={this.deleteNugget.bind(this)} onShift={this.shiftNugget.bind(this)} />
 
-                <ControlButtons onSave={this.onSave.bind(this)} onDiscard={this.getData.bind(this)} show={this.state.hasChanged} addEntryMode={this.props.addEntryMode} />
+                <ControlButtons onSave={this.onSave.bind(this)} onCancelNew={this.onCancelNew.bind(this)} onDiscard={this.getData.bind(this)} show={this.state.hasChanged} addEntryMode={this.props.addEntryMode} />
             </form>
         )
     }
