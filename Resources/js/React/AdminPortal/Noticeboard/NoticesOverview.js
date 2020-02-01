@@ -1,5 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
-import PhonePreview from '../../Components/PhonePreview';
+import DevicePreview from '../../Components/DevicePreview';
 import NoticeboardSection from './NoticeboardSection';
 import { NoticeCard, NoticeSummary } from './Notice';
 import { Button } from '../../Components/Button';
@@ -50,22 +50,15 @@ export default class NoticesOverview extends Component {
                 </div>
 
                 <div className="col-md-5 col-sm-12">
-                    <PhonePreview sticky>
-                        <div className="h-100">
-                            <div className="preview-body with-back-button">
-                                <div>
-                                    <NoticeboardSection title="Important Notices">
-                                        {important_notices}
-                                    </NoticeboardSection>
+                    <DevicePreview sticky backBar>
+                        <NoticeboardSection title="Important Notices">
+                            {important_notices}
+                        </NoticeboardSection>
 
-                                    <NoticeboardSection title="General Notices">
-                                        {normal_notices}
-                                    </NoticeboardSection>
-                                </div>
-                            </div>
-                            <div className="back-button-bar">Back</div>
-                        </div>
-                    </PhonePreview>
+                        <NoticeboardSection title="General Notices">
+                            {normal_notices}
+                        </NoticeboardSection>
+                    </DevicePreview>
                 </div>
             </Fragment>
         )

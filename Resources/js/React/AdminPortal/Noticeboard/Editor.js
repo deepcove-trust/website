@@ -1,6 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
-import PhonePreview from '../../Components/PhonePreview';
-import NoticeboardSection from './NoticeboardSection';
+import DevicePreview from '../../Components/DevicePreview';
 import { Button, ConfirmButton } from '../../Components/Button';
 import { FormGroup, Input, TextArea, Checkbox } from '../../Components/FormControl';
 import Card, { CardHighlight, CardBody } from '../../Components/Card';
@@ -72,7 +71,7 @@ export default class Editor extends Component {
 
         return (
             <Fragment>
-                <div className="col-md-8 col-sm-12">
+                <div className="col-md-7 col-sm-12">
                     <Card>
                         <CardHighlight>
                             <h3 className="pt-3 pb-2 mb-0">Notice Editor</h3>
@@ -120,20 +119,13 @@ export default class Editor extends Component {
                     </Card>
                 </div>
 
-                <div className="col-md-4 col-sm-12">
-                    <PhonePreview>
-                        <div className="h-100">
-                            <div className="preview-body with-back-button">
-                                <div>
-                                    <h4 className="text-center">{this.state.title}</h4>
-                                    <small className="d-block text-center">{this.getReadableDate(this.state.updated_at)}</small>
-                                    <hr className="indented" />
-                                    <p className="indented">{this.state.long_desc}</p>
-                                </div>
-                            </div>
-                            <div className="back-button-bar">Back</div>
-                        </div>
-                    </PhonePreview>
+                <div className="col-md-5 col-sm-12">
+                    <DevicePreview sticky backBar>
+                        <h4 className="text-center">{this.state.title}</h4>
+                        <small className="d-block text-center">{this.getReadableDate(this.state.updated_at)}</small>
+                        <hr className="indented" />
+                        <p className="indented">{this.state.long_desc}</p>
+                    </DevicePreview>
                 </div>
             </Fragment>
         )

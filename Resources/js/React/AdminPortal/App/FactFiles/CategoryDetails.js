@@ -2,14 +2,14 @@
 import $ from 'jquery';
 import _ from 'lodash';
 
-import { FormGroup, Input, TextArea, Checkbox } from '../../../Components/FormControl';
+import { FormGroup, Input, TextArea } from '../../../Components/FormControl';
 import EntryImages from './CategoryDetails/EntryImages';
 import EntryList from './CategoryDetails/EntryList';
 import EntryAudio from './CategoryDetails/EntryAudio';
 import EntryNuggets from './CategoryDetails/EntryNuggets';
 import ControlButtons from './CategoryDetails/ControlButtons';
 import { ConfirmButton, ConfirmModal } from '../../../Components/Button';
-import PhonePreview from '../../../Components/PhonePreview';
+import DevicePreview from '../../../Components/DevicePreview';
 import FactFilePreview from './FactFilePreview';
 
 const url = '/admin/app/factfiles';
@@ -143,9 +143,9 @@ export default class CategoryDetails extends Component {
                     }
                     <div className="col-lg-5 py-1">
                         <div className="m-3 sticky-preview">
-                            <PhonePreview>
+                            <DevicePreview>
                                 <FactFilePreview previewEntry={this.state.previewEntry} entries={this.state.category.entries} onEntrySelect={this.onEntrySelect.bind(this)} onBack={this.clearPreviewEntry.bind(this)}/>
-                            </PhonePreview>
+                            </DevicePreview>
                         </div>
                     </div>
 
