@@ -16,19 +16,57 @@ using static Deepcove_Trust_Website.Helpers.Utils;
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 {
     // Validation classes
-    class QuizUpdateArgs
+    public class QuizArgs
     {
-        public int Id { get; set; }
-        public bool Active { get; set; }
-        public bool Shuffle { get; set; }
-        public int? ImageId { get; set; }
-
+        public int Id { get; set; }        
         [Required]
+        public bool? Active { get; set; }
+        [Required]
+        public bool? Shuffle { get; set; }
+        [Required(ErrorMessage = "You must select an image")]
+        public int? ImageId { get; set; }
+        [Required(ErrorMessage = "You must provide a quiz title")]
         public string Title { get; set; }
         public string UnlockCode { get; set; }
+        
     }
 
-    [Authorize]
+    public class QuestionArgs : IValidatableObject
+    {
+        public int? CorrectAnswerId { get; set; }
+        public bool? TrueOrFalse { get; set; }
+        public int? ImageId { get; set; }
+        public int? AudioId { get; set; }
+        [Required]
+        public string Text { get; set; }
+        [Required]
+        public int? OrderIndex { get; set; }
+        public List<AnswerArgs> Answers { get; set; }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            // If no correct answer has been specified
+            if (CorrectAnswerId == null && TrueOrFalse == null)
+                yield return new ValidationResult("You must select a correct answer", new string[] { "CorrectAnswerId", "TrueOrFalse" });
+
+            // There are a mix of answers with and without images - not allowed!
+            if (Answers.Any(a => a.ImageId != null) && Answers.Any(a => a.ImageId == null))
+                yield return new ValidationResult("All answers must have images", new string[] { "Answers" });
+
+            if (Answers.Any(a => a.ImageId == null && string.IsNullOrEmpty(a.Text)))
+                yield return new ValidationResult("At least one answer does not have an image or text", new string[] { "Answers" });
+        }
+    }
+
+    public class AnswerArgs
+    {
+        public int? ImageId { get; set; }
+        public string Text { get; set; }
+    }
+
+    // -- End validation classes
+
+    //[Authorize]
     [Area("admin-portal,app")]
     [Route("/api/admin/app/quizzes")]
     public class ManageQuizzesController : Controller
@@ -132,24 +170,16 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
         // POST: /api/admin/app/quizzes
         [HttpPost]
-        public async Task<IActionResult> AddQuiz(IFormCollection data)
+        public async Task<IActionResult> AddQuiz(QuizArgs data)
         {
-            string unlockCode = data.Str("unlockCode");
-            string title = data.Str("title");
-            int imageId = data.Int("imageId");
-
-            // Crude validation - 422 is the correct code to return here
-            string failedFields = "";
-            if (imageId == 0) failedFields += "Image | ";
-            if (string.IsNullOrEmpty(title)) failedFields += "Title | ";
-
-            if (!string.IsNullOrEmpty(failedFields)) return UnprocessableEntity(new ResponseHelper("You must provide the following fields: " + failedFields));
+            if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);            
 
             Quiz newQuiz = new Quiz
             {
-                Title = title,
-                ImageId = imageId,
-                UnlockCode = unlockCode
+                Title = data.Title,
+                ImageId = (int)data.ImageId,
+                Shuffle = (bool)data.Shuffle,
+                UnlockCode = data.UnlockCode
             };
 
             await _Db.AddAsync(newQuiz);
@@ -161,28 +191,21 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
         // PATCH /api/admin/app/quizzes/{id:int}
         [HttpPatch("{id:int}")]
-        public async Task<IActionResult> UpdateQuiz(int id, IFormCollection data)
+        public async Task<IActionResult> UpdateQuiz(int id, QuizArgs data)
         {
-            bool active = data.Bool("active");
-            string title = data.Str("title");
-            string unlockCode = data.Str("unlockCode");
-            int imageId = data.Int("imageId");
-
-            // Validation
-            string failedFields = "";
-            if (string.IsNullOrEmpty(title)) failedFields += "Title | ";
-            if (imageId == 0) failedFields += "Image | ";
-            if (!string.IsNullOrEmpty(failedFields)) return UnprocessableEntity(new ResponseHelper("You must provide the following fields: " + failedFields));
+            if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
 
             // Find quiz record
             Quiz quiz = await _Db.Quizzes.FindAsync(id);
-            if (quiz == null) return NotFound(new ResponseHelper("Something went wrong. If the problem persists, please contact the developer.", "Quiz not found in database."));
+            
+            if (quiz == null) 
+                return NotFound(new ResponseHelper("Something went wrong. If the problem persists, please contact the developer.", "Quiz not found in database."));
 
             // Update fields
-            quiz.Active = active;
-            quiz.Title = title;
-            if (!string.IsNullOrEmpty(unlockCode)) quiz.UnlockCode = unlockCode;
-            if (imageId != 0) quiz.ImageId = imageId;
+            quiz.Active = (bool)data.Active;
+            quiz.Title = data.Title;
+            quiz.UnlockCode = string.IsNullOrEmpty(data.UnlockCode) ? quiz.UnlockCode : data.UnlockCode;
+            quiz.ImageId = (int)data.ImageId;
 
             // Save changes
             await _Db.SaveChangesAsync();
@@ -191,10 +214,20 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         }
 
         // POST: /api/admin/app/quizzes/questions
-        //[HttpPost("{questionId:int}/questions")]
-        //public async Task<IActionResult> AddQuestion(int questionId, IFormCollection data)
-        //{
+        [HttpPost("{quizId:int}/questions")]
+        public async Task<IActionResult> UpdateQuizQuestions(int quizId, [FromBody]List<QuestionArgs> data)
+        {
+            if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
+
+            Quiz quiz = await _Db.Quizzes.FindAsync(quizId);
+            if (quiz == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your page and try again.", "Quiz not found in database"));
+
+            List<QuizQuestion> questions = data.Select(d => new QuizQuestion
+            {
+                CorrectAnswerId = d.CorectAnswerId != null)
+            }).ToList();
+
             
-        //}
+        }
     }
 }
