@@ -366,6 +366,7 @@ class EntryDetails extends Component {
         }).done(() => {
             this.props.alert.success("Entry updated!");
             this.props.onSave();
+            this.getData();
         }).fail((err) => {
             this.props.alert.error(null, err.responseText);
         })
