@@ -143,8 +143,12 @@ export default class CategoryDetails extends Component {
                     }
                     <div className="col-lg-5 py-1">
                         <div className="m-3 sticky-preview">
-                            <DevicePreview>
-                                <FactFilePreview previewEntry={this.state.previewEntry} entries={this.state.category.entries} onEntrySelect={this.onEntrySelect.bind(this)} onBack={this.clearPreviewEntry.bind(this)}/>
+                            <DevicePreview sticky>
+                                <FactFilePreview previewEntry={this.state.previewEntry}
+                                    entries={this.state.category.entries}
+                                    onEntrySelect={this.onEntrySelect.bind(this)}
+                                    onBack={this.clearPreviewEntry.bind(this)}
+                                />
                             </DevicePreview>
                         </div>
                     </div>
@@ -172,7 +176,7 @@ class EntryDetails extends Component {
 
     constructor(props) {
         super(props);
-        console.log('constructor')
+        
         this.state = {
             hasChanged: this.props.addEntryMode,
             entry: this.props.previewEntry || this.emptyEntry()

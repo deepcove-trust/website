@@ -120,7 +120,7 @@ export default class Editor extends Component {
                 </div>
 
                 <div className="col-md-5 col-sm-12">
-                    <DevicePreview sticky backBar>
+                    <DevicePreview onBack={this.props.cb_edit.bind(this, 0, {})} sticky backBar>
                         <h4 className="text-center">{this.state.title}</h4>
                         <small className="d-block text-center">{this.getReadableDate(this.state.updated_at)}</small>
                         <hr className="indented" />

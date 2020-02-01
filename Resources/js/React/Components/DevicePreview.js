@@ -10,9 +10,15 @@ class PreviewWrapper extends Component {
 }
 
 class ScrollWrapper extends Component {
+
+    handleBack() {
+        if (this.props.onBack)
+            this.props.onBack();
+    }
+
     render() {
         const { children, backBar} = this.props;
-        let backBar_ui = !!backBar ? <div className="back-button-bar">Back</div> : null;
+        let backBar_ui = !!backBar ? <div className="back-button-bar" onClick={this.handleBack.bind(this)}>Back</div> : null;
         return (
             <div className="h-100">
                 <div className={`preview-body ${!!backBar ? 'with-back-button' : ''}`}>
@@ -68,15 +74,16 @@ export default class DevicePreview extends Component {
      * Both devices are portrait unless you specify 'landscape'
      * */
     render() {
-        let device = this.props.tablet
-            ? <Tablet silver={this.props.silver} landscape={this.props.landscape}>
-                <ScrollWrapper backBar={this.props.backBar}>
-                    {this.props.children}
+        const { backBar, children, landscape, onBack, silver, tablet, white } = this.props;
+        let device = tablet
+            ? <Tablet silver={silver} landscape={landscape}>
+                <ScrollWrapper backBar={backBar} onBack={onBack}>
+                    {children}
                 </ScrollWrapper>
             </Tablet>
-            : <Phone white={this.props.white} landscape={this.props.landscape}>
-                <ScrollWrapper backBar={this.props.backBar}>
-                    {this.props.children}
+            : <Phone white={white} landscape={landscape}>
+                <ScrollWrapper backBar={backBar} onBack={onBack}>
+                    {children}
                 </ScrollWrapper>
             </Phone>
 
