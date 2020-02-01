@@ -14,7 +14,7 @@ using Deepcove_Trust_Website.Data;
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
     [Authorize]
-    [Area("admin-portal")]
+    [Area("admin")]
     [Route("/admin/users")]
     public class UsersController : Controller
     {

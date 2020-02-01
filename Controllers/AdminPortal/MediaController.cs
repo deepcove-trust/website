@@ -21,16 +21,16 @@ using static Deepcove_Trust_Website.Helpers.Utils;
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
     [Authorize]
-    [Area("admin-portal")]
+    [Area("admin")]
     [Route("/admin/media")]
-    public class ManageMediaController : Controller
+    public class MediaController : Controller
     {
         private WebsiteDataContext _Db;
-        private ILogger<ManageMediaController> _Logger;
+        private ILogger<MediaController> _Logger;
         private IHostingEnvironment _HostingEnv;
         private IConfiguration _Config;
 
-        public ManageMediaController(WebsiteDataContext Db, ILogger<ManageMediaController> Logger, IHostingEnvironment HostingEnv, IConfiguration Config)
+        public MediaController(WebsiteDataContext Db, ILogger<MediaController> Logger, IHostingEnvironment HostingEnv, IConfiguration Config)
         {
             _Db = Db;
             _Logger = Logger;

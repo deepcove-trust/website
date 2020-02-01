@@ -42,7 +42,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 return Redirect(Url.Action(
                     "Index",
                     "Page",
-                    new { area = "admin-portal,web" }
+                    new { area = "admin" }
                 ));
             }
 
