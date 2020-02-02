@@ -1,79 +1,65 @@
 ﻿@using Deepcove_Trust_Website.Helpers;
 
-<div class="navigation-wrap bg-light start-header start-style">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="navbar navbar-expand-md navbar-light">
-                    <!-- Navbar Brand -->
-                    <a class="navbar-brand" href="/">
-                        <img src="~/images/logo.png" alt="Logo">
-                    </a>
-                    
-                    <!-- Toggle: Navbar Collapse -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    
-                    <!-- Navbar Links -->
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto py-4 py-md-0">
-                            <!-- Users -->
-                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                <a class="nav-link" asp-area="admin" asp-controller="Users"> Accounts</a>
-                            </li>
-                            <!--TODO-->
-                            <!-- Discover Deep Cove -->
-                            <ul class="navbar-nav ml-auto py-4 py-md-0">
-                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Discover Deep Cove</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="admin" asp-controller="Page" asp-action="FactFiles">Fact Files</a>
-                                        <a class="dropdown-item" asp-area="admin" asp-controller="Page" asp-action="Quizzes">Quizes</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            
-                            <!-- Media -->
-                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                <a class="nav-link" asp-area="admin" asp-controller="Media">Media</a>
-                            </li>
+<nav id="sitenav" class="navbar navbar-light navbar-expand-md sticky-top">
+    <div class="container-fluid">
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="/">
+            <img src="~/images/logo.png" alt="Logo">
+        </a>
 
-                            <!-- Noticeboard  -->
-                            <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                <a class="nav-link" asp-area="admin" asp-controller="Noticeboard">Noticeboard</a>
-                            </li>
+        <!-- Navbar Toggle -->
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#sitenav-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                            <!-- Website -->
-                            <ul class="navbar-nav ml-auto py-4 py-md-0">
-                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Website</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="admin" asp-controller="WebSettings">Website Settings</a>
-                                        <div class="dropdown-divider"></div>
-                                        <h6 class="dropdown-header">Pages</h6>
-                                        <a class="dropdown-item" asp-area="admin" asp-controller="Page" asp-route-filter="main">Main Website</a>
-                                        <a class="dropdown-item" asp-area="admin" asp-controller="Page" asp-route-filter="education">Education</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            
-                            <!-- My Account -->
-                            <ul class="navbar-nav ml-auto py-4 py-md-0">
-                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Hi @User.AccountNameFirst()</a>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" asp-area="admin" asp-controller="Account">Account Settings</a>
-                                        <a class="dropdown-item" asp-controller="Login" asp-action="Logout">Log out</a>
-                                    </div>
-                                </li>
-                            </ul>
-                            <!-- End My Account -->
-                        </ul>
+        <div id="sitenav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav ml-auto">
+                <!-- Manage Users -->
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link" asp-area="admin" asp-controller="Users">Accounts</a>
+                </li>
+
+                <!-- Discover Deep Cove -->
+                <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> Discover Deep Cove</a>
+                    <div role="menu" class="dropdown-menu">
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Page" asp-action="FactFiles">Fact Files</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Page" asp-action="Quizzes">Quizes</a>
                     </div>
-                    <!-- End Navbar Links -->
-                </nav>
-            </div>
+                </li>
+
+                <!-- Manage Media -->
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link" asp-area="admin" asp-controller="Media">Media</a>
+                </li>
+
+                <!-- Noticeboard -->
+                <li role="presentation" class="nav-item">
+                    <a class="nav-link" asp-area="admin" asp-controller="Noticeboard">Noticeboard</a>
+                </li>
+
+                <!-- Website -->
+                <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> Website</a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="WebSettings">Website Settings</a>
+                        <div class="dropdown-divider"></div>
+                        <h6 class="dropdown-header">Manage Pages</h6>
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Page" asp-route-filter="main">Main Website</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Page" asp-route-filter="education">Education</a>
+                    </div>
+                </li>
+
+                <!-- Me -->
+                <li class="nav-item dropdown">
+                    <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> Hi @User.AccountNameFirst()</a>
+                    <div class="dropdown-menu" role="menu">
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Account">Your Settings</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Login" asp-action="Logout">Logout</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>

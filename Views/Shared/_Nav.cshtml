@@ -10,61 +10,52 @@
     List<NavItem> navItems = Nav.GetNavItemsBySection(section);
 }
 
-<div class="navigation-wrap bg-light start-header start-style">
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <nav class="navbar navbar-expand-md navbar-light">
-                    <!-- Navbar Brand -->
-                    <a class="navbar-brand" href="/">
-                        <img src="~/images/logo.png" alt="Logo">
-                    </a>
+<nav id="sitenav" class="navbar navbar-light navbar-expand-md sticky-top">
+    <div class="container-fluid">
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="/">
+            <img src="~/images/logo.png" alt="Logo">
+        </a>
 
-                    <!-- Toggle: Navbar Collapse -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
+        <!-- Navbar Toggle -->
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#sitenav-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-                    <!-- Navbar Links -->
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ml-auto py-4 py-md-0">
-
-                            @foreach (var navItem in navItems)
-                            {
-                                @if (navItem.NavItemPages.Count > 0)
+        <div id="sitenav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav ml-auto">
+                <!-- Start Links -->
+                @foreach (var navItem in navItems)
+                {
+                    @if (navItem.NavItemPages.Count > 0)
+                    {
+                        <li class="nav-item dropdown">
+                            <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> @(navItem.Text ?? "Dropdown")</a>
+                            <div role="menu" class="dropdown-menu">
+                                @foreach (var link in navItem.NavItemPages)
                                 {
-                                    <ul class="navbar-nav ml-auto py-4 py-md-0">
-                                        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> @(navItem.Text ?? "Dropdown")</a>
-                                            <div class="dropdown-menu" role="menu">
-                                                @foreach (var link in navItem.NavItemPages)
-                                                {
-                                                    if (link.Page == null || link.Page.Public || User.Identity.IsAuthenticated)
-                                                    {
-                                                        <a class="dropdown-item" href="@(link.Url ?? link.Page.AbsoluteUrl)">@(link.Text ?? link.Page.Name)</a>
-                                                    }
-                                                }
-                                            </div>
-                                        </li>
-                                    </ul>
-
-                                }
-                                else if (navItem.Page == null || navItem.Page.Public || User.Identity.IsAuthenticated)
-                                {
-                                    if (navItem.Page == null && navItem.Url == null) { }
-                                    else
+                                    if (link.Page == null || link.Page.Public || User.Identity.IsAuthenticated)
                                     {
-                                        <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
-                                            <a class="nav-link" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
-                                        </li>
+                                        <a role="presentation" class="dropdown-item" href="@(link.Url ?? link.Page.AbsoluteUrl)">@(link.Text ?? link.Page.Name)</a>
                                     }
                                 }
-                            }
-                        </ul>
-                    </div>
-                    <!-- End Navbar Links -->
-                </nav>
-            </div>
+                            </div>
+                        </li>
+                    }
+                    else if (navItem.Page == null || navItem.Page.Public || User.Identity.IsAuthenticated)
+                    {
+                        if (navItem.Page == null && navItem.Url == null) { }
+                        else
+                        {
+                            <li role="presentation" class="nav-item">
+                                <a class="nav-link" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
+                            </li>
+                        }
+                    }
+                }
+                <!-- End Links -->
+            </ul>
         </div>
     </div>
-</div>
+</nav>
