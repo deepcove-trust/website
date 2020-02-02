@@ -17,7 +17,7 @@ using static Deepcove_Trust_Website.Helpers.Utils;
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 {
     [Authorize]
-    [Area("admin-portal,app")]
+    [Area("admin")]
     [Route("/admin/app/factfiles")]
     public class ManageFactFilesController : Controller
     {

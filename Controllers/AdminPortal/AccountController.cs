@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Deepcove_Trust_Website.Models;
@@ -16,7 +15,7 @@ using static Deepcove_Trust_Website.Helpers.Utils;
 namespace Deepcove_Trust_Website.Controllers.AdminPortal
 {
     [Authorize]
-    [Area("admin-portal")]
+    [Area("admin")]
     [Route("/admin/account")]
     public class AccountController : Controller
     {

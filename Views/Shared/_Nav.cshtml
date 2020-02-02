@@ -5,39 +5,43 @@
 @inject NavbarService Nav
 
 @{
-    var section = Nav.WebsiteSection;
+    string action = ViewContext.RouteData.Values["action"].ToString();
+    var section = Nav.GetWebsiteSection(action: action);
     List<NavItem> navItems = Nav.GetNavItemsBySection(section);
 }
 
-<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
-    <div class="container">
+<nav id="sitenav" class="navbar navbar-light navbar-expand-md sticky-top">
+    <div class="container-fluid">
+        <!-- Navbar Brand -->
         <a class="navbar-brand" href="/">
-            <img src="~/images/logo.png" alt="logo" />
+            <img src="~/images/logo.png" alt="Logo">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+        <!-- Navbar Toggle -->
+        <button class="navbar-toggler" data-toggle="collapse" data-target="#sitenav-collapse">
+            <span class="sr-only">Toggle navigation</span>
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-            <ul class="navbar-nav flex-shrink-1">
-                <!-- Once the trust is happy with their education portal, remove this link. . . -->
-                <!-- Contact Samuel Grant -->
+
+        <div id="sitenav-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav ml-auto">
+                <!-- Start Links -->
                 @foreach (var navItem in navItems)
                 {
                     @if (navItem.NavItemPages.Count > 0)
                     {
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle nav-link text-dark" aria-expanded="false" data-toggle="dropdown" href="#">@(navItem.Text ?? "Dropdown")</a>
-                            <div class="dropdown-menu" role="menu">
+                            <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> @(navItem.Text ?? "Dropdown")</a>
+                            <div role="menu" class="dropdown-menu">
                                 @foreach (var link in navItem.NavItemPages)
                                 {
                                     if (link.Page == null || link.Page.Public || User.Identity.IsAuthenticated)
                                     {
-                                        <a class="dropdown-item" role="presentation" href="@(link.Url ?? link.Page.AbsoluteUrl)">@(link.Text ?? link.Page.Name)</a>
+                                        <a role="presentation" class="dropdown-item" href="@(link.Url ?? link.Page.AbsoluteUrl)">@(link.Text ?? link.Page.Name)</a>
                                     }
                                 }
                             </div>
                         </li>
-
                     }
                     else if (navItem.Page == null || navItem.Page.Public || User.Identity.IsAuthenticated)
                     {
@@ -45,11 +49,12 @@
                         else
                         {
                             <li role="presentation" class="nav-item">
-                                <a class="nav-link text-dark" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
+                                <a class="nav-link" href="@(navItem.Url ?? navItem.Page.AbsoluteUrl)">@(navItem.Text ?? navItem.Page.Name)</a>
                             </li>
                         }
                     }
                 }
+                <!-- End Links -->
             </ul>
         </div>
     </div>

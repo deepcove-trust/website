@@ -15,7 +15,7 @@ using static Deepcove_Trust_Website.Helpers.Utils;
 namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
 {
     [Authorize]
-    [Area("admin-portal,web")]
+    [Area("admin")]
     [Route("/admin/pages")]
     public class PageController : Controller
     {
