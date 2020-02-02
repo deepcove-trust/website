@@ -32,11 +32,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
         /// 
         /// If no size is provided, the controller will return the thumbnail.
         /// 
-        /// 
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Index(string filename, int width = 0, bool original = false)
+        public async Task<IActionResult> Index(string filename, int width = 0, bool original = false, bool download = false)
         {
             try
             {
@@ -47,6 +46,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                     .FirstOrDefaultAsync();
 
                 if (file == null) return NotFound("No file exists for the supplied filename");
+
+                // If a download is requested, set the mandatory header.
+                if (download) Response.Headers.Add(file.DownloadHeader());
 
                 // Return file if not image
                 if (file.GetCategory() != MediaCategory.Image)
