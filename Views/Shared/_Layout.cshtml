@@ -42,17 +42,13 @@
 
     <div class="container content-container">
         <header class="mb-3">
-            @if (RouteArea == "")
+            @if (RouteArea == "" || RouteArea == "education-portal")
             {
                 await Html.RenderPartialAsync("_Nav.cshtml");
             }
             else if (RouteArea.Contains("admin-portal") || RouteArea.Contains("admin"))
             {
                 await Html.RenderPartialAsync("_AdminNav.cshtml");
-            }
-            else if (RouteArea == "education-portal")
-            {
-
             }
         </header>
 
