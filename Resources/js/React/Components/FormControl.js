@@ -39,6 +39,7 @@ export class Checkbox extends Component {
                 <input id={id}
                     type="checkbox"
                     className="custom-control-input"
+                    disabled={this.props.disabled}
                     name={this.props.name || null}
                     checked={this.state.checked}
                     onChange={this.toggleCheckbox.bind(this)}

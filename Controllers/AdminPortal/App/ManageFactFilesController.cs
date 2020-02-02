@@ -271,8 +271,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                     } : null,
                     PronounceAudio = entry.PronounceAudio != null ? new
                     {
-                        entry.PronounceAudio?.Id,
-                        entry.PronounceAudio?.Name,
+                        entry.PronounceAudio.Id,
+                        entry.PronounceAudio.Name,
                         entry.PronounceAudio.Filename,
                         entry.PronounceAudio.MediaType
                     } : null,

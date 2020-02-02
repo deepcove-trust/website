@@ -141,7 +141,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                     audio = q.Audio != null ? new
                     {
                         q.Audio.Id,
-                        q.Audio.Filename
+                        q.Audio.Filename,
+                        q.Audio.MediaType
                     } : null,
                     q.Text,
                     answers = q.Answers.Select(a => new {
