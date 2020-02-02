@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Deepcove_Trust_Website.Controllers.AppPortal
 {
     [Authorize]
-    [Area("admin-portal,app")]
+    [Area("admin")]
     [Route("/admin/app")]
     public class PageController : Controller
     {        

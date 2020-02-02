@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using Deepcove_Trust_Website.Data;
-using Deepcove_Trust_Website.Models;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Routing;
+using Deepcove_Trust_Website.Models;
 
 namespace Deepcove_Trust_Website.Features.RazorRender
 {
@@ -46,12 +46,9 @@ namespace Deepcove_Trust_Website.Features.RazorRender
                 .OrderBy(o => o.OrderIndex).ToList();
         }
 
-        public Models.Section WebsiteSection
+        public Models.Section GetWebsiteSection(string action)
         {
-            get
-            {
-                return Models.Section.main;
-            }
+            return (string.IsNullOrEmpty(action) || action == "MainPage" || action == "HomePage") ? Models.Section.main : Models.Section.education;
         }
     }
 }
