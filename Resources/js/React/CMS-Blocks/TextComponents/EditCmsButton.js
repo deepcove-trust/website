@@ -3,6 +3,7 @@ import { FormGroup, Input, Select } from '../../Components/FormControl';
 import { Button } from '../../Components/Button';
 import { isExternalUrl } from '../../../helpers';
 import Modal from '../../Components/Modal';
+import SelectMedia from '../SelectMedia';
 
 export default class EditCmsButton extends Component {
     constructor(props) {
@@ -16,7 +17,8 @@ export default class EditCmsButton extends Component {
                 href: "",
                 text: ""
             },
-            showModal: false
+            showModal: false,
+            showFileModal: false
         }
     }
 
@@ -27,6 +29,24 @@ export default class EditCmsButton extends Component {
             button: button
         });
     }
+
+    handleFileSelect(file) {
+        let button = this.state.button;
+        button.href = `/media?filename=${file.filename}&download=true`
+        button.text = `Download ${file.name}`;
+
+        this.setState({
+            button,
+            showModal: true
+        });
+    }
+
+    handleFileModal(showFileModal) {       
+        this.setState({
+            showFileModal
+        });
+    }
+
 
     returnChanges(e) {
         e.preventDefault();
@@ -44,7 +64,14 @@ export default class EditCmsButton extends Component {
 
         let externalIcon = this.state.button && isExternalUrl(this.state.button.href) ? <i className="fas fa-external-link-alt"/>: null;
         
-        let modal = this.state.showModal ? (
+        let modal = this.state.showFileModal ? (
+            <SelectMedia showModal={this.state.showFileModal}
+                title="Chose a 'download' file"
+                type="General"
+                handleHideModal={this.handleFileModal.bind(this, false)}
+                cb={(file) => this.handleFileSelect(file)}
+            />
+        ) : this.state.showModal ? (
             <Modal title="Configure Button" handleHideModal={() => this.setState({ 'showModal': false })}>
                 <form onSubmit={this.returnChanges.bind(this)}>
                     <div className="row text-left">
@@ -56,10 +83,14 @@ export default class EditCmsButton extends Component {
 
                             <FormGroup label="URL: " required>
                                 <Input placeHolder="https://" type="href" cb={this.editVal.bind(this, 'href')} value={this.state.button.href} required />
-                                <p className="my-2">Or create a download link <span className="font-italic">(Coming Sooon!)</span></p>
-                                <Button className="btn btn-dark" disabled>
+                                <p className="my-2">Or create a download link</p>
+
+
+                                {/* Select a file to download modal */}
+                                <Button className="btn btn-dark" cb={this.handleFileModal.bind(this, true)}>
                                     Choose File <i className="fas fa-file-check" />
                                 </Button>
+                                {/* End Select a file to download modal */}
                             </FormGroup>
                         </div>
 

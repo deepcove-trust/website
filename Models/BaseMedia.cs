@@ -1,8 +1,7 @@
 ﻿using Deepcove_Trust_Website.Data;
-using Deepcove_Trust_Website.DiscoverDeepCove;
 using Deepcove_Trust_Website.Helpers;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
@@ -10,7 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
@@ -132,6 +130,16 @@ namespace Deepcove_Trust_Website.Models
             // Todo: Also a bit tricky since these aren't linked in the database, only via HREF properties
 
             return usages;
+        }
+
+        /// <summary>
+        /// A response header that will download the file rather than view it in the browser. Usage: 
+        /// </summary>
+        /// <returns><see cref="KeyValuePair{String, StringValues}"/></returns>
+        public KeyValuePair<string, StringValues> DownloadHeader()
+        {
+            string fileName = $"{Name}.{MediaType.Value.ToLower()}";
+            return new KeyValuePair<string, StringValues>("Content-Disposition", $"attachment; filename={fileName}");
         }
     }
 }

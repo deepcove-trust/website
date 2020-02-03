@@ -6,6 +6,7 @@ import FileUsages from './FileUsages';
 
 import $ from 'jquery';
 import _ from 'lodash';
+import Card from '../../../Components/Card';
 
 const baseUri = "/admin/media"
 
@@ -78,24 +79,16 @@ export default class MetaData extends Component {
         if (!this.state.file) return <div />
 
         return (
-            <Fragment>
-                <div className="pb-3">
-                    <FileDetails edit={this.state.edit}
-                        file={this.state.file}
-                        cb={this.updateField.bind(this)}
-                    />
-                </div>
-
-                <div className="py-3">
-                    <FileProperties edit={this.state.edit}
-                        file={this.state.file}
-                        cb={this.updateField.bind(this)}
-                    />
-                </div>
-
-                <div className="py-3">
-                    <FileUsages usages={this.state.file.usages} />
-                </div>
+            <Card>
+                <FileDetails edit={this.state.edit}
+                    file={this.state.file}
+                    cb={this.updateField.bind(this)}
+                />
+            
+                <FileProperties edit={this.state.edit}
+                    file={this.state.file}
+                    cb={this.updateField.bind(this)}
+                />
 
                 <MetaButtons edit={this.state.edit}
                     alert={this.props.alert}
@@ -111,7 +104,11 @@ export default class MetaData extends Component {
                         });
                     }}
                 />
-            </Fragment>
+
+                <div className="py-3">
+                    <FileUsages usages={this.state.file.usages} />
+                </div>
+            </Card>
         )
     }
 }

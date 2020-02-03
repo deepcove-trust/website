@@ -1,4 +1,4 @@
-﻿import React, { Component, Fragment } from 'react';
+﻿import React, { Component } from 'react';
 import Modal from '../Components/Modal';
 import { Input } from '../Components/FormControl';
 import { Button } from '../Components/Button';
@@ -12,7 +12,7 @@ export default class SelectMedia extends Component {
         this.state = {
             filter: this.props.type,
             search: null,
-            data: null,
+            data: [],
             selectedId: null
         }
     }
@@ -80,7 +80,7 @@ export default class SelectMedia extends Component {
 
         return (
             <Modal size="lg" className="media_select"
-                title={`Select an ${this.props.type}`}
+                title={this.props.title || `Select an ${this.props.type}`}
                 footer={footer}
                 handleHideModal={this.props.handleHideModal}
             >

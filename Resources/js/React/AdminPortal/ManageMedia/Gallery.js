@@ -1,9 +1,17 @@
 ﻿import React, { Component } from 'react';
 import { Button } from '../../Components/Button';
-import { Input, FormGroup, Select } from '../../Components/FormControl';
+import { Input, FormGroup } from '../../Components/FormControl';
+import Rselect from 'react-select';
 import AudioControls from '../../Components/Audio';
 import Delete from './DetailsWidget/Delete';
 import $ from 'jquery';
+
+const filterOptions = [
+    { label: "Any", value: "" },
+    { label: "Audio", value: "Audio" },
+    { label: "Image", value: "Image" },
+    { label: "File", value: "General"}
+]
 
 export default class Gallery extends Component {
     constructor(props) {
@@ -53,6 +61,12 @@ export default class Gallery extends Component {
             images.css("height", images[0].offsetWidth);
     }
 
+    handleFilterChange(filter) {
+        this.setState({
+            filter: filter.value
+        });
+    }
+
     render() {
         let media;
         if (this.state.data) {
@@ -89,9 +103,8 @@ export default class Gallery extends Component {
 
                 <div className="col-md-4 col-sm-12">
                     <FormGroup label="Type:">
-                        <Select selected={this.state.filter}
-                            options={["", "Audio", "Image", "File"]}
-                            cb={(filter) => this.setState({ filter })}
+                        <Rselect options={filterOptions}
+                            onChange={this.handleFilterChange.bind(this)}
                         />
                     </FormGroup>
                 </div>
