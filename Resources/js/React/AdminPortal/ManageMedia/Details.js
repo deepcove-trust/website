@@ -23,8 +23,6 @@ export default class Details extends Component {
         return (
             <div className="row pb-5">
                 <div className="col-12 py-3">
-                    <h1 className="text-center">Media File Details</h1>
-
                     <div className="pb-4">
                         <Button className="btn btn-dark btn-sm float-left" cb={this.props.setTab.bind(this, 1)}>
                             Back to Gallery
@@ -39,8 +37,8 @@ export default class Details extends Component {
 
                 
                 <div className="col-md-6 col-sm-12 details-container">
-                    <img src={imgUrl} alt={this.props.data.alt} />
-                    <AudioControls file={this.props.data}/>
+                    <img className="sticky-top" src={imgUrl} alt={this.props.data.alt} />
+                    <AudioControls file={this.props.data} />
                 </div>
 
                 <div className="col-md-6 col-sm-12">

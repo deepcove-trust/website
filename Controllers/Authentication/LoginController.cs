@@ -41,7 +41,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
             {
                 return Redirect(Url.Action(
                     "Index",
-                    "Page",
+                    "Dashboard",
                     new { area = "admin" }
                 ));
             }

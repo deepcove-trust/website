@@ -14,11 +14,9 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using static Deepcove_Trust_Website.Helpers.Utils;
 
-namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
+namespace Deepcove_Trust_Website.Controllers
 {
-    [Authorize]
-    [Area("admin")]
-    [Route("/admin/app/factfiles")]
+    [Authorize, Area("admin"), Route("/admin/app/factfiles")]
     public class ManageFactFilesController : Controller
     {
 
@@ -29,6 +27,12 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         {
             _Logger = logger;
             _Db = db;
+        }
+        
+        [HttpGet]
+        public IActionResult Index()
+        {
+            return View(viewName: "~/Views/AdminPortal/App/FactFiles.cshtml");
         }
 
         // GET: /admin/app/factfiles/categories
