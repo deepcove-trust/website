@@ -4,6 +4,7 @@ import { render } from 'react-dom';
 import Alert from '../../Components/Alert';
 import QuizIndex from './Quizzes/QuizIndex';
 import QuizDetails from './Quizzes/QuizDetails';
+import ErrorBoundary from '../../Errors/ErrorBoundary';
 
 export default class Quizzes extends Component {
 
@@ -57,10 +58,12 @@ export default class Quizzes extends Component {
             : <QuizDetails alert={this.Alert} quizId={this.state.selectedQuizId} quizTitle={this.state.selectedQuizTitle} onQuizSave={this.onQuizSave.bind(this)} onBack={this.onClearSelected.bind(this)} />
 
         return (
-            <Alert onRef={ref => this.Alert = ref}>
-                <h1 className="text-center my-5">Quiz Management</h1>
-                {page}
-            </Alert>
+            <ErrorBoundary customError="react-quizzes">
+                <Alert onRef={ref => this.Alert = ref}>
+                    <h1 className="text-center my-5">Quiz Management</h1>
+                    {page}
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }

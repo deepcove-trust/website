@@ -13,6 +13,7 @@ import ReactTemplate9 from './9';
 import ReactTemplate10 from './10';
 import ReactTemplate11 from './11';
 import $ from 'jQuery';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 
 
@@ -114,7 +115,7 @@ export default class BasePage extends Component {
         const TemplateName = components[this.state.page.templateId];
         
         return (
-            <Fragment>
+            <ErrorBoundary customError={`react-page-${this.state.pageId}`}>
                 <PageControls allowEdits={this.state.allowEdits}
                     page={this.state.page}
                     settings={!this.state.page.enums}
@@ -139,7 +140,7 @@ export default class BasePage extends Component {
                     allowEdits={this.state.allowEdits}
                     pushChanges={this.receiveChanges.bind(this)}
                 />
-            </Fragment>
+            </ErrorBoundary>
         );
     }
 

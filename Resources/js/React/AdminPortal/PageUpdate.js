@@ -4,6 +4,7 @@ import PageMeta from './Pages/PageMeta';
 
 import $ from 'jquery';
 import Alert from '../Components/Alert';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const baseUri = "/admin/pages";
 
@@ -60,12 +61,14 @@ export default class UpdatePageWrapper extends Component {
         }
 
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <PageMeta title="Page Settings"
-                    data={this.state.page}
-                    saveChanges={this.updatePage.bind(this)}
-                />
-            </Alert>
+            <ErrorBoundary customError="react-page-update">
+                <Alert onRef={ref => (this.Alert = ref)}>
+                    <PageMeta title="Page Settings"
+                        data={this.state.page}
+                        saveChanges={this.updatePage.bind(this)}
+                    />
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }

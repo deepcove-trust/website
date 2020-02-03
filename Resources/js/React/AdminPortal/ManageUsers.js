@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import AccountCard from './ManageUsers/AccountCard';
 import Alert from '../Components/Alert';
 import $ from 'jquery';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const baseUri = `/admin/users`;
 
@@ -35,11 +36,11 @@ export default class Users extends Component {
 
     render() {
         let accounts;
-        if(this.state.accounts) {
+        if (this.state.accounts) {
             accounts = this.state.accounts.map((account, key) => {
                 return <AccountCard key={key}
                     u={this.getData.bind(this)}
-                    account={account} 
+                    account={account}
                     baseUri={baseUri}
                     alert={this.Alert}
                 />
@@ -47,18 +48,20 @@ export default class Users extends Component {
         }
 
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <div className="row">
-                    <div className="col-12 py-3">
-                        <h1 className="text-center">Manage Users</h1>
-                        <p className="text-center">
-                            Active accounts have access to all functions, <a href="/register">click here</a> to register a new account.
+            <ErrorBoundary customError="react-manage-users">
+                <Alert onRef={ref => (this.Alert = ref)}>
+                    <div className="row">
+                        <div className="col-12 py-3">
+                            <h1 className="text-center">Manage Users</h1>
+                            <p className="text-center">
+                                Active accounts have access to all functions, <a href="/register">click here</a> to register a new account.
                         </p>
-                    </div>
+                        </div>
 
-                    {accounts}
-                </div>
-            </Alert>
+                        {accounts}
+                    </div>
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }

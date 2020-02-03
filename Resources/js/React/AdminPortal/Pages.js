@@ -5,6 +5,7 @@ import PagePreview from './Pages/PagePreview';
 import Alert from '../Components/Alert';
 import $ from 'jquery';
 import { Input, FormGroup } from '../Components/FormControl';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const baseUri = `/admin/pages`;
 
@@ -56,25 +57,27 @@ export default class Pages extends Component {
         }
 
         return (
-            <Alert className="row" onRef={ref => (this.alert = ref)}>
-                <div className="col-12 py-3">
-                    <h1 className="text-center">Pages</h1>
-                </div>
+            <ErrorBoundary customError="react-pages">
+                <Alert className="row" onRef={ref => (this.alert = ref)}>
+                    <div className="col-12 py-3">
+                        <h1 className="text-center">Pages</h1>
+                    </div>
 
-                <div className="col-md-4">
-                    <FormGroup label="Search:">
-                        <Input type="text" placeHolder="Page name..." value={this.state.search} cb={(search) => this.setState({ search })} />
-                    </FormGroup>
-                </div>
+                    <div className="col-md-4">
+                        <FormGroup label="Search:">
+                            <Input type="text" placeHolder="Page name..." value={this.state.search} cb={(search) => this.setState({ search })} />
+                        </FormGroup>
+                    </div>
 
-                <div className="col-md-4 offset-md-4 mb-3">
-                    <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
-                        New Page <i className="fas fa-file-plus"></i>
-                    </Link>
-                </div>
+                    <div className="col-md-4 offset-md-4 mb-3">
+                        <Link className="btn btn-info float-right" href={`${baseUri}/create?filter=${this.state.filter}`}>
+                            New Page <i className="fas fa-file-plus"></i>
+                        </Link>
+                    </div>
 
-                {pages}
-            </Alert>
+                    {pages}
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }

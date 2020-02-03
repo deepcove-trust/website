@@ -4,6 +4,7 @@ import Gallery from './ManageMedia/Gallery';
 import Details from './ManageMedia/Details';
 import Upload from './ManageMedia/Upload';
 import Alert from '../Components/Alert';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const sections = {
     1: Gallery,
@@ -28,23 +29,25 @@ export default class ManageMedia extends Component {
         const Template = sections[this.state.tab];
 
         return (
-            <Alert onRef={ref => this.Alert = ref}>
-                <div className="row">
-                    <div className="col-12 fade1sec">
-                        <Template data={this.state.media || null}
-                            alert={this.Alert}
-                            setTab={(tab) => this.setState({
-                                tab
-                            })
-                            }
-                            viewDetails={(media) => this.setState({
-                                tab: 2,
-                                media
-                            })
-                            } />
+            <ErrorBoundary customError="react-manage-media">
+                <Alert onRef={ref => this.Alert = ref}>
+                    <div className="row">
+                        <div className="col-12 fade1sec">
+                            <Template data={this.state.media || null}
+                                alert={this.Alert}
+                                setTab={(tab) => this.setState({
+                                    tab
+                                })
+                                }
+                                viewDetails={(media) => this.setState({
+                                    tab: 2,
+                                    media
+                                })
+                                } />
+                        </div>
                     </div>
-                </div>
-            </Alert>
+                </Alert>
+            </ErrorBoundary>
         )
     }
 }
