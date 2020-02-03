@@ -110,7 +110,8 @@ class Item extends Component {
             <div className={this.props.selected ? "selected" : ''}>
                 <img src={imgSrc}
                     height={'200px'}
-                    style={{ 'width': '100%', 'objectFit': 'cover' }}
+                    style={{
+                        'width': '100%', 'objectFit': 'cover', 'backgroundColor': '#262626' }}
                     alt={this.props.file.name}
                     onClick={this.props.cb.bind(this, this.props.file.id)}
                 />
