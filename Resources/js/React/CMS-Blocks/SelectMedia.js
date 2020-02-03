@@ -12,7 +12,7 @@ export default class SelectMedia extends Component {
         this.state = {
             filter: this.props.type,
             search: null,
-            data: null,
+            data: [],
             selectedId: null
         }
     }
