@@ -33,10 +33,10 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
     public class QuestionArgs : IValidatableObject
     {
-        public int? CorrectAnswerId { get; set; }
-        public bool? TrueOrFalse { get; set; }
-        public int? ImageId { get; set; }
-        public int? AudioId { get; set; }
+        public int? CorrectAnswerIndex { get; set; }
+        public int? TrueOrFalse { get; set; }
+        public MediaArgs Image { get; set; }
+        public MediaArgs Audio { get; set; }
         [Required]
         public string Text { get; set; }
         [Required]
@@ -46,22 +46,27 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // If no correct answer has been specified
-            if (CorrectAnswerId == null && TrueOrFalse == null)
+            if (CorrectAnswerIndex == null && TrueOrFalse == null)
                 yield return new ValidationResult("You must select a correct answer", new string[] { "CorrectAnswerId", "TrueOrFalse" });
 
             // There are a mix of answers with and without images - not allowed!
-            if (Answers.Any(a => a.ImageId != null) && Answers.Any(a => a.ImageId == null))
+            if (Answers.Any(a => a.Image?.Id != null) && Answers.Any(a => a.Image?.Id == null))
                 yield return new ValidationResult("All answers must have images", new string[] { "Answers" });
 
-            if (Answers.Any(a => a.ImageId == null && string.IsNullOrEmpty(a.Text)))
+            if (Answers.Any(a => a.Image?.Id == null && string.IsNullOrEmpty(a.Text)))
                 yield return new ValidationResult("At least one answer does not have an image or text", new string[] { "Answers" });
         }
     }
 
     public class AnswerArgs
     {
-        public int? ImageId { get; set; }
+        public MediaArgs Image { get; set; }
         public string Text { get; set; }
+    }
+
+    public class MediaArgs
+    {
+        public int? Id { get; set; }        
     }
 
     // -- End validation classes
@@ -133,6 +138,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                     q.Id,
                     questionType = q.GetQuestionType(),
                     q.TrueFalseAnswer,
+                    q.CorrectAnswerId,
                     image = q.Image != null ? new
                     {
                         q.Image.Id,
@@ -205,36 +211,99 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
         // POST: /api/admin/app/quizzes/{id:int}/questions
         [HttpPost("{quizId:int}/questions")]
-        public async Task<IActionResult> UpdateQuizQuestions(int quizId, [FromBody]List<QuestionArgs> data)
+        public async Task<IActionResult> AddQuestion(int quizId, [FromBody]QuestionArgs data)
         {
             if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
 
             Quiz quiz = await _Db.Quizzes.FindAsync(quizId);
-            if (quiz == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your page and try again.", "Quiz not found in database"));
 
-            List<QuizQuestion> questions = data.Select(d => new QuizQuestion
+            if(quiz == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find quiz in database"));
+
+            throw new NotImplementedException();
+        }
+
+        // PUT: /api/admin/app/quizzes/{quizId:int}/questions/{questionId:int}
+        [HttpPut("{quizId:int}/questions/{questionId:int}")]
+        public async Task<IActionResult> UpdateQuestion(int quizId, int questionId, [FromBody]QuestionArgs data)
+        {
+            if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
+
+            Quiz quiz = await _Db.Quizzes.FindAsync(quizId);
+
+            QuizQuestion question = await _Db.QuizQuestions.Include(q => q.Answers).Where(q => q.Id == questionId).FirstOrDefaultAsync();
+
+            if (quiz == null || question == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find question in database"));
+
+            using (var transaction = await _Db.Database.BeginTransactionAsync())
             {
-                QuizId = quizId,
-                CorrectAnswerId = d.CorrectAnswerId,
-                TrueFalseAnswer = d.TrueOrFalse != null ? (bool)d.TrueOrFalse ? (int?)1 : 0 : null,
-                ImageId = d.ImageId,
-                AudioId = d.AudioId,
-                Text = d.Text,
-                OrderIndex = d.OrderIndex,
-                Answers = d.Answers.Select(a => new QuizAnswer
+                question.CorrectAnswerId = null;
+
+                await _Db.SaveChangesAsync();
+
+                _Db.RemoveRange(question.Answers);
+
+                await _Db.SaveChangesAsync();
+
+                question.ImageId = data.Image?.Id;
+                question.Text = data.Text;
+                question.TrueFalseAnswer = data.TrueOrFalse;
+                question.AudioId = data.Audio?.Id;
+                
+                foreach(AnswerArgs answerArgs in data.Answers)
                 {
-                    Text = a.Text,
-                    ImageId = a.ImageId
-                }).ToList()
-            }).ToList();
+                    QuizAnswer newAns = new QuizAnswer
+                    {
+                        QuizQuestionId = question.Id,
+                        Text = answerArgs.Text,
+                        ImageId = answerArgs.Image?.Id
+                    };
 
-            _Db.RemoveRange(quiz.Questions); // not sure if we need this line of if EFC takes card of it
+                    await _Db.AddAsync(newAns);
 
-            quiz.Questions = questions;
+                    await _Db.SaveChangesAsync();
 
-            await _Db.SaveChangesAsync();
+                    if(data.Answers.IndexOf(answerArgs) == data.CorrectAnswerIndex)
+                    {
+                        question.CorrectAnswerId = newAns.Id;
+                    }
+                }
+
+                await _Db.SaveChangesAsync();
+
+                transaction.Commit();
+            }
 
             return Ok();
+
+        }
+
+        // DELETE: /api/admin/app/quizzes/{quizId:int}/questions/{questionId:int}
+        [HttpDelete("{quizId:int}/questions/{questionId:int}")]
+        public async Task<IActionResult> DeleteQuestion(int quizId, int questionId)
+        {
+            QuizQuestion question = await _Db.QuizQuestions.FindAsync(questionId);
+
+            if (question == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find question in database"));
+
+            using (var transaction = await _Db.Database.BeginTransactionAsync())
+            {
+                question.CorrectAnswerId = null;
+                await _Db.SaveChangesAsync();
+
+                _Db.Remove(question);
+                await _Db.SaveChangesAsync();
+
+                transaction.Commit();
+            }
+
+            return Ok();
+        }     
+        
+        // PATCH: /api/admin/app/quizzes/{quizId:int}/questions/{questionId:int}
+        [HttpPatch("{quizId:int}/questions/{questionId:int}")]
+        public async Task<IActionResult> ShiftQuestion(int quizId, int questionId, string shiftDirection)
+        {
+            throw new NotImplementedException();
         }
 
         // DELETE: /api/admin/app/quizzes/{id:int}

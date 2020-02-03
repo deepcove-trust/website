@@ -70,6 +70,10 @@ h4.noticeboardSection {
     background-color: $color-primary;
 }
 
+.bground-faded{
+    background-color: $color-primary-faded;
+}
+
 #bodyText{
     resize: none;
     min-height: 300px;
@@ -133,24 +137,25 @@ h4.noticeboardSection {
 }
 
 .new-image-card, .new-nugget-card, .new-audio-card, .new-question-card, .new-something-card {
+    background-color: white;
+    position: relative;
     cursor: pointer;
     height: 100%;
     color: $color-grey;
     padding-top: 20px;
     padding-bottom: 20px;
+    transition: all ease-in 0.1s;
 
     &:hover {
         color: white;
-        background-color: $color-primary;
+        background-color: $color-primary !important;
     }
     /* Center the 'add new' icon */
     & > div {
-        margin-left: auto;
-        margin-right: auto;
-        text-align: center;
-        position: relative;
+        position: absolute;
         top: 50%;
-        transform: translateY(-50%);
+        left: 50%;
+        transform: translateY(-50%) translateX(-50%);
 
         & > div {
             color: $color-primary;
@@ -264,7 +269,7 @@ label.list-card h5, label.list-card p {
 }
 
 .bg-trans{
-    background-color: rgba(254, 254, 254, 0.7);
+    background-color: rgba(254, 254, 254, 0.3);
 }
 
 .btn-gray {

@@ -12,14 +12,14 @@ export default class QuizSettings extends Component {
 
         this.state = {
             showModal: false,
-            editMode: false
+            editMode: this.props.mustSaveSettingsFirst
         }
     }
 
     componentDidMount() {
-        let e = $('.d-square').each(() => $(this).css('minHeight', $(this).offsetWidth));        
+        $('.d-square').each(() => $(this).css('minHeight', $(this).offsetWidth));
     }
-
+    
     cancelEdit() {
         this.props.onCancel();
         this.setState({editMode: false})
@@ -33,8 +33,18 @@ export default class QuizSettings extends Component {
 
     handleQuizSettingsFormSubmit(e) {
         e.preventDefault();
-        this.setState({ editMode: false });
-        this.props.onSaveSettings();
+        this.props.onSaveSettings(() => {
+            this.setState({
+                editMode: false
+            })
+        });
+    }
+
+    handleStartEdit() {
+        this.props.onEdit();
+        this.setState({
+            editMode: true
+        })
     }
 
     render() {
@@ -43,11 +53,11 @@ export default class QuizSettings extends Component {
 
         let checkBoxes = (
             <Fragment>
-                <FormGroup htmlFor="shuffle" label="Shuffle Questions?">
-                    <Checkbox disabled={disabled} tooltip="Questions will be shown in random order" checked={this.props.quiz.shuffle} className="d-inline mx-2" id="shuffle" cb={this.props.updateField.bind(this, 'shuffle')} />
+                <FormGroup className="d-inline-block" htmlFor="shuffle" label="Shuffle Questions?">
+                    <Checkbox disabled={disabled} tooltip="Questions will be shown in random order" checked={this.props.quiz.shuffle} className="ml-2 float-right" id="shuffle" cb={this.props.updateField.bind(this, 'shuffle')} />
                 </FormGroup>
-                <FormGroup htmlFor="active" label="Enable Quiz?">
-                    <Checkbox disabled={disabled} tooltip="Quiz will be downloaded to users devices" checked={this.props.quiz.active} className="d-inline mx-2" id="active" cb={this.props.updateField.bind(this, 'active')} />
+                <FormGroup className="d-inline-block" htmlFor="active" label="Enable Quiz?">
+                    <Checkbox disabled={disabled} tooltip="Quiz will be downloaded to users devices" checked={this.props.quiz.active} className="ml-2 float-right" id="active" cb={this.props.updateField.bind(this, 'active')} />
                 </FormGroup>
             </Fragment>
         )
@@ -55,12 +65,12 @@ export default class QuizSettings extends Component {
         let buttons = !this.state.editMode
             ? (
                 <div className="text-right">
-                    <Button className="btn btn-sm btn-dark" cb={() => { this.setState({ editMode: true }) }} >Edit &nbsp; <i className="fas fa-pencil"></i></Button>
+                    <Button className={`btn btn-sm btn-dark ${this.props.pendingEdit ? "d-none" : ""}`} cb={this.handleStartEdit.bind(this)} >Edit &nbsp; <i className="fas fa-pencil"></i></Button>
                 </div>
             )
                 : (
                 <div className="text-right">
-                    <Button className="btn btn-sm btn-danger mr-1" cb={this.cancelEdit.bind(this)} >Cancel &nbsp; <i className="fas fa-times"></i></Button>
+                    <Button className={`btn btn-sm btn-danger mr-1 `} cb={this.cancelEdit.bind(this)} >Cancel &nbsp; <i className="fas fa-times"></i></Button>
                     <Button className="btn btn-sm btn-success" type="submit" >Save &nbsp; <i className="fas fa-check"></i></Button>
                 </div>
                 )

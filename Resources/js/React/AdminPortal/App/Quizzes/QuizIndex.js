@@ -66,7 +66,7 @@ class QuizCard extends Component {
                     <span className="question-count">{this.props.quiz.questionCount} questions</span>
                 </div>
                 <div className="col-5 text-right">
-                    <small className={`font-weight-bold ${active ? "text-success" : "text-muted"}`}>{active ? "ENABLED" : "DISABLED"}</small> 
+                    <small className={`font-weight-bold ${active ? "text-success" : "text-danger"}`}>{active ? "ENABLED" : "DISABLED"}</small> 
                 </div>
             </div>
             )

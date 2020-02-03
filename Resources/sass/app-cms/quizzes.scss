@@ -1,6 +1,7 @@
-﻿.quiz-card{
+﻿.quiz-card {
     background-color: white;
     box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    transition: all ease-in 0.1s;
 
     h5 {
         margin-bottom: 0px;
@@ -11,14 +12,20 @@
         color: darkgray;
     }
 
-    &:hover, &:hover span, &:hover small{
+    &:hover {
         color: white !important;
         background-color: $color-primary;
 
-        & span, small{
+        span, small {
             color: white !important;
         }
     }
+}
+
+.pos-top-right {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
 }
 
 .quiz-settings{
@@ -38,5 +45,31 @@
 
     &:hover {
         opacity: 1.0;
+    }
+}
+
+.question-card{
+    margin-bottom: 30px;
+
+    .dropdown {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+
+        li {
+            padding: 10px;
+            transition: all ease-in 0.1s;
+            cursor: pointer;
+            &:hover {
+                background-color: $color-primary;
+                color: white;                
+            }
+        }
+    }
+}
+
+.answer-tile{
+    input[type=text]{
+        width: 90%;
     }
 }
