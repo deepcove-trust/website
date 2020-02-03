@@ -53,6 +53,10 @@ nav#sitenav.navbar {
         visibility: visible;
     }
 
+    .dropdown-toggle{
+        cursor: pointer;
+    }
+
     a.dropdown-toggle::after {
         color: black;
     }
