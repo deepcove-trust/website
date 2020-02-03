@@ -1,6 +1,6 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { Input } from '../../../Components/FormControl';
-import Panel from '../../../Components/Panel';
+import { CardHighlight, CardBody } from '../../../Components/Card';
 
 export default class FileProperties extends Component {
     render() {
@@ -8,29 +8,33 @@ export default class FileProperties extends Component {
         var title = this.props.file.mediaType.category + ' Properties';
 
         return (
-            <Panel>
-                <h4 className="text-center">{title}</h4>
+            <Fragment>
+                <CardHighlight>
+                    <h3 className="pt-3">{title}</h3>
+                </CardHighlight>
 
-                <div className="table-responsive">
-                    <table className="table table-sm">
-                        <tbody>
-                            <Title edit={this.props.edit}
-                                file={this.props.file}
-                                cb={this.props.cb.bind(this, 'title')}
-                            />
+                <CardBody>
+                    <div className="table-responsive">
+                        <table className="table table-sm">
+                            <tbody>
+                                <Title edit={this.props.edit}
+                                    file={this.props.file}
+                                    cb={this.props.cb.bind(this, 'title')}
+                                />
 
-                            <AltText edit={this.props.edit}
-                                file={this.props.file}
-                                cb={this.props.cb.bind(this, 'alt')}
-                            />
+                                <AltText edit={this.props.edit}
+                                    file={this.props.file}
+                                    cb={this.props.cb.bind(this, 'alt')}
+                                />
 
-                            <Dimensions file={this.props.file} />
+                                <Dimensions file={this.props.file} />
 
-                            <Duration file={this.props.file} />
-                        </tbody>
-                    </table>
-                </div>
-            </Panel>
+                                <Duration file={this.props.file} />
+                            </tbody>
+                        </table>
+                    </div>
+                </CardBody>
+            </Fragment>
         )
     }
 }

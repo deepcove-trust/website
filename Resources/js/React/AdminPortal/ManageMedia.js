@@ -41,7 +41,7 @@ export default class ManageMedia extends Component {
                                 tab: 2,
                                 media
                             })
-                            } />
+                        } />
                     </div>
                 </div>
             </Alert>
