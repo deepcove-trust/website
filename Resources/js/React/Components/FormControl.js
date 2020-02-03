@@ -34,7 +34,7 @@ export class Checkbox extends Component {
         let id = this.props.id ? `chq-${this.props.id}` : null;
 
         return (
-            <div className={`custom-control custom-checkbox ${this.props.className}`}>
+            <div className={`custom-control custom-checkbox ${this.props.className || ''}`}>
                 <ReactTooltip />
                 <input id={id}
                     type="checkbox"
@@ -167,7 +167,7 @@ export class Input extends Component {
         return (
             <input id={this.props.id || null}
                 type={this.getType()}
-                className={this.props.inputClass || "form-control"}
+                className={`form-control ${this.props.inputClass || ''}`}
                 name={this.props.name || null}
                 value={this.state.value || ""}
                 placeholder={this.props.placeHolder || null}
@@ -297,7 +297,7 @@ export class TextArea extends Component {
         return (
             <React.Fragment>
                 <textarea id={this.props.id || null}
-                    className={this.props.inputClass || "form-control"}
+                    className={`form-control ${this.props.inputClass || ''}`}
                     name={this.props.name || null}
                     value={this.state.value || ""}
                     placeholder={this.props.placeHolder || null}
