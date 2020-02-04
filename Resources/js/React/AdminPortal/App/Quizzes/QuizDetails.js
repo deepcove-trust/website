@@ -47,18 +47,18 @@ export default class QuizDetails extends Component {
             question[key][ansIndex] = val;
         } else {
             question[key] = val;
-        }        
+        }
 
         if (question.questionType == 'TrueOrFalse' && question.trueFalseAnswer == null) {
             question.trueFalseAnswer = 0;
-        } else if (question.correctAnswerIndex == null) {
-            question.correctAnswerIndex = 0;
+        } else {
+            if (question.correctAnswerIndex == null) {
+                question.correctAnswerIndex = 0;
+            }
             if (question.answers == null || question.answers.length == 0) {
                 question.answers = [{}, {}, {}, {}];
-            }            
-        }
-        
-
+            }
+        }   
         this.updateField('questions', questions);
     }
 
