@@ -223,11 +223,50 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         {
             if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
 
-            Quiz quiz = await _Db.Quizzes.FindAsync(quizId);
+            Quiz quiz = await _Db.Quizzes.Include(q => q.Questions).Where(q => q.Id == quizId).FirstOrDefaultAsync();
 
             if(quiz == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find quiz in database"));
 
-            throw new NotImplementedException();
+            QuizQuestion question = new QuizQuestion
+            {
+                Quiz = quiz,
+                TrueFalseAnswer = data.TrueFalseAnswer,
+                ImageId = data.Image?.Id,
+                AudioId = data.Audio?.Id,
+                Text = data.Text,
+                OrderIndex = quiz.Questions.Count,
+
+            };
+
+            // Transaction rolls back all changes if a failure occurs halfway through
+            using(var transaction = await _Db.Database.BeginTransactionAsync())
+            {
+                // Generate question ID
+                await _Db.AddAsync(question);
+                await _Db.SaveChangesAsync();
+
+                // Generate IDs for each question, update question correctAnswerId
+                for(int i = 0; i < data.Answers?.Count; i++)
+                {
+                    QuizAnswer answer = new QuizAnswer
+                    {
+                        QuizQuestionId = question.Id,
+                        Text = data.Answers[i].Text,
+                        ImageId = data.Answers[i].Image?.Id
+                    };
+
+                    await _Db.AddAsync(answer);
+                    await _Db.SaveChangesAsync();
+
+                    if (i == data.CorrectAnswerIndex) question.CorrectAnswerId = answer.Id;
+                }
+
+                await _Db.SaveChangesAsync();
+
+                transaction.Commit();
+            }
+
+            return Ok();
         }
 
         // PUT: /admin/app/quizzes/{quizId:int}/questions/{questionId:int}
@@ -312,7 +351,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         
         // PATCH: /admin/app/quizzes/{quizId:int}/questions/{questionId:int}
         [HttpPatch("{quizId:int}/questions/{questionId:int}")]
-        public async Task<IActionResult> ShiftQuestion(int quizId, int questionId, string shiftDirection)
+        public async Task<IActionResult> ShiftQuestion(int quizId, int questionId, [FromQuery]string shiftDirection)
         {
             if (!(shiftDirection.EqualsIgnoreCase("up") || shiftDirection.EqualsIgnoreCase("down")))
                 return BadRequest(new ResponseHelper("Shift direction must be 'up' or 'down'"));

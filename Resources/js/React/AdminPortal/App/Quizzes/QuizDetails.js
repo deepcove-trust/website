@@ -51,7 +51,12 @@ export default class QuizDetails extends Component {
 
         if (question.questionType == 'TrueOrFalse' && question.trueFalseAnswer == null) {
             question.trueFalseAnswer = 0;
-        } else if (question.correctAnswerIndex == null) question.correctAnswerIndex = 0;
+        } else if (question.correctAnswerIndex == null) {
+            question.correctAnswerIndex = 0;
+            if (question.answers == null || question.answers.length == 0) {
+                question.answers = [{}, {}, {}, {}];
+            }            
+        }
         
 
         this.updateField('questions', questions);
@@ -77,7 +82,7 @@ export default class QuizDetails extends Component {
             correctAnswerIndex: 0,
             questionType: "TextAnswers",
             text: null,
-            answers: [],
+            answers: [{}, {}, {}, {}],
             image: null,
             audio: null
         });
@@ -138,8 +143,17 @@ export default class QuizDetails extends Component {
         })
     }
 
-    onShiftQuestion() {
-
+    onShiftQuestion(questionId, shiftUp) {
+        let shiftDirection = shiftUp ? 'up' : 'down';
+        $.ajax({
+            type: 'patch',
+            url: `${url}/${this.state.quiz.id}/questions/${questionId}?shiftDirection=${shiftDirection}`,            
+        }).done(() => {
+            this.props.alert.success("Question position updated!");
+            this.getData();
+        }).fail((err) => {
+            this.props.alert.error(null, err.responseText);
+        });
     }
 
     onQuizDelete() {
@@ -147,8 +161,9 @@ export default class QuizDetails extends Component {
             type: 'delete',
             url: `${url}/${this.state.quiz.id}`
         }).done(() => {
+            this.props.alert.success("Quiz deleted!");
             this.props.onBack()
-        }).fail(() => {
+        }).fail((err) => {
             this.props.alert.error(null, err.responseText);
         });
     }
@@ -191,7 +206,7 @@ export default class QuizDetails extends Component {
 
         $.ajax({
             type: isNew ? 'post' : 'put',
-            url: `${url}/${this.state.quiz.id}/questions/${this.state.quiz.questions[questionIndex].id || null}`,
+            url: `${url}/${this.state.quiz.id}/questions/${this.state.quiz.questions[questionIndex].id || ''}`,
             contentType: 'application/json',
             data: JSON.stringify(this.state.quiz.questions[questionIndex])
         }).done(() => {
@@ -217,7 +232,7 @@ export default class QuizDetails extends Component {
                         <Card className="bg-trans">
                             <CardHighlight>
                                 {this.props.quizTitle ? <h3 className="mt-4 mb-3">{this.props.quizTitle}</h3> : <i className="fad fa-spinner fa-pulse fa-2x"></i>}
-                                <ConfirmModal className="btn btn-dark pos-top-right" question="Delete this quiz" confirmPhrase={this.props.quizTitle} cb={this.onQuizDelete.bind(this)}><i className="fas fa-trash"></i>&nbsp; Delete Quiz</ConfirmModal>
+                                {this.props.quizId != 0 ? <ConfirmModal className="btn btn-dark pos-top-right" question="Delete this quiz" confirmPhrase={this.props.quizTitle} cb={this.onQuizDelete.bind(this)}><i className="fas fa-trash"></i>&nbsp; Delete Quiz</ConfirmModal> : null}
                             </CardHighlight>
 
                             <QuizSettings pendingEdit={this.state.pendingEdit}

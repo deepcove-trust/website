@@ -18,7 +18,7 @@ export default class QuizQuestions extends Component {
                     pendingEdit={this.props.pendingEdit}
                     onEdit={this.props.onEdit.bind(this, index)}
                     onUpdateQuestion={this.props.onUpdateQuestion.bind(this, index)}
-                    onShiftQuestion={this.props.onShiftQuestion.bind(this, index)}
+                    onShiftQuestion={this.props.onShiftQuestion.bind(this, q.id)}
                     onDeleteQuestion={this.props.onDeleteQuestion.bind(this, index)}
                     onCancel={this.props.onCancel}
                     onSave={this.props.onSaveQuestion} />

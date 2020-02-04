@@ -181,6 +181,9 @@ namespace Deepcove_Trust_Website.Data
             // -- Configure relationships between pages and navitems
             modelBuilder.Entity<Page>().HasMany(p => p.NavItems).WithOne(ni => ni.Page).HasForeignKey(ni => ni.PageId).OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Page>().HasMany(p => p.NavItemPages).WithOne(ni => ni.Page).HasForeignKey(ni => ni.PageId).OnDelete(DeleteBehavior.Cascade);
+
+            // -- Configure relationship between question and correct answer
+            modelBuilder.Entity<QuizQuestion>().HasOne(q => q.CorrectAnswer).WithOne(a => a.CorrectForQuestion).OnDelete(DeleteBehavior.Cascade);
         }
 
         /// <summary>

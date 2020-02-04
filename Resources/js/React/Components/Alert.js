@@ -76,18 +76,17 @@ export default class Alert extends Component {
      * @param {[function, function]} cb
      */
     error(message, responseText, cb) {
-        let msg;
-
         try {
-            msg = responseText ? $.parseJSON(responseText) : null;
+            var msg = responseText ? $.parseJSON(responseText) : defaultMsg;
 
             // If it is a failed validation error, handle it differently       
-            if(msg && !(msg.ui && msg.debug)) {
+            if(msg.ui == null || msg.debug == null) {
                 Object.keys(msg).forEach((key) => {
                     toast.error(msg[key][0] || message, {
-                        _handleOnShow: this._handleOnShow('error', msg[key][0], cb)
+                        _handleOnShow: this._handleOnShow('error', msg[key][0])
                     });
                 })
+                return;
             }
         }
         catch {
@@ -95,10 +94,10 @@ export default class Alert extends Component {
                 ui: 'The server experienced an internal error. Please refresh the page and contact a developer if the problem persists.',
                 debug: 'The server experienced an internal error. Please refresh the page and contact a developer if the problem persists.'
             }
-        }        
+        }                
 
         toast.error(msg.ui || message, {
-            _handleOnShow: this._handleOnShow('error', msg.debug, cb)
+            _handleOnShow: this._handleOnShow('error', msg.debug || null, cb)
         });
 
     }
