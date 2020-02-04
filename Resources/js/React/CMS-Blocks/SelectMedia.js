@@ -54,6 +54,11 @@ export default class SelectMedia extends Component {
         );
     }
 
+    onInfiniteScrollUpdate() {
+        let el = $(`.media-select-icon`).first();
+        $(`.media-select-icon img`).css('height', el[0].offsetWidth);
+    }
+
     render() {
         if (!this.props.showModal) return <div />
 
@@ -86,7 +91,7 @@ export default class SelectMedia extends Component {
             >
                 <Input type="text" value={this.state.search} placeHolder="Search by name..." cb={(search) => this.setState({ search })} />
 
-                <InfiniteScroll>
+                <InfiniteScroll onUpdate={this.onInfiniteScrollUpdate}>
                     {items}
                 </InfiniteScroll>
             </Modal>
@@ -95,6 +100,14 @@ export default class SelectMedia extends Component {
 }
 
 class Item extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            iconHeight: null
+        }
+    }    
+
     render() {
 
         let mediaType = this.props.file.mediaType.category;
@@ -107,11 +120,10 @@ class Item extends Component {
         else imgSrc = `/media?filename=${this.props.file.filename}`;
 
         return (
-            <div className={this.props.selected ? "selected" : ''}>
+            <div className={`${this.props.selected ? 'selected' : ''} media-select-icon bground-primary text-white`}>
                 <img src={imgSrc}
-                    height={'200px'}
                     style={{
-                        'width': '100%', 'objectFit': 'cover', 'backgroundColor': '#262626' }}
+                        'width': '100%', 'objectFit': 'contain' }}
                     alt={this.props.file.name}
                     onClick={this.props.cb.bind(this, this.props.file.id)}
                 />
