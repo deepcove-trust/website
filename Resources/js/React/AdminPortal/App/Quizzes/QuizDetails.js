@@ -7,7 +7,7 @@ import QuizSettings from './QuizDetails/QuizSettings';
 import QuizQuestions from './QuizDetails/QuizQuestions';
 import { ConfirmModal } from '../../../Components/Button';
 
-const url = '/api/admin/app/quizzes';
+const url = '/admin/app/quizzes';
 
 export default class QuizDetails extends Component {
 
@@ -48,6 +48,12 @@ export default class QuizDetails extends Component {
         } else {
             question[key] = val;
         }        
+
+        if (question.questionType == 'TrueOrFalse' && question.trueFalseAnswer == null) {
+            question.trueFalseAnswer = 0;
+        } else if (question.correctAnswerIndex == null) question.correctAnswerIndex = 0;
+        
+
         this.updateField('questions', questions);
     }
 
@@ -64,18 +70,22 @@ export default class QuizDetails extends Component {
         })
     }
 
-    addQuestion(question) {
+    onAddQuestion() {
         let questions = this.state.quiz.questions;
-        questions.push(question);
+        questions.push({
+            id: 0,
+            correctAnswerIndex: 0,
+            questionType: "TextAnswers",
+            text: null,
+            answers: [],
+            image: null,
+            audio: null
+        });
         this.updateField('questions', questions);
-    }
-
-    shiftQuestion(index, shiftUp) {      
-        let questions = this.state.quiz.questions;
-        if (index == 0 && shiftUp || index == questions.length - 1 && !shiftUp) return;
-
-        let swapIndex = shiftUp ? index - 1 : index + 1;
-        [questions[index], questions[swapIndex]] = [questions[swapIndex], questions[index]];
+        this.setState({
+            pendingEdit: true,
+            editedQuestionIndex: questions.length - 1
+        })
     }
 
     componentDidMount() {
@@ -128,6 +138,10 @@ export default class QuizDetails extends Component {
         })
     }
 
+    onShiftQuestion() {
+
+    }
+
     onQuizDelete() {
         $.ajax({
             type: 'delete',
@@ -162,16 +176,24 @@ export default class QuizDetails extends Component {
         this.getData();
     }
 
-    onSaveQuestion(cb) {
+    onSaveQuestion(cb) {        
+        let questionIndex = this.state.editedQuestionIndex;
+        let question = this.state.quiz.questions[questionIndex];
+        let isNew = question.id == 0;
 
-        let isNew = this.state.editedQuestionIndex == null;
-        let indexOfQuestion = this.state.editedQuestionIndex != null ? this.state.editedQuestionIndex : this.state.quiz.questions.length - 1;
+        // Strip images away from non image answer questions
+        if (question.questionType != "ImageAnswers") question.answers.forEach(a => a.image = null);
+
+        // Strip answers away from true/false questions
+        if (question.questionType == "TrueOrFalse") {
+            question.answers = null
+        } else question.trueFalseAnswer = null;
 
         $.ajax({
             type: isNew ? 'post' : 'put',
-            url: `${url}/${this.state.quiz.id}/questions/${this.state.quiz.questions[indexOfQuestion].id || null}`,
+            url: `${url}/${this.state.quiz.id}/questions/${this.state.quiz.questions[questionIndex].id || null}`,
             contentType: 'application/json',
-            data: JSON.stringify(this.state.quiz.questions[indexOfQuestion])
+            data: JSON.stringify(this.state.quiz.questions[questionIndex])
         }).done(() => {
             this.props.alert.success('Question updated!');
             this.getData();
@@ -212,7 +234,8 @@ export default class QuizDetails extends Component {
                                 onUpdateQuestion={this.updateQuestion.bind(this)}
                                 onCancel={this.onCancel.bind(this)}
                                 onDeleteQuestion={this.deleteQuestion.bind(this)}
-                                onShiftQuestion={this.shiftQuestion.bind(this)}
+                                onShiftQuestion={this.onShiftQuestion.bind(this)}
+                                onAddQuestion={this.onAddQuestion.bind(this)}
                             />
                         </Card>
 

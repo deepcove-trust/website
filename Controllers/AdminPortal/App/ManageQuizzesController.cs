@@ -34,7 +34,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
     public class QuestionArgs : IValidatableObject
     {
         public int? CorrectAnswerIndex { get; set; }
-        public int? TrueOrFalse { get; set; }
+        public int? TrueFalseAnswer { get; set; }
         public MediaArgs Image { get; set; }
         public MediaArgs Audio { get; set; }
         [Required]
@@ -46,15 +46,18 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             // If no correct answer has been specified
-            if (CorrectAnswerIndex == null && TrueOrFalse == null)
+            if (CorrectAnswerIndex == null && TrueFalseAnswer == null)
                 yield return new ValidationResult("You must select a correct answer", new string[] { "CorrectAnswerId", "TrueOrFalse" });
 
-            // There are a mix of answers with and without images - not allowed!
-            if (Answers.Any(a => a.Image?.Id != null) && Answers.Any(a => a.Image?.Id == null))
-                yield return new ValidationResult("All answers must have images", new string[] { "Answers" });
+            if (TrueFalseAnswer == null)
+            {
+                // There are a mix of answers with and without images - not allowed!
+                if (Answers.Any(a => a.Image?.Id != null) && Answers.Any(a => a.Image?.Id == null))
+                    yield return new ValidationResult("All answers must have images", new string[] { "Answers" });
 
-            if (Answers.Any(a => a.Image?.Id == null && string.IsNullOrEmpty(a.Text)))
-                yield return new ValidationResult("At least one answer does not have an image or text", new string[] { "Answers" });
+                if (Answers.Any(a => a.Image?.Id == null && string.IsNullOrEmpty(a.Text)))
+                    yield return new ValidationResult("At least one answer does not have an image or text", new string[] { "Answers" });
+            }
         }
     }
 
@@ -71,9 +74,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
     // -- End validation classes
 
-    //[Authorize]
-    [Area("admin-portal,app")]
-    [Route("/api/admin/app/quizzes")]
+    [Authorize, Area("admin"), Route("/admin/app/quizzes")]
     public class ManageQuizzesController : Controller
     {
         private readonly WebsiteDataContext _Db;
@@ -83,9 +84,16 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         {
             _Db = db;
             _Logger = logger;
-        }        
+        }
 
-        // GET: /api/admin/app/quizzes
+        // GET: /admin/app/quizzes
+        public IActionResult Index()
+        {
+            return View(viewName: "~/Views/AdminPortal/App/Quizzes.cshtml");
+        }
+
+        // GET: /admin/app/quizzes/data
+        [HttpGet("data")]
         public async Task<IActionResult> GetQuizzes()
         {
             return Ok(await _Db.Quizzes.OrderBy(q => q.Title).Include(q => q.Questions).Include(q => q.Image).Select(q => new
@@ -104,7 +112,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             }).ToListAsync());
         }
 
-        // GET: /api/admin/app/quizzes/{id:int}
+        // GET: /admin/app/quizzes/{id:int}
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetQuiz(int id)
         {
@@ -164,7 +172,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             });
         }
 
-        // POST: /api/admin/app/quizzes
+        // POST: /admin/app/quizzes
         [HttpPost]
         public async Task<IActionResult> AddQuiz(QuizArgs data)
         {
@@ -209,7 +217,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             return Ok();
         }
 
-        // POST: /api/admin/app/quizzes/{id:int}/questions
+        // POST: /admin/app/quizzes/{id:int}/questions
         [HttpPost("{quizId:int}/questions")]
         public async Task<IActionResult> AddQuestion(int quizId, [FromBody]QuestionArgs data)
         {
@@ -222,7 +230,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             throw new NotImplementedException();
         }
 
-        // PUT: /api/admin/app/quizzes/{quizId:int}/questions/{questionId:int}
+        // PUT: /admin/app/quizzes/{quizId:int}/questions/{questionId:int}
         [HttpPut("{quizId:int}/questions/{questionId:int}")]
         public async Task<IActionResult> UpdateQuestion(int quizId, int questionId, [FromBody]QuestionArgs data)
         {
@@ -246,25 +254,28 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
                 question.ImageId = data.Image?.Id;
                 question.Text = data.Text;
-                question.TrueFalseAnswer = data.TrueOrFalse;
+                question.TrueFalseAnswer = data.TrueFalseAnswer;
                 question.AudioId = data.Audio?.Id;
-                
-                foreach(AnswerArgs answerArgs in data.Answers)
+
+                if (data.Answers != null)
                 {
-                    QuizAnswer newAns = new QuizAnswer
+                    foreach (AnswerArgs answerArgs in data.Answers)
                     {
-                        QuizQuestionId = question.Id,
-                        Text = answerArgs.Text,
-                        ImageId = answerArgs.Image?.Id
-                    };
+                        QuizAnswer newAns = new QuizAnswer
+                        {
+                            QuizQuestionId = question.Id,
+                            Text = answerArgs.Text,
+                            ImageId = answerArgs.Image?.Id
+                        };
 
-                    await _Db.AddAsync(newAns);
+                        await _Db.AddAsync(newAns);
 
-                    await _Db.SaveChangesAsync();
+                        await _Db.SaveChangesAsync();
 
-                    if(data.Answers.IndexOf(answerArgs) == data.CorrectAnswerIndex)
-                    {
-                        question.CorrectAnswerId = newAns.Id;
+                        if (data.Answers.IndexOf(answerArgs) == data.CorrectAnswerIndex)
+                        {
+                            question.CorrectAnswerId = newAns.Id;
+                        }
                     }
                 }
 
@@ -277,7 +288,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
         }
 
-        // DELETE: /api/admin/app/quizzes/{quizId:int}/questions/{questionId:int}
+        // DELETE: /admin/app/quizzes/{quizId:int}/questions/{questionId:int}
         [HttpDelete("{quizId:int}/questions/{questionId:int}")]
         public async Task<IActionResult> DeleteQuestion(int quizId, int questionId)
         {
@@ -299,14 +310,36 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             return Ok();
         }     
         
-        // PATCH: /api/admin/app/quizzes/{quizId:int}/questions/{questionId:int}
+        // PATCH: /admin/app/quizzes/{quizId:int}/questions/{questionId:int}
         [HttpPatch("{quizId:int}/questions/{questionId:int}")]
         public async Task<IActionResult> ShiftQuestion(int quizId, int questionId, string shiftDirection)
         {
-            throw new NotImplementedException();
+            if (!(shiftDirection.EqualsIgnoreCase("up") || shiftDirection.EqualsIgnoreCase("down")))
+                return BadRequest(new ResponseHelper("Shift direction must be 'up' or 'down'"));
+            
+            bool shiftUp = shiftDirection.EqualsIgnoreCase("up");
+
+            Quiz quiz = await _Db.Quizzes.Include(q => q.Questions).Where(q => q.Id == quizId).FirstOrDefaultAsync();
+            quiz.Questions = quiz.Questions.OrderBy(q => q.OrderIndex).ToList();
+
+            int currentIndex = quiz.Questions.FindIndex(q => q.Id == questionId);
+
+            if (currentIndex == 0 && shiftUp || currentIndex == quiz.Questions.Count - 1 && !shiftUp) 
+                return UnprocessableEntity(new ResponseHelper("Question cannot be shifted further in this direction"));
+
+            int swapIndex = shiftUp ? currentIndex - 1 : currentIndex + 1;
+            var temp = quiz.Questions[swapIndex];
+            quiz.Questions[swapIndex] = quiz.Questions[currentIndex];
+            quiz.Questions[currentIndex] = temp;
+
+            for (int i = 0; i < quiz.Questions.Count; i++) quiz.Questions[i].OrderIndex = i;
+
+            await _Db.SaveChangesAsync();
+
+            return Ok();
         }
 
-        // DELETE: /api/admin/app/quizzes/{id:int}
+        // DELETE: /admin/app/quizzes/{id:int}
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteQuiz(int id)
         {

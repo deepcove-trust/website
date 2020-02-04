@@ -64,6 +64,9 @@ body {
     border-radius: 0px;
 }
 
+.bg-dark-trans{
+    background-color: rgba(0,0,0,0.5);
+}
 
 .alert-cookies {
     margin-bottom: 0;
@@ -312,4 +315,44 @@ label.btn input[type="radio"]{
     -webkit-border-radius: 0px !important;
     -moz-border-radius: 0px !important;
     border-radius: 0px !important;
+}
+
+// OverlayImage Component
+.overlay-image, .overlay-image img {
+    position: relative;
+    transition: all ease-in 0.1s;
+
+    .overlay {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+    }
+
+    h5 {
+        opacity: 0.0;
+        position: absolute;
+        cursor: default !important;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    &-enabled {
+        cursor: pointer;
+
+        h5 {
+            opacity: 1.0;
+            cursor: pointer !important;
+        }
+
+        img {
+            opacity: 0.5;
+        }
+
+        &:hover{
+            background-color: rgba(0,0,0,0.5);
+        }
+    }
 }

@@ -4,6 +4,7 @@ import $ from 'jquery';
 import { FormGroup, Input, Checkbox } from '../../../../Components/FormControl';
 import SelectMedia from '../../../../CMS-Blocks/SelectMedia';
 import { Button } from '../../../../Components/Button';
+import OverlayImage from '../../../../Components/OverlayImage';
 
 export default class QuizSettings extends Component {
 
@@ -95,10 +96,13 @@ export default class QuizSettings extends Component {
                 <div className="quiz-settings">                    
                     <div className="row">
                         <div className="col-6 mx-auto">
-                            <div className={`d-square m-2 position-relative ${this.state.editMode ? "pointer" : ""}`} onClick={this.state.editMode ? this.setModal.bind(this, true) : null}>                                
-                                {this.props.quiz.id == null ? null : <img className="object-fit-cover w-100 h-auto m-2" src={this.props.quiz.image.filename ? `/media?filename=${this.props.quiz.image.filename}` : "/images/no-image.png"} />}
-                                {this.state.editMode ? <div className="image-edit-overlay"><h5 className="center-text text-white"><u>Change</u></h5></div> : null}
-                            </div>
+
+                            <OverlayImage cb={this.state.editMode ? this.setModal.bind(this, true) : null}
+                                imageSource={this.props.quiz.image.filename ? `/media?filename=${this.props.quiz.image.filename}` : "/images/no-image.png"}
+                                enabled={this.state.editMode} containerClass="m-2">
+                                <h5 className="text-white text-center pt-3 pb-2 bg-dark-trans w-90">{this.props.quiz.image.filename ? 'Click to change' : 'Click to add'}</h5>
+                                </OverlayImage>
+
                         </div>
                         <div className="col-md-6">
                             {editForm}                             

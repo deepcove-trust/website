@@ -209,6 +209,7 @@ export class Select extends Component {
             this.setState({
                 value: nextProps.value
             });
+
     }
 
     render() {
@@ -216,7 +217,7 @@ export class Select extends Component {
         if (this.props.options) {
             selectOptions = this.props.options.map((option, key) => {
 
-                return <option value={option} key={key}>{option}</option>
+                return <option value={option.value != null ? option.value : option} key={key}>{option.label != null ? option.label : option}</option>
             });
         }
 

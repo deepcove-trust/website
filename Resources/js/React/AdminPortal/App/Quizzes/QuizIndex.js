@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import Card, { CardHighlight } from '../../../Components/Card';
 
-const url = '/api/admin/app/quizzes';
+const url = '/admin/app/quizzes';
 
 export default class QuizIndex extends Component {    
 
@@ -22,7 +22,7 @@ export default class QuizIndex extends Component {
     getData() {
         $.ajax({
             type: 'get',
-            url: url,
+            url: `${url}/data`,
         }).done((data) => {
             this.setState({
                 quizzes: data
