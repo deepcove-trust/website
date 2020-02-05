@@ -143,7 +143,7 @@ export default class CategoryDetails extends Component {
                     }
                     <div className="col-lg-5 py-1">
                         <div className="m-3 sticky-preview show-large text-center">
-                            <DevicePreview sticky>
+                            <DevicePreview sticky topBarBlack>
                                 <FactFilePreview previewEntry={this.state.previewEntry}
                                     entries={this.state.category.entries}
                                     onEntrySelect={this.onEntrySelect.bind(this)}

@@ -93,7 +93,7 @@ export default class QuizSettings extends Component {
 
         return (
             <Fragment>
-                <div className="quiz-settings">                    
+                <div onMouseEnter={this.props.onHover} className="quiz-settings">                    
                     <div className="row">
                         <div className="col-6 mx-auto">
 

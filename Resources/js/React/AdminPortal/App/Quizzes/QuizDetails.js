@@ -6,6 +6,7 @@ import Card, { CardHighlight } from '../../../Components/Card';
 import QuizSettings from './QuizDetails/QuizSettings';
 import QuizQuestions from './QuizDetails/QuizQuestions';
 import { ConfirmModal } from '../../../Components/Button';
+import QuizPreview from './QuizPreview';
 
 const url = '/admin/app/quizzes';
 
@@ -17,6 +18,7 @@ export default class QuizDetails extends Component {
         this.state = {
             pendingEdit: !this.props.quizId,
             editedQuestionIndex: null,
+            previewQuestionIndex: null,
             quiz: {
                 id: this.props.quizId,
                 active: false,
@@ -39,6 +41,13 @@ export default class QuizDetails extends Component {
         })
     }    
 
+    // Update preview on hovering over question
+    onQuestionHover(previewQuestionIndex) {
+        this.setState({
+            previewQuestionIndex
+        })
+    }
+
     updateQuestion(questionIndex, key, val, ansIndex) {
         let questions = this.state.quiz.questions;
         let question = questions[questionIndex];
@@ -55,10 +64,10 @@ export default class QuizDetails extends Component {
             if (question.correctAnswerIndex == null) {
                 question.correctAnswerIndex = 0;
             }
-            if (question.answers == null || question.answers.length == 0) {
+            if (question.answers == null || question.answers.length != 4) {
                 question.answers = [{}, {}, {}, {}];
             }
-        }   
+        }
         this.updateField('questions', questions);
     }
 
@@ -69,7 +78,12 @@ export default class QuizDetails extends Component {
             url: `${url}/${this.state.quiz.id}/questions/${question.id}`
         }).done(() => {
             this.props.alert.success('Question deleted!');
-            this.getData();
+            if (this.state.previewQuestionIndex == index) {
+                this.setState({
+                    previewQuestionIndex: null
+                });
+            }
+             this.getData();                   
         }).fail((err) => {
             this.props.alert.error(null, err.responseText);
         })
@@ -89,7 +103,8 @@ export default class QuizDetails extends Component {
         this.updateField('questions', questions);
         this.setState({
             pendingEdit: true,
-            editedQuestionIndex: questions.length - 1
+            editedQuestionIndex: questions.length - 1,
+            previewQuestionIndex: questions.length - 1
         })
     }
 
@@ -187,8 +202,17 @@ export default class QuizDetails extends Component {
         if (this.props.quizId == 0) {
             return this.props.onBack();
         }
-        // Else reset data
-        this.getData();
+
+        // Change preview screen if that question 
+        // has been deleted
+        if (this.state.previewQuestionIndex == this.state.editedQuestionIndex) {
+            this.setState({
+                previewQuestionIndex: null
+            }, () => {
+                // Reset view
+                this.getData();
+            })
+        }        
     }
 
     onSaveQuestion(cb) {        
@@ -196,8 +220,12 @@ export default class QuizDetails extends Component {
         let question = this.state.quiz.questions[questionIndex];
         let isNew = question.id == 0;
 
-        // Strip images away from non image answer questions
-        if (question.questionType != "ImageAnswers") question.answers.forEach(a => a.image = null);
+        // Strip images away from non image answer questions, else strip main image
+        if (question.questionType != "ImageAnswers") {
+            question.answers.forEach(a => a.image = null);
+        } else {
+            question.image = null;
+        }
 
         // Strip answers away from true/false questions
         if (question.questionType == "TrueOrFalse") {
@@ -239,9 +267,12 @@ export default class QuizDetails extends Component {
                                 mustSaveSettingsFirst={this.props.quizId == 0}
                                 quiz={this.state.quiz} updateField={this.updateField.bind(this)}
                                 onEdit={this.onSettingsEdit.bind(this)} onSaveSettings={this.onSaveSettings.bind(this)}
-                                onCancel={this.onCancel.bind(this)} />
+                                onCancel={this.onCancel.bind(this)}
+                                onHover={this.onQuestionHover.bind(this, null)}
+                            />
 
                             <QuizQuestions pendingEdit={this.state.pendingEdit}
+                                onHover={this.onQuestionHover.bind(this)}
                                 mustSaveSettingsFirst={this.props.quizId == 0}
                                 questions={this.state.quiz.questions}
                                 onEdit={this.onQuestionEdit.bind(this)}
@@ -261,8 +292,8 @@ export default class QuizDetails extends Component {
                     }
                     <div className="col-lg-5 py-1">
                         <div className="m-3 sticky-preview show-large text-center">
-                            <DevicePreview sticky>
-                                <div>Quiz Preview</div>
+                            <DevicePreview sticky topBarGreen>
+                                <QuizPreview quiz={this.state.quiz} questionIndex={this.state.previewQuestionIndex} />
                             </DevicePreview>
                         </div>
                     </div>

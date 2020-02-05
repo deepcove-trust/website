@@ -16,6 +16,7 @@ export default class QuizQuestions extends Component {
                 <QuestionCard key={q.id}
                     questionNo={index + 1} question={q}
                     pendingEdit={this.props.pendingEdit}
+                    onHover={this.props.onHover.bind(this, index)}
                     onEdit={this.props.onEdit.bind(this, index)}
                     onUpdateQuestion={this.props.onUpdateQuestion.bind(this, index)}
                     onShiftQuestion={this.props.onShiftQuestion.bind(this, q.id)}
@@ -111,7 +112,7 @@ class QuestionCard extends Component {
                 </Fragment>
             )
             : !disabled ? (
-                <div onClick={() => this.setState({showAudioSelectModal: true})} className="new-something-card text-center" style={{ maxHeight: "80px" }}>
+                <div onClick={() => this.setState({ showAudioSelectModal: true })} className="new-something-card text-center" style={{ maxHeight: "80px" }}>
                     <div><i className="far fa-plus-square fa-2x d-block"></i><small>Add Audio Clip</small></div>
                 </div>
             ) : null
@@ -167,66 +168,73 @@ class QuestionCard extends Component {
             </Modal>
         ) : null
 
+        let imageWarning = this.props.question.image && this.props.question.questionType == "ImageAnswers"
+            ? <small className="font-weight-bold text-danger">Question image will not display with image answers</small>
+            : null;
+
         return (
-            <Card className="question-card">
-                <CardHighlight>
-                    <h5 className="mt-3 mb-2">{`Question ${this.props.questionNo}`}</h5>
-                    <div className={`dropdown ${this.props.pendingEdit ? 'd-none' : ''}`}>
-                        <button className="btn dropdown-toggle text-white" type="button" data-toggle="dropdown"></button>
-                        <ul className="dropdown-menu">
-                            <li onClick={this.onEdit.bind(this)}><i className="fas fa-pencil"></i> &nbsp; Edit</li>
-                            <li onClick={this.props.onShiftQuestion.bind(this, true)}><i className="fas fa-chevron-up"></i> &nbsp; Move Up</li>
-                            <li onClick={this.props.onShiftQuestion.bind(this, false)}><i className="fas fa-chevron-down"></i> &nbsp; Move Down</li>
-                            <li onClick={this.onClickDelete.bind(this)}><i className="fas fa-trash"></i> &nbsp; Delete</li>
-                        </ul>
-                    </div>
-                    {deleteQuestionModal}
-                </CardHighlight>
-                <form onSubmit={(e) => { this.handleFormSubmit(e) }}>
-                    {this.state.editMode ? controls : null}
-                    <div className="row p-2">
-                        <div className="col-sm-7">
-                            <FormGroup htmlFor={`question-${this.props.question.id}-text`} label="Question" required>
-                                <TextArea cb={this.props.onUpdateQuestion.bind(this, 'text')} rows="3" inputClass="form-control resize-none" id={`question-${this.props.question.id}-text`} value={this.props.question.text} disabled={disabled} required />
-                            </FormGroup>
-
-                            {questionAudio}
-
-                            <QuestionImage cb={() => this.setState({ showImageSelectModal: true })} onClear={this.props.onUpdateQuestion.bind(this, 'image', null)} displayClass="d-sm-none" image={this.props.question.image} disabled={disabled} />
-
-                            <FormGroup htmlFor={`question-${this.props.question.id}-style`} className="mt-2" label="Answers Style" required>
-                                <Select cb={this.props.onUpdateQuestion.bind(this, 'questionType')} id={`question-${this.props.question.id}-style`} formattedOptions={answerStyleOptions} disabled={disabled} required selected={this.props.question.questionType} />
-                            </FormGroup>
-
-                            <FormGroup htmlFor={`question-${this.props.question.id}-correct-answer`} className="mt-2" label="Correct Answer" required>
-                                <Select cb={this.props.onUpdateQuestion.bind(this, isTF ? 'trueFalseAnswer' : 'correctAnswerIndex' )} id={`question-${this.props.question.id}-style-correct-answer`} options={correctAnswerOptions} disabled={disabled} required selected={isTF ? this.props.question.trueFalseAnswer : this.props.question.correctAnswerIndex} />
-                            </FormGroup>
+            <div onMouseEnter={this.props.onHover}>
+                <Card className="question-card">
+                    <CardHighlight>
+                        <h5 className="mt-3 mb-2">{`Question ${this.props.questionNo}`}</h5>
+                        <div className={`dropdown ${this.props.pendingEdit ? 'd-none' : ''}`}>
+                            <button className="btn dropdown-toggle text-white" type="button" data-toggle="dropdown"></button>
+                            <ul className="dropdown-menu">
+                                <li onClick={this.onEdit.bind(this)}><i className="fas fa-pencil"></i> &nbsp; Edit</li>
+                                <li onClick={this.props.onShiftQuestion.bind(this, true)}><i className="fas fa-chevron-up"></i> &nbsp; Move Up</li>
+                                <li onClick={this.props.onShiftQuestion.bind(this, false)}><i className="fas fa-chevron-down"></i> &nbsp; Move Down</li>
+                                <li onClick={this.onClickDelete.bind(this)}><i className="fas fa-trash"></i> &nbsp; Delete</li>
+                            </ul>
                         </div>
-                        <div className="col-sm-5">
-                            <QuestionImage cb={() => this.setState({ showImageSelectModal: true })} onClear={this.props.onUpdateQuestion.bind(this, 'image', null)} displayClass="d-none d-sm-block" image={this.props.question.image} disabled={disabled} />
+                        {deleteQuestionModal}
+                    </CardHighlight>
+                    <form onSubmit={(e) => { this.handleFormSubmit(e) }}>
+                        {this.state.editMode ? controls : null}
+                        <div className="row p-2">
+                            <div className="col-sm-7">
+                                <FormGroup htmlFor={`question-${this.props.question.id}-text`} label="Question" required>
+                                    <TextArea cb={this.props.onUpdateQuestion.bind(this, 'text')} rows="3" inputClass="form-control resize-none" id={`question-${this.props.question.id}-text`} value={this.props.question.text} disabled={disabled} required />
+                                </FormGroup>
+
+                                {questionAudio}
+
+                                <QuestionImage cb={() => this.setState({ showImageSelectModal: true })} onClear={this.props.onUpdateQuestion.bind(this, 'image', null)} displayClass="d-sm-none" image={this.props.question.image} disabled={disabled} />
+
+                                <FormGroup htmlFor={`question-${this.props.question.id}-style`} className="mt-2" label="Answers Style" required>
+                                    <Select cb={this.props.onUpdateQuestion.bind(this, 'questionType')} id={`question-${this.props.question.id}-style`} formattedOptions={answerStyleOptions} disabled={disabled} required selected={this.props.question.questionType} />
+                                </FormGroup>
+
+                                {imageWarning}
+
+                                <FormGroup htmlFor={`question-${this.props.question.id}-correct-answer`} className="mt-2" label="Correct Answer" required>
+                                    <Select cb={this.props.onUpdateQuestion.bind(this, isTF ? 'trueFalseAnswer' : 'correctAnswerIndex')} id={`question-${this.props.question.id}-correct-answer`} options={correctAnswerOptions} disabled={disabled} required selected={isTF ? this.props.question.trueFalseAnswer : this.props.question.correctAnswerIndex} />
+                                </FormGroup>
+                            </div>
+                            <div className="col-sm-5">
+                                <QuestionImage cb={() => this.setState({ showImageSelectModal: true })} onClear={this.props.onUpdateQuestion.bind(this, 'image', null)} displayClass="d-none d-sm-block" image={this.props.question.image} disabled={disabled} />
+                            </div>
                         </div>
-                    </div>
-                    <hr />
-                    <div className="row">
-                        {answerTiles}
-                    </div>
-                    {this.state.editMode || this.props.question.id == 0 ? controls : null}
-                </form>
+                        <div className="row mt-3">
+                            {answerTiles}
+                        </div>
+                        {this.state.editMode || this.props.question.id == 0 ? controls : null}
+                    </form>
 
-                <SelectMedia
-                    type="Image"
-                    cb={(imageData) => { this.props.onUpdateQuestion('image', imageData) }}
-                    showModal={this.state.showImageSelectModal}
-                    handleHideModal={() => this.setState({ showImageSelectModal: false })}
-                />
+                    <SelectMedia
+                        type="Image"
+                        cb={(imageData) => { this.props.onUpdateQuestion('image', imageData) }}
+                        showModal={this.state.showImageSelectModal}
+                        handleHideModal={() => this.setState({ showImageSelectModal: false })}
+                    />
 
-                <SelectMedia
-                    type="Audio"
-                    cb={(audioData) => { this.props.onUpdateQuestion('audio', audioData) }}
-                    showModal={this.state.showAudioSelectModal}
-                    handleHideModal={() => this.setState({ showAudioSelectModal: false })}
-                />
-            </Card>
+                    <SelectMedia
+                        type="Audio"
+                        cb={(audioData) => { this.props.onUpdateQuestion('audio', audioData) }}
+                        showModal={this.state.showAudioSelectModal}
+                        handleHideModal={() => this.setState({ showAudioSelectModal: false })}
+                    />
+                </Card>
+            </div>
         )
     }
 }
@@ -313,7 +321,7 @@ class AnswerTile extends Component {
                                     imageSource={this.props.answer.image ? `/media?filename=${this.props.answer.image.filename}` : '/images/no-image.png'}
                                     enabled={!this.props.disabled}>
                                     <h5 className="text-white text-center pt-3 pb-2 bg-dark-trans w-90">{this.props.answer.image ? 'Change' : 'Add'}</h5>
-                                </OverlayImage>                                
+                                </OverlayImage>
                                 <SelectMedia
                                     type="Image"
                                     cb={(imageData) => { this.props.onUpdate('image', imageData) }}
