@@ -43,15 +43,22 @@ $color-dark: #2A292A;
     }
 }
 
-.tile-title-dark {
+.tile-title {
     position: absolute;
     bottom: 0px;
     color: white;
     width: calc(100% - 1.0rem);
-    background-color: rgba(0,0,0,0.7);
     text-align: center;
     padding-top: 5px;
     padding-bottom: 5px;
+
+    &-dark {
+        background-color: rgba(0,0,0,0.7);
+    }
+
+    &-green {
+        background-color: lime;
+    }
 }
 
 .tile-shadow{
@@ -67,6 +74,9 @@ $color-dark: #2A292A;
 }
 
 .back-button-bar{
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
     cursor: pointer;
     padding-top: 10px;
     height: 40px;
@@ -84,6 +94,11 @@ $color-dark: #2A292A;
     
     &.with-back-button{
         max-height: calc(100% - 40px);
+
+        &::after{
+            content: 'Back';
+            height: 40px;
+        }
     }
 
     & hr {
