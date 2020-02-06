@@ -1,4 +1,5 @@
 ﻿const path = require('path');
+const fs = require('fs');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackNotifierPlugin = require("webpack-notifier");
@@ -21,17 +22,15 @@ module.exports = (env, argv) => {
                     test: /\.s[c|a]ss$/,
                     use:
                         [
-                            'style-loader',
                             MiniCssExtractPlugin.loader,
                             'css-loader',
                             {
                                 loader: 'postcss-loader',
                                 options: {
                                     config: {
-                                        ctx: {
-                                            env: argv.mode
-                                        }
-                                    }
+                                        ctx: { env: argv.mode }
+                                    },
+                                    ident: 'postcss'
                                 }
                             },
                             'sass-loader'
@@ -74,6 +73,29 @@ module.exports = (env, argv) => {
             errorDetails: false,
             warnings: false,
             publicPath: false
+        },
+        resolve: {
+            extensions: ['*', '.js', '.jsx', '.scss', '.sass'],
+            modules: [
+                'node_modules',
+                ...walkDirectories(path.resolve(__dirname, 'Resources')) // add each subdirectory under 'Resources'
+            ]
         }
     };
 };
+
+// Return array of the absolute paths to each folder under basePath,
+// recursively entering subdirectories
+function walkDirectories(basePath, directories) {
+
+    let contents = fs.readdirSync(basePath);
+    directories = directories || [];
+
+    contents.forEach((item) => {
+        if (fs.statSync(path.join(basePath, item)).isDirectory()) {
+            directories.push(path.join(basePath, item));
+            walkDirectories(path.join(basePath, item), directories);
+        }
+    })
+    return directories;
+}
