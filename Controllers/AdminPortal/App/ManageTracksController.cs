@@ -32,6 +32,7 @@ namespace Deepcove_Trust_Website.Controllers
         }
 
         // GET: /admin/app/tracks/data
+        [HttpGet("data")]
         public async Task<IActionResult> GetTracks()
         {
             List<Track> tracks = await _Db.Tracks.Include(t => t.Activities).ToListAsync();
@@ -42,10 +43,12 @@ namespace Deepcove_Trust_Website.Controllers
                 track.Name,
                 track.Active,
                 ActivityCount = track.Activities.Where(a => a.Active).ToList().Count,                
+                DisabledCount = track.Activities.Where(a => !a.Active).ToList().Count
             }));
         }
 
         // GET: /admin/app/tracks/{trackId:int}
+        [HttpGet("{trackId:int}")]
         public async Task<IActionResult> GetTrackDetails(int trackId)
         {
             Track track = await _Db.Tracks.Include(t => t.Activities).Where(t => t.Id == trackId).FirstOrDefaultAsync();
@@ -72,6 +75,7 @@ namespace Deepcove_Trust_Website.Controllers
         }
 
         // GET: /admin/app/tracks/{trackId:int}/{activityId:int}
+        [HttpGet("{trackId:int}/{activityId:int}")]
         public async Task<IActionResult> GetActivityDetails(int trackId, int activityId)
         {
             Activity activity = await _Db.Activities
