@@ -78,7 +78,7 @@ module.exports = (env, argv) => {
             extensions: ['*', '.js', '.jsx', '.scss', '.sass'],
             modules: [
                 'node_modules',
-                ...walkDirectories(path.resolve(__dirname, 'Resources')) // add each subdirectory under 'Resources'
+                ...walkDirectories(path.resolve(__dirname, 'Resources/js/React')) // add each subdirectory under 'Resources'
             ]
         }
     };
