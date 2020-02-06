@@ -28,10 +28,12 @@ module.exports = (env, argv) => {
                                 loader: 'postcss-loader',
                                 options: {
                                     config: {
-                                        ctx: {
-                                            env: argv.mode
-                                        }
-                                    }
+                                        ctx: { env: argv.mode }
+                                    },
+                                    ident: 'postcss',
+                                    plugins: [
+                                        require('postcss-preset-env')
+                                    ]
                                 }
                             },
                             'sass-loader'
