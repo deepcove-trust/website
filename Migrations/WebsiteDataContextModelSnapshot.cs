@@ -234,6 +234,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<int?>("ImageId");
 
+                    b.Property<int>("OrderIndex");
+
                     b.Property<int>("QuizId");
 
                     b.Property<string>("Text");
@@ -447,8 +449,6 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<string>("LongDesc");
 
                     b.Property<int>("Noticeboard");
-
-                    b.Property<string>("ShortDesc");
 
                     b.Property<string>("Title");
 
@@ -691,7 +691,7 @@ namespace Deepcove_Trust_Website.Migrations
             modelBuilder.Entity("Deepcove_Trust_Website.DiscoverDeepCove.Activity", b =>
                 {
                     b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.FactFileEntry", "FactFile")
-                        .WithMany()
+                        .WithMany("Activities")
                         .HasForeignKey("FactFileId");
 
                     b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")

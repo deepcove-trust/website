@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import Gallery from './ManageMedia/Gallery';
 import Details from './ManageMedia/Details';
 import Upload from './ManageMedia/Upload';
+import Alert from '../Components/Alert';
 
 const sections = {
     1: Gallery,
@@ -19,25 +20,31 @@ export default class ManageMedia extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({});
+    }
 
     render() {
         const Template = sections[this.state.tab];
 
         return (
-            <div className="row">
-                <div className="col-12 fade1sec">
-                    <Template data={this.state.media || null}
-                        setTab={(tab) => this.setState({
+            <Alert onRef={ref => this.Alert = ref}>
+                <div className="row">
+                    <div className="col-12 fade1sec">
+                        <Template data={this.state.media || null}
+                            alert={this.Alert}
+                            setTab={(tab) => this.setState({
                                 tab
                             })
-                        }
-                        viewDetails={(media) => this.setState({
-                            tab: 2,
-                            media
-                        })
-                    } />
+                            }
+                            viewDetails={(media) => this.setState({
+                                tab: 2,
+                                media
+                            })
+                        } />
+                    </div>
                 </div>
-            </div>    
+            </Alert>
         )
     }
 }

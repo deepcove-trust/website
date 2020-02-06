@@ -2,9 +2,11 @@
 import FileProperties from './FileProperties';
 import MetaButtons from './MetaButtons';
 import FileDetails from './FileDetails';
+import FileUsages from './FileUsages';
 
 import $ from 'jquery';
 import _ from 'lodash';
+import Card from '../../../Components/Card';
 
 const baseUri = "/admin/media"
 
@@ -57,9 +59,10 @@ export default class MetaData extends Component {
                     alt: file.alt
                 }
             }).done(() => {
+                this.props.alert.success("Changes saved!")
                 this.getData();
             }).fail((err) => {
-                console.error(`[Metadata@submitChanges] Error saving changes to the file: `, err.responseText);
+                this.props.alert.error(null, err.responseText)
             })
         })
     }
@@ -76,22 +79,19 @@ export default class MetaData extends Component {
         if (!this.state.file) return <div />
 
         return (
-            <Fragment>
-                <div className="pb-3">
-                    <FileDetails edit={this.state.edit}
-                        file={this.state.file}
-                        cb={this.updateField.bind(this)}
-                    />
-                </div>
-
-                <div className="py-3">
-                    <FileProperties edit={this.state.edit}
-                        file={this.state.file}
-                        cb={this.updateField.bind(this)}
-                    />
-                </div>
+            <Card>
+                <FileDetails edit={this.state.edit}
+                    file={this.state.file}
+                    cb={this.updateField.bind(this)}
+                />
+            
+                <FileProperties edit={this.state.edit}
+                    file={this.state.file}
+                    cb={this.updateField.bind(this)}
+                />
 
                 <MetaButtons edit={this.state.edit}
+                    alert={this.props.alert}
                     fileId={this.state.file.id}
                     pending={this.state.pending}
                     setEdit={(edit) => this.setState({ edit })}
@@ -104,7 +104,11 @@ export default class MetaData extends Component {
                         });
                     }}
                 />
-            </Fragment>
+
+                <div className="py-3">
+                    <FileUsages usages={this.state.file.usages} />
+                </div>
+            </Card>
         )
     }
 }

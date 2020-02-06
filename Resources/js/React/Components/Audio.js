@@ -5,7 +5,7 @@ export default class AudioControls extends Component {
         if (!this.props.file.mediaType.mime.includes("audio/")) return <div />;
 
         return (
-            <audio className="overImg" controls>
+            <audio className={this.props.className} controls>
                 <source src={`/media?filename=${this.props.file.filename}`} />
                 Your browser does not support this audio player, please use
                 <a href="https://www.google.com/chrome/">Google Chrome</a>,

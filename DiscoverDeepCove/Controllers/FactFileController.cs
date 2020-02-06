@@ -27,7 +27,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
             try
             {
                 return Ok(_Db.FactFileEntries
-                    .Where(c => c.Active && c.Category.Active)
+                    .Where(c => c.Active)
                     .Select(s => new
                     {
                         s.Id,
@@ -52,7 +52,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
             try
             {
                 var factFile = _Db.FactFileEntries
-                    .Where(c => c.Id == id && c.Active && c.Category.Active)
+                    .Where(c => c.Id == id && c.Active)
                     .Select(s => new
                     {
                         s.Id,
@@ -97,7 +97,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
             try
             {
                 return Ok(_Db.FactFileCategories
-                    .Where(c => c.Active)
+                    .Include(cat => cat.FactFileEntries)
+                    .Where(c => c.FactFileEntries.Count > 0)
                     .Select(s => new
                 {
                     s.Id,

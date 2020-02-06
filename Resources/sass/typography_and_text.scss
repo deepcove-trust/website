@@ -1,4 +1,26 @@
-﻿/* Hyperlinks
+﻿/* Font Awesome
+-------------------------------------------------- */
+$fa-font-path: '~@fortawesome/fontawesome-pro/webfonts';
+@import '~@fortawesome/fontawesome-pro/scss/fontawesome';
+@import '~@fortawesome/fontawesome-pro/scss/regular';
+@import '~@fortawesome/fontawesome-pro/scss/solid';
+@import '~@fortawesome/fontawesome-pro/scss/brands';
+@import '~@fortawesome/fontawesome-pro/scss/duotone';
+
+/* Google Fonts
+-------------------------------------------------- */
+@import url('https://fonts.googleapis.com/css?family=Gayathri&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+// Navbar font
+@import url('https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&subset=devanagari,latin-ext');
+
+/* Headings
+-------------------------------------------------- */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    font-family: 'Gayathri', sans-serif;
+}
+
+/* Hyperlinks
 -------------------------------------------------- */
 a[href^="tel:"] {
     color: black;

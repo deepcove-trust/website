@@ -4,7 +4,12 @@ import Alert from '../Components/Alert';
 import { EditPageSettings, ToggleVisibility, ViewPageDashboard } from './PageControlButtons';
 
 
-export default class PageControls extends Component {
+export default class PageControls extends Component {    
+
+    componentDidMount() {
+        this.setState({})
+    }
+
     render() {
         if (this.props.settings)
             return null;

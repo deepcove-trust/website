@@ -26,6 +26,13 @@ export default class Upload extends Component {
         this.setState({ file, triggerUpload, cropData });
     }
 
+    onFail() {
+        this.setState({
+            file: null,
+            triggerUpload: false
+        })
+    }
+
     render() {
         let View = <p>Something went wrong, please refresh your page</p>
         if (!this.state.file) {
@@ -38,6 +45,8 @@ export default class Upload extends Component {
                     cropData={this.state.cropData}
                     cb={this.updateState.bind(this)}
                     done={this.props.setTab.bind(this, 1)}
+                    onFail={this.onFail.bind(this)}
+                    alert={this.props.alert}
                 />
             );
         } else if (this.state.file && !this.state.triggerUpload) {
@@ -64,7 +73,7 @@ export default class Upload extends Component {
 
                 <div className="col-lg-12">
                     <div className="fileuploader">
-                        {/*<h3 className="text-center mt-5">Upload FIle</h3>*/}
+                        {/*<h3 className="text-center mt-5">Upload File</h3>*/}
                         {View} 
                     </div>
                 </div>

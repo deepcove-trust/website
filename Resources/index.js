@@ -25,6 +25,7 @@ import './js/React/Authentication/Login';
 import './js/React/Authentication/RequestPasswordReset';
 import './js/React/Authentication/ResetPassword';
 import './js/React/Authentication/Register';
+import './js/React/AdminPortal/Dashboard';
 import './js/React/AdminPortal/ManageUsers';
 import './js/React/AdminPortal/Pages';
 import './js/React/AdminPortal/PagesNew';
@@ -32,6 +33,11 @@ import './js/React/AdminPortal/PageUpdate';
 import './js/React/AdminPortal/SystemSettings';
 import './js/React/AdminPortal/ManageMedia';
 import './js/React/CMS-Blocks/Text';
+import './js/React/AdminPortal/App/FactFiles';
+import './js/React/AdminPortal/App/Quizzes';
+import './js/React/AdminPortal/App/Tracks';
+import './js/React/AdminPortal/App/Settings';
+import './js/React/AdminPortal/Noticeboard';
 
 /* React Error Pages */
 import './js/React/Errors/Inactive';

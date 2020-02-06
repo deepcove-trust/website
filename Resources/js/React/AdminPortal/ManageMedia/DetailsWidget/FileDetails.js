@@ -1,30 +1,35 @@
 ﻿import React, { Component, Fragment } from 'react';
 import { Input, Checkbox } from '../../../Components/FormControl';
 import { convertSize } from '../../../../helpers';
-import Panel from '../../../Components/Panel';
+import { CardHighlight, CardBody } from '../../../Components/Card';
 
 export default class FileDetails extends Component {
     render() {
         return (
-            <Panel>
-                <div className="table-responsive">
-                    <table className="table table-sm">
-                        <tbody>
-                            <Name edit={this.props.edit}
-                                file={this.props.file}
-                                cb={this.props.cb.bind(this, 'name')}
-                            />
+            <Fragment>
+                <CardHighlight>
+                    <h3 className="pt-3">File Detials</h3>
+                </CardHighlight>
+                <CardBody className="pb-3 card-body">
+                    <div className="table-responsive">
+                        <table className="table table-sm">
+                            <tbody>
+                                <Name edit={this.props.edit}
+                                    file={this.props.file}
+                                    cb={this.props.cb.bind(this, 'name')}
+                                />
 
-                            <TypeSize file={this.props.file} />
+                                <TypeSize file={this.props.file} />
 
-                            <Source edit={this.props.edit}
-                                file={this.props.file}
-                                cb={this.props.cb.bind(this, 'source')}
-                            />
-                        </tbody>
-                    </table>
-                </div>
-            </Panel>
+                                <Source edit={this.props.edit}
+                                    file={this.props.file}
+                                    cb={this.props.cb.bind(this, 'source')}
+                                />
+                            </tbody>
+                        </table>
+                    </div>
+                </CardBody>
+            </Fragment>
         )
     }
 }

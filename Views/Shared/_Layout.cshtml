@@ -22,28 +22,33 @@
     <script src="~/ckeditor/ckeditor.js"></script>
 </head>
 <body>
+    <!-- JavaScript unavailable message -->
+    <noscript>
+        <style>
+            #noscript{
+                background-color: white;
+                height: 100%;
+                width: 100%;
+                z-index: 10000;
+                float: left;
+                position: absolute;
+            }
+        </style>
+        <div id="noscript">
+            Our website requires JavaScript to function. Ensure your browser supports JavaScript and that
+            <a href="https://www.enable-javascript.com/">JavaScript is enabled</a>.
+        </div>
+    </noscript>
+
     <div class="container content-container">
         <header class="mb-3">
-            @if (RouteArea == "")
+            @if (RouteArea == "" || RouteArea == "education-portal")
             {
                 await Html.RenderPartialAsync("_Nav.cshtml");
             }
-            else if (RouteArea.Contains("admin-portal"))
+            else if (RouteArea.Contains("admin-portal") || RouteArea.Contains("admin"))
             {
-                await Html.RenderPartialAsync("_AdminPortalNav.cshtml");
-
-                if (RouteArea.Contains("admin-portal,web"))
-                {
-                    await Html.RenderPartialAsync("_AdminPortal_WebNav.cshtml");
-                }
-                else if (RouteArea.Contains("admin-portal,app"))
-                {
-                    await Html.RenderPartialAsync("_AdminPortal_AppNav.cshtml");
-                }
-            }
-            else if (RouteArea == "education-portal")
-            {
-
+                await Html.RenderPartialAsync("_AdminNav.cshtml");
             }
         </header>
 
