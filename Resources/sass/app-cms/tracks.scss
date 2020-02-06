@@ -1,0 +1,36 @@
+﻿.track-card {
+    background-color: white;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    transition: all ease-in 0.1s;
+
+    h5 {
+        margin-bottom: 0px;
+    }
+
+    .question-count {
+        position: relative;
+        color: darkgray;
+    }
+
+    &:hover {
+        color: white !important;
+        background-color: $color-primary;
+
+        span, small, i {
+            color: white !important;
+        }
+    }
+}
+
+.new-track-card{
+    @extend .track-card;
+    color: rgb(174,174,174);
+}
+
+.map-marker {
+    color: #F44336;
+}
+
+.map-marker-inactive {
+    color: #999999;
+}
