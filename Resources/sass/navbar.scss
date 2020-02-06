@@ -25,6 +25,19 @@ nav#sitenav.navbar {
 }
 
 #sitenav {
+    @media(max-width: 768px){
+        .dropdown-item, .nav-item, .dropdown-item {
+            text-align: center;
+            padding: 10px 0px!important;
+            border: none;
+        }
+
+        .dropdown-menu {
+            border: none;
+            text-align: center;
+        }
+    }
+    
     .navbar-brand img {
         max-height: 75px;
     }
@@ -60,8 +73,7 @@ nav#sitenav.navbar {
     a.dropdown-toggle::after {
         color: black;
     }
-    
-/* Drop down item
+    /* Drop down item
 -------------------------------------------- */
     .dropdown-item:hover {
         background-color: $activeColor !important;
@@ -76,8 +88,7 @@ nav#sitenav.navbar {
     .dropdown-menu {
         padding: 0px;
     }
-    
-/* Nav hover effect
+    /* Nav hover effect
 -------------------------------------------- */
     .nav-item > a {
         position: relative;
