@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import Alert from '../../Components/Alert';
 import CategoryIndex from './FactFiles/CategoryIndex';
 import CategoryDetails from './FactFiles/CategoryDetails';
+import ErrorBoundary from '../../Errors/ErrorBoundary';
 
 /**
  * Root component for the fact file management UI
@@ -47,12 +48,14 @@ export default class FactFiles extends Component {
         }
 
         return (
-            <Alert onRef={ref => this.Alert = ref}>
-                <div>
-                    <h1 className="text-center my-5">Fact File Management</h1>
-                    {content}
-                </div>
-            </Alert>
+            <ErrorBoundary customError="react-fact-files">
+                <Alert onRef={ref => this.Alert = ref}>
+                    <div>
+                        <h1 className="text-center my-5">Fact File Management</h1>
+                        {content}
+                    </div>
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }

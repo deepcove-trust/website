@@ -142,8 +142,8 @@ export default class CategoryDetails extends Component {
                         // Right hand side of display - entry details
                     }
                     <div className="col-lg-5 py-1">
-                        <div className="m-3 sticky-preview show-large">
-                            <DevicePreview sticky>
+                        <div className="m-3 sticky-preview show-large text-center">
+                            <DevicePreview sticky topBarBlack>
                                 <FactFilePreview previewEntry={this.state.previewEntry}
                                     entries={this.state.category.entries}
                                     onEntrySelect={this.onEntrySelect.bind(this)}
@@ -329,7 +329,7 @@ class EntryDetails extends Component {
 
     onRemoveImage(imageId) {
         if (imageId == this.state.entry.mainImageId)
-            return this.Alert.error("Unable to delete main image. Set a different image as main and try again.");
+            return this.props.alert.error("Unable to delete main image. Set a different image as main and try again.");
 
         let images = this.state.entry.images;
         let imageToRemove = images.find(image => image.id == imageId);

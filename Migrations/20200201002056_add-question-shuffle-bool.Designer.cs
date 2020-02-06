@@ -3,14 +3,16 @@ using System;
 using Deepcove_Trust_Website.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Deepcove_Trust_Website.Migrations
 {
     [DbContext(typeof(WebsiteDataContext))]
-    partial class WebsiteDataContextModelSnapshot : ModelSnapshot
+    [Migration("20200201002056_add-question-shuffle-bool")]
+    partial class addquestionshufflebool
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -793,8 +795,7 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", "CorrectAnswer")
                         .WithOne("CorrectForQuestion")
-                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "CorrectAnswerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "CorrectAnswerId");
 
                     b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
                         .WithMany()

@@ -17,6 +17,8 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         [JsonProperty("unlock_code")]
         public string UnlockCode { get; set; }
 
+        public bool Shuffle { get; set; }
+
         public ImageMedia Image { get; set; }
 
         // Navigation Properties

@@ -11,12 +11,14 @@ namespace Deepcove_Trust_Website.Controllers
         [HttpGet("inactive")]
         public IActionResult Inactive()
         {
+            Response.StatusCode = 403;
             return View(viewName: "~/Views/Errors/Inactive.cshtml");
         }
 
         [HttpGet("password-reset")]
         public IActionResult PasswordExpired()
         {
+            Response.StatusCode = 401;
             return View(viewName: "~/Views/Errors/PasswordExpired.cshtml");
         }
 
@@ -24,6 +26,7 @@ namespace Deepcove_Trust_Website.Controllers
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult InternalServerError(string requestId = "")
         {
+            Response.StatusCode = 500;
             return View(viewName: "~/Views/Errors/InternalServerError.cshtml", new ErrorViewModel { RequestId = requestId });
         }
     }

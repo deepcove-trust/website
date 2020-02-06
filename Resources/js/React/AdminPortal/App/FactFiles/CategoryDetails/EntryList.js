@@ -110,7 +110,7 @@ class EntryCard extends Component {
         return (
             <label className={`d-block list-card m-2 p-2 ${active ? 'active' : ''}`} >
                 <input type="radio" name="navitem" onChange={this.props.setActive} disabled={this.props.addingNew} />
-                <h5>{this.props.entryName}</h5>
+                <h5 className="vertically-center">{this.props.entryName}</h5>
             </label>
         )
     }

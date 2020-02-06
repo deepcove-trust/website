@@ -34,11 +34,12 @@ export class Checkbox extends Component {
         let id = this.props.id ? `chq-${this.props.id}` : null;
 
         return (
-            <div className="custom-control custom-checkbox">
+            <div className={`custom-control custom-checkbox ${this.props.className || ''}`}>
                 <ReactTooltip />
                 <input id={id}
                     type="checkbox"
                     className="custom-control-input"
+                    disabled={this.props.disabled}
                     name={this.props.name || null}
                     checked={this.state.checked}
                     onChange={this.toggleCheckbox.bind(this)}
@@ -166,7 +167,7 @@ export class Input extends Component {
         return (
             <input id={this.props.id || null}
                 type={this.getType()}
-                className={this.props.inputClass || "form-control"}
+                className={`form-control ${this.props.inputClass || ''}`}
                 name={this.props.name || null}
                 value={this.state.value || ""}
                 placeholder={this.props.placeHolder || null}
@@ -208,6 +209,7 @@ export class Select extends Component {
             this.setState({
                 value: nextProps.value
             });
+
     }
 
     render() {
@@ -215,7 +217,7 @@ export class Select extends Component {
         if (this.props.options) {
             selectOptions = this.props.options.map((option, key) => {
 
-                return <option value={option} key={key}>{option}</option>
+                return <option value={option.value != null ? option.value : option} key={key}>{option.label != null ? option.label : option}</option>
             });
         }
 
@@ -296,7 +298,7 @@ export class TextArea extends Component {
         return (
             <React.Fragment>
                 <textarea id={this.props.id || null}
-                    className={this.props.inputClass || "form-control"}
+                    className={`form-control ${this.props.inputClass || ''}`}
                     name={this.props.name || null}
                     value={this.state.value || ""}
                     placeholder={this.props.placeHolder || null}
