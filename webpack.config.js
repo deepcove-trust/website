@@ -30,10 +30,7 @@ module.exports = (env, argv) => {
                                     config: {
                                         ctx: { env: argv.mode }
                                     },
-                                    ident: 'postcss',
-                                    plugins: [
-                                        require('postcss-preset-env')
-                                    ]
+                                    ident: 'postcss'
                                 }
                             },
                             'sass-loader'
