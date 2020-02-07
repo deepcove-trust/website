@@ -8,6 +8,9 @@
 @import './ReactImageCrop';
 @import './navbar.scss';
 
+/* Import Mapbox GL Styles */
+@import './mapbox-gl.scss';
+
 /* Custom CSS */
 @import './Authentication.scss';
 @import './media.scss';
@@ -45,6 +48,10 @@ body {
 
 .w-90{
     width: 90%;
+}
+
+.w-30{
+    width: 30%;
 }
 
 .resize-none {
@@ -355,5 +362,11 @@ label.btn input[type="radio"]{
         &:hover{
             background-color: rgba(0,0,0,0.5);
         }
+    }
+}
+
+@media only screen and (max-width: 576px){
+    .align-left-sm{
+        text-align: left !important;
     }
 }

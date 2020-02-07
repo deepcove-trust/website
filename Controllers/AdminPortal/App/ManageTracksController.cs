@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
 using static Deepcove_Trust_Website.Helpers.Utils;
+using Microsoft.AspNetCore.Http;
+using Deepcove_Trust_Website.Helpers;
 
 namespace Deepcove_Trust_Website.Controllers
 {
@@ -62,6 +64,7 @@ namespace Deepcove_Trust_Website.Controllers
                 track.Id,
                 track.Name,
                 track.Active,
+                boundingBox = track.GetBoundingBox(_Db),
                 Activities = track.Activities.Select(activity => new
                 {
                     activity.Id,
@@ -106,6 +109,41 @@ namespace Deepcove_Trust_Website.Controllers
                 activity.CoordX,
                 activity.CoordY
             });
+        }
+
+        // POST: /admin/app/tracks
+        [HttpPost]
+        public async Task<IActionResult> AddTrack(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return BadRequest(new ResponseHelper("You must provide a track name."));
+
+            Track track = new Track
+            {
+                Name = name,
+                Active = false
+            };
+
+            await _Db.AddAsync(track);
+            await _Db.SaveChangesAsync();
+
+            return Ok(track.Id);
+        }
+
+        // PATCH: /admin/app/tracks/{id:int}
+        [HttpPatch("{id:int}")]
+        public async Task<IActionResult> UpdateTrackName(int id, string name)
+        {
+            if (string.IsNullOrEmpty(name)) return BadRequest(new ResponseHelper("You must provide a track name."));
+
+            Track track = await _Db.Tracks.FindAsync(id);
+
+            if (track == null) return NotFound(new ResponseHelper("Something went wrong, please refesh the page and try again.", "Could not find track in database."));
+
+            track.Name = name;
+
+            await _Db.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }

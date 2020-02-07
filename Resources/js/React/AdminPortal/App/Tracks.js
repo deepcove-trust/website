@@ -10,13 +10,21 @@ export default class Tracks extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedTrackId: null
+            selectedTrackId: null,
+            selectedTrackName: null
         };
     }
 
-    onSelect(selectedTrackId) {
+    // Ensure that the alert ref is passed to children
+    componentDidMount() {
         this.setState({
-            selectedTrackId
+        });
+    }
+
+    onSelect(selectedTrackId, selectedTrackName) {
+        this.setState({
+            selectedTrackId,
+            selectedTrackName
         });
     }
 
@@ -24,12 +32,12 @@ export default class Tracks extends Component {
         this.setState({
             selectedTrackId: null
         });
-    }
+    }    
 
     render() {
-        let page = this.state.selectedTrackId 
-            ? <TrackDetails onBack={this.onBack.bind(this)} />
-            : <TrackIndex onSelect={this.onSelect.bind(this)} />
+        let page = this.state.selectedTrackId
+            ? <TrackDetails alert={this.Alert} onBack={this.onBack.bind(this)} trackName={this.state.selectedTrackName} trackId={this.state.selectedTrackId} />
+            : <TrackIndex alert={this.Alert} onSelect={this.onSelect.bind(this)} />
 
         return (
             <ErrorBoundary customError="react-tracks">
