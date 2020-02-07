@@ -6,6 +6,7 @@ import PageMeta from './Pages/PageMeta';
 import SelectTemplate from './Pages/SelectTemplate';
 
 import $ from 'jquery';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const baseUri = "/admin/pages/create";
 
@@ -70,10 +71,10 @@ export default class NewPageWrapper extends Component {
             );
 
         return (
-            <Fragment>
+            <ErrorBoundary customError="react-page-new">
                 <ProgressBar progress={this.state.stage * 50} color="info"/>
                 {DivBlock}
-            </Fragment>
+            </ErrorBoundary>
         );
     }
 }

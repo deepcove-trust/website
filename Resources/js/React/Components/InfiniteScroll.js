@@ -13,6 +13,8 @@ export default class InfiniteScroll extends Component {
     }
 
     componentDidUpdate() {
+        if (this.props.onUpdate) this.props.onUpdate();
+
         if (this.props.children != this.state.data) {
             this.setState({
                 data: this.props.children,

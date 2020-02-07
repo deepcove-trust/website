@@ -6,6 +6,7 @@ import NotificationChannels from './AccountSettings/Notifications';
 import Alert from '../Components/Alert';
 
 import $ from 'jquery';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const baseUri = `/admin/account`;
 
@@ -42,40 +43,42 @@ export default class AccountSettings extends Component {
 
     render() {
         return (
-            <Alert className="container" onRef={ref => (this.Alert = ref)}>
-                <div className="row">
-                    <div className="col-12 py-3">
-                        <h1 className="text-center">Account Settings</h1>
-                    </div>
+            <ErrorBoundary customError="react-account-settings">
+                <Alert className="container" onRef={ref => (this.Alert = ref)}>
+                    <div className="row">
+                        <div className="col-12 py-3">
+                            <h1 className="text-center">Account Settings</h1>
+                        </div>
 
-                    <div className="col-lg-4 col-md-6 col-sm-12">
-                        <Settings account={this.state.account}
-                            u={this.getData.bind(this)}
-                            alert={this.Alert}
-                            baseUri={baseUri}
-                        />
-                    </div>
+                        <div className="col-lg-4 col-md-6 col-sm-12">
+                            <Settings account={this.state.account}
+                                u={this.getData.bind(this)}
+                                alert={this.Alert}
+                                baseUri={baseUri}
+                            />
+                        </div>
 
-                    <div className="col-lg-4 col-md-6 col-sm-12">
-                        <ChangePassword baseUri={baseUri}
-                            u={this.getData.bind(this)}
-                            alert={this.Alert}
-                        />
-                    </div>
+                        <div className="col-lg-4 col-md-6 col-sm-12">
+                            <ChangePassword baseUri={baseUri}
+                                u={this.getData.bind(this)}
+                                alert={this.Alert}
+                            />
+                        </div>
 
-                    <div className="col-lg-4 col-md-6 col-sm-12">
-                        <NotificationChannels baseUri={baseUri}
-                            channelMemberships={this.getChannelMemberships()}
-                            channels={this.state.channels}
-                            u={this.getData.bind(this)}
-                            alert={this.Alert}
-                        />
+                        <div className="col-lg-4 col-md-6 col-sm-12">
+                            <NotificationChannels baseUri={baseUri}
+                                channelMemberships={this.getChannelMemberships()}
+                                channels={this.state.channels}
+                                u={this.getData.bind(this)}
+                                alert={this.Alert}
+                            />
+                        </div>
                     </div>
-                </div>
-            </Alert>
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }
 
-if (document.getElementById('react_accountSettings')) 
+if (document.getElementById('react_accountSettings'))
     render(<AccountSettings />, document.getElementById('react_accountSettings'));    

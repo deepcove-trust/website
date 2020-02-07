@@ -67,7 +67,7 @@ class CategoryCard extends Component {
         return (
             <div className="m-2 row list-card" onClick={this.props.cb.bind(this, this.props.categoryId)}>
                 <div className="col-7">
-                    <h5>{this.props.categoryName}</h5>
+                    <h5 className="vertically-center">{this.props.categoryName}</h5>
                 </div>
                 <div className="col-5">
                     <div className="vertically-center">
