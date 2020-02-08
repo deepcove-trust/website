@@ -73,7 +73,7 @@ namespace Deepcove_Trust_Website.Controllers.Authentication
                 _Logger.LogInformation("New account created - Name: {0}, Email: {1}", account.Name, account.Email);
                 await _EmailService.SendNewAccountEmailAsync(reset, User, Request.BaseUrl());
 
-                return Ok(Url.Action("Index", "Users", new { area = "admin-portal" }));
+                return Ok(Url.Action("Index", "Users", new { area = "admin" }));
             } 
             catch(Exception ex)
             {

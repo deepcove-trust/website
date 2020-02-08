@@ -2,20 +2,18 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Deepcove_Trust_Website.Features.Emails;
-using Microsoft.EntityFrameworkCore;
-using Deepcove_Trust_Website.Helpers;
-using Deepcove_Trust_Website.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using Deepcove_Trust_Website.Data;
+using Deepcove_Trust_Website.Models;
+using Deepcove_Trust_Website.Helpers;
+using Deepcove_Trust_Website.Features.Emails;
 
-namespace Deepcove_Trust_Website.Controllers.AdminPortal
+namespace Deepcove_Trust_Website.Controllers
 {
-    [Authorize]
-    [Area("admin")]
-    [Route("/admin/users")]
+    [Authorize, Area("admin"), Route("/admin/users")]
     public class UsersController : Controller
     {
         private readonly WebsiteDataContext _Db;
@@ -35,6 +33,11 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
 
             return View(viewName: "~/Views/AdminPortal/Users.cshtml");
         }
+        [HttpGet("v2")]
+        public IActionResult V2()
+        {
+            return View(viewName: "~/Views/Admin/UserAccounts.cshtml");
+        }
 
         [HttpGet("data")]
         public async Task<IActionResult> Data()
@@ -49,6 +52,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                     s.Email,
                     s.PhoneNumber,
                     s.Active,
+                    s.Developer,
+                    s.ForcePasswordReset,
                     timestamps = new { signup = Utils.PrettyDate(s.CreatedAt), lastLogin = Utils.DiffForHumans(s.LastLogin) }
                 }).ToListAsync());
             }

@@ -20,6 +20,8 @@ import './js/bootstrap.bundle.min.js';
 //import './js/Bootstrap/index';
 
 /* React */
+import './nReact/UserAccounts';
+//OLD
 import './js/React/AdminPortal/AccountSettings';
 import './js/React/Authentication/Login';
 import './js/React/Authentication/RequestPasswordReset';
@@ -31,7 +33,7 @@ import './js/React/AdminPortal/Pages';
 import './js/React/AdminPortal/PagesNew';
 import './js/React/AdminPortal/PageUpdate';
 import './js/React/AdminPortal/SystemSettings';
-import './js/React/AdminPortal/ManageMedia';
+import './js/React/AdminPortal/ManageMedia';//> Delete
 import './js/React/CMS-Blocks/Text';
 import './js/React/AdminPortal/App/FactFiles';
 import './js/React/AdminPortal/App/Quizzes';
