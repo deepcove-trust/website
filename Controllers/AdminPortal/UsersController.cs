@@ -28,14 +28,7 @@ namespace Deepcove_Trust_Website.Controllers
             _Logger = logger;
         }
 
-        [HttpGet]
         public IActionResult Index()
-        {
-
-            return View(viewName: "~/Views/AdminPortal/Users.cshtml");
-        }
-        [HttpGet("v2")]
-        public IActionResult V2()
         {
             return View(viewName: "~/Views/Admin/UserAccounts.cshtml");
         }
