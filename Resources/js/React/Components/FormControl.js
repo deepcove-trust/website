@@ -2,7 +2,7 @@
 import ReactTooltip from 'react-tooltip'
 
 const AutoComplete = ["name", "email", "organization", "on"];
-const Type = ["email", "file", "image", "password", "url"];
+const Type = ["email", "file", "image", "password", "url", "number"];
 
 export class Checkbox extends Component {
     constructor(props) {

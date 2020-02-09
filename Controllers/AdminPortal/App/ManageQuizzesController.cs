@@ -392,5 +392,29 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
             return Ok();
         }
+
+        // GET: /admin/app/quizzes/master
+        [HttpGet("master")]
+        public async Task<IActionResult> GetMasterUnlockCode()
+        {
+            Config config = await _Db.Config.FindAsync(1);
+
+            return Ok(config.MasterUnlockCode);
+        }
+
+        // PATCH: /admin/app/quizzes/master
+        [HttpPatch("master")]
+        public async Task<IActionResult> UpdateMasterUnlockCode(string newCode)
+        {
+            if (string.IsNullOrEmpty(newCode)) return BadRequest(new ResponseHelper("You need to provide a new code", "Null or empty string received"));
+
+            Config config = await _Db.Config.FindAsync(1);
+
+            config.MasterUnlockCode = newCode;
+
+            await _Db.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
