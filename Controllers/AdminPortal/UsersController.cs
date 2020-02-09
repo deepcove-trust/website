@@ -163,6 +163,11 @@ namespace Deepcove_Trust_Website.Controllers
                 if (account.Id == User.AccountId())
                     return Forbid(new ResponseHelper("You are not allowed to delete your own account").ToString());
 
+                // Prevent's developer accounts from being deleted
+                // To delete a developer account, remove developer flag from database and run this method
+                if (account.Developer)
+                    return Forbid(new ResponseHelper("You cannot delete a developer account").ToString());
+
                 account.DeletedAt = DateTime.UtcNow;
                 await _Db.SaveChangesAsync();
 
