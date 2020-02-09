@@ -2,7 +2,9 @@
 import mapboxgl, { Map, Marker, Popup } from 'mapbox-gl';
 import $ from 'jquery';
 
-export default class MapBox extends Component {    
+const typeLabels = ['Informational', 'Count Activity', 'Photograph Activity', 'Picture Select Activity', 'Picture Tap Activity', 'Text Answer Activity'];
+
+export default class MapBox extends Component {
 
     constructor(props) {
         super(props);
@@ -17,24 +19,32 @@ export default class MapBox extends Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState) {
+    componentDidUpdate(prevProps) {
 
         // Add markers to the map when they are ready and the map has loaded
         if (this.props.activities && this.state.mapLoaded && !this.state.markersLoaded) {
             this.initMarkers();
         }
 
-        if (this.props.bbox && !prevProps.bbox) {            
+        // Fly to bounds of the track, with some padding
+        if (this.props.bbox && !prevProps.bbox) {
             this.map.fitBounds(this.props.bbox, {
                 padding: 80
             })
+        }
+
+        // If activities have updated, or a new one has been selected, update the map layer
+        if ((this.props.activities != prevProps.activities && this.state.mapLoaded) || (this.props.selectedActivityId != prevProps.selectedActivityId)) {
+            let geojson = this.generateGeojson();
+            this.setState({ geojson });
+            this.map.getSource('activities').setData(geojson);
         }
     }
 
     componentDidMount() {
 
         // Retrieve map box token from DOM
-        mapboxgl.accessToken = $('#react_app_tracks').data('mapboxToken');       
+        mapboxgl.accessToken = $('#react_app_tracks').data('mapboxToken');
 
         // Initiate the map
         this.map = new Map({
@@ -63,9 +73,9 @@ export default class MapBox extends Component {
         })
 
         // Set on-click handler, will report its lngLat back to TrackDetails
-        //map.on('click', (ev) => {
-        //    this.props.onMapClick(ev.lngLat);
-        //});
+        this.map.on('click', (ev) => {
+            this.props.onMapClick(ev.lngLat); 
+        });
     }
 
     componentWillUnmount() {
@@ -76,35 +86,36 @@ export default class MapBox extends Component {
         let coords = e.lngLat;
         this.map.getCanvas().style.cursor = 'grabbing';
 
+        this.setState({
+            isDragging: true
+        });
+
         let geojson = this.state.geojson;
         geojson.features[this.state.currentMarker].geometry.coordinates = [coords.lng, coords.lat];
 
         // Update state, essentially for both the react component, and the map
         this.setState({ geojson });
         this.map.getSource('activities').setData(geojson);
-    }    
+    }
 
     onMarkerDrop(e) {
 
         this.map.getCanvas().style.cursor = '';
 
+        if (this.state.isDragging) {
+            this.props.onMarkerDrop(this.state.currentMarker, e.lngLat);
+        }        
+
         this.setState({
             isDragging: false
-        });
+        });       
 
         this.map.off('mousemove', this.state.onDragCallback);
-        //this.map.off('touchmove', this.onMarkerDrag.bind(this));
+        this.map.off('touchmove', this.state.onDragCallback);
     }
 
-    //onMarkerClick(e) {
-    //}
-
-    initMarkers() {       
-        console.log('init markers');
-        let typeLabels = ['Informational', 'Count Activity', 'Photograph Activity', 'Picture Select Activity', 'Picture Tap Activity', 'Text Answer Activity'];      
-        
-
-        let geojson = {
+    generateGeojson() {        
+        return {
             type: 'FeatureCollection',
             features: this.props.activities.map((activity, index) => {
                 return {
@@ -116,14 +127,20 @@ export default class MapBox extends Component {
                     },
                     properties: {
                         index: index,
+                        id: activity.id,
                         title: activity.title,
                         description: typeLabels[activity.activityType],
-                        color: activity.active ? '#F44336' : '#999999',
+                        color: activity.id == this.props.selectedActivityId && activity.active ? '#F5A54B' : activity.active ? '#F44336' : '#999999',
                         icon: activity.active ? '\uf3c5' : '\uf609',
+                        halo: activity.id == this.props.selectedActivityId ? 2 : 0
                     }
                 }
             })
         }
+    }
+
+    initMarkers() {
+        let geojson = this.generateGeojson();
 
         // Add this geojson to state for manipulation by other functions
         this.setState({
@@ -134,7 +151,7 @@ export default class MapBox extends Component {
         this.map.addSource('activities', {
             type: 'geojson',
             data: geojson
-        });        
+        });
 
         // Draw a map marker layer onto the map using the added source
         this.map.addLayer({
@@ -152,6 +169,8 @@ export default class MapBox extends Component {
             },
             paint: {
                 'text-color': ['get', 'color'],
+                'text-halo-color': 'rgba(255,255,255,255)',
+                'text-halo-width': ['get', 'halo']
             }
         })
 
@@ -167,10 +186,10 @@ export default class MapBox extends Component {
         this.map.on('mouseenter', 'activities', (e) => {
             this.map.getCanvas().style.cursor = 'pointer';
             let text = e.features[0].properties.title;
-            let lngLat = e.features[0].geometry.coordinates.slice();           
+            let lngLat = e.features[0].geometry.coordinates.slice();
 
             if (!this.state.isDragging) {
-                popup.setLngLat(lngLat).setHTML(text).addTo(this.map);            
+                popup.setLngLat(lngLat).setHTML(text).addTo(this.map);
                 this.setState({
                     currentMarker: e.features[0].properties.index
                 });
@@ -189,50 +208,46 @@ export default class MapBox extends Component {
         })
 
         // When a marker is clicked...
-        //map.on('click', 'activities', (e) => {
-        //});
+        this.map.on('click', 'activities', (e) => {
+            if (!this.state.isDragging) {
+                this.props.onMarkerClick(e.features[0].properties.id);
+            }
+        });
 
         // When a marker is dragged...
         this.map.on('mousedown', 'activities', (e) => {
             // Stop map from moving
             e.preventDefault();
 
-            this.map.getCanvas().style.cursor = 'grabbing';   
-
-            this.setState({
-                isDragging: true
-            });
-
-            this.map.setLayoutProperty('activities', 'text-anchor', 'center');
-
-            let markerIndex = e.features[0].properties.index;
+            this.map.getCanvas().style.cursor = 'grabbing';            
 
             this.map.on('mousemove', this.state.onDragCallback);
             this.map.once('mouseup', this.state.onDropCallback);
         });
 
-        //// Same as above, but for touchscreens
-        //this.map.on('touchstart', 'activities', (e) => {
-        //    // Abort if more than one finger is touching the screen
-        //    if (e.points.length !== 1) return;
+        // Same as above, but for touchscreens
+        this.map.on('touchstart', 'activities', (e) => {
+            // Abort if more than one finger is touching the screen
+            if (e.points.length !== 1) return;
 
-        //    // Stop map from moving
-        //    e.preventDefault();
+            // Stop map from moving
+            e.preventDefault();
 
-        //    let markerIndex = e.features[0].properties.index;
+            this.setState({
+                isDragging: true
+            });
 
-        //    //this.map.on('touchmove', this.onMarkerDrag.bind(this, markerIndex));
-        //    //this.map.once('touchend', this.onMarkerDrop.bind(this, markerIndex));
-        //});
+            this.map.on('touchmove', this.state.onDragCallback);
+            this.map.once('touchend', this.state.onDropCallback);
+        });
 
 
         this.setState({
             markersLoaded: true
-        });        
-    }    
+        });
+    }
 
     render() {
         return <div ref={ref => this.mapContainer = ref} className="map-container-inner"></div>
     }
-
 }

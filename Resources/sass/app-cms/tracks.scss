@@ -110,3 +110,19 @@
         top: -100px;
     }
 }
+
+.click-to-add{
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    box-shadow: rgba(0,0,0,0.7) 5px 5px 5px;
+    cursor: initial;
+    background-color: white;
+
+    h4{
+        margin: 1.0rem;
+        margin-bottom: 0.5rem;
+    }
+}
