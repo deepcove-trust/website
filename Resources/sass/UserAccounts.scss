@@ -3,6 +3,10 @@
     padding-bottom: 10px;
 }
 
+.user-item a {
+    text-decoration: underline;
+}
+
 .user-item:hover:hover {
     background-color: rgba(98, 136, 147, 0.3);
     transition: ease-in-out 1s;

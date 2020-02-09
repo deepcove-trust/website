@@ -14,10 +14,12 @@ export default class Modal extends Component {
 
     size() {
         switch (this.props.size) {
-            case "large": return "modal-lg";
-            case "lg": return "modal-lg";
-            case "small": return "modal-sm";
-            case "sm": return "modal-sm";
+            case "large":
+            case "lg":
+                return "modal-lg";
+            case "small":
+            case "sm":
+                return "modal-sm";
             default: return "";
         }
     }
