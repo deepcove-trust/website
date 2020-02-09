@@ -55,6 +55,7 @@ namespace Deepcove_Trust_Website.Controllers
                     s.Active,
                     s.Developer,
                     s.ForcePasswordReset,
+                    notificationChannels = s.ChannelMemberships.Select(s1 => s1.NotificationChannel.Name),
                     timestamps = new { signup = Utils.PrettyDate(s.CreatedAt), lastLogin = Utils.DiffForHumans(s.LastLogin) }
                 }).ToListAsync());
             }
@@ -167,7 +168,7 @@ namespace Deepcove_Trust_Website.Controllers
             {
                 Account account = await _Db.Accounts.FindAsync(id);
                 if (account.Id == User.AccountId())
-                    return Forbid("You are not allowed to delete your own account");
+                    return Forbid(new ResponseHelper("You are not allowed to delete your own account").ToString());
 
                 account.DeletedAt = DateTime.UtcNow;
                 await _Db.SaveChangesAsync();
@@ -175,13 +176,13 @@ namespace Deepcove_Trust_Website.Controllers
                 _Logger.LogInformation("Account belonging to {0} was deleted", account.Name);
                 _EmailService.SendAccountStatusAsync(false, account.ToEmailContact(), Request.BaseUrl());
 
-                return Ok();
+                return Ok($"{account.Name}'s account has been deleted");
             }
             catch (Exception ex)
             {
                 _Logger.LogError("Error deleting account (Id: {0}): {1}", id, ex.Message);
                 _Logger.LogError(ex.StackTrace);
-                return BadRequest("The account could not be deleted. Please try again later.");
+                return BadRequest(new ResponseHelper("The account could not be deleted. Please try again later.", ex.Message));
             }
         }
     }
