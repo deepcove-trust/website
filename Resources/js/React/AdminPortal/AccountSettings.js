@@ -4,6 +4,7 @@ import Settings from './AccountSettings/Settings';
 import ChangePassword from './AccountSettings/ChangePassword';
 import NotificationChannels from './AccountSettings/Notifications';
 import Alert from '../Components/Alert';
+import md5 from 'md5';
 
 import $ from 'jquery';
 import ErrorBoundary from '../Errors/ErrorBoundary';
@@ -15,7 +16,7 @@ export default class AccountSettings extends Component {
         super(props);
 
         this.state = {
-            account: null
+            account: { email: null }
         }
     }
 
@@ -39,6 +40,21 @@ export default class AccountSettings extends Component {
 
     getChannelMemberships() {
         return this.state.account ? this.state.account.notificationChannels : null;
+    }
+
+    getGravatar() {
+        let email = this.state.account.email;
+        // Settings
+        const apiUrl = "http://www.gravatar.com/avatar";
+        const size = 60;//Options: https://en.gravatar.com/site/implement/images#size
+        const rating = "g";//Options: https://en.gravatar.com/site/implement/images#rating
+
+        // No email provided
+        if (!email) return;
+        // Prepare the email
+        email = email.toLowerCase().trim();
+        // Return the Gravatar string
+        return `${apiUrl}/${md5(email)}?r=${rating}&s=${size}`;
     }
 
     render() {
@@ -72,6 +88,11 @@ export default class AccountSettings extends Component {
                                 u={this.getData.bind(this)}
                                 alert={this.Alert}
                             />
+
+                            <div className="pt-3">
+                                <img className="float-left mr-2" src={this.getGravatar()} alt={`${this.state.account.name}'s gravatar`} />
+                                <p>We use Gravatar's API for your account avatar. You can change it <a href="https://en.gravatar.com/" target="_blank">here</a>.</p>    
+                            </div>
                         </div>
                     </div>
                 </Alert>
