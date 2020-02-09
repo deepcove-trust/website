@@ -60,7 +60,7 @@ export default class Quizzes extends Component {
         return (
             <ErrorBoundary customError="react-quizzes">
                 <Alert onRef={ref => this.Alert = ref}>
-                    <h1 className="text-center my-5">Quiz Management</h1>
+                    <h1 className="text-center my-5">Quiz Manager</h1>
                     {page}
                 </Alert>
             </ErrorBoundary>

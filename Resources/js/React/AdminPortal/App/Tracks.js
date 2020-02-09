@@ -42,7 +42,7 @@ export default class Tracks extends Component {
         return (
             <ErrorBoundary customError="react-tracks">
                 <Alert onRef={ref => this.Alert = ref}>
-                    <h1 className="text-center my-5">Guided Walk Management</h1>
+                    <h1 className="text-center my-5">Guided Walk Manager</h1>
                     {page}
                 </Alert>
             </ErrorBoundary>
