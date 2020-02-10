@@ -238,6 +238,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
             };
 
+            quiz.UpdatedAt = DateTime.UtcNow;
+
             // Transaction rolls back all changes if a failure occurs halfway through
             using(var transaction = await _Db.Database.BeginTransactionAsync())
             {
@@ -318,6 +320,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                     }
                 }
 
+                quiz.UpdatedAt = DateTime.UtcNow;
+
                 await _Db.SaveChangesAsync();
 
                 transaction.Commit();
@@ -331,6 +335,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         [HttpDelete("{quizId:int}/questions/{questionId:int}")]
         public async Task<IActionResult> DeleteQuestion(int quizId, int questionId)
         {
+            Quiz quiz = await _Db.Quizzes.FindAsync(quizId);
+
             QuizQuestion question = await _Db.QuizQuestions.FindAsync(questionId);
 
             if (question == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find question in database"));
@@ -342,6 +348,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
                 _Db.Remove(question);
                 await _Db.SaveChangesAsync();
+
+                quiz.UpdatedAt = DateTime.UtcNow;
 
                 transaction.Commit();
             }
