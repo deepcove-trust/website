@@ -191,6 +191,7 @@
     z-index: 1000;
     color: white;
     position: absolute;
+    width: 100%;
     top: 8px;
     left: 50%;
     transform: translateX(-50%);
@@ -241,5 +242,54 @@
     z-index: 1000;
     i{
         margin-top: 10px;
+    }
+}
+
+.count-section {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-top: 23px;
+    background-color: $primaryColor;
+    border-radius: 8px;
+    width: 60%;
+    margin-right: auto;
+    margin-left: auto;
+    height: 80px;
+
+    &-inner {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+}
+
+.pic-select-section {
+    width: 100%;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    position: relative;
+    height: 200px;
+
+    .fa-chevron-left {
+        position: absolute;
+        top: 50%;
+        left: 45px;
+        transform: translateY(-50%);
+    }
+
+    .fa-chevron-right {
+        position: absolute;
+        top: 50%;
+        right: 45px;
+        transform: translateY(-50%);
+    }
+
+    .img-container {
+        position:absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 50%;
+        border-radius: 10px;
     }
 }

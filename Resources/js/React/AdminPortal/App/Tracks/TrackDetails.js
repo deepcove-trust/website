@@ -475,7 +475,13 @@ class ActivityDetails extends Component {
 
         let typeOptions = typeLabels.map((type, index) => {
             return <option key={index} value={index}>{type}</option>
-        });        
+        });
+
+        let qrCode = (
+            <FormGroup htmlFor="qr-code" label="QR Code" required>
+                <Input id="qr-code" type="text" value={this.props.activity.qrCode} cb={this.props.updateField.bind(this, 'qrCode')} required />
+            </FormGroup>
+            );
         
         let title = activityType != 'Fact File' ? (
             <FormGroup htmlFor="activity-title" label="Activity Title" required>
@@ -592,6 +598,7 @@ class ActivityDetails extends Component {
                         <FormGroup htmlFor="activity-type" label="Activity Type:" required>
                             <Select formattedOptions={typeOptions} selected={this.props.activity.activityType} cb={this.props.updateField.bind(this, 'activityType')} required />
                         </FormGroup>
+                        {qrCode}
                         {title}
                         {factFile}
                         {description}

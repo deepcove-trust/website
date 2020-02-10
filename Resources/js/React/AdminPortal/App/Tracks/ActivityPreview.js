@@ -26,7 +26,7 @@ export default class ActivityPreview extends Component {
             return <p key={index} className="text-left mx-3">{p}</p>
         }) : null;               
 
-        let task = activity.task ? <h6 className="my-4 mx-3 text-left">{activity.task}</h6> : null;
+        let task = activity.task ? <h6 className="my-4 mx-3">{activity.task}</h6> : null;
 
         let previewTypes = [InformationalActivity, CountActivity, PhotographActivity, PictureSelectActivity, PictureTapActivity, TextAnswerActivity]
         let ViewClass = previewTypes[this.props.activity.activityType];
@@ -126,25 +126,26 @@ class PhotographActivity extends Component {
 
 class PictureTapActivity extends Component {
     render() {
-        return <div>Picture Tap Activity</div>
+        return (
+            <div className="preview-body with-back-button pt-4">
+                <div className="activity-title">{this.props.activity.title}</div>
+
+                {this.props.bookIcon}                
+
+                {this.props.desc}
+
+                {this.props.task}
+
+                {this.props.image}
+
+                <BackButtonBar />
+            </div>
+        )
     }
 }
 
 class PictureSelectActivity extends Component {
     render() {
-        return <div>Picture Select Activity</div>
-    }
-}
-
-class CountActivity extends Component {
-    render() {
-        return <div>Count Activity</div>
-    }
-}
-
-class TextAnswerActivity extends Component {
-    render() {       
-
         return (
             <div className="preview-body with-back-button">
                 <div className="activity-title">{this.props.activity.title}</div>
@@ -157,9 +158,67 @@ class TextAnswerActivity extends Component {
 
                 {this.props.task}
 
+                <hr className="mx-4 mt-4 mb-2" />                
+
+                <div className="pic-select-section">
+                    <i className="fas fa-chevron-left"></i>
+                    <i className="fas fa-chevron-right"></i>
+                    <div className="img-container">
+                        <img src={`/media?filename=${this.props.activity.images[0].filename}`} className="img-fluid w-100" />
+                    </div>
+                </div>
+
+                <BackButtonBar />
+            </div>
+        )
+    }
+}
+
+class CountActivity extends Component {
+    render() {
+        return (
+            <div className="preview-body with-back-button">
+                <div className="activity-title">{this.props.activity.title}</div>
+
+                {this.props.bookIcon}
+
+                {this.props.image}
+
+                {this.props.desc}
+
                 <hr className="mx-4 mt-4 mb-2" />
 
-                <h5 className="mt-3 mb-4">Enter your ideas below:</h5>
+                {this.props.task}
+
+                <div className="count-section">
+                    <div className="count-section-inner">
+                        <i className="fas fa-chevron-left fa-2x"></i>
+                        <h2>0</h2>
+                        <i className="fas fa-chevron-right fa-2x"></i>
+                    </div>
+                </div>
+
+                <BackButtonBar />
+            </div>
+        )
+    }
+}
+
+class TextAnswerActivity extends Component {
+    render() {       
+        return (
+            <div className="preview-body with-back-button">
+                <div className="activity-title">{this.props.activity.title}</div>
+
+                {this.props.bookIcon}
+
+                {this.props.image}
+
+                {this.props.desc}                
+
+                <hr className="mx-4 mt-4 mb-2" />
+
+                {this.props.task}
 
                 <div className="mock-input"></div>
 
