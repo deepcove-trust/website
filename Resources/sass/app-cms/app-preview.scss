@@ -276,7 +276,8 @@ $color-dark: #2A292A;
 }
 
 .text-answer-tile{
-    min-height: 74px;
+    position: relative;
+    height: 74px;
     margin-left: 15%;
     margin-right: 15%;
     padding: 25px 15px;
@@ -285,6 +286,13 @@ $color-dark: #2A292A;
     background-color: #262626;
     box-shadow: rgba(0,0,0,0.7) 3px 3px 5px;
     border-radius: 8px;
+    h5{
+        position: absolute;
+        width: 100%
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .true-false-questions{
