@@ -22,7 +22,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         [Required]
         public bool? Active { get; set; }
         [Required]
-        public bool? Shuffle { get; set; }
+        public bool Shuffle { get; set; }
         [Required(ErrorMessage = "You must select an image")]
         public int? ImageId { get; set; }
         [Required(ErrorMessage = "You must provide a quiz title")]
@@ -208,8 +208,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             // Update fields
             quiz.Active = (bool)data.Active;
             quiz.Title = data.Title;
-            quiz.UnlockCode = string.IsNullOrEmpty(data.UnlockCode) ? quiz.UnlockCode : data.UnlockCode;
+            quiz.UnlockCode = data.UnlockCode;
             quiz.ImageId = (int)data.ImageId;
+            quiz.Shuffle = data.Shuffle;
 
             // Save changes
             await _Db.SaveChangesAsync();
