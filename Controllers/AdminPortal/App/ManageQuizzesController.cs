@@ -22,7 +22,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         [Required]
         public bool? Active { get; set; }
         [Required]
-        public bool? Shuffle { get; set; }
+        public bool Shuffle { get; set; }
         [Required(ErrorMessage = "You must select an image")]
         public int? ImageId { get; set; }
         [Required(ErrorMessage = "You must provide a quiz title")]
@@ -208,8 +208,9 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             // Update fields
             quiz.Active = (bool)data.Active;
             quiz.Title = data.Title;
-            quiz.UnlockCode = string.IsNullOrEmpty(data.UnlockCode) ? quiz.UnlockCode : data.UnlockCode;
+            quiz.UnlockCode = data.UnlockCode;
             quiz.ImageId = (int)data.ImageId;
+            quiz.Shuffle = data.Shuffle;
 
             // Save changes
             await _Db.SaveChangesAsync();
@@ -236,11 +237,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                 Text = data.Text,
                 OrderIndex = quiz.Questions.Count,
 
-            };
+            };            
 
             // Transaction rolls back all changes if a failure occurs halfway through
             using(var transaction = await _Db.Database.BeginTransactionAsync())
             {
+                quiz.UpdatedAt = DateTime.UtcNow;
+
                 // Generate question ID
                 await _Db.AddAsync(question);
                 await _Db.SaveChangesAsync();
@@ -318,6 +321,8 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                     }
                 }
 
+                quiz.UpdatedAt = DateTime.UtcNow;
+
                 await _Db.SaveChangesAsync();
 
                 transaction.Commit();
@@ -331,17 +336,21 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         [HttpDelete("{quizId:int}/questions/{questionId:int}")]
         public async Task<IActionResult> DeleteQuestion(int quizId, int questionId)
         {
+            Quiz quiz = await _Db.Quizzes.FindAsync(quizId);
+
             QuizQuestion question = await _Db.QuizQuestions.FindAsync(questionId);
 
             if (question == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh your browser and try again.", "Unable to find question in database"));
 
             using (var transaction = await _Db.Database.BeginTransactionAsync())
             {
+                quiz.UpdatedAt = DateTime.UtcNow;
+
                 question.CorrectAnswerId = null;
                 await _Db.SaveChangesAsync();
 
                 _Db.Remove(question);
-                await _Db.SaveChangesAsync();
+                await _Db.SaveChangesAsync();                                
 
                 transaction.Commit();
             }
@@ -359,6 +368,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             bool shiftUp = shiftDirection.EqualsIgnoreCase("up");
 
             Quiz quiz = await _Db.Quizzes.Include(q => q.Questions).Where(q => q.Id == quizId).FirstOrDefaultAsync();
+            quiz.UpdatedAt = DateTime.UtcNow;
             quiz.Questions = quiz.Questions.OrderBy(q => q.OrderIndex).ToList();
 
             int currentIndex = quiz.Questions.FindIndex(q => q.Id == questionId);
