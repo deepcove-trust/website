@@ -24,13 +24,14 @@ import './js/bootstrap.bundle.min.js';
 import './js/mapbox-gl.js';
 
 /* React */
+import './nReact/UserAccounts';
+//OLD
 import './js/React/AdminPortal/AccountSettings';
 import './js/React/Authentication/Login';
 import './js/React/Authentication/RequestPasswordReset';
 import './js/React/Authentication/ResetPassword';
 import './js/React/Authentication/Register';
 import './js/React/AdminPortal/Dashboard';
-import './js/React/AdminPortal/ManageUsers';
 import './js/React/AdminPortal/Pages';
 import './js/React/AdminPortal/PagesNew';
 import './js/React/AdminPortal/PageUpdate';

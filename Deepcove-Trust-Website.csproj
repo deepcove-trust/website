@@ -140,6 +140,14 @@
     <Compile Remove="Migrations\20191221211615_cascade-page-delete.Designer.cs" />
     <Compile Remove="Migrations\20191221211943_cascade-page-delete.cs" />
     <Compile Remove="Migrations\20191221211943_cascade-page-delete.Designer.cs" />
+    <Compile Remove="Migrations\20200208232113_Added developer attribute to user accounts.cs" />
+    <Compile Remove="Migrations\20200208232113_Added developer attribute to user accounts.Designer.cs" />
+    <Compile Remove="Migrations\20200208232207_Added developer column to accounts.cs" />
+    <Compile Remove="Migrations\20200208232207_Added developer column to accounts.Designer.cs" />
+    <Compile Remove="Migrations\20200208232449_Added developer field to accounts.cs" />
+    <Compile Remove="Migrations\20200208232449_Added developer field to accounts.Designer.cs" />
+    <Compile Remove="Migrations\20200208232524_Added developer field to accounts.cs" />
+    <Compile Remove="Migrations\20200208232524_Added developer field to accounts.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
