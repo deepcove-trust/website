@@ -52,6 +52,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
                     {
                         s.Id,
                         s.Title,
+                        s.Shuffle,
                         image_id = s.Image.Id,
                         unlock_code = s.UnlockCode,
                         updated_at = s.UpdatedAt.ToString("yyyy-MM-dd HH:mm:ss"),

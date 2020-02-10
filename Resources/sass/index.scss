@@ -8,6 +8,9 @@
 @import './ReactImageCrop';
 @import './navbar.scss';
 
+/* Import Mapbox GL Styles */
+@import './mapbox-gl.scss';
+
 /* Custom CSS */
 @import './Authentication.scss';
 @import './media.scss';
@@ -16,6 +19,7 @@
 @import './mobile-cms.scss';
 @import './app-cms/app-preview';
 @import './app-cms/quizzes';
+@import './app-cms/tracks';
 
 /* Devices */
 @import './devices.min.scss';
@@ -44,6 +48,10 @@ body {
 
 .w-90{
     width: 90%;
+}
+
+.w-30{
+    width: 30%;
 }
 
 .resize-none {
@@ -144,6 +152,17 @@ button[disabled]{
 
 .btn {
     border-radius: 0px;
+}
+
+.btn-clear {
+    color: white;
+    background-color: rgba(0,0,0,0.3);
+    padding: 5px;
+
+    &:hover {
+        color: white;
+        background-color: rgba(0,0,0,0.6);
+    }
 }
 
 /* Sticky footer styles
@@ -355,4 +374,14 @@ label.btn input[type="radio"]{
             background-color: rgba(0,0,0,0.5);
         }
     }
+}
+
+@media only screen and (max-width: 576px){
+    .align-left-sm{
+        text-align: left !important;
+    }
+}
+
+.text-orange{
+    color: orange;
 }

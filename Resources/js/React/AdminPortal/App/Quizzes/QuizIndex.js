@@ -128,8 +128,8 @@ class QuizCard extends Component {
 class NewQuizCard extends Component {
     render() {
         return (
-            <div className="text-center m-3 quiz-card pointer" onClick={this.props.cb.bind(this)} style={{ color: "#AEAEAE" }}>
-                <div className="inline-block ff-category-card py-2" style={{ height: "80px" }}>
+            <div className="text-center m-2 quiz-card pointer py-3" onClick={this.props.cb.bind(this)} style={{ color: "#AEAEAE" }}>
+                <div className="inline-block ff-category-card">
                     <i className="far fa-plus-circle fa-3x"></i>
                     <small className="d-block">Add new</small>
                 </div>

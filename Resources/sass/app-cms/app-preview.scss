@@ -96,6 +96,7 @@ $color-dark: #2A292A;
         max-height: calc(100% - 40px);
 
         &::after{
+            visibility: hidden;
             content: 'Back';
             height: 40px;
         }
@@ -115,7 +116,7 @@ $color-dark: #2A292A;
         font-size: 0.95rem;
     }
 
-    & h3, h5, p {
+    & h1, h2, h3, h4, h5, h6, p {
         font-family: 'Roboto', sans-serif !important;
     }
     
@@ -135,6 +136,10 @@ $color-dark: #2A292A;
 
 .object-fit-cover{
     object-fit: cover;
+}
+
+.object-fit-contain{
+    object-fit: contain;
 }
 
 // Fact File Index
@@ -271,7 +276,8 @@ $color-dark: #2A292A;
 }
 
 .text-answer-tile{
-    min-height: 74px;
+    position: relative;
+    height: 74px;
     margin-left: 15%;
     margin-right: 15%;
     padding: 25px 15px;
@@ -280,6 +286,13 @@ $color-dark: #2A292A;
     background-color: #262626;
     box-shadow: rgba(0,0,0,0.7) 3px 3px 5px;
     border-radius: 8px;
+    h5{
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .true-false-questions{

@@ -38,7 +38,7 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.js$/,
-                    exclude: /node_modules/,
+                    exclude: /(node_modules|mapbox-gl)/,                    
                     use: {
                         loader: "babel-loader"
                     }

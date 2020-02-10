@@ -51,7 +51,7 @@ export default class FactFiles extends Component {
             <ErrorBoundary customError="react-fact-files">
                 <Alert onRef={ref => this.Alert = ref}>
                     <div>
-                        <h1 className="text-center my-5">Fact File Management</h1>
+                        <h1 className="text-center my-5">Fact File Manager</h1>
                         {content}
                     </div>
                 </Alert>

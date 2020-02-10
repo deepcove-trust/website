@@ -42,6 +42,7 @@ export class Button extends Component {
         return (
             <button className={this.props.className || "btn btn-primary"}
                 type={this.props.type || "button"}
+                form={this.props.form}
                 disabled={this.props.disabled || this.props.pending}
                 style={{ minWidth: `${this.state.width}px` }}
                 data-dismiss={this.props.dismiss || null}
