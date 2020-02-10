@@ -391,7 +391,8 @@ class ActivityDetails extends Component {
         this.state = {
             showModal: false,
             modalTarget: null,
-            targetIndex: null
+            targetIndex: null,
+            qrStatus: null
         };
     }
 
@@ -399,8 +400,12 @@ class ActivityDetails extends Component {
         this.squareImages();
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
         this.squareImages();
+
+        if (prevProps.activity != this.props.activity) {
+            this.setState({ qrStatus: null });
+        }
     }
 
     squareImages() {
@@ -443,6 +448,23 @@ class ActivityDetails extends Component {
         this.props.updateField('images', images);
     }
 
+    onQrEdit(code) {
+        this.props.updateField('qrCode', code);
+
+        $.ajax({
+            type: 'get',
+            url: `${url}/validate-qr`,
+            data: {
+                qrCode: code,
+                excludeId: this.props.activity.id
+            }
+        }).done(qrStatus => {
+            this.setState({
+                qrStatus
+            });
+        });
+    }
+
     render() {                   
 
         if (!this.props.activity || !this.props.factFiles) return <div></div>;
@@ -479,7 +501,8 @@ class ActivityDetails extends Component {
 
         let qrCode = (
             <FormGroup htmlFor="qr-code" label="QR Code" required>
-                <Input id="qr-code" type="text" value={this.props.activity.qrCode} cb={this.props.updateField.bind(this, 'qrCode')} required />
+                <Input id="qr-code" type="text" value={this.props.activity.qrCode} cb={this.onQrEdit.bind(this)} required />
+                <small className={`${this.state.qrStatus ? 'text-success' : 'text-danger'} float-right font-weight-bold`}>{this.state.qrStatus == null || !this.props.activity.qrCode ? '' : this.state.qrStatus ? 'QR code is available' : 'QR code is in use' }</small>
             </FormGroup>
             );
         
