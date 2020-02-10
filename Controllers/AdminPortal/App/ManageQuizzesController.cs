@@ -237,13 +237,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
                 Text = data.Text,
                 OrderIndex = quiz.Questions.Count,
 
-            };
-
-            quiz.UpdatedAt = DateTime.UtcNow;
+            };            
 
             // Transaction rolls back all changes if a failure occurs halfway through
             using(var transaction = await _Db.Database.BeginTransactionAsync())
             {
+                quiz.UpdatedAt = DateTime.UtcNow;
+
                 // Generate question ID
                 await _Db.AddAsync(question);
                 await _Db.SaveChangesAsync();
@@ -344,13 +344,13 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
 
             using (var transaction = await _Db.Database.BeginTransactionAsync())
             {
+                quiz.UpdatedAt = DateTime.UtcNow;
+
                 question.CorrectAnswerId = null;
                 await _Db.SaveChangesAsync();
 
                 _Db.Remove(question);
-                await _Db.SaveChangesAsync();
-
-                quiz.UpdatedAt = DateTime.UtcNow;
+                await _Db.SaveChangesAsync();                                
 
                 transaction.Commit();
             }
@@ -368,6 +368,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
             bool shiftUp = shiftDirection.EqualsIgnoreCase("up");
 
             Quiz quiz = await _Db.Quizzes.Include(q => q.Questions).Where(q => q.Id == quizId).FirstOrDefaultAsync();
+            quiz.UpdatedAt = DateTime.UtcNow;
             quiz.Questions = quiz.Questions.OrderBy(q => q.OrderIndex).ToList();
 
             int currentIndex = quiz.Questions.FindIndex(q => q.Id == questionId);
