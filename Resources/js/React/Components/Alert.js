@@ -80,7 +80,7 @@ export default class Alert extends Component {
             var msg = responseText ? $.parseJSON(responseText) : defaultMsg;
 
             // If it is a failed validation error, handle it differently       
-            if(msg.ui == null || msg.debug == null) {
+            if((msg.ui == null || msg.debug == null) && !message) {
                 Object.keys(msg).forEach((key) => {
                     toast.error(msg[key][0] || message, {
                         _handleOnShow: this._handleOnShow('error', msg[key][0])

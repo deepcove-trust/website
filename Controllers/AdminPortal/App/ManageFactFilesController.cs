@@ -240,7 +240,7 @@ namespace Deepcove_Trust_Website.Controllers
         [HttpGet("entries/all")]
         public async Task<IActionResult> GetAllEntries()
         {
-            List<FactFileEntry> entries = await _Db.FactFileEntries.ToListAsync();
+            List<FactFileEntry> entries = await _Db.FactFileEntries.Where(e => e.Active).ToListAsync();
 
             return Ok(entries.Select(e => new
             {

@@ -1,12 +1,10 @@
 ﻿import React, { Component, Fragment } from 'react';
 import MapBox from './MapBox';
-import { LngLatLike } from 'mapbox-gl';
 import $ from 'jquery';
 import Card, { CardHighlight, CardBody } from '../../../Components/Card';
 import { ConfirmModal, Button, ConfirmButton } from '../../../Components/Button';
 import { Input, FormGroup, Select, TextArea } from '../../../Components/FormControl';
 import ActivityPreview from './ActivityPreview';
-import DevicePreview from '../../../Components/DevicePreview';
 import SelectMedia from '../../../CMS-Blocks/SelectMedia';
 
 const url = '/admin/app/tracks';
@@ -42,10 +40,6 @@ export default class TrackDetails extends Component {
 
     getSelectedActivityIndex() {
         return this.state.track ? this.state.track.activities.findIndex(a => a.id == this.state.selectedActivityId) : null;
-    }
-
-    getSelectedActivity() {
-        return this.state.track ? this.state.track.activities[this.getSelectedActivityIndex()] : null;
     }
 
     updateActivityField(key, val) {
@@ -183,14 +177,17 @@ export default class TrackDetails extends Component {
 
     onSaveActivity(e) {
         e.preventDefault();        
-
-        // Just gonna let server side handle the validation...
-
-        // Format for the API
         let activity = this.state.activity;
+
+        // Just gonna let server side handle the validation... mostly
+        if (!activity.factFile && activity.activityType == 0)
+            return this.props.alert.error("You must select a fact file to link this activity to.");
+
+        // Format for the API        
         activity.factfileId = activity.factFile ? activity.factFile.id : null;
         activity.imageId = activity.image ? activity.image.id : null;
         activity.images = activity.images.map(image => image.id);
+        activity.title = activity.activityType != 0 ? activity.title : activity.factFile.primaryName;
 
         // Make the request
         $.ajax({
@@ -330,9 +327,7 @@ export default class TrackDetails extends Component {
                         </div>
                         <div className="col-lg-5 show-large">
                             <div className="m-3 sticky-preview show-large text-center">
-                                <DevicePreview sticky topBarGreen>
-                                    <ActivityPreview activity={this.getSelectedActivity()} />
-                                </DevicePreview>
+                                <ActivityPreview alert={this.props.alert} activity={this.state.activity} />                                
                             </div>
                         </div>
                     </div>
@@ -482,11 +477,11 @@ class ActivityDetails extends Component {
             return <option key={index} value={index}>{type}</option>
         });        
         
-        let title =  (
+        let title = activityType != 'Fact File' ? (
             <FormGroup htmlFor="activity-title" label="Activity Title" required>
                 <Input id="activity-title" type="text" value={this.props.activity.title} cb={this.props.updateField.bind(this, 'title')} required />
             </FormGroup>
-        );
+        ) : null;
 
         let factFile = (
             <FormGroup htmlFor="fact-file-id" label="Linked Fact File" required={activityType == 'Fact File'}>
