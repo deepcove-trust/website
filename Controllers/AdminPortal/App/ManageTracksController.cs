@@ -25,6 +25,10 @@ namespace Deepcove_Trust_Website.Controllers
         public int? FactFileId { get; set; }
         public int? ImageId { get; set; }
         public int[] Images { get; set; }
+        [Required]
+        public double CoordX { get; set; }
+        [Required]
+        public double CoordY { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -36,7 +40,7 @@ namespace Deepcove_Trust_Website.Controllers
             } else
             {
                 if (string.IsNullOrEmpty(Description) && string.IsNullOrEmpty(Task))
-                    yield return new ValidationResult("You must provide at least one of: Description, Task", new string[] { "Description", "Task" });
+                    yield return new ValidationResult("You must provide at least one of: Description, Task", new string[] { "Description" });
             }
 
             if(ActivityType == ActivityType.pictureTapActivity)
@@ -46,7 +50,8 @@ namespace Deepcove_Trust_Website.Controllers
 
             if(ActivityType == ActivityType.pictureSelectActivity)
             {
-                if (Images.Length != 3) yield return new ValidationResult("You must provide three image options", new string[] { "Images" });
+                // Note - using to hashset means we can detect if the same image has been selected more than once.
+                if (Images.ToHashSet().Count != 3) yield return new ValidationResult("You must provide three image options", new string[] { "Images" });
             }
         }
     }
@@ -152,7 +157,7 @@ namespace Deepcove_Trust_Website.Controllers
                 Images = activity.ActivityImages.Select(image => new
                 {
                     Id = image.ImageId,
-                    Filename = image.Image.Filename
+                    image.Image.Filename
                 }),
                 activity.QrCode,
                 activity.CoordX,
@@ -206,6 +211,7 @@ namespace Deepcove_Trust_Website.Controllers
                 TrackId = trackId,
                 ActivityType = ActivityType.textAnswerActivity,
                 Title = "New Activity",
+                Description = "New Activity Description",
                 Active = false,
                 CoordX = lng,
                 CoordY = lat
@@ -263,30 +269,30 @@ namespace Deepcove_Trust_Website.Controllers
                 // Retrieve existing activity - confirm its existence
                 Activity oldActivity = await _Db.Activities.Include(a => a.ActivityImages).Where(a => a.Id == activityId).FirstOrDefaultAsync();
                 if(oldActivity == null) return NotFound(new ResponseHelper("Something went wrong. Please refresh the page and try again.", "Could not find activity in database"));
-
-                // Remove old activity from database
-                _Db.Remove(oldActivity);
-                await _Db.SaveChangesAsync();
-
-                // Create new activity
-                Activity activity = new Activity
-                {
-                    ActivityType = activityArgs.ActivityType,
-                    FactFileId = activityArgs.FactFileId,
-                    Description = activityArgs.Description,
-                    Task = activityArgs.Task,
-                    ImageId = activityArgs.ImageId
-                };
+                               
+                oldActivity.TrackId = oldActivity.TrackId;
+                oldActivity.Title = activityArgs.Title;
+                oldActivity.Active = oldActivity.Active;
+                oldActivity.ActivityType = activityArgs.ActivityType;
+                oldActivity.FactFileId = activityArgs.FactFileId;
+                oldActivity.Description = activityArgs.Description;
+                oldActivity.Task = activityArgs.Task;
+                oldActivity.ImageId = activityArgs.ImageId;
+                oldActivity.CoordX = activityArgs.CoordX;
+                oldActivity.CoordY = activityArgs.CoordY;                
 
                 // Save new activity to generate ID
-                await _Db.AddAsync(activity);
+                _Db.Update(oldActivity);
                 await _Db.SaveChangesAsync();
+
+                // Remove old activity images
+                _Db.RemoveRange(oldActivity.ActivityImages);
 
                 // Add pivot table records for activity images
                 _Db.AddRange(activityArgs.Images.Select(imageId => new ActivityImage
                 {
                     ImageId = imageId,
-                    ActivityId = activity.Id
+                    ActivityId = oldActivity.Id
                 }));
 
                 // Save pivot table records

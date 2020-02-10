@@ -47,7 +47,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.App
         {
             // If no correct answer has been specified
             if (CorrectAnswerIndex == null && TrueFalseAnswer == null)
-                yield return new ValidationResult("You must select a correct answer", new string[] { "CorrectAnswerId", "TrueOrFalse" });
+                yield return new ValidationResult("You must select a correct answer", new string[] { "CorrectAnswerId" });
 
             if (TrueFalseAnswer == null)
             {

@@ -62,7 +62,7 @@ export default class MapBox extends Component {
 
         // Update state when the map has loaded, so that we know it is safe to add markers
         this.map.on('load', () => {
-            this.setState({ mapLoaded: true })
+            this.setState({ mapLoaded: true });
         });
 
         // Put callback refs into state for use by the onMarkerDrop function
@@ -74,6 +74,11 @@ export default class MapBox extends Component {
 
         // Set on-click handler, will report its lngLat back to TrackDetails
         this.map.on('click', (ev) => {
+
+            if (this.state.currentMarker == null) {
+                this.props.onMarkerClick(null);
+            };
+
             this.props.onMapClick(ev.lngLat); 
         });
     }
@@ -219,10 +224,13 @@ export default class MapBox extends Component {
             // Stop map from moving
             e.preventDefault();
 
-            this.map.getCanvas().style.cursor = 'grabbing';            
+            // Prevent dragging unless the marker has been previously selected
+            if (this.props.selectedActivityId == e.features[0].properties.id) {
+                this.map.getCanvas().style.cursor = 'grabbing';
 
-            this.map.on('mousemove', this.state.onDragCallback);
-            this.map.once('mouseup', this.state.onDropCallback);
+                this.map.on('mousemove', this.state.onDragCallback);
+                this.map.once('mouseup', this.state.onDropCallback);
+            }
         });
 
         // Same as above, but for touchscreens
