@@ -52,11 +52,13 @@ export default class SelectMedia extends Component {
         this.props.cb(
             this.state.data.find(x => x.id == this.state.selectedId) || null
         );
+
+        this.setState({ selectedId: null });
     }
 
     onInfiniteScrollUpdate() {
         let el = $(`.media-select-icon`).first();
-        $(`.media-select-icon img`).css('height', el[0].offsetWidth);
+        if (el[0]) $(`.media-select-icon img`).css('height', el[0].offsetWidth);
     }
 
     render() {

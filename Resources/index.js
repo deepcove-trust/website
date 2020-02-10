@@ -16,8 +16,12 @@ $.ajaxSetup({
 
 /* JavaScript Core */
 import './js/popper.min';
+import './js/popper.min';
 import './js/bootstrap.bundle.min.js';
 //import './js/Bootstrap/index';
+
+/* Mapbox GL Js */
+import './js/mapbox-gl.js';
 
 /* React */
 import './nReact/UserAccounts';
