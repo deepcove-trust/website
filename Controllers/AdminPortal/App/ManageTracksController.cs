@@ -29,6 +29,8 @@ namespace Deepcove_Trust_Website.Controllers
         public double CoordX { get; set; }
         [Required]
         public double CoordY { get; set; }
+        [Required]
+        public string QrCode { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -165,6 +167,10 @@ namespace Deepcove_Trust_Website.Controllers
             });
         }
 
+        // GET: /admin/app/tracks/validate-qr
+        [HttpGet("validate-qr")]
+        public async Task<IActionResult> ValidateQR(string qrCode, int excludeId = 0) => Ok(await IsValidQrCode(qrCode, excludeId));
+
         // POST: /admin/app/tracks
         [HttpPost]
         public async Task<IActionResult> AddTrack(string name)
@@ -263,6 +269,10 @@ namespace Deepcove_Trust_Website.Controllers
             // Check validation status - see ActivityArgs class for validation logic
             if (!ModelState.IsValid) return new BadRequestObjectResult(ModelState);
 
+            // Check that QR code is not in use elsewhere
+            if (!(await IsValidQrCode(activityArgs.QrCode, activityId)))            
+                return BadRequest(new ResponseHelper("QR code already in use."));            
+
             // Use a transaction to avoid losing data if an exception is thrown
             using(var transaction = await _Db.Database.BeginTransactionAsync())
             {
@@ -279,7 +289,8 @@ namespace Deepcove_Trust_Website.Controllers
                 oldActivity.Task = activityArgs.Task;
                 oldActivity.ImageId = activityArgs.ImageId;
                 oldActivity.CoordX = activityArgs.CoordX;
-                oldActivity.CoordY = activityArgs.CoordY;                
+                oldActivity.CoordY = activityArgs.CoordY;
+                oldActivity.QrCode = activityArgs.QrCode;
 
                 // Save new activity to generate ID
                 _Db.Update(oldActivity);
@@ -362,6 +373,11 @@ namespace Deepcove_Trust_Website.Controllers
             //}
 
             return Ok();
+        }
+
+        private async Task<bool> IsValidQrCode(string code, int excludeId = 0)
+        {
+            return await _Db.Activities.Where(a => a.QrCode == code && a.Id != excludeId).CountAsync() == 0;
         }
     }
 }
