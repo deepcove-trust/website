@@ -164,7 +164,7 @@ class PictureSelectActivity extends Component {
                     <i className="fas fa-chevron-left"></i>
                     <i className="fas fa-chevron-right"></i>
                     <div className="img-container">
-                        <img src={`/media?filename=${this.props.activity.images[0].filename}`} className="img-fluid w-100" />
+                        <img src={this.props.activity.images[0] ? `/media?filename=${this.props.activity.images[0].filename}}` : `/images/no-image.png`} className="img-fluid w-100" />
                     </div>
                 </div>
 
