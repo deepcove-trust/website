@@ -45,7 +45,7 @@ export default class AccountSettings extends Component {
     getGravatar() {
         let email = this.state.account.email;
         // Settings
-        const apiUrl = "http://www.gravatar.com/avatar";
+        const apiUrl = "https://www.gravatar.com/avatar";
         const size = 60;//Options: https://en.gravatar.com/site/implement/images#size
         const rating = "g";//Options: https://en.gravatar.com/site/implement/images#rating
 

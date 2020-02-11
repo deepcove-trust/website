@@ -14,7 +14,7 @@ export default class AccountCard extends Component {
 
     getAvatarUrl(email) {
         // Settings
-        const apiUrl = "http://www.gravatar.com/avatar";
+        const apiUrl = "https://www.gravatar.com/avatar";
         const size = 100;//Options: https://en.gravatar.com/site/implement/images#size
         const rating = "g";//Options: https://en.gravatar.com/site/implement/images#rating
 
