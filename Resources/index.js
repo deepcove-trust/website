@@ -48,6 +48,7 @@ import './js/React/AdminPortal/Noticeboard';
 import './js/React/Errors/Inactive';
 import './js/React/Errors/PasswordExpired';
 import './js/React/Errors/InternalServerError';
+import './js/React/Errors/NotFound';
 
 /* React - Page Templates */
 import './js/React/PageTemplates/BasePage';
