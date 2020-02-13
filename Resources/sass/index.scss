@@ -13,6 +13,7 @@
 
 /* Custom CSS */
 @import './Authentication.scss';
+@import './CookieConsent.scss';
 @import './media.scss';
 @import './dropzone.scss';
 @import './button_fade.scss';
@@ -76,21 +77,6 @@ body {
 
 .bg-dark-trans{
     background-color: rgba(0,0,0,0.5);
-}
-
-.alert-cookies {
-    margin-bottom: 0;
-    border-radius: 0px;
-    background-color: #282d32;
-    color: #f0f9ff;
-    height: 80px;
-    outline: none;
-    text-align: center;
-    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
-    -moz-animation: fadein 1s; /* Firefox < 16 */
-    -ms-animation: fadein 1s; /* Internet Explorer */
-    -o-animation: fadein 1s; /* Opera < 12.1 */
-    animation: fadein 1s;
 }
 
 .navbar-brand > img {
