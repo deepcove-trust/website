@@ -49,7 +49,8 @@ module.exports = (env, argv) => {
                 }
             ]
         },
-        devtool: "inline-source-map",
+        // No map for production, reduces size of the bundle
+        devtool: argv.mode === "production" ? false : "source-map",
         plugins: [
             new CleanWebpackPlugin(dirName, {}),
             new MiniCssExtractPlugin({
