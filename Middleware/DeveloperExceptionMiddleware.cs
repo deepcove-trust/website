@@ -41,9 +41,26 @@ namespace Deepcove_Trust_Website.Middleware
                     throw;
                 }
                 
+                // Handle an internal server error
                 httpContext.Response.Clear();
                 httpContext.Response.StatusCode = 500;
-                httpContext.Response.Redirect($"/error/server-error?requestId={requestId}");
+                httpContext.Response.Redirect($"/error/server-error?requestId={requestId}");                
+            }
+
+
+            try
+            {
+                // Trigger the exception handler
+                if (httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+                {
+                    throw new Exception($"{httpContext.Request.Path} could not be found");
+                }
+            }
+            catch(Exception ex)
+            {   // Handle an internal server error
+                httpContext.Response.Clear();
+                httpContext.Response.StatusCode = 404;
+                httpContext.Response.Redirect($"/error/not-found");
             }
         }
     }
