@@ -68,7 +68,6 @@ namespace Deepcove_Trust_Website.Middleware
                         $"END EXCEPTION"
                     );
 
-                httpContext.Response.Clear();
                 httpContext.Response.StatusCode = 404;
                 httpContext.Response.Redirect($"/error/not-found");
             }
