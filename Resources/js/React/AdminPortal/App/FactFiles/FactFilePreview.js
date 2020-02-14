@@ -20,7 +20,7 @@ class FactFileIndexPreview extends Component {
         return (
             <div className="h-100">
                 <div className="tab-bar"></div>
-                <div className="row preview-body">
+                <div className="row preview-body with-nav-bar">
                     {entryTiles}
                 </div>
                 <div className="nav-bar"></div>
@@ -54,7 +54,7 @@ class EntryCard extends Component {
                 <div className="tile tile-shadow">
                     {disabledFlag}
                     <img className="object-fit-cover img-fluid" src={`/media?filename=${this.props.imgSrc}`} />
-                    <div className="tile-title-dark mb-2">
+                    <div className="tile-title-dark tile-title mb-2">
                         {this.props.title}
                     </div>
                 </div>
@@ -71,7 +71,7 @@ class FactFileEntryPreview extends Component {
         let bodyParagraphs = this.props.entry.bodyText.split('\n').map((p, index) => { return <p key={index} className="text-left mx-2">{p}</p> });
 
         let disabledFlag = !this.props.entry.active && this.props.entry.id != 0 ? (
-            <div className="warning-stripes">
+            <div className="warning-stripes" style={{zIndex: '1012'}}>
                 <p>Disabled</p>
             </div>
         ) : null;

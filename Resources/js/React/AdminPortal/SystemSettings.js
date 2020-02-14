@@ -4,6 +4,7 @@ import Alert from '../Components/Alert';
 import ContactInformation from './SystemSettings/ContactInformation';
 import FooterQuickLinks from './SystemSettings/FooterQuickLinks';
 import Navbar from './Systemsettings/Navbar';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const components = {
     0: {
@@ -51,21 +52,23 @@ export default class SystemSettings extends Component {
         const SettingsPage = components[this.state.tabIndex || 0].template;
 
         return (
-            <Alert onRef={ref => (this.Alert = ref)}>
-                <div className="row">
-                    <div className="col-12 py-3">
-                        <h1 className="text-center">Website Settings</h1>
-                        <PageTabs tabIndex={this.state.tabIndex}
-                            pages={components}
-                            cb={this.updateIndex.bind(this)}
-                        />
+            <ErrorBoundary customError="react-system-settings">
+                <Alert onRef={ref => (this.Alert = ref)}>
+                    <div className="row">
+                        <div className="col-12 py-3">
+                            <h1 className="text-center">Website Settings</h1>
+                            <PageTabs tabIndex={this.state.tabIndex}
+                                pages={components}
+                                cb={this.updateIndex.bind(this)}
+                            />
 
-                        <div className="fade1sec">
-                            <SettingsPage alert={this.Alert}/>
+                            <div className="fade1sec">
+                                <SettingsPage alert={this.Alert} />
+                            </div>
                         </div>
                     </div>
-                </div>
-            </Alert>
+                </Alert>
+            </ErrorBoundary>
         );
     }
 }

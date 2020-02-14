@@ -38,7 +38,7 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.js$/,
-                    exclude: /node_modules/,
+                    exclude: /(node_modules|mapbox-gl)/,                    
                     use: {
                         loader: "babel-loader"
                     }
@@ -49,7 +49,8 @@ module.exports = (env, argv) => {
                 }
             ]
         },
-        devtool: "inline-source-map",
+        // No map for production, reduces size of the bundle
+        devtool: argv.mode === "production" ? false : "source-map",
         plugins: [
             new CleanWebpackPlugin(dirName, {}),
             new MiniCssExtractPlugin({

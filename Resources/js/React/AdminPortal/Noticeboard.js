@@ -10,6 +10,7 @@ const components = {
 }
 
 import $ from 'jquery';
+import ErrorBoundary from '../Errors/ErrorBoundary';
 
 const baseUri = `/admin/noticeboard`;
 
@@ -86,27 +87,29 @@ class Noticeboard extends Component {
         })
     }
 
-    render() {       
+    render() {
         const TemplateName = components[this.state.viewIndex];
 
         return (
-            <Alert className="row" onRef={ref => (this.Alert = ref)}>
-                <div className="col-12">
-                    <h1 className="text-center">Noticeboard</h1>
-                </div>
+            <ErrorBoundary customError="react-noticeboard">
+                <Alert className="row" onRef={ref => (this.Alert = ref)}>
+                    <div className="col-12">
+                        <h1 className="text-center">Noticeboard</h1>
+                    </div>
 
-                <TemplateName 
-                    important={this.state.important}
-                    normal={this.state.normal}
-                    disabled={this.state.disabled}
-                    selected={this.state.selected}
-                    alert={this.Alert}
+                    <TemplateName
+                        important={this.state.important}
+                        normal={this.state.normal}
+                        disabled={this.state.disabled}
+                        selected={this.state.selected}
+                        alert={this.Alert}
 
-                    cb_delete={this.handleDelete.bind(this)}
-                    cb_edit={this.changeView.bind(this)}
-                    cb_submit={this.handleSubmit.bind(this)}
-                />
-            </Alert>
+                        cb_delete={this.handleDelete.bind(this)}
+                        cb_edit={this.changeView.bind(this)}
+                        cb_submit={this.handleSubmit.bind(this)}
+                    />
+                </Alert>
+            </ErrorBoundary>
         )
     }
 }

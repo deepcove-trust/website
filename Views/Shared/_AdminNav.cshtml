@@ -17,7 +17,7 @@
             <ul class="nav navbar-nav ml-auto">
                 <!-- Manage Users -->
                 <li role="presentation" class="nav-item">
-                    <a class="nav-link" asp-area="admin" asp-controller="Users">Accounts</a>
+                    <a class="nav-link" asp-area="admin" asp-controller="Users" asp-action="Index">Accounts</a>
                 </li>
 
                 <!-- Discover Deep Cove -->
@@ -25,9 +25,8 @@
                     <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> Discover Deep Cove</a>
                     <div role="menu" class="dropdown-menu">
                         <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="ManageFactFiles">Fact Files</a>
-                        @*<a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="ManageQuizzes">Quizes</a>
-                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="ManageTracks">Tracks</a>*@
-                        
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="ManageTracks">Guided Walks</a>
+                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="ManageQuizzes">Quizzes</a>
                     </div>
                 </li>
 
@@ -58,7 +57,7 @@
                     <a data-toggle="dropdown" aria-expanded="false" class="dropdown-toggle nav-link"> Hi @User.AccountNameFirst()</a>
                     <div class="dropdown-menu" role="menu">
                         <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Account">Your Settings</a>
-                        <a class="dropdown-item" role="presentation" asp-area="admin" asp-controller="Login" asp-action="Logout">Logout</a>
+                        <a class="dropdown-item" role="presentation" asp-controller="Login" asp-action="Logout">Logout</a>
                     </div>
                 </li>
             </ul>

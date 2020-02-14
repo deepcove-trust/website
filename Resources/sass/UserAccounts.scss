@@ -1,0 +1,31 @@
+﻿.user-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.user-item a {
+    text-decoration: underline;
+}
+
+.user-item:hover:hover {
+    background-color: rgba(98, 136, 147, 0.3);
+    transition: ease-in-out 1s;
+}
+
+.user-item img.avatar {
+    float: left;
+    border-radius: 50%;
+    margin-right: 10px;
+    min-width: 100px;
+}
+
+.user-item .name {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.user-item .list-unstyled li {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}

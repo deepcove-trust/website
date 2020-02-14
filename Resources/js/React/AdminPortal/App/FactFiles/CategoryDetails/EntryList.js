@@ -57,7 +57,7 @@ export default class EntryList extends Component {
         let categoryName = !this.state.editMode ? (
             <Fragment>
                 <h3 className="pt-3 pb-2 mb-0 d-inline-block text-white">{this.state.categoryName}</h3>
-                <Button className="btn text-white" cb={() => this.setState({ editMode: true })}><i className="fas fa-edit"></i></Button>
+                <Button className="btn text-white" cb={() => this.setState({ editMode: true })}><i className="fas fa-pen"></i></Button>
                 <ConfirmModal className="btn btn-dark float-right m-2" cb={this.props.onDeleteCategory.bind(this)} confirmPhrase={this.state.categoryName} question="Delete this category and all associated entries">
                     <i className="fas fa-trash"></i>&nbsp; Delete Category
                 </ConfirmModal>
@@ -110,7 +110,7 @@ class EntryCard extends Component {
         return (
             <label className={`d-block list-card m-2 p-2 ${active ? 'active' : ''}`} >
                 <input type="radio" name="navitem" onChange={this.props.setActive} disabled={this.props.addingNew} />
-                <h5>{this.props.entryName}</h5>
+                <h5 className="vertically-center">{this.props.entryName}</h5>
             </label>
         )
     }

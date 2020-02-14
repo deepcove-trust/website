@@ -236,6 +236,19 @@ namespace Deepcove_Trust_Website.Controllers
             }
         }
 
+        // GET: /admin/app/factfiles/entries/all;
+        [HttpGet("entries/all")]
+        public async Task<IActionResult> GetAllEntries()
+        {
+            List<FactFileEntry> entries = await _Db.FactFileEntries.Where(e => e.Active).ToListAsync();
+
+            return Ok(entries.Select(e => new
+            {
+                e.Id,
+                e.PrimaryName
+            }));
+        } 
+
         // GET /admin/app/factfiles/entries/{entryId}
         [HttpGet("entries/{id:int}")]
         public async Task<IActionResult> GetEntryDetails(int id)
@@ -275,8 +288,8 @@ namespace Deepcove_Trust_Website.Controllers
                     } : null,
                     PronounceAudio = entry.PronounceAudio != null ? new
                     {
-                        entry.PronounceAudio?.Id,
-                        entry.PronounceAudio?.Name,
+                        entry.PronounceAudio.Id,
+                        entry.PronounceAudio.Name,
                         entry.PronounceAudio.Filename,
                         entry.PronounceAudio.MediaType
                     } : null,

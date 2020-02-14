@@ -17,11 +17,14 @@ class ScrollWrapper extends Component {
     }
 
     render() {
-        const { children, backBar} = this.props;
+        const { children, backBar, topBarGreen, topBarBlack} = this.props;
         let backBar_ui = !!backBar ? <div className="back-button-bar" onClick={this.handleBack.bind(this)}>Back</div> : null;
+        let topBar = (topBarBlack || topBarGreen) ? <div className={`tab-bar${topBarGreen ? '-green' : ''}`}></div> : null;
+
         return (
-            <div className="h-100">
-                <div className={`preview-body ${!!backBar ? 'with-back-button' : ''}`}>
+            <div className="h-100" >                
+                <div className={`preview-body ${backBar ? 'with-back-button' : ''} ${topBar ? 'with-top-bar' : ''} `}>
+                    {topBar}
                     <div>
                         {children}
                     </div>
@@ -77,12 +80,12 @@ export default class DevicePreview extends Component {
         const { backBar, children, landscape, onBack, silver, tablet, white } = this.props;
         let device = tablet
             ? <Tablet silver={silver} landscape={landscape}>
-                <ScrollWrapper backBar={backBar} onBack={onBack}>
+                <ScrollWrapper backBar={backBar} onBack={onBack} topBarBlack={!!this.props.topBarBlack} topBarGreen={!!this.props.topBarGreen}>
                     {children}
                 </ScrollWrapper>
             </Tablet>
             : <Phone white={white} landscape={landscape}>
-                <ScrollWrapper backBar={backBar} onBack={onBack}>
+                <ScrollWrapper backBar={backBar} onBack={onBack} topBarBlack={!!this.props.topBarBlack} topBarGreen={!!this.props.topBarGreen}>
                     {children}
                 </ScrollWrapper>
             </Phone>

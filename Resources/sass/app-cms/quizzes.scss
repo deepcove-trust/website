@@ -1,0 +1,80 @@
+﻿.quiz-card {
+    background-color: white;
+    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+    transition: all ease-in 0.1s;
+
+    h5 {
+        margin-bottom: 0px;
+    }
+
+    .question-count {
+        position: relative;
+        color: darkgray;
+    }
+
+    &:hover {
+        color: white !important;
+        background-color: $color-primary;
+
+        span, small {
+            color: white !important;
+        }
+    }
+}
+
+.pos-top-right {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.quiz-settings{
+    background-color: $color-primary-faded;        
+}
+
+.image-edit-overlay {
+    opacity: 0;
+    z-index: 999;
+    transition: all ease-in 0.1s;
+    background-color: rgba(0,0,0,0.4);
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 1rem);
+    top: 0.5rem;
+    left: 0.5rem;
+
+    &:hover {
+        opacity: 1.0;
+    }
+}
+
+.question-card{
+    margin-bottom: 30px;
+
+    .dropdown {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+
+        li {
+            padding: 10px;
+            transition: all ease-in 0.1s;
+            cursor: pointer;
+            &:hover {
+                background-color: $color-primary;
+                color: white;                
+            }
+        }
+    }
+}
+
+.answer-tile{
+    input[type=text]{
+        width: 90%;
+    }
+}
+
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button{
+    appearance: none;
+}

@@ -190,6 +190,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.Property<int>("ImageId");
 
+                    b.Property<bool>("Shuffle");
+
                     b.Property<string>("Title");
 
                     b.Property<string>("UnlockCode");
@@ -280,6 +282,8 @@ namespace Deepcove_Trust_Website.Migrations
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<DateTime?>("DeletedAt");
+
+                    b.Property<bool>("Developer");
 
                     b.Property<string>("Email")
                         .IsRequired();
@@ -791,7 +795,8 @@ namespace Deepcove_Trust_Website.Migrations
 
                     b.HasOne("Deepcove_Trust_Website.DiscoverDeepCove.QuizAnswer", "CorrectAnswer")
                         .WithOne("CorrectForQuestion")
-                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "CorrectAnswerId");
+                        .HasForeignKey("Deepcove_Trust_Website.DiscoverDeepCove.QuizQuestion", "CorrectAnswerId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Deepcove_Trust_Website.Models.ImageMedia", "Image")
                         .WithMany()

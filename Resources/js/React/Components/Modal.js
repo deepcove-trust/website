@@ -14,10 +14,12 @@ export default class Modal extends Component {
 
     size() {
         switch (this.props.size) {
-            case "large": return "modal-lg";
-            case "lg": return "modal-lg";
-            case "small": return "modal-sm";
-            case "sm": return "modal-sm";
+            case "large":
+            case "lg":
+                return "modal-lg";
+            case "small":
+            case "sm":
+                return "modal-sm";
             default: return "";
         }
     }
@@ -39,7 +41,7 @@ export default class Modal extends Component {
         ) : null
         
         return (
-            <div className={`modal fade ${this.props.className}`} role="dialog">
+            <div className={`modal fade ${this.props.className || ''}`} role="dialog">
                 <div className={`modal-dialog ${this.size()}`} role="document">
                     <div className="modal-content">
                         {headder}
