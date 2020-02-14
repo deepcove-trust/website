@@ -1,0 +1,26 @@
+﻿.alert-cookies {
+    margin-bottom: 0;
+    border-radius: 0px;
+    background-color: #282d32;
+    color: #f0f9ff;
+    height: 105px;
+    outline: none;
+    text-align: center;
+    -webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadein 1s; /* Firefox < 16 */
+    -ms-animation: fadein 1s; /* Internet Explorer */
+    -o-animation: fadein 1s; /* Opera < 12.1 */
+    animation: fadein 1s;
+}
+
+@media(max-width: 908px) {
+    .cookieConsent > button {
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+}
+
+.cookieConsent > button {
+    float: right !important;
+}

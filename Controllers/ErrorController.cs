@@ -7,7 +7,13 @@ namespace Deepcove_Trust_Website.Controllers
     [Route("error")]
     public class ErrorController : Controller
     {
-        
+        [HttpGet("password-reset")]
+        public IActionResult PasswordExpired()
+        {
+            Response.StatusCode = 401;
+            return View(viewName: "~/Views/Errors/PasswordExpired.cshtml");
+        }
+
         [HttpGet("inactive")]
         public IActionResult Inactive()
         {
@@ -15,12 +21,13 @@ namespace Deepcove_Trust_Website.Controllers
             return View(viewName: "~/Views/Errors/Inactive.cshtml");
         }
 
-        [HttpGet("password-reset")]
-        public IActionResult PasswordExpired()
+        [HttpGet("not-found")]
+        public IActionResult PageNotFound()
         {
-            Response.StatusCode = 401;
-            return View(viewName: "~/Views/Errors/PasswordExpired.cshtml");
+            Response.StatusCode = 404;
+            return View(viewName: "~/Views/Errors/NotFound.cshtml");
         }
+
 
         [HttpGet("server-error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
