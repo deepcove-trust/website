@@ -27,7 +27,7 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove.Controllers
         {
             try
             {
-                return Ok(await _Database.Notices.Where(n => n.Noticeboard != Noticeboard.web).ToListAsync());
+                return Ok(await _Database.Notices.Where(n => n.Noticeboard != Noticeboard.web && n.Active).ToListAsync());
             }
             catch(Exception ex)
             {
