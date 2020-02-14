@@ -140,7 +140,8 @@ namespace Deepcove_Trust_Website.Controllers
 
                     // Location
                     writer.WriteStartElement(null, "loc", null);
-                    writer.WriteValue(new Uri(Request.BaseUrl(), page.AbsoluteUrl));
+                    writer.WriteValue(new Uri(Request.BaseUrl(), 
+                        (page.Name == "" || page.Name == "Home") ? "/" : page.AbsoluteUrl));
                     writer.WriteEndElement();
                     // Close location
 
@@ -151,7 +152,7 @@ namespace Deepcove_Trust_Website.Controllers
                     // Close lastmod
 
                     // Priority
-                    double priority = page.Name == "" ? 1.0 : page.Name == "Contact Us" 
+                    double priority = page.Name == "" || page.Name == "Home" ? 1.0 : page.Name == "Contact Us" 
                         ? 0.8 : page.Section == Section.main ? 0.6 : 0.4;
 
                     writer.WriteStartElement(null, "priority", null);
