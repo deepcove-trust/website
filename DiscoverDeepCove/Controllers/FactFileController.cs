@@ -95,15 +95,9 @@ namespace Deepcove_Trust_Website.DiscoverDeepCove
         public IActionResult Categories()
         {
             try
-            {
-                return Ok(_Db.FactFileCategories
-                    .Include(cat => cat.FactFileEntries)
-                    .Where(c => c.FactFileEntries.Count > 0)
-                    .Select(s => new
-                {
-                    s.Id,
-                    s.Name
-                }).ToList());
+            {               
+                return Ok(_Db.FactFileCategories.Where(cat => cat.Active && cat.FactFileEntries.Where(fe => fe.Active).Count() > 0)
+                    .Select(s => new { s.Id, s.Name }).ToList());
             }
             catch(Exception ex)
             {
