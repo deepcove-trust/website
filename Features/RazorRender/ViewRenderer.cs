@@ -20,6 +20,7 @@ namespace Deepcove_Trust_Website.Features.RazorRender
         private readonly ITempDataProvider _TempDataProvider;
         private readonly IServiceProvider _ServiceProvider;
 
+        
         public ViewRenderer(IRazorViewEngine viewEngine, ITempDataProvider tempDataProvider, IServiceProvider serviceProvider)
         {
             _ViewEngine = viewEngine;
