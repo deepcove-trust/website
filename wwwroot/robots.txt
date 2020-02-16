@@ -1,4 +1,5 @@
 ﻿User-Agent: *
 Disallow: 
+Disallow: /www.deepcovehostel.co.nz
 
 Sitemap: https://deepcovehostel.co.nz/sitemap.xml
