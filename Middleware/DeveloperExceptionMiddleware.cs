@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Deepcove_Trust_Website.Features.Emails;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
-using System.Text;
 using Deepcove_Trust_Website.Features.RazorRender;
+using Deepcove_Trust_Website.Features.Emails;
 
 namespace Deepcove_Trust_Website.Middleware
 {
@@ -65,7 +65,7 @@ namespace Deepcove_Trust_Website.Middleware
             catch (Exception ex)
             {   // Only send emails if the request did not come from a search engine bot
                 // Bots list from: https://perishablepress.com/list-all-user-agents-top-search-engines/ Feb 2020
-                if (!IsSpiderBot(httpContext.Request.Headers["User-Agent"]))
+                if (!IsSpiderBot(logger, httpContext.Request.Headers["User-Agent"]))
                 {
                     string requestId = System.Diagnostics.Activity.Current?.Id ?? httpContext.TraceIdentifier;
                     await email.SendExceptionEmailAsync(ex, httpContext, requestId);
@@ -82,7 +82,6 @@ namespace Deepcove_Trust_Website.Middleware
                 buffer = Encoding.UTF8
                     .GetBytes(await viewRenderer.RenderAsync("NotFound", new { }));
 
-                httpContext.Response.StatusCode = 404;
                 httpContext.Response.ContentType = "text/html";
                 httpContext.Response.ContentLength = buffer.Length;
                 using (var stream = httpContext.Response.Body)
@@ -91,11 +90,11 @@ namespace Deepcove_Trust_Website.Middleware
                     await stream.FlushAsync();
                 }
 
-                //httpContext.Response.Redirect($"/error/not-found");
+                httpContext.Response.StatusCode = 404;
             }
         }
 
-        private bool IsSpiderBot(string useragent_string)
+        private bool IsSpiderBot(ILogger<DeveloperExceptionMiddleware> _logger, string useragent_string)
         {
             List<SpiderBotAgents> UserAgents = JsonConvert.DeserializeObject<List<SpiderBotAgents>>
                 (File.ReadAllText("Data/spiderbot_useragents.json"));
@@ -106,7 +105,7 @@ namespace Deepcove_Trust_Website.Middleware
                 {
                     if (useragent_string.Contains(exp))
                     {
-                        //log agent.Owner
+                        _logger.LogDebug($"404 caused by spiderbot: {agent.Owner}");
                         return true;
                     }
                 }
