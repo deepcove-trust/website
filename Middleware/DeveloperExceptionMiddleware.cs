@@ -58,7 +58,8 @@ namespace Deepcove_Trust_Website.Middleware
                 // Trigger the exception handler
                 if (httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
                 {
-                    throw new Exception($"{httpContext.Request.PathBase + httpContext.Request.Path} could not be found");
+                    if(!httpContext.Response.Headers.ContainsKey("errorstop"))
+                     throw new Exception($"{httpContext.Request.PathBase + httpContext.Request.Path} could not be found");
                 }
             }
             // Handle page not found
@@ -78,19 +79,7 @@ namespace Deepcove_Trust_Website.Middleware
                         );
                 }
 
-                byte[] buffer;
-                buffer = Encoding.UTF8
-                    .GetBytes(await viewRenderer.RenderAsync("NotFound", new { }));
-
-                httpContext.Response.ContentType = "text/html";
-                httpContext.Response.ContentLength = buffer.Length;
-                using (var stream = httpContext.Response.Body)
-                {
-                    await stream.WriteAsync(buffer, 0, buffer.Length);
-                    await stream.FlushAsync();
-                }
-
-                httpContext.Response.StatusCode = 404;
+                httpContext.Response.Redirect("/error/not-found");
             }
         }
 
