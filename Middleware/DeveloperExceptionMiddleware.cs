@@ -7,6 +7,8 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
+using System.Text;
+using Deepcove_Trust_Website.Features.RazorRender;
 
 namespace Deepcove_Trust_Website.Middleware
 {
@@ -20,7 +22,7 @@ namespace Deepcove_Trust_Website.Middleware
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext, IEmailService email, ILogger<DeveloperExceptionMiddleware> logger)
+        public async Task Invoke(HttpContext httpContext, IEmailService email, ILogger<DeveloperExceptionMiddleware> logger, IViewRenderer viewRenderer)
         {
             try
             {
@@ -75,9 +77,21 @@ namespace Deepcove_Trust_Website.Middleware
                             $"END EXCEPTION"
                         );
                 }
-                
+
+                byte[] buffer;
+                buffer = Encoding.UTF8
+                    .GetBytes(await viewRenderer.RenderAsync("NotFound", new { }));
+
                 httpContext.Response.StatusCode = 404;
-                httpContext.Response.Redirect($"/error/not-found");
+                httpContext.Response.ContentType = "text/html";
+                httpContext.Response.ContentLength = buffer.Length;
+                using (var stream = httpContext.Response.Body)
+                {
+                    await stream.WriteAsync(buffer, 0, buffer.Length);
+                    await stream.FlushAsync();
+                }
+
+                //httpContext.Response.Redirect($"/error/not-found");
             }
         }
 
