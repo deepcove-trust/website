@@ -1,0 +1,34 @@
+[
+  {
+    "owner": "AOL.com",
+    "regex": [ "aolbuild" ]
+  },
+  {
+    "owner": "Baidu",
+    "regex": [ "baidu" ]
+  },
+  {
+    "owner": "Bingbot/MSN",
+    "regex": [ "bingbot", "bingpreview", "msnbot" ]
+  },
+  {
+    "owner": "DuckDuckGo",
+    "regex": [ "duckduckgo" ]
+  },
+  {
+    "owner": "Google",
+    "regex": [ "adsbot-google", "googlebot", "mediapartners-google" ]
+  },
+  {
+    "owner": "Teoma",
+    "regex": [ "teoma" ]
+  },
+  {
+    "owner": "Yahoo!",
+    "regex": [ "slurp" ]
+  },
+  {
+    "owner": "Yandex",
+    "regex": [ "yandex" ]
+  }
+]

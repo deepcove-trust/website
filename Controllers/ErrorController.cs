@@ -24,6 +24,12 @@ namespace Deepcove_Trust_Website.Controllers
         [HttpGet("not-found")]
         public IActionResult PageNotFound()
         {
+            if (!Response.Headers.ContainsKey("errorcode")) {
+                Response.Headers.Add("errorstop", "true");
+            } else {
+                Response.Headers.Remove("errorcode");
+            }
+
             Response.StatusCode = 404;
             return View(viewName: "~/Views/Errors/NotFound.cshtml");
         }

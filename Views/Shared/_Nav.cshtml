@@ -5,9 +5,13 @@
 @inject NavbarService Nav
 
 @{
-    string action = ViewContext.RouteData.Values["action"].ToString();
-    var section = Nav.GetWebsiteSection(action: action);
-    List<NavItem> navItems = Nav.GetNavItemsBySection(section);
+    string action = ViewContext?.RouteData?.Values["action"]?.ToString();
+    List<NavItem> navItems = new List<NavItem>();
+    if(!string.IsNullOrEmpty(action))
+    {
+        var section = Nav.GetWebsiteSection(action: action);
+        navItems = Nav.GetNavItemsBySection(section);
+    }
 }
 
 <nav id="sitenav" class="navbar navbar-light navbar-expand-md sticky-top">
