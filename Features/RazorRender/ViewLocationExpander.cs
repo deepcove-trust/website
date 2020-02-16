@@ -8,7 +8,7 @@ namespace Deepcove_Trust_Website.Features.RazorRender
     {
         public IEnumerable<string> ExpandViewLocations(ViewLocationExpanderContext context, IEnumerable<string> viewLocations)
         {
-            var locations = new[] { "Views/Emails/{0}.cshtml" };
+            var locations = new[] { "Views/Emails/{0}.cshtml", "Views/Errors/{0}.cshtml"};
             return locations.Union(viewLocations);
         }
 
