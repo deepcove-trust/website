@@ -63,7 +63,7 @@ namespace Deepcove_Trust_Website.Middleware
             catch (Exception ex)
             {   // Only send emails if the request did not come from a search engine bot
                 // Bots list from: https://perishablepress.com/list-all-user-agents-top-search-engines/ Feb 2020
-                if (!IsSpiderBot(httpContext.Request.Headers["useragent"]))
+                if (!IsSpiderBot(httpContext.Request.Headers["User-Agent"]))
                 {
                     string requestId = System.Diagnostics.Activity.Current?.Id ?? httpContext.TraceIdentifier;
                     await email.SendExceptionEmailAsync(ex, httpContext, requestId);
