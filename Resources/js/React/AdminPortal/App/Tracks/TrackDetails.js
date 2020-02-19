@@ -296,7 +296,7 @@ export default class TrackDetails extends Component {
                 <h5 className="p-link mt-3" onClick={this.props.onBack.bind(this)}>Back to guided walks</h5>
                 <CardHighlight className="position-relative py-1 px-3 mb-0 align-left-sm">
                     {title}
-                    <ConfirmModal className="btn btn-dark pos-top-right" cb={this.onDeleteTrack.bind(this)} question="Delete this walk" confirmPhrase={this.props.trackName}>
+                    <ConfirmModal className="btn btn-dark pos-top-right" cb={this.onDeleteTrack.bind(this)} question="Delete this track" confirmPhrase={this.props.trackName}>
                         <i className="fas fa-trash"></i>                        
                         <span>&nbsp; Delete Track</span> 
                     </ConfirmModal>
