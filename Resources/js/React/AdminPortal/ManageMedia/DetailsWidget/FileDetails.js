@@ -8,7 +8,7 @@ export default class FileDetails extends Component {
         return (
             <Fragment>
                 <CardHighlight>
-                    <h3 className="pt-3">File Detials</h3>
+                    <h3 className="pt-3">File Details</h3>
                 </CardHighlight>
                 <CardBody className="pb-3 card-body">
                     <div className="table-responsive">

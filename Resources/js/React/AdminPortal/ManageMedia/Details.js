@@ -6,9 +6,6 @@ import AudioControls from '../../Components/Audio';
 export default class Details extends Component {
 
     onDelete() {
-
-
-
         this.props.setTab(1);
     }
 
