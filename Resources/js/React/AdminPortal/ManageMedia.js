@@ -37,12 +37,12 @@ export default class ManageMedia extends Component {
                                 alert={this.Alert}
                                 setTab={(tab) => this.setState({
                                     tab
-                                })
+                                    })
                                 }
                                 viewDetails={(media) => this.setState({
                                     tab: 2,
                                     media
-                                })
+                                    })
                                 } />
                         </div>
                     </div>

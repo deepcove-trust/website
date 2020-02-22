@@ -43,7 +43,7 @@ class UsageSection extends Component {
                         <h5>{this.props.title}</h5>
                     </div>
                     <div className="col-6">
-                        {this.props.usages.map(quiz => { return <p>{quiz}</p> })}
+                        {this.props.usages.map((quiz, key) => { return <p key={key}>{quiz}</p> })}
                     </div>
                 </div>
                 <hr />

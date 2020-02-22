@@ -33,7 +33,7 @@ export default class Details extends Component {
                 </div>
 
                 
-                <div className="col-md-6 col-sm-12 details-container">
+                <div className="col-md-6 col-sm-12 details-container">                   
                     <img className="sticky-top" src={imgUrl} alt={this.props.data.alt} />
                     <AudioControls file={this.props.data} />
                 </div>
