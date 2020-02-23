@@ -18,7 +18,7 @@ export default class MetaButtons extends Component {
         document.body.appendChild(el);
         //Be careful if you use texarea. setAttribute('value', value),
         // which works with "input" does not work with "textarea".– Eduard
-        el.value = `${window.location.hostname}/media?filename=eb8de5ee-9d33-479a-b8e4-542097bf7b2d.jpg&download=true&original=true`;
+        el.value = `${window.location.hostname}/media?filename=eb8de5ee-9d33-479a-b8e4-542097bf7b2d.jpg&original=true`;
         el.select();
         document.execCommand("copy");
         document.body.removeChild(el);
