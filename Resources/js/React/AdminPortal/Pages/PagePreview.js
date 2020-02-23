@@ -65,7 +65,7 @@ class DeletePage extends Component {
                 <ConfirmModal id={this.props.page.id}
                     question="delete page"
                     className="btn btn-outline-danger btn-block"
-                    explanation="This action cannot be undone, all information will be lost"
+                    explanation="This action cannot be undone, all information will be lost."
                     actionText="YES Delete Page!"
                     confirmPhrase={this.props.page.name}
                     cb={this.deletePage.bind(this)} >
