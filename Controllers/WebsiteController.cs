@@ -85,8 +85,8 @@ namespace Deepcove_Trust_Website.Controllers
 
         public async Task<IActionResult> HomePage()
         {
-            var page = await _Db.Pages.
-                Include(i => i.PageRevisions)
+            var page = await _Db.Pages
+                .Include(i => i.PageRevisions)
                     .ThenInclude(i => i.Template)
                 .Where(c => c.Name == "Home")
                 .FirstOrDefaultAsync();
@@ -105,8 +105,31 @@ namespace Deepcove_Trust_Website.Controllers
             return View(viewName: "~/Views/PageTemplate.cshtml");
         }
 
-        [AllowAnonymous]
-        [HttpGet("discover")]
+        [HttpGet, Route("/education")]
+        public async Task<IActionResult> EducationHomePage()
+        {
+            var page = await _Db.Pages
+                .Include(i => i.PageRevisions)
+                    .ThenInclude(i => i.Template)
+                .Where(c => c.Name == "Education")
+                .FirstOrDefaultAsync();
+
+            if (page == null || (!page.Public && !User.Identity.IsAuthenticated)) {
+                return NotFound();
+            }
+
+            if (page.Latest.Template == null) {
+                return BadRequest("Fatal error - no page template found");
+            }
+
+            ViewData["pageName"] = "Deep Cove Outdoor Education Trust";
+            ViewData["templateId"] = page.Latest.Template.Id;
+            ViewData["pageId"] = page.Id;
+            ViewData["Description"] = page.Description;
+            return View(viewName: "~/Views/PageTemplate.cshtml");
+        }
+
+        [AllowAnonymous, HttpGet("discover")]
         public IActionResult AndroidAppRedirect()
         {
             string appUrl = _Db.SystemSettings.First().UrlGooglePlay;
@@ -114,8 +137,7 @@ namespace Deepcove_Trust_Website.Controllers
             return Redirect(appUrl);
         }
 
-        [AllowAnonymous]
-        [HttpGet("sitemap")]
+        [AllowAnonymous, HttpGet("sitemap")]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 60)]
         public async Task<IActionResult> GenerateSitemap()
         {
