@@ -85,7 +85,7 @@ class Title extends Component {
 
 class Dimensions extends Component {
     render() {
-        if (!this.props.file.mediaType.mime.includes("image/")) return <div />
+        if (!this.props.file.mediaType.mime.includes("image/")) return null;
 
         return (
             <tr>
@@ -100,7 +100,7 @@ class Dimensions extends Component {
 
 class Duration extends Component {
     render() {
-        if (!this.props.file.mediaType.mime.includes("audio/")) return <div />
+        if (!this.props.file.mediaType.mime.includes("audio/")) return null;
 
         return (
             <tr>

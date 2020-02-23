@@ -93,6 +93,7 @@ export default class MetaData extends Component {
                 <MetaButtons edit={this.state.edit}
                     alert={this.props.alert}
                     fileId={this.state.file.id}
+                    fileName={this.state.file.fileName}
                     pending={this.state.pending}
                     setEdit={(edit) => this.setState({ edit })}
                     saveChanges={this.submitChanges.bind(this)}

@@ -60,7 +60,7 @@ export default class Pages extends Component {
             <ErrorBoundary customError="react-pages">
                 <Alert className="row" onRef={ref => (this.alert = ref)}>
                     <div className="col-12 py-3">
-                        <h1 className="text-center">Pages</h1>
+                        <h1 className="text-center">Page Manager</h1>
                     </div>
 
                     <div className="col-md-4">

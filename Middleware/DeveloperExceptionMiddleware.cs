@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Logging;
 using Deepcove_Trust_Website.Features.RazorRender;
 using Deepcove_Trust_Website.Features.Emails;
+using Microsoft.Extensions.Configuration;
 
 namespace Deepcove_Trust_Website.Middleware
 {
@@ -28,7 +29,7 @@ namespace Deepcove_Trust_Website.Middleware
             {
                 await _next(httpContext);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 string requestId = System.Diagnostics.Activity.Current?.Id ?? httpContext.TraceIdentifier;
                 await email.SendExceptionEmailAsync(ex, httpContext, requestId);
@@ -39,27 +40,50 @@ namespace Deepcove_Trust_Website.Middleware
                         $"{ex.InnerException?.StackTrace ?? ""}\n\n" +
                         $"END EXCEPTION"
                     );
-                
+
                 if (httpContext.Response.HasStarted)
                 {
                     logger.LogWarning("The response has already started, the exception will not be handled.");
                     throw;
                 }
-                
+
                 // Handle an internal server error
                 httpContext.Response.Clear();
                 httpContext.Response.StatusCode = 500;
-                httpContext.Response.Redirect($"/error/server-error?requestId={requestId}");                
+                httpContext.Response.Redirect($"/error/server-error?requestId={requestId}");
             }
+        }
+    }
 
+    // Extension method used to add the middleware to the HTTP request pipeline.
+    public static class DeveloperExceptionMiddlewareExtensions
+    {
+        public static IApplicationBuilder UseDeveloperExceptionMails(this IApplicationBuilder builder)
+        {
+            return builder.UseMiddleware<DeveloperExceptionMiddleware>();
+                //.UseMiddleware<NotfoundExceptionMiddleware>(); Disabled until I can fix search engine 404s
+        }
+    }
 
+    public class NotfoundExceptionMiddleware
+    {
+        private readonly RequestDelegate _next;
+
+        public NotfoundExceptionMiddleware(RequestDelegate next)
+        {
+            _next = next;
+        }
+
+        public async Task Invoke(HttpContext httpContext, IEmailService email, 
+            ILogger<DeveloperExceptionMiddleware> logger, IViewRenderer viewRenderer, IConfiguration config)
+        {
             try
             {
                 // Trigger the exception handler
-                if (httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
+                if (bool.Parse(config["logging.404emails"]) && httpContext.Response.StatusCode == StatusCodes.Status404NotFound)
                 {
-                    if(!httpContext.Response.Headers.ContainsKey("errorstop"))
-                     throw new Exception($"{httpContext.Request.PathBase + httpContext.Request.Path} could not be found");
+                    if (!httpContext.Response.Headers.ContainsKey("errorstop"))
+                        throw new Exception($"{httpContext.Request.PathBase + httpContext.Request.Path} could not be found");
                 }
             }
             // Handle page not found
@@ -87,10 +111,10 @@ namespace Deepcove_Trust_Website.Middleware
         {
             List<SpiderBotAgents> UserAgents = JsonConvert.DeserializeObject<List<SpiderBotAgents>>
                 (File.ReadAllText("Data/spiderbot_useragents.json"));
-            
-            foreach(SpiderBotAgents agent in UserAgents)
+
+            foreach (SpiderBotAgents agent in UserAgents)
             {
-                foreach(string exp in agent.Regex)
+                foreach (string exp in agent.Regex)
                 {
                     if (useragent_string.Contains(exp))
                     {
@@ -106,16 +130,7 @@ namespace Deepcove_Trust_Website.Middleware
         private struct SpiderBotAgents
         {
             public string Owner { get; set; }
-            public List<string> Regex { get; set; } 
-        }
-    }
-
-    // Extension method used to add the middleware to the HTTP request pipeline.
-    public static class DeveloperExceptionMiddlewareExtensions
-    {
-        public static IApplicationBuilder UseDeveloperExceptionMails(this IApplicationBuilder builder)
-        {
-            return builder.UseMiddleware<DeveloperExceptionMiddleware>();
+            public List<string> Regex { get; set; }
         }
     }
 }

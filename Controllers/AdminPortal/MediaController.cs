@@ -85,6 +85,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal
                         showCopyright = mediaFile.ShowCopyright,
                         info = mediaFile.Source
                     },
+                    fileName = mediaFile.Filename,
                     height = imageFile?.Height,
                     width = imageFile?.Width,
                     versions = imageFile?.Versions,
