@@ -54,7 +54,7 @@ export default class MetaButtons extends Component {
                 </div>
 
                 <div className="col-md-4 col-sm-12">
-                    <Button className="btn btn-dark btn-sm btn-block" disabled>
+                    <Button className="btn btn-dark btn-sm btn-block d-none" disabled>
                         Crop Image  <i className="far fa-crop" />
                     </Button>
                 </div>
