@@ -22,7 +22,6 @@ export class NoticeCard extends Component {
         )
     }
 }
-
 export class NoticeSummary extends Component {
     getReadableDate(d) {
         return new Date(d).toDateString();
