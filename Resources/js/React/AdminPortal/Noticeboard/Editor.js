@@ -124,7 +124,7 @@ export default class Editor extends Component {
                         <h4 className="text-center">{this.state.title}</h4>
                         <small className="d-block text-center">{this.getReadableDate(this.state.updated_at)}</small>
                         <hr className="indented" />
-                        <p className="indented">{this.state.long_desc}</p>
+                        <p className="indented" dangerouslySetInnerHTML={{ __html: this.state.long_desc.replace(/\n/g, '<br/>')}}/>
                     </DevicePreview>
                 </div>
             </Fragment>
