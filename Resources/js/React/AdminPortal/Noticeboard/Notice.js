@@ -31,8 +31,8 @@ export class NoticeSummary extends Component {
         const { id, noticeboard, active, urgent, title, short_desc, updated_at } = this.props.notice;
 
         // Notice Status
-        let important = urgent ? <span className="text-danger">URGENT</span> : null;
-        let disabled = !active ? <span className="text-danger">DISABLED</span> : null;
+        let important = urgent ? <span className="text-danger px-1">URGENT</span> : null;
+        let disabled = !active ? <span className="text-danger px-1">DISABLED</span> : null;
         let status = !!important || !!disabled ? <p className="font-weight-bold">Status: {important}{disabled}</p> : null;
 
         //Platforms
