@@ -157,13 +157,31 @@ export default class Media extends Component {
             />
         )
 
+        let youtubeEmbeed = this.state.content.youTubeEmbed ? <YoutubeEmbed url={this.state.content.youTubeEmbed}
+            width={this.state.Width} /> : null;
+
         let calculatedHeight = this.state.ImageAspect != null ? this.state.ImageAspect * this.state.Width : null;
 
         return (
             <div style={{ 'position': 'relative', 'minHeight': calculatedHeight || this.props.minHeight }} ref={this.contentRef} >
-                {image}
+                {youtubeEmbeed || image}
                 {selectFile}
             </div>
         )
+    }
+}
+
+class YoutubeEmbed extends Component {
+    render() {
+        const { url, width } = this.props;
+
+        if (!url) return null;
+
+        return <iframe width={width} height={width / (16/9)}
+            src={`https://www.youtube.com/embed/${this.props.url}`}
+            frameBorder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen 
+        />
     }
 }

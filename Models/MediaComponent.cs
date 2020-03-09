@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Deepcove_Trust_Website.Models
 {
@@ -9,6 +7,7 @@ namespace Deepcove_Trust_Website.Models
     {
         public int Id { get; set; }
         public int SlotNo { get; set; }
+        public string YouTubeEmbed { get; set; }
         public int? ImageMediaId { get; set; }
 
         // Navigation properties
