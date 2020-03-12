@@ -4,6 +4,7 @@ import { Button, BtnGroup, ConfirmButton } from '../Components/Button';
 import SelectMedia from './SelectMedia';
 
 import _ from 'lodash';
+import { YouTubeVideoId } from '../../helpers';
 
 export default class Media extends Component {
     constructor(props) {
@@ -75,8 +76,25 @@ export default class Media extends Component {
     handleImageSelect(file) {
         file.slotNo = this.state.default.slotNo;
         file.imageMediaId = file.id;
+        file.youTubeEmbed = null;
+
         this.setState({
             showModal: false,
+            content: file
+        });
+    }
+
+    handleYoutubeSelect() {
+        let YouTubeUrl = prompt('YouTube videos Short Url\nExample: https://www.youtube.com/watch?v=H542nLTTbu0')
+        if (!YouTubeUrl) return;
+
+        let file = {
+            slotNo: this.state.default.slotNo,
+            imageMediaId: null,
+            youTubeEmbed: YouTubeVideoId(YouTubeUrl)
+        }
+
+        this.setState({
             content: file
         });
     }
@@ -116,6 +134,9 @@ export default class Media extends Component {
                     <ConfirmButton className="btn btn-danger btn-sm" cb={this.handleClearImage.bind(this)}>
                         Clear <i className="far fa-times"/>
                     </ConfirmButton>
+                    <Button className="btn btn-info btn-sm" style={{ 'bottom': '0px' }} cb={this.handleYoutubeSelect.bind(this)}>
+                        YouTube Video <i className="fab fa-youtube"/>
+                    </Button>
                     <Button className="btn btn-dark btn-sm" style={{ 'bottom': '0px' }} cb={this.toggleModal.bind(this, true)}>
                         Select Image <i className="far fa-images" />
                     </Button>
