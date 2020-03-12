@@ -82,6 +82,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                         {
                                 img.MediaComponent.Id,
                                 img.MediaComponent.SlotNo,
+                                img.MediaComponent.YouTubeEmbed,
                                 img.MediaComponent.ImageMediaId,
                                 img.MediaComponent?.ImageMedia?.Filename,
                                 img.MediaComponent?.ImageMedia?.Alt,

@@ -48,10 +48,29 @@ export function PrepareGoogleMapsUrl(url) {
     }
 }
 
+export function YouTubeVideoId(s) {
+    // invalid or valid and doesn't have ?
+
+    // If the string is invalid return it
+    // maybe the user entered the ID
+    if (!validUrl(s) || !s.includes('?')) {
+        return s;
+    }
+   
+    // Return the query value for 'v' - the video Id
+    return new URLSearchParams(s.substr(s.indexOf('?') + 1)).get('v');
+}
+
 // Validate email string against RFC2822
 export function validateEmail(address) {
     var regex = RegExp("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?");
     return regex.test(address);
+}
+
+// Validate URL
+export function validUrl(s) {
+    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
+    return regexp.test(s);
 }
 
 // Polyfill to support Internet Explorer
