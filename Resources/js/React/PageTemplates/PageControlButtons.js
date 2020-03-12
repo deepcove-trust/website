@@ -61,6 +61,6 @@ export class ViewPage extends Component {
 
 export class ViewPageDashboard extends Component {
     render() {
-        return <Link className={this.props.className || `btn btn-outline-dark btn-block`} href={pageBaseUri}>Pages Dashboard</Link>
+        return <Link className={this.props.className || `btn btn-outline-dark btn-block`} href={pageBaseUri}>Page Manager</Link>
     }
 }
