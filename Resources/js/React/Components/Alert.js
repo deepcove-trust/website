@@ -182,7 +182,7 @@ export class StaticAlert extends Component {
         return (
             <div role="alert" className={this.className()}>
                 {btn_dismiss}
-                <span>{this.props.children}</span>
+                {this.props.children}
             </div>
         );
     }

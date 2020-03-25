@@ -25,6 +25,7 @@ import './js/mapbox-gl.js';
 
 /* React */
 import './nReact/UserAccounts';
+import './nReact/Noticeboard';
 //OLD
 import './js/React/AdminPortal/AccountSettings';
 import './js/React/Authentication/Login';
