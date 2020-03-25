@@ -73,6 +73,20 @@ export function validUrl(s) {
     return regexp.test(s);
 }
 
+export function formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [day, month, year].join('-');
+}
+
 // Polyfill to support Internet Explorer
 // (doesn't support Math.trunc by default)
 Math.trunc = Math.trunc || function (x) {

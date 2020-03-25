@@ -137,6 +137,30 @@ namespace Deepcove_Trust_Website.Controllers
             return Redirect(appUrl);
         }
 
+        [AllowAnonymous, HttpGet, Route("/api/notices")]
+        public async Task<IActionResult> WebsiteNoticesAsync()
+        {
+            try
+            {
+                var notices = await _Db.Notices.Where(c => c.Active && c.Noticeboard != Noticeboard.app)
+                    .Select(s => new { 
+                        s.Title,
+                        s.Urgent,
+                        s.LongDesc,
+                        s.UpdatedAt
+                    })
+                    .OrderByDescending(o => o.Urgent)
+                    .ThenBy(o => o.UpdatedAt)
+                    .ToListAsync();
+                
+                return Ok(notices);
+
+            } catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [AllowAnonymous, HttpGet("sitemap")]
         [ResponseCache(VaryByHeader = "User-Agent", Duration = 60)]
         public async Task<IActionResult> GenerateSitemap()

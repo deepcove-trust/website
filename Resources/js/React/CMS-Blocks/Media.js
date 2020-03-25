@@ -178,14 +178,14 @@ export default class Media extends Component {
             />
         )
 
-        let youtubeEmbeed = this.state.content.youTubeEmbed ? <YoutubeEmbed url={this.state.content.youTubeEmbed}
+        let youtubeEmbed = this.state.content.youTubeEmbed ? <YoutubeEmbed url={this.state.content.youTubeEmbed}
             width={this.state.Width} /> : null;
 
         let calculatedHeight = this.state.ImageAspect != null ? this.state.ImageAspect * this.state.Width : null;
 
         return (
             <div style={{ 'position': 'relative', 'minHeight': calculatedHeight || this.props.minHeight }} ref={this.contentRef} >
-                {youtubeEmbeed || image}
+                {youtubeEmbed || image}
                 {selectFile}
             </div>
         )

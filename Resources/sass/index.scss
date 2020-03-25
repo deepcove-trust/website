@@ -373,3 +373,17 @@ label.btn input[type="radio"]{
 .text-orange{
     color: orange;
 }
+
+
+.noticeboard {
+    padding: 20px;
+    background-color: #363636c4;
+    color: white;
+    font-size: larger !important;
+    transition: ease-in-out 0.5s;
+}
+
+.noticeboard .learnMore {
+    text-decoration: underline;
+    cursor: pointer;
+}
