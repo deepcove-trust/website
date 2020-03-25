@@ -38,7 +38,6 @@ export default class Noticeboard extends Component {
 
     _tick() {
         const { index, notices } = this.state;
-        console.log(index + 1, notices.length)
         this.setState({
             index: (index < (notices.length -1)) ? index + 1 : 0
         });
@@ -64,7 +63,7 @@ export default class Noticeboard extends Component {
 
         return (
             <Fragment>
-                <StaticAlert className={`noticeboard${notice.urgent ? ' urgent' : ''}`}>
+                <StaticAlert className='noticeboard'>
                     <i className={`fas fa-exclamation-triangle text-warning pr-3`} />
                     {notice.title} - <span className="learnMore" onClick={this._handleModal.bind(this, notice)}>Learn More</span>
                 </StaticAlert>

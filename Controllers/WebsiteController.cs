@@ -149,7 +149,8 @@ namespace Deepcove_Trust_Website.Controllers
                         s.LongDesc,
                         s.UpdatedAt
                     })
-                    .OrderBy(o => o.UpdatedAt)
+                    .OrderByDescending(o => o.Urgent)
+                    .ThenBy(o => o.UpdatedAt)
                     .ToListAsync();
                 
                 return Ok(notices);

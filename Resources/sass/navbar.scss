@@ -73,7 +73,8 @@ nav#sitenav.navbar {
     a.dropdown-toggle::after {
         color: black;
     }
-    /* Drop down item
+
+/* Drop down item
 -------------------------------------------- */
     .dropdown-item:hover {
         background-color: $activeColor !important;
@@ -88,7 +89,8 @@ nav#sitenav.navbar {
     .dropdown-menu {
         padding: 0px;
     }
-    /* Nav hover effect
+
+/* Nav hover effect
 -------------------------------------------- */
     .nav-item > a {
         position: relative;
@@ -121,4 +123,10 @@ nav#sitenav.navbar {
         -webkit-transform: scaleX(1);
         transform: scaleX(1);
     }
+}
+
+/* Stop the narbar shifting when a modal opens
+-------------------------------------------- */
+#sitenav {
+    margin-right: 0px!important;
 }
