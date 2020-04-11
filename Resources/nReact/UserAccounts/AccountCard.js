@@ -1,7 +1,7 @@
 ﻿import React, { Component } from 'react';
 import AccountIcons from './AccountIcons';
-import md5 from 'md5';
 import AccountModal from './AccountModal';
+import { GravatarUrl } from '../../js/helpers';
 
 export default class AccountCard extends Component {
     constructor(props) {
@@ -10,20 +10,6 @@ export default class AccountCard extends Component {
         this.state = {
             showModal: false
         }
-    }
-
-    getAvatarUrl(email) {
-        // Settings
-        const apiUrl = "https://www.gravatar.com/avatar";
-        const size = 100;//Options: https://en.gravatar.com/site/implement/images#size
-        const rating = "g";//Options: https://en.gravatar.com/site/implement/images#rating
-
-        // No email provided
-        if (!email) return;
-        // Prepare the email
-        email = email.toLowerCase().trim();
-        // Return the Gravatar string
-        return `${apiUrl}/${md5(email)}?r=${rating}&s=${size}`;
     }
 
     handleModal(showModal) {
@@ -37,7 +23,7 @@ export default class AccountCard extends Component {
               
         return (
             <div className="col-lg-4 col-md-6 col-sm-12 user-item" onClick={this.handleModal.bind(this, true)}>
-                <img className="avatar" src={this.getAvatarUrl(email)} alt={`${name}'s gravatar`} />
+                <img className="avatar" src={GravatarUrl(email)} alt={`${name}'s gravatar`} />
                 <h3 className="name">{name}</h3>
                 <ul className="list-unstyled mb-1">
                     <li>

@@ -1,3 +1,5 @@
+import md5 from 'md5';
+
 export function convertSize(bytes) {
     if (!bytes || bytes == 0) return 'n/a';
 
@@ -98,3 +100,19 @@ Math.trunc = Math.trunc || function (x) {
     }
     return Math.ceil(x);
 };
+
+// Generate the Gravatar URL, using the email hash
+export function GravatarUrl(email) {
+    // Settings
+    const apiUrl = "https://www.gravatar.com/avatar";
+    const size = 100;//Options: https://en.gravatar.com/site/implement/images#size
+    const rating = "g";//Options: https://en.gravatar.com/site/implement/images#rating
+    const defaultImg = "mp";//Options: https://en.gravatar.com/site/implement/images#default-image
+
+    // No email provided
+    if (!email) return;
+    // Prepare the email
+    email = email.toLowerCase().trim();
+    // Return the Gravatar string
+    return `${apiUrl}/${md5(email)}?r=${rating}&s=${size}&d=${defaultImg}`;
+}
