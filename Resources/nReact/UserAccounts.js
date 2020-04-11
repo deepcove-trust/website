@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { render } from 'react-dom';
+
 import Alert from '../js/React/Components/Alert';
-import $ from 'jquery';
 import AccountCard from './UserAccounts/AccountCard';
+
 const baseUrl = "/admin/users";
 
 export default class UserAccounts extends Component {

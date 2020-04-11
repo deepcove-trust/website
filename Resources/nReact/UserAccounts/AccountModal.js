@@ -1,10 +1,8 @@
 ﻿import React, { Component } from 'react';
+import AccountIcons from './AccountIcons';
 import Modal from '../../js/React/Components/Modal';
 import { FormGroup, Input } from '../../js/React/Components/FormControl';
 import { BtnGroup, ConfirmButton } from '../../js/React/Components/Button';
-import $ from 'jquery';
-import AccountIcons from './AccountIcons';
-
 
 export default class AccountModal extends Component {
     constructor(props) {
@@ -46,28 +44,22 @@ export default class AccountModal extends Component {
     }
 
     _handleUpdateAccount(account) {
-        this.setState({
-            pending: true
-        }, () => {
-            $.ajax({
-                method: 'put',
-                url: `${this.props.baseUrl}/${account.id}`,
-                data: {
-                    email: account.email,
-                    id: account.id,
-                    name: account.name, 
-                    phoneNumber: account.phoneNumber
-                }
-            }).done((message) => {
-                this.updatePending(false);
-                this._handelEditMode(false);
-                this.props.Alert.success(message);
-                this.props.updateData();
-            }).fail((err) => {
-                this.updatePending(false);
-                this.props.Alert.error(null, err.responseText);
-            });
-        })
+        $.ajax({
+            method: 'put',
+            url: `${this.props.baseUrl}/${account.id}`,
+            data: {
+                email: account.email,
+                id: account.id,
+                name: account.name,
+                phoneNumber: account.phoneNumber
+            },
+            beforeSend: this.updatePending(true),
+            always: this.updatePending(false)
+        }).done((msg) => {
+            this._handelEditMode(false);
+            this.props.Alert.success(msg);
+            this.props.updateData();
+        }).fail((err) => this.props.Alert.error(null, err.responseText));
     }
 
     _handleUpdateAccountFlags(id, flag) {
@@ -102,7 +94,7 @@ export default class AccountModal extends Component {
             <div className="dropdown">
                 <button className="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Account Actions
-                    </button>
+                </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a className="dropdown-item" onClick={this._handelEditMode.bind(this, true)}>Edit</a>
                     <a className="dropdown-item" onClick={this._handleUpdateAccountFlags.bind(this, id, 'status')}>{active ? 'Disable' : 'Enable'} Account</a>
@@ -111,7 +103,7 @@ export default class AccountModal extends Component {
             </div>
         ) : (
             <BtnGroup>
-                    <ConfirmButton className="btn btn-danger" pending={this.state.pending} cb={this._handelEditMode.bind(this, false)}>
+                <ConfirmButton className="btn btn-danger" pending={this.state.pending} cb={this._handelEditMode.bind(this, false)}>
                     Cancel <i className="fas fa-times" />
                 </ConfirmButton>
                 <ConfirmButton className="btn btn-success" pending={this.state.pending} cb={this._handleUpdateAccount.bind(this, this.state.account)}>
@@ -147,9 +139,7 @@ export default class AccountModal extends Component {
                             <AccountIcons active={active} developer={developer} locked={forcePasswordReset} />
                         </span>
 
-                        <p className="font-weight-bold">
-                            Recieves email types:
-                        </p>
+                        <p className="font-weight-bold">Recieves email types:</p>
                         <ul>{emailTypes}</ul>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ import { StaticAlert } from '../js/React/Components/Alert';
 import Modal from '../js/React/Components/Modal';
 import { formatDate } from '../js/helpers';
 import _ from 'lodash';
-import $ from 'jquery';
+
 
 const baseUri = '/api/notices';
 
@@ -77,6 +77,7 @@ export default class Noticeboard extends Component {
 class NoticeModal extends Component {
     render() {
         const { longDesc, title, updatedAt } = this.props.notice;
+
         const _title = (
             <span>
                 <i className={`fas fa-exclamation-triangle pr-3`} />

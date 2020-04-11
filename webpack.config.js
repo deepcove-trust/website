@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 var WebpackNotifierPlugin = require("webpack-notifier");
 var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
+var WebpackProvidePlugin = require('webpack').ProvidePlugin;
 
 const bundleFileName = 'bundle';
 const dirName = 'wwwroot/dist';
@@ -57,7 +58,12 @@ module.exports = (env, argv) => {
                 filename: bundleFileName + '.css'
             }),
             new WebpackNotifierPlugin(),
-            new BrowserSyncPlugin()
+            new BrowserSyncPlugin(),
+            new WebpackProvidePlugin({
+                $: 'jquery',
+                jQuery: 'jquery',
+                'window.jQuery': 'jquery'
+            })
         ],
         stats: {
             colors: true,
