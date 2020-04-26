@@ -64,7 +64,7 @@ namespace Deepcove_Trust_Website.Models
             get
             {
                 string pageNameUrl = Name.ToLower().Replace(' ', '-');
-                return Section == Section.main ? $"{pageNameUrl}" : $"education/{pageNameUrl}";
+                return Section == Section.main ? $"/{pageNameUrl}" : $"/education/{pageNameUrl}";
             }
         }
     }
