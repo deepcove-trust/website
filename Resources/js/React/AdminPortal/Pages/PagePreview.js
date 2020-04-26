@@ -14,7 +14,7 @@ export default class PagePreview extends Component {
 
                 <div className="row">
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
-                        <ViewPage href={`/${this.props.page.absoluteUrl}`} />
+                        <ViewPage href={`${this.props.page.absoluteUrl}`} />
                     </div>
 
                     <div className="col-md-6 col-sm-12 pb-2 px-1">
