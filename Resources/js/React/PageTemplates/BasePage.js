@@ -12,6 +12,7 @@ import ReactTemplate8 from './8';
 import ReactTemplate9 from './9';
 import ReactTemplate10 from './10';
 import ReactTemplate11 from './11';
+import ReactTemplate12 from './12';
 import $ from 'jQuery';
 import ErrorBoundary from '../Errors/ErrorBoundary';
 
@@ -29,7 +30,8 @@ const components = {
     8: ReactTemplate8,
     9: ReactTemplate9,
     10: ReactTemplate10,
-    11: ReactTemplate11
+    11: ReactTemplate11,
+    12: ReactTemplate12
 }
 
 export default class BasePage extends Component {

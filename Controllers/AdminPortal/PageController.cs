@@ -147,7 +147,7 @@ namespace Deepcove_Trust_Website.Controllers.AdminPortal.Web
                 await _Db.SaveChangesAsync();
 
                 // Return new page URL to the caller
-                return Ok(this.Request.BaseUrl() + page.AbsoluteUrl);
+                return Ok(page.AbsoluteUrl);
 
             }
             catch (Exception ex)
