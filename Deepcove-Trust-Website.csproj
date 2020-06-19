@@ -177,7 +177,6 @@
   <ItemGroup>
     <Folder Include="Storage\" />
     <Folder Include="wwwroot\audio\" />
-    <Folder Include="wwwroot\images\templates\" />
   </ItemGroup>
 
 
