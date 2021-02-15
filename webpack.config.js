@@ -15,7 +15,8 @@ module.exports = (env, argv) => {
         entry: ['./Resources/index.js', './Resources/sass/index.scss'],
         output: {
             filename: bundleFileName + '.js',
-            path: path.resolve(__dirname, dirName)
+            path: path.resolve(__dirname, dirName),
+            publicPath: ''
         },
         module: {
             rules: [
@@ -46,7 +47,10 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                    loader: 'url-loader?limit=100000'
+                    loader: 'url-loader',
+                    options: {
+                        'limit': '100000'
+                    }
                 }
             ]
         },
