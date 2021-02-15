@@ -2,8 +2,6 @@
 const fs = require('fs');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-var WebpackNotifierPlugin = require("webpack-notifier");
-var BrowserSyncPlugin = require("browser-sync-webpack-plugin");
 var WebpackProvidePlugin = require('webpack').ProvidePlugin;
 
 const bundleFileName = 'bundle';
@@ -61,8 +59,6 @@ module.exports = (env, argv) => {
             new MiniCssExtractPlugin({
                 filename: bundleFileName + '.css'
             }),
-            new WebpackNotifierPlugin(),
-            new BrowserSyncPlugin(),
             new WebpackProvidePlugin({
                 $: 'jquery',
                 jQuery: 'jquery',
