@@ -1,6 +1,5 @@
 ﻿import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import { setTimeout } from 'timers';
 import { FormGroup, Input } from './FormControl';
 import Modal from './Modal';
 
